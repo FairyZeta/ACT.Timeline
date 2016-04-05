@@ -1,0 +1,19 @@
+﻿<Window x:Class="FairyZeta.FF14.ACT.Timeline.Test.View.TestWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Test.ViewModels"
+        Height="350" Width="800" 
+        Title="タイムラインテスト">
+    
+    <Window.DataContext>
+        <vm:TestWindowViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <StackPanel Orientation="Horizontal" Margin="5" >
+            <TextBox x:Name="FilePathBox" Text="D:\TestTimeline\The Second Coil Of Bahamut - Turn (4).txt" Height="30" Width="400"/>
+            <Button Width="120" Height="30" Command="{Binding Test_TimelineTextLoadCommand}" CommandParameter="{Binding Text, ElementName=FilePathBox}"/>
+
+        </StackPanel>  
+    </Grid>
+</Window>

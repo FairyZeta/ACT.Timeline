@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="_TimelineStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="ContentBoxColor1" Color="#FFE33A3C"/>
+    <SolidColorBrush x:Key="ArrowLabelColor1" Color="#FFFFDB4C"/>
+    <SolidColorBrush x:Key="M123PointBrownColor" Color="#FF4E0400"/>
+    <SolidColorBrush x:Key="M123BoxColor1" Color="#FFF8CEB8"/>
+    <SolidColorBrush x:Key="M123SelectedTabColor" Color="#FFF2F4CD"/>
+    <SolidColorBrush x:Key="M123TabBorderColor" Color="Gainsboro"/>
+
+</ResourceDictionary>

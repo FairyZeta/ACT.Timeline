@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.StandardTimelineView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type=dData:Desing_TimelineComponent, IsDesignTimeCreatable=True}">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="RoleColor_TANK1" Color="#BF344396"/>
+            <SolidColorBrush x:Key="RoleColor_HEALER1" Color="#BF396527"/>
+            <SolidColorBrush x:Key="RoleColor_DPS1" Color="#BF653232"/>
+            <SolidColorBrush x:Key="RoleColor_Pet1" Color="#BF969334"/>
+            <SolidColorBrush x:Key="RoleColor_UNKNOWN1" Color="#BFD3D3D3"/>
+            <SolidColorBrush x:Key="RoleColor_Me1" Color="#BFFFF700"/>
+
+            <SolidColorBrush x:Key="BaseColor_Blue1" Color="#E2EBF5"/>
+            <SolidColorBrush x:Key="BaseColor_Blue1_Shadow" Color="#217AA2"/>
+            <SolidColorBrush x:Key="BaseColor_Gold1" Color="#DED7BE"/>
+            <SolidColorBrush x:Key="BaseColor_Gold1_Shadow" Color="#795516"/>
+
+            <DataTemplate x:Key="BasicTimeHeaderTemplate" DataType="DataGridColumnHeader">
+                <Label Content="Time" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+            </DataTemplate>
+            <DataTemplate x:Key="BasicActionHeaderTemplate" DataType="DataGridColumnHeader">
+                <Label Content="Action" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center"/>
+            </DataTemplate>
+            <DataTemplate x:Key="BasicActiveHeaderTemplate" DataType="DataGridColumnHeader">
+                <Label Content="Active" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="BasicTimeCellTemplate" DataType="DataGridCell">
+                <Grid >
+                    <Label Content="{Binding ActivityTime}" Foreground="{StaticResource BaseColor_Blue1}"  VerticalAlignment="Center"  />
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="BasicActionCellTemplate" DataType="DataGridCell">
+                <Grid>
+                    <Label Content="{Binding ActivityName}" Foreground="{StaticResource BaseColor_Blue1}" VerticalAlignment="Center" />
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="BasicActiveCellTemplate" DataType="DataGridCell">
+                <Grid>
+                    <Label Content="0" Foreground="{StaticResource BaseColor_Blue1}" VerticalAlignment="Center" />
+                </Grid>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Background="Black" CornerRadius="5">
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition  Width="30"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="[CombatTime] " Foreground="{StaticResource BaseColor_Gold1}"/>
+                    <TextBlock Text="22:33" Foreground="{StaticResource BaseColor_Blue1}"/>
+                    <TextBlock Text=" / " Foreground="{StaticResource BaseColor_Gold1}"/>
+                    <TextBlock Text="Lavender Beds" Foreground="{StaticResource BaseColor_Blue1}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Style="{StaticResource CaptionButtonStyleKey}"
+                                Content="r" ToolTip="閉じる"
+                                Command="{Binding WindowClosedCommand}"/>
+                </StackPanel>
+            </Grid>
+            <DataGrid ItemsSource="{Binding TimelineDataModel.TimelineItemCollection}" AutoGenerateColumns="False" Background="Transparent" BorderBrush="Transparent" >
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource BaseColor_Gold1}"/>
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.RowHeaderStyle>
+                    <Style TargetType="{x:Type DataGridRowHeader}">
+                        <Setter Property="Background" Value="Transparent" />
+                    </Style>
+                </DataGrid.RowHeaderStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Background" Value="Transparent" />
+                    </Style>
+                </DataGrid.RowStyle>
+                
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn HeaderTemplate="{StaticResource BasicTimeHeaderTemplate}" CellTemplate="{StaticResource BasicTimeCellTemplate}" />
+                    <DataGridTemplateColumn HeaderTemplate="{StaticResource BasicActionHeaderTemplate}" CellTemplate="{StaticResource BasicActionCellTemplate}"/>
+                    <DataGridTemplateColumn HeaderTemplate="{StaticResource BasicActiveHeaderTemplate}" CellTemplate="{StaticResource BasicActiveCellTemplate}" />
+                </DataGrid.Columns>
+        </DataGrid>
+        </StackPanel>
+    </Border>
+</UserControl>
