@@ -6,7 +6,9 @@
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
         mc:Ignorable="d" 
-        d:DesignHeight="300" d:DesignWidth="300">
+        d:DesignHeight="300" d:DesignWidth="300" 
+        WindowStyle="None"
+        Background="Transparent" AllowsTransparency="True">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
@@ -20,18 +22,16 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/_TimelineStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <!--fwConverter:EqualsToVisibleConveter x:Key="visiConverter" /-->
-
+            <Style TargetType="Button" x:Key="WindowButtons">
+                <Setter Property="Opacity" Value="0"/>
+            </Style>
         </ResourceDictionary>
-
-
     </Window.Resources>
+    
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
 
-    <Border x:Name="RootBorder">
-        <view:StandardTimelineView DataContext="{Binding TimelineComponent}"/>
-    </Border>
+    <view:StandardTimelineView DataContext="{Binding TimelineComponent}" />
+    
 </Window>

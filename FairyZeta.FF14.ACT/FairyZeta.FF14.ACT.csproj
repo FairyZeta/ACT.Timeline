@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Advanced Combat Tracker">
+      <HintPath>D:\My System\Online Game\Tool\Advanced Combat Tracker\Advanced Combat Tracker.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,6 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Act.ENUM.cs" />
+    <Compile Include="DataModel\TimerDataModel.cs" />
+    <Compile Include="Module\_Module.cs" />
+    <Compile Include="Process\ActTimerProcess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Process\_Process.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

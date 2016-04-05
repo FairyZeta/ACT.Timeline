@@ -2,7 +2,10 @@
 {
     public enum TimelineType
     {
-        Enemy,
-        P
+        UNKNOWN,
+        ENEMY,
+        TANK,
+        DPS,
+        HEALER
     }
 }

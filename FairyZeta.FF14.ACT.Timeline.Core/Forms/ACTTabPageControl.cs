@@ -179,7 +179,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Forms
         private void buttonResourceDirOpen_Click(object sender, EventArgs e)
         {
             if (Directory.Exists(Globals.ResourceRoot))
-                Process.Start(Globals.ResourceRoot);
+                 System.Diagnostics.Process.Start(Globals.ResourceRoot);
         }
 
         private void buttonRefreshList_Click(object sender, EventArgs e)

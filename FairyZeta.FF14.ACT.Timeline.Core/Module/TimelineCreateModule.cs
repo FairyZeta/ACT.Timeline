@@ -52,24 +52,62 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             if (pBaseData.Items.Count() == 0) return;
 
-            for (double d = 0; d < pBaseData.EndTime; d += (double)0.1)
+            decimal endTime = Convert.ToDecimal(pBaseData.EndTime);
+            for (decimal d = 0; d < endTime; d += (decimal)0.1)
             {
                 TimelineItemData item = new TimelineItemData();
                 item.ActivityIndex = Convert.ToInt32(d * 10);
-                item.ActivityTime = this.DoubleToAdjustProcess.ToHalfAdjust(d,1);
+                item.ActivityNo = d;
+                item.ActivityTime = new TimeSpan(0,0,Convert.ToInt32(d));
 
                 pDataModel.TimelineItemCollection.Add(item);
             }
 
             foreach (var data in pBaseData.Items)
             {
-                var target = pDataModel.TimelineItemCollection.FirstOrDefault(item => item.ActivityTime == this.DoubleToAdjustProcess.ToHalfAdjust(data.TimeFromStart, 1));
+                var target = pDataModel.TimelineItemCollection.FirstOrDefault(item => item.ActivityNo == Convert.ToDecimal(this.DoubleToAdjustProcess.ToHalfAdjust(data.TimeFromStart, 1)));
                 if (target != null)
                 {
+                    target.ActiveTime = target.ActivityNo;
                     target.ActivityName = data.Name;
-                }
+                    target.Duration = Convert.ToDecimal(data.Duration);
+                    target.Jump = Convert.ToDecimal(data.Jump);
+                    target.Visibility = true;
+                    target.TimelineType = TimelineType.ENEMY;
 
+                    if(target.ActivityName.IndexOf("[T]") > -1)
+                    {
+                        target.TimelineType = TimelineType.TANK;
+                    }
+                    else if (target.ActivityName.IndexOf("[H]") > -1)
+                    {
+                        target.TimelineType = TimelineType.HEALER;
+                    }
+                    else if (target.ActivityName.IndexOf("[D]") > -1)
+                    {
+                        target.TimelineType = TimelineType.DPS;
+                    }
+
+
+                }
             }
+
+            foreach (var data in pBaseData.Alerts)
+            {
+                var targt = pDataModel.TimelineItemCollection.FirstOrDefault(item => item.ActivityNo == Convert.ToDecimal(this.DoubleToAdjustProcess.ToHalfAdjust(data.TimeFromStart, 1)));
+                if(targt != null)
+                {
+                    targt.ActivityAlert = data;
+                }
+            }
+
+            var activeItems = pDataModel.TimelineItemCollection.Where(i => !string.IsNullOrWhiteSpace(i.ActivityName));
+            foreach (var item in activeItems)
+            {
+                pDataModel.TimelineActiveItemCollection.Add(item);
+            }
+
+            pDataModel.TimelineItemViewSource.View.Refresh();
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

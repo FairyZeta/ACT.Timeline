@@ -45,12 +45,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         /// </summary>
         private void createDesingData_P001()
         {
-            for (int i = 0; i < 60.0 * 10; i++)
+            for (decimal d = 0; d < (decimal)60.0; d += (decimal)0.1)
             {
                 TimelineItemData item = new TimelineItemData();
-                item.ActivityIndex = i;
-                item.ActivityTime = this.TimelineCreateModule.DoubleToAdjustProcess.ToHalfAdjust(Convert.ToDouble(i)/10, 1);
-                item.ActivityName = "デザイン＠" + item.ActivityTime.ToString();
+                item.ActivityIndex = Convert.ToInt32(d * 10);
+                item.ActivityNo = d;
+                item.ActivityName = "デザイン＠" + item.ActivityNo.ToString();
 
                 base.TimelineDataModel.TimelineItemCollection.Add(item);
             }

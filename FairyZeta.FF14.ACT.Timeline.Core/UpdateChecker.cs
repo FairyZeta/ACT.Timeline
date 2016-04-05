@@ -80,7 +80,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
                     var result = MessageBox.Show(msg, "act_timeline", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
-                        Process.Start(remoteInfo.DownloadUrl);
+                        System.Diagnostics.Process.Start(remoteInfo.DownloadUrl);
                     }
                 }
             }

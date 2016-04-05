@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -8,26 +9,19 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FairyZeta.FF14")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("FairyZeta.FF14")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
+[assembly: AssemblyCopyright("Copyright (C)  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
-// ComVisible を false に設定すると、その型はこのアセンブリ内で COM コンポーネントから 
-// 参照不可能になります。COM からこのアセンブリ内の型にアクセスする場合は、
-// その型の ComVisible 属性を true に設定してください。
-[assembly: ComVisible(false)]
-
-// 次の GUID は、このプロジェクトが COM に公開される場合の、typelib の ID です
-[assembly: Guid("36d3f16b-3b10-426d-963a-1472c74dfc5c")]
+[assembly: NeutralResourcesLanguage("ja")]
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
 //
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
+//      メジャー バージョン
+//      マイナー バージョン 
+//      ビルド番号
+//      リビジョン
 //
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:

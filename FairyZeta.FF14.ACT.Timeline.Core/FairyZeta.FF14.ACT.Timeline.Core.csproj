@@ -215,6 +215,14 @@
       <Project>{22d040db-58a3-4e1d-9bcf-130d9504b9ab}</Project>
       <Name>FairyZeta.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FairyZeta.FF14.ACT\FairyZeta.FF14.ACT.csproj">
+      <Project>{d5bd94d9-1765-4713-a3ed-8249e0d7586f}</Project>
+      <Name>FairyZeta.FF14.ACT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FairyZeta.FF14\FairyZeta.FF14.csproj">
+      <Project>{2e2375d6-4f1a-404d-9ac0-a48555e91803}</Project>
+      <Name>FairyZeta.FF14</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -64,6 +64,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Component\TimerTestComponent.cs" />
+    <Compile Include="Test.ENUM.cs" />
     <Compile Include="ViewModels\TestWindowViewModel.cs" />
     <Compile Include="Views\TestWindowView.xaml.cs">
       <DependentUpon>TestWindowView.xaml</DependentUpon>
@@ -99,9 +101,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FairyZeta.Core\FairyZeta.Core.csproj">
+      <Project>{22d040db-58a3-4e1d-9bcf-130d9504b9ab}</Project>
+      <Name>FairyZeta.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FairyZeta.FF14.ACT.Timeline.Core\FairyZeta.FF14.ACT.Timeline.Core.csproj">
       <Project>{3874ef4c-d3d7-48de-bf5d-5d19d0e7b8a0}</Project>
       <Name>FairyZeta.FF14.ACT.Timeline.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FairyZeta.FF14.ACT\FairyZeta.FF14.ACT.csproj">
+      <Project>{d5bd94d9-1765-4713-a3ed-8249e0d7586f}</Project>
+      <Name>FairyZeta.FF14.ACT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FairyZeta.FF14\FairyZeta.FF14.csproj">
+      <Project>{2e2375d6-4f1a-404d-9ac0-a48555e91803}</Project>
+      <Name>FairyZeta.FF14</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

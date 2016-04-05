@@ -19,14 +19,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// </summary>
         public TimelineBaseData Timeline { get; set; }
 
+        /// <summary> 有効な(時間や名前が入っている)タイムラインアイテムコレクション
+        /// </summary>
+        public ObservableCollection<TimelineItemData> TimelineActiveItemCollection { get; private set; }
         /// <summary> タイムラインアイテムコレクション
         /// </summary>
         public ObservableCollection<TimelineItemData> TimelineItemCollection { get; private set; }
-
         /// <summary> 画面表示用タイムラインビューソース
         /// </summary>
         public CollectionViewSource TimelineItemViewSource { get; private set; }
 
+        /// <summary> ActivityNameによるフィルター
+        /// </summary>
         public ActivityNameFilter ActivityNameFilter { get; private set; }
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -49,8 +53,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             this.TimelineItemCollection = new ObservableCollection<TimelineItemData>();
             this.TimelineItemViewSource = new CollectionViewSource() { Source = this.TimelineItemCollection };
 
+            this.TimelineActiveItemCollection = new ObservableCollection<TimelineItemData>();
+
             this.ActivityNameFilter = new ActivityNameFilter();
             this.TimelineItemViewSource.Filter += new FilterEventHandler(this.ActivityNameFilter.Filter_ActivityNonName);
+            this.TimelineItemViewSource.View.Refresh();
+
             return true;
         }
 
