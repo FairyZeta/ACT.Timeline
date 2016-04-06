@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Advanced Combat Tracker">
+      <HintPath>D:\My System\Online Game\Tool\Advanced Combat Tracker\Advanced Combat Tracker.exe</HintPath>
+    </Reference>
     <Reference Include="Prism">
       <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
     </Reference>
@@ -64,6 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Component\TestOverlayManageComponent.cs" />
     <Compile Include="Component\TimerTestComponent.cs" />
     <Compile Include="Test.ENUM.cs" />
     <Compile Include="ViewModels\TestWindowViewModel.cs" />

@@ -58,7 +58,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 TimelineItemData item = new TimelineItemData();
                 item.ActivityIndex = Convert.ToInt32(d * 10);
                 item.ActivityNo = d;
-                item.ActivityTime = new TimeSpan(0,0,Convert.ToInt32(d));
 
                 pDataModel.TimelineItemCollection.Add(item);
             }
@@ -74,6 +73,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                     target.Jump = Convert.ToDecimal(data.Jump);
                     target.Visibility = true;
                     target.TimelineType = TimelineType.ENEMY;
+                    target.ActivityTime = new TimeSpan(0, 0, Convert.ToInt32(target.EndTime));
+
+                    target.ActiveIndicatorStartTime = target.ActiveTime - Convert.ToDecimal(target.ActiveIndicatorMaxValue);
+                    target.DurationIndicatorMaxValue = data.Duration;
+                    if(target.DurationIndicatorMaxValue > 0)
+                    {
+                        target.DurationIndicatorVisibility = true;
+                    }
+
 
                     if(target.ActivityName.IndexOf("[T]") > -1)
                     {

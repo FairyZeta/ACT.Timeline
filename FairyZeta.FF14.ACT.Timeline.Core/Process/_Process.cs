@@ -4,29 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FairyZeta.FF14.ACT.Timeline.Core.Module
+namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 {
-    /// <summary> タイムライン／ビューコントロールモジュール
+    /// <summary> [基底] タイムライン／プロセス
     /// </summary>
-    public class ViewControlModule : _Module
+    public abstract class _Process
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> タイムライン／ビューコントロールモジュール／コンストラクタ
+        /// <summary> [基底] タイムライン／プロセス
         /// </summary>
-        public ViewControlModule()
+        public _Process()
         {
-            this.initModule();
+            this.initProcess();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> モジュールの初期化を実行します。
+        /// <summary> プロセスの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
-        private bool initModule()
+        private bool initProcess()
         {
             return true;
         }

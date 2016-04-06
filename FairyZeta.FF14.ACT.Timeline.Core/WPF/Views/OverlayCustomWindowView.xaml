@@ -1,4 +1,4 @@
-﻿<Window x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.MainWindowView"
+﻿<Window x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.OverlayCustomWindowView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,8 +7,7 @@
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
         mc:Ignorable="d" 
         d:DesignHeight="300" d:DesignWidth="300" 
-        WindowStyle="None"
-        Background="Transparent" AllowsTransparency="True">
+        Background="Transparent" AllowsTransparency="True" WindowStyle="None">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
@@ -29,9 +28,10 @@
     </Window.Resources>
     
     <Window.DataContext>
-        <vm:MainWindowViewModel />
+        <vm:OverlayCustomWindowViewModel />
     </Window.DataContext>
-
-    <view:StandardTimelineView DataContext="{Binding TimelineComponent}" />
+    <Grid>
+        <view:StandardTimelineView DataContext="{Binding}" />
+    </Grid>
     
 </Window>

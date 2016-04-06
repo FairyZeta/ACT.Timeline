@@ -6,7 +6,7 @@
              xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="400"
-             d:DataContext="{d:DesignInstance Type=dData:Desing_TimelineComponent, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=dData:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}">
     
     <UserControl.Resources>
         <ResourceDictionary>
@@ -105,8 +105,39 @@
                     <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActivityName}"  />
                 </Grid>
             </DataTemplate>
+            <!-- Active Cell -->
             <DataTemplate x:Key="BasicActiveCellTemplate" DataType="DataGridCell">
                 <Grid Style="{StaticResource BasicCellGrid}">
+                    <ProgressBar Minimum="{Binding ActiveIndicatorMinValue}" Value="{Binding ActiveIndicatorValue}" Maximum="{Binding ActiveIndicatorMaxValue}" 
+                                 Template="{StaticResource BasicProgressBar}" FlowDirection="RightToLeft" Background="Transparent" BorderBrush="Transparent" >
+                        <ProgressBar.Style>
+                            <Style TargetType="ProgressBar">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ActiveIndicatorVisibility}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ActiveIndicatorValue}" Value="4">
+                                        <Setter Property="Foreground" Value="Orange"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ActiveIndicatorValue}" Value="8">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ProgressBar.Style>
+                    </ProgressBar>
+                    <ProgressBar Minimum="{Binding DurationIndicatorMinValue}" Value="{Binding DurationIndicatorValue}" Maximum="{Binding DurationIndicatorMaxValue}" 
+                                 Template="{StaticResource BasicProgressBar}" Background="Transparent" BorderBrush="Transparent">
+                        <ProgressBar.Style>
+                            <Style TargetType="ProgressBar">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DurationIndicatorMaxValue}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ProgressBar.Style>
+                    </ProgressBar>
                     <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActiveTime}" ContentStringFormat="{}{0:#0.0}" HorizontalAlignment="Right"/>
                 </Grid>
             </DataTemplate>
@@ -131,8 +162,8 @@
                     <ColumnDefinition  Width="30"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2">
-                    <TextBlock Text="[C-Time] " Foreground="{StaticResource BaseColor_Gold1}"/>
-                    <TextBlock Text="22:33.9" Foreground="{StaticResource BaseColor_Blue1}"/>
+                    <TextBlock Text="[Line-Time] " Foreground="{StaticResource BaseColor_Gold1}"/>
+                    <TextBlock Text="{Binding TimelineComponent.TimerDataModel.TimerDeta.MainTimerTime, StringFormat={}{0:00:00.0}}" Foreground="{StaticResource BaseColor_Blue1}"/>
                     <TextBlock Text=" / " Foreground="{StaticResource BaseColor_Gold1}"/>
                     <TextBlock Text="Irohasu Extreme" Foreground="{StaticResource BaseColor_Blue1}"/>
                 </StackPanel>
@@ -142,7 +173,7 @@
                                 Command="{Binding WindowClosedCommand}"/>
                 </StackPanel>
             </Grid>
-            <DataGrid Grid.Row="1" ItemsSource="{Binding TimelineDataModel.TimelineItemViewSource.View}" AutoGenerateColumns="False" Background="Transparent" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+            <DataGrid Grid.Row="1" ItemsSource="{Binding TimelineComponent.TimelineDataModel.TimelineItemViewSource.View}" AutoGenerateColumns="False" Background="Transparent" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type ScrollBar}">
                         <Setter Property="Template" Value="{StaticResource MyScrollBar}"/>

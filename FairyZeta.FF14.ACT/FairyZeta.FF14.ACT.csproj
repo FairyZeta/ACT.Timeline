@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Act.ENUM.cs" />
-    <Compile Include="DataModel\TimerDataModel.cs" />
+    <Compile Include="DataModel\TimerSetDataModel.cs" />
     <Compile Include="Module\_Module.cs" />
     <Compile Include="Process\ActTimerProcess.cs">
       <SubType>Code</SubType>
@@ -52,6 +52,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\KeyLock.png" />
+    <Content Include="Resources\KeyOpen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

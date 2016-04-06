@@ -18,6 +18,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Test.ViewModels
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
         public TimelineComponent TimelineComponent { get; private set; }
+        public OverlayViewComponent ViewControlComponent { get; private set; }
 
         #region #- [Command] DelegateCommand.Test_TimelineTextLoadCommand - ＜[テスト]タイムラインテキスト読込＞ -----
         /// <summary> [テスト]タイムラインテキスト読込＜コマンド＞ </summary>
@@ -30,6 +31,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Test.ViewModels
         #endregion 
 
         
+        #region #- [Command] DelegateCommand.ShowOverlayManageCommand - ＜オーバーレイ管理ウィンドウ表示コマンド＞ -----
+        /// <summary> オーバーレイ管理ウィンドウ表示コマンド＜コマンド＞ </summary>
+        private DelegateCommand _ShowOverlayManageCommand;
+        /// <summary> オーバーレイ管理ウィンドウ表示コマンド＜コマンド＞ </summary>
+        public DelegateCommand ShowOverlayManageCommand
+        {
+            get { return _ShowOverlayManageCommand = _ShowOverlayManageCommand ?? new DelegateCommand(this._ShowOverlayManageExecute); }
+        }
+        #endregion ---------- /
+
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／テスト用メインウィンドウ／コンストラクタ
@@ -37,6 +49,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Test.ViewModels
         public TestWindowViewModel()
         {
             this.TimelineComponent = new TimelineComponent();
+            this.ViewControlComponent = new Core.Component.OverlayViewComponent();
             Globals.ResourceRoot = @"D:\TestTimeline";
         }
 
@@ -54,16 +67,40 @@ namespace FairyZeta.FF14.ACT.Timeline.Test.ViewModels
             var timeline = TimelineLoader.LoadFromFile(para);
             this.TimelineComponent.TimelineCreateModule.CreateTimelineDataModel(timeline, this.TimelineComponent.TimelineDataModel);
 
-            MainWindowView view = new MainWindowView();
-            var vm = view.DataContext as MainWindowViewModel;
+            OverlayWindowView view = new OverlayWindowView();
+            
+            view.Topmost = true;
+            var vm = view.DataContext as OverlayWindowViewModel;
             if(vm != null)
             {
                 vm.TimelineComponent = this.TimelineComponent;
+                vm.ViewControlComponent = this.ViewControlComponent;
             }
 
             view.Show();
 
             return;
+        }
+
+        #endregion 
+
+        #region #- [Method] Execute @ ShowOverlayManageCommand - ＜オーバーレイ管理ウィンドウ表示コマンド＞ -----
+
+        /// <summary> コマンド実行＜オーバーレイ管理ウィンドウ表示コマンド＞ </summary>
+        private void _ShowOverlayManageExecute()
+        {
+            OverlayManageWindowView window = new OverlayManageWindowView();
+
+            window.Width = 800;
+            window.Height = 300;
+
+            var vm = window.DataContext as OverlayManageWindowViewModel;
+            if (vm != null)
+            {
+                vm.OverlayManageComponent = new OverlayManageComponent();
+            }
+
+            window.Show();
         }
 
         #endregion 

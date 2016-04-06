@@ -21,7 +21,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         #region --- DataModels ---
         
         public TimelineDataModel TimelineDataModel { get; private set; }
-        
+
+        public TimerDataModel TimerDataModel { get; private set; }
+
         #endregion
 
         #region --- Modules ---
@@ -67,9 +69,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         private bool initComponent()
         {
             this.TimelineDataModel = new TimelineDataModel();
+            this.TimerDataModel = new TimerDataModel();
 
             this.TimelineCreateModule = new TimelineCreateModule();
-            this.TimelineControlModule = new TimelineControlModule(this.TimelineDataModel);
+            this.TimelineControlModule = new TimelineControlModule(this.TimelineDataModel, this.TimerDataModel);
             this.ViewControlModule = new ViewControlModule();
 
             return true;

@@ -18,22 +18,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> ACT汎用タイマー用データモデル
         /// </summary>
-        public TimerDataModel TimerDataModel { get; private set; }
+        public TimerSetDataModel TimerSetDataModel { get; private set; }
 
         /// <summary> ACT汎用タイマープロセス
         /// </summary>
         public ActTimerProcess ActTimerProcess { get; private set; }
 
-        public TimelineDataModel TimelineDataModel { get; private set; }
+        private TimerDataModel timerDetaModel;
+        private TimelineDataModel timelineDataModel;
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／タイムライン操作モジュール
         /// </summary>
-        public TimelineControlModule(TimelineDataModel pDataModel)
+        public TimelineControlModule(TimelineDataModel pTimelineDataModel, TimerDataModel pTimerDataModel)
             : base()
         {
-            this.TimelineDataModel = pDataModel;
+            this.timelineDataModel = pTimelineDataModel;
+            this.timerDetaModel = pTimerDataModel;
 
             this.initModule();
         }
@@ -53,32 +55,45 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         public void TimerSetup()
         {
-            this.TimerDataModel = new TimerDataModel();
+            this.TimerSetDataModel = new TimerSetDataModel();
 
-            this.TimerDataModel.TimerAutoReset = true;
-            this.TimerDataModel.TimerInterval = 100.0;
-            this.TimerDataModel.TimerEvent = this.TimerEvent;
+            this.TimerSetDataModel.TimerAutoReset = true;
+            this.TimerSetDataModel.TimerInterval = 100.0;
+            this.TimerSetDataModel.TimerEvent = this.TimerEvent;
 
-            this.ActTimerProcess.TimerSetup(this.TimerDataModel);
+            this.ActTimerProcess.TimerSetup(this.TimerSetDataModel);
 
         }
         
         public void TimerEvent(object o, ElapsedEventArgs e)
         {
-            this.TimelineTimerTick(this.TimelineDataModel);
+            this.TimelineTimerTick(this.timelineDataModel, this.timerDetaModel);
         }
 
         /// <summary> タイムラインの0.1秒単位の処理を実行します。
         /// </summary>
-        public void TimelineTimerTick(TimelineDataModel pDataModel)
+        public void TimelineTimerTick(TimelineDataModel pTimelineDataModel, TimerDataModel pTimerDataModel)
         {
-            foreach (var item in pDataModel.TimelineActiveItemCollection)
+            pTimerDataModel.TimerDeta.MainTimerTime += (decimal)0.1;
+
+            foreach (var item in pTimelineDataModel.TimelineActiveItemCollection)
             {
                 if (!item.Visibility) continue;
 
                 item.ActiveTime -= (decimal)0.1;
 
-                if(item.ActiveTime <= 0) item.Visibility = false;
+                if(item.ActiveIndicatorStartTime < pTimerDataModel.TimerDeta.MainTimerTime)
+                {
+                    item.ActiveIndicatorValue += 0.1;
+                }
+
+                if(item.ActiveTime <= 0 && item.Duration > 0)
+                {
+                    item.ActiveIndicatorVisibility = false;
+                    item.DurationIndicatorValue += 0.1;
+                }
+
+                if(item.ActiveTime <= (decimal)-2.0) item.Visibility = false;
             }
         }
 

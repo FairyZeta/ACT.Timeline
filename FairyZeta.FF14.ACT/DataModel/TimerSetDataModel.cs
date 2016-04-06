@@ -7,7 +7,7 @@ using System.Timers;
 
 namespace FairyZeta.FF14.ACT.DataModel
 {
-    public class TimerDataModel
+    public class TimerSetDataModel
     {
         public bool TimerAutoReset { get; set; }
 

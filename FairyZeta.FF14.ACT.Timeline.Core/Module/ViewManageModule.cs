@@ -6,23 +6,24 @@ using System.Threading.Tasks;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {
-    /// <summary> タイムライン／ビューコントロールモジュール
+    /// <summary> タイムライン／ビュー管理モジュール
     /// </summary>
-    public class ViewControlModule : _Module
+    public class ViewManageModule : _Module
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> タイムライン／ビューコントロールモジュール／コンストラクタ
+        /// <summary> タイムライン／ビュー管理モジュール／コンストラクタ
         /// </summary>
-        public ViewControlModule()
+        public ViewManageModule()
+            : base()
         {
-            this.initModule();
+
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
-
+        
         /// <summary> モジュールの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 

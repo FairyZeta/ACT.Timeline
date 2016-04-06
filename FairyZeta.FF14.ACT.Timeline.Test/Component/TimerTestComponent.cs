@@ -33,7 +33,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Test.Component
         }
         #endregion
 
-        public TimerDataModel TimerDataModel { get; private set; }
+        public TimerSetDataModel TimerDataModel { get; private set; }
         public ActTimerProcess ActTimerProcess { get; private set; }
 
         public TimerTestComponent()
@@ -47,7 +47,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Test.Component
         private bool initComponent()
         {
             this.ActTimerProcess = new ActTimerProcess();
-            this.TimerDataModel = new TimerDataModel();
+            this.TimerDataModel = new TimerSetDataModel();
 
             this.TimerDataModel.TimerAutoReset = true;
             this.TimerDataModel.TimerInterval = 100.0;

@@ -6,6 +6,66 @@
         ENEMY,
         TANK,
         DPS,
-        HEALER
+        HEALER,
+        PET,
+        GIMMICK
     }
+
+    public enum Category
+    {
+        UNKNOWN,
+        NON,
+
+        PLD,
+        MNK,
+        WAR,
+        DRG,
+        BRD,
+        NIN,
+        WHM,
+        BLM,
+        SMN,
+        SCH,
+        DKN,
+        AST,
+        MCN,
+
+        EGI,
+        FAIRY,
+        TURRET
+
+        //ナ / ナイト　：PLD / Paladin
+        //モ / モンク　：MNK / Monk
+        //戦 / 戦士　　：WAR / Warrior
+        //竜 / 竜騎士　：DRG / Dragoon
+        //詩 / 吟遊詩人：BRD / Bard
+        //忍 / 忍者　　：NIN / Ninja
+        //白 / 白魔道士：WHM / WhiteMage
+        //黒 / 黒魔道士：BLM / BlackMage
+        //召 / 召喚士　：SMN / Summoner
+        //学 / 学者　　：SCH / Scholar
+        //暗 / 暗黒騎士：DKN / DarkKnight*
+        //占 / 占星術師：AST / Astrologian*
+        //機 / 機工士　：MCN / Machinist*
+    }
+
+
+    public enum TankMode
+    {
+        NON,
+        MT,
+        ST
+    }
+
+    public enum WindowLock
+    {
+        Lock,
+        Unlock
+    }
+
+    public enum OverlayType
+    {
+        StandardTimeline
+    }
+
 }

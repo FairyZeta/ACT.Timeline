@@ -12,17 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Interop;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
-    /// <summary>
-    /// MainWindowView.xaml の相互作用ロジック
+    /// <summary> 新規オーバーレイ作成ウィンドウ
     /// </summary>
-    public partial class MainWindowView : Window
+    public partial class NewOverlayAddWindowView : Window
     {
-        public MainWindowView()
+        public NewOverlayAddWindowView()
         {
             InitializeComponent();
+
+            this.MouseLeftButtonDown += (sender, e) => this.DragMove();
         }
+
     }
 }

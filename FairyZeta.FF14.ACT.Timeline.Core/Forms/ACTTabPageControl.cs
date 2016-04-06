@@ -36,9 +36,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Forms
 
             var settings = timelineCore.Settings;
             settings.AddControlSetting("ResourcesDir", textBoxResourceDir);
-            settings.AddControlSetting("OverlayX", udOverlayX);
-            settings.AddControlSetting("OverlayY", udOverlayY);
-            settings.AddControlSetting("NumberOfRowsToDisplay", udNumRows);
             settings.AddControlSetting("MoveOverlayByDrag", checkBoxMoveOverlayByDrag);
             settings.AddControlSetting("ShowOverlayButtons", checkBoxShowOverlayButtons);
             settings.AddControlSetting("PlaySoundByACT", checkBoxPlaySoundByACT);
@@ -119,8 +116,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Forms
         private void TimelineView_Move(object sender, EventArgs e)
         {
             updateFromOverlayMove = true;
-            udOverlayX.Value = timelineCore.TimelineView.Left;
-            udOverlayY.Value = timelineCore.TimelineView.Top;
             updateFromOverlayMove = false;
         }
 
@@ -193,22 +188,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Forms
             timelineCore.Controller.TimelineTxtFilePath = String.Format("{0}/{1}", Globals.TimelineTxtsRoot, timelineTxtFilePath);
         }
 
-        private void udOverlayX_ValueChanged(object sender, EventArgs e)
-        {
-            if (!updateFromOverlayMove)
-                timelineCore.TimelineView.Left = (int)udOverlayX.Value;
-        }
-
-        private void udOverlayY_ValueChanged(object sender, EventArgs e)
-        {
-            if (!updateFromOverlayMove)
-                timelineCore.TimelineView.Top = (int)udOverlayY.Value;
-        }
-
-        private void udNumRows_ValueChanged(object sender, EventArgs e)
-        {
-            timelineCore.TimelineView.NumberOfRowsToDisplay = (int)udNumRows.Value;
-        }
 
         private void checkBoxMoveOverlayByDrag_CheckedChanged(object sender, EventArgs e)
         {

@@ -45,7 +45,7 @@ namespace FairyZeta.FF14.ACT.Process
         /// <summary> 汎用タイマーのセッティングを実行します。
         /// </summary>
         /// <param name="pTimerDataModel"></param>
-        public void TimerSetup(TimerDataModel pTimerDataModel)
+        public void TimerSetup(TimerSetDataModel pTimerDataModel)
         {
             this.ActCommonTimer.AutoReset = pTimerDataModel.TimerAutoReset;
             this.ActCommonTimer.Interval = pTimerDataModel.TimerInterval;

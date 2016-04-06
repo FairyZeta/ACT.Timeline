@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FairyZeta.Core.Process;
-using FairyZeta.FF14.ACT.Timeline.Core.Data;
+using Prism.Commands;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
-using FairyZeta.FF14.ACT.Timeline.Core.Component;
+using FairyZeta.FF14.ACT.Timeline.Core.Module;
 
-namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
+namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 {
-    /// <summary> [画面デザイン用] タイムライン／タイムラインデータモデル
+    /// <summary> タイムライン／オーバーレイ表示コンポーネント
     /// </summary>
-    public class Desing_TimelineComponent : TimelineComponent
+    public class OverlayViewComponent
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> オーバーレイデータモデル
+        /// </summary>
+        public OverlayDataModel OverlayDataModel { get; set; }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> [画面デザイン用] タイムライン／タイムラインデータモデル／コンストラクタ
+        /// <summary> タイムライン／オーバーレイ表示コンポーネント／コンストラクタ
         /// </summary>
-        public Desing_TimelineComponent()
-            : base()
+        public OverlayViewComponent()
         {
             this.initComponent();
-            this.createDesingData_P001();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -34,6 +35,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         /// <returns> 正常終了時 True </returns> 
         private bool initComponent()
         {
+            this.OverlayDataModel = new OverlayDataModel();
             return true;
         }
 
@@ -41,20 +43,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> デザイン用データ（パターン１）の生成
-        /// </summary>
-        private void createDesingData_P001()
-        {
-            for (decimal d = 0; d < (decimal)60.0; d += (decimal)0.1)
-            {
-                TimelineItemData item = new TimelineItemData();
-                item.ActivityIndex = Convert.ToInt32(d * 10);
-                item.ActivityNo = d;
-                item.ActivityName = "デザイン＠" + item.ActivityNo.ToString();
-                item.Visibility = true;
 
-                base.TimelineDataModel.TimelineItemCollection.Add(item);
-            }
-        }
     }
 }

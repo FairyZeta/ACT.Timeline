@@ -16,13 +16,20 @@ using System.Windows.Interop;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
-    /// <summary> スタンダートタイムラインコントロール
+    /// <summary> オーバーレイ表示ウィンドウ
     /// </summary>
-    public partial class StandardTimelineView : UserControl
+    public partial class OverlayWindowView : Window
     {
-        public StandardTimelineView()
+        public OverlayWindowView()
         {
             InitializeComponent();
+            this.MouseLeftButtonDown += (sender, e) => this.DragMove();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            var hwnd = new WindowInteropHelper(this).Handle;
         }
     }
 }

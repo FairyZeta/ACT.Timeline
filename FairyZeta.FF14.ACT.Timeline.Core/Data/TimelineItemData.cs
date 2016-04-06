@@ -121,6 +121,185 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+
+        #region #- [Property] bool.ActiveIndicatorVisibility - ＜アクティブインジケータ表示フラグ＞ -----
+        /// <summary> アクティブインジケータ表示フラグ </summary>
+        private bool _ActiveIndicatorVisibility;
+        /// <summary> アクティブインジケータ表示フラグ </summary>
+        public bool ActiveIndicatorVisibility
+        {
+            get { return this._ActiveIndicatorVisibility; }
+            set
+            {
+                if (this._ActiveIndicatorVisibility == value) return;
+
+                this._ActiveIndicatorVisibility = value;
+                base.OnPropertyChanged("ActiveIndicatorVisibility");
+            }
+        }
+        #endregion
+        #region #- [Property] decimal.ActiveIndicatorStartTime - ＜アクティブインジケータ開始時間＞ -----
+        /// <summary> アクティブインジケータ開始時間 </summary>
+        private decimal _ActiveIndicatorStartTime;
+        /// <summary> アクティブインジケータ開始時間 </summary>
+        public decimal ActiveIndicatorStartTime
+        {
+            get { return this._ActiveIndicatorStartTime; }
+            set
+            {
+                if (this._ActiveIndicatorStartTime == value) return;
+
+                this._ActiveIndicatorStartTime = value;
+                base.OnPropertyChanged("ActiveIndicatorStartTime");
+            }
+        }
+        #endregion
+        #region #- [Property] double.ActiveIndicatorValue - ＜アクティブインジケータ値＞ -----
+        /// <summary> アクティブインジケータ値 </summary>
+        private double _ActiveIndicatorValue;
+        /// <summary> アクティブインジケータ値 </summary>
+        public double ActiveIndicatorValue
+        {
+            get { return this._ActiveIndicatorValue; }
+            set
+            {
+                if (this._ActiveIndicatorValue == value) return;
+
+                this._ActiveIndicatorValue = value;
+                base.OnPropertyChanged("ActiveIndicatorValue");
+            }
+        }
+        #endregion
+        #region #- [Property] double.ActiveIndicatorMinValue - ＜アクティブインジケータ最小値＞ -----
+        /// <summary> アクティブインジケータ最小値 </summary>
+        private double _ActiveIndicatorMinValue;
+        /// <summary> アクティブインジケータ最小値 </summary>
+        public double ActiveIndicatorMinValue
+        {
+            get { return this._ActiveIndicatorMinValue; }
+            set
+            {
+                if (this._ActiveIndicatorMinValue == value) return;
+
+                this._ActiveIndicatorMinValue = value;
+                base.OnPropertyChanged("ActiveIndicatorMinValue");
+            }
+        }
+        #endregion
+        #region #- [Property] double.ActiveIndicatorMaxValue - ＜アクティブインジケータ最大値＞ -----
+        /// <summary> アクティブインジケータ最大値 </summary>
+        private double _ActiveIndicatorMaxValue;
+        /// <summary> アクティブインジケータ最大値 </summary>
+        public double ActiveIndicatorMaxValue
+        {
+            get { return this._ActiveIndicatorMaxValue; }
+            set
+            {
+                if (this._ActiveIndicatorMaxValue == value) return;
+
+                this._ActiveIndicatorMaxValue = value;
+                base.OnPropertyChanged("ActiveIndicatorMaxValue");
+            }
+        }
+        #endregion
+        #region #- [Property] double.ActiveIndicatorDefaultValue - ＜アクティブインジケータ初期値＞ -----
+        /// <summary> アクティブインジケータ初期値 </summary>
+        private double _ActiveIndicatorDefaultValue;
+        /// <summary> アクティブインジケータ初期値 </summary>
+        public double ActiveIndicatorDefaultValue
+        {
+            get { return this._ActiveIndicatorDefaultValue; }
+            set
+            {
+                if (this._ActiveIndicatorDefaultValue == value) return;
+
+                this._ActiveIndicatorDefaultValue = value;
+                base.OnPropertyChanged("ActiveIndicatorDefaultValue");
+            }
+        }
+        #endregion
+
+        #region #- [Property] bool.DurationIndicatorVisibility - ＜アクションインジケータ表示フラグ＞ -----
+        /// <summary> アクションインジケータ表示フラグ </summary>
+        private bool _DurationIndicatorVisibility;
+        /// <summary> アクションインジケータ表示フラグ </summary>
+        public bool DurationIndicatorVisibility
+        {
+            get { return this._DurationIndicatorVisibility; }
+            set
+            {
+                if (this._DurationIndicatorVisibility == value) return;
+
+                this._DurationIndicatorVisibility = value;
+                base.OnPropertyChanged("DurationIndicatorVisibility");
+            }
+        }
+        #endregion
+        #region #- [Property] double.DurationIndicatorValue - ＜アクションインジケータ値＞ -----
+        /// <summary> アクションインジケータ値 </summary>
+        private double _DurationIndicatorValue;
+        /// <summary> アクションインジケータ値 </summary>
+        public double DurationIndicatorValue
+        {
+            get { return this._DurationIndicatorValue; }
+            set
+            {
+                if (this._DurationIndicatorValue == value) return;
+
+                this._DurationIndicatorValue = value;
+                base.OnPropertyChanged("DurationIndicatorValue");
+            }
+        }
+        #endregion
+        #region #- [Property] double.DurationIndicatorMinValue - ＜アクションインジケータ最小値＞ -----
+        /// <summary> アクションインジケータ最小値 </summary>
+        private double _DurationIndicatorMinValue;
+        /// <summary> アクションインジケータ最小値 </summary>
+        public double DurationIndicatorMinValue
+        {
+            get { return this._DurationIndicatorMinValue; }
+            set
+            {
+                if (this._DurationIndicatorMinValue == value) return;
+
+                this._DurationIndicatorMinValue = value;
+                base.OnPropertyChanged("DurationIndicatorMinValue");
+            }
+        }
+        #endregion
+        #region #- [Property] double.DurationIndicatorMaxValue - ＜アクションインジケータ最大値＞ -----
+        /// <summary> アクションインジケータ最大値 </summary>
+        private double _DurationIndicatorMaxValue;
+        /// <summary> アクションインジケータ最大値 </summary>
+        public double DurationIndicatorMaxValue
+        {
+            get { return this._DurationIndicatorMaxValue; }
+            set
+            {
+                if (this._DurationIndicatorMaxValue == value) return;
+
+                this._DurationIndicatorMaxValue = value;
+                base.OnPropertyChanged("DurationIndicatorMaxValue");
+            }
+        }
+        #endregion
+        #region #- [Property] double.DurationIndicatorDefaultValue - ＜アクションインジケータ初期値＞ -----
+        /// <summary> アクションインジケータ初期値 </summary>
+        private double _DurationIndicatorDefaultValue;
+        /// <summary> アクションインジケータ初期値 </summary>
+        public double DurationIndicatorDefaultValue
+        {
+            get { return this._DurationIndicatorDefaultValue; }
+            set
+            {
+                if (this._DurationIndicatorDefaultValue == value) return;
+
+                this._DurationIndicatorDefaultValue = value;
+                base.OnPropertyChanged("DurationIndicatorDefaultValue");
+            }
+        }
+        #endregion
+
         public decimal EndTime
         {
             get
@@ -171,6 +350,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
+            this.ActiveIndicatorVisibility = true;
+            this.ActiveIndicatorValue = 0;
+            this.ActiveIndicatorMinValue = 0;
+            this.ActiveIndicatorMaxValue = 12;
+            this.ActiveIndicatorDefaultValue = 0;
+
+            this.DurationIndicatorVisibility = false;
+            this.DurationIndicatorValue = 0;
+            this.DurationIndicatorMinValue = 0;
+            this.DurationIndicatorMaxValue = 0;
+            this.DurationIndicatorDefaultValue = 0;
+
             return true;
         }
     }

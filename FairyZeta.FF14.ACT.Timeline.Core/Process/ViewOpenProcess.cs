@@ -3,54 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Interop;
 using FairyZeta.FF14.ACT.Timeline.Core.Component;
+using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
+using FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels;
 
-namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
+namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 {
-    /// <summary> タイムライン／メインウィンドウビューモデル
+    /// <summary> タイムライン／ビューオープンプロセス
     /// </summary>
-    public class MainWindowViewModel : _ViewModels
+    public class ViewOpenProcess : _Process
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        #region #- [Property] TimelineComponent.TimelineComponent - ＜タイムラインコンポーネント＞ -----
-        /// <summary> タイムラインコンポーネント </summary>
-        private TimelineComponent _TimelineComponent;
-        /// <summary> タイムラインコンポーネント </summary>
-        public TimelineComponent TimelineComponent
-        {
-            get { return this._TimelineComponent; }
-            set
-            {
-                if (this._TimelineComponent == value) return;
-
-                this._TimelineComponent = value;
-                base.OnPropertyChanged("TimelineComponent");
-            }
-        }
-        #endregion
-
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> タイムライン／メインウィンドウビューモデル／コンストラクタ
+        /// <summary> タイムライン／ビューオープンプロセス／コンストラクタ
         /// </summary>
-        public MainWindowViewModel()
+        public ViewOpenProcess()
             : base()
-        {   
-            this.initViewModel();
+        {
+            this.initProcess();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
-        
-        /// <summary> ビューモデルの初期化を実行します。
+
+        /// <summary> プロセスの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
-        private bool initViewModel()
+        private bool initProcess()
         {
             return true;
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        public void NewWindowOpen(TimelineComponent pTimelineComponent, OverlayViewComponent pViewControlComponent)
+        {
+            OverlayWindowView view = new OverlayWindowView();
+
+            view.Topmost = true;
+            var vm = view.DataContext as OverlayWindowViewModel;
+            if (vm != null)
+            {
+                vm.TimelineComponent = pTimelineComponent;
+                vm.ViewControlComponent = pViewControlComponent;
+            }
+
+            view.Show();
+
+            return;
+        }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 

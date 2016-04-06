@@ -8,7 +8,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 {
     /// <summary> タイムライン／画面表示設定データ
     /// </summary>
-    public class ViewSettingsData : _Data
+    public class OverlaySettingsData : _Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -23,7 +23,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         /// <summary> タイムライン／画面表示設定データ／コンストラクタ
         /// </summary>
-        public ViewSettingsData()
+        public OverlaySettingsData()
         {
             this.initData();
             this.clear();
