@@ -12,7 +12,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
     public class OverlayManageWindowViewModel : _ViewModels
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
-        
+
+        #region #- [Property] CommonComponent.CommonComponent - ＜共通コンポーネント＞ -----
+        /// <summary> 共通コンポーネント </summary>
+        private CommonComponent _CommonComponent;
+        /// <summary> 共通コンポーネント </summary>
+        public CommonComponent CommonComponent
+        {
+            get { return this._CommonComponent; }
+            set
+            {
+                if (this._CommonComponent == value) return;
+
+                this._CommonComponent = value;
+                base.OnPropertyChanged("CommonComponent");
+            }
+        }
+        #endregion
+
         #region #- [Property] OverlayManageComponent.OverlayViewComponent - ＜オーバーレイ管理コンポーネント＞ -----
         /// <summary> オーバーレイ管理コンポーネント </summary>
         private OverlayManageComponent _OverlayManageComponent;

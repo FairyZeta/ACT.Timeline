@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Prism.Mvvm;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
@@ -12,6 +13,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     public abstract class _Data : BindableBase
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> データが保存対象であるか
+        /// </summary>
+        [XmlIgnore]
+        public bool SaveChangedTarget { get; set; }
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -52,6 +58,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
+            this.SaveChangedTarget = false;
             return true;
         }
     }

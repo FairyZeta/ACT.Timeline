@@ -59,6 +59,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\TestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TestWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -71,6 +75,9 @@
     <Compile Include="Component\TimerTestComponent.cs" />
     <Compile Include="Test.ENUM.cs" />
     <Compile Include="ViewModels\TestWindowViewModel.cs" />
+    <Compile Include="Views\TestWindow.xaml.cs">
+      <DependentUpon>TestWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TestWindowView.xaml.cs">
       <DependentUpon>TestWindowView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -120,6 +127,10 @@
     <ProjectReference Include="..\FairyZeta.FF14\FairyZeta.FF14.csproj">
       <Project>{2e2375d6-4f1a-404d-9ac0-a48555e91803}</Project>
       <Name>FairyZeta.FF14</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FairyZeta.Framework\FairyZeta.Framework.csproj">
+      <Project>{99f2ed28-b5fd-4c8f-855a-18ffc34a447b}</Project>
+      <Name>FairyZeta.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

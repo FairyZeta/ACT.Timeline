@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FairyZeta.Framework.Process;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
+using FairyZeta.FF14.ACT.Timeline.Core.Component;
+using FairyZeta.FF14.ACT.Timeline.Core.Process;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {
@@ -13,6 +16,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
     public class OverlayManageModule : _Module
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> オーバーレイオープンプロセス
+        /// </summary>
+        private OverlayViewOpenProcess overlayViewOpenProcess;
+
+        /// <summary> XMLシリアライズプロセス
+        /// </summary>
+        private XmlSerializerProcess xmlSerializerProcess;
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -31,6 +42,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <returns> 正常終了時 True </returns> 
         private bool initModule()
         {
+            this.overlayViewOpenProcess = new OverlayViewOpenProcess();
+            this.xmlSerializerProcess = new XmlSerializerProcess();
             return true;
         }
 
@@ -50,15 +63,172 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         }
 
-        public void SaveOverlayWindowInfo()
+        /// <summary> オーバーレイを表示します。
+        /// </summary>
+        /// <param name="pTimelineComponent"> タイムラインコンポーネント </param>
+        /// <param name="pOverlayViewComponent">  </param>
+        public void ShowOverlay(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
         {
-
+            this.overlayViewOpenProcess.NewOverlayOpen(pTimelineComponent, pOverlayViewComponent);
         }
 
-        public void LoadOverlayWindowInfo()
+        /// <summary> オーバーレイカスタムを表示します。
+        /// </summary>
+        /// <param name="pOverlayViewComponent"> カスタム対象のオーバーレイコンポーネント </param>
+        public void ShowCustomWindow(OverlayViewComponent pOverlayViewComponent)
         {
-
+            this.overlayViewOpenProcess.NewOverlayCustomWindowOpen(pOverlayViewComponent);
         }
+
+      #region  - [REGINO] - Overlay IO
+
+        /// <summary> XML形式のオーバーレイデータモデルを読み込み、データリストを返却します。
+        /// </summary>
+        /// <param name="pFilePathList"> 読み込みファイルパスリスト </param>
+        /// <returns> 復元成功時 DataList, 失敗時 空List </returns>
+        public IList<OverlayDataModel> OverlayDataModelLoad(IList<string> pFilePathList)
+        {
+            List<OverlayDataModel> list = new List<OverlayDataModel>();
+
+            foreach (string path in pFilePathList)
+            {
+                var data = this.OverlayDataModelLoad(path);
+                if (data != null)
+                {
+                    list.Add(data);
+                }
+            }
+            return list;
+        }
+        /// <summary> XML形式のオーバーレイデータモデルを読み込み、データを返却します。
+        /// </summary>
+        /// <param name="pFilePath"> 読み込みファイルパス </param>
+        /// <returns> 復元成功時 Data, 失敗時 Null </returns>
+        public OverlayDataModel OverlayDataModelLoad(string pFilePath)
+        {
+            return this.xmlSerializerProcess.XmlLoad(pFilePath, typeof(OverlayDataModel), false) as OverlayDataModel;
+        }
+        /// <summary> XML形式のオーバーレイウィンドウ情報を読み込み、データリストを返却します。
+        /// </summary>
+        /// <param name="pFilePathList"> 読み込みファイルパスリスト </param>
+        /// <returns> 復元成功時 DataList, 失敗時 空List </returns>
+        public IList<OverlayWindowData> OverlayWindowLoad(IList<string> pFilePathList)
+        {
+            List<OverlayWindowData> list = new List<OverlayWindowData>();
+
+            foreach (string path in pFilePathList)
+            {
+                var data = this.OverlayWindowLoad(path);
+                if (data != null)
+                {
+                    list.Add(data);
+                }
+            }
+            return list;
+        }
+        /// <summary> XML形式のオーバーレイウィンドウ情報を読み込み、データを返却します。
+        /// </summary>
+        /// <param name="pFilePath"> 読み込みファイルパス </param>
+        /// <returns> 復元成功時 Data, 失敗時 Null </returns>
+        public OverlayWindowData OverlayWindowLoad(string pFilePath)
+        {
+            return this.xmlSerializerProcess.XmlLoad(pFilePath, typeof(OverlayWindowData), false) as OverlayWindowData;
+        }
+        /// <summary> XML形式のオーバーレイオプション情報を読み込み、データリストを返却します。
+        /// </summary>
+        /// <param name="pFilePathList"> 読み込みファイルパスリスト </param>
+        /// <returns> 復元成功時 DataList, 失敗時 空List </returns>
+        public IList<OverlayOptionData> OverlayOptionLoad(IList<string> pFilePathList)
+        {
+            List<OverlayOptionData> list = new List<OverlayOptionData>();
+
+            foreach (string path in pFilePathList)
+            {
+                var data = this.OverlayOptionLoad(path);
+                if (data != null)
+                {
+                    list.Add(data);
+                }
+            }
+            return list;
+        }
+        /// <summary> XML形式のオーバーレイオプション情報を読み込み、データを返却します。
+        /// </summary>
+        /// <param name="pFilePath"> 読み込みファイルパス </param>
+        /// <returns> 復元成功時 Data, 失敗時 Null </returns>
+        public OverlayOptionData OverlayOptionLoad(string pFilePath)
+        {
+            return this.xmlSerializerProcess.XmlLoad(pFilePath, typeof(OverlayOptionData), false) as OverlayOptionData;
+        }
+
+        /// <summary> オーバーレイデータモデルリストをXML形式で保存します。
+        /// </summary>
+        /// <param name="pFilePath"> 書き込みファイルパス </param>
+        /// <param name="pOverlayDataModelList"> オーバーレイ情報リスト </param>
+        public void OverlayDataModeSave(string pFilePath, IList<OverlayDataModel> pOverlayDataModelList)
+        {
+            foreach (var data in pOverlayDataModelList)
+            {
+                this.OverlayDataModeSave(pFilePath, data);
+            }
+
+            return;
+        }
+        /// <summary> オーバーレイデータモデルをXML形式で保存します。
+        /// </summary>
+        /// <param name="pFilePath"> 読み込みファイルパス </param>
+        /// <param name="pOverlayDataModel"> オーバーレイ情報 </param>
+        public void OverlayDataModeSave(string pFilePath, OverlayDataModel pOverlayDataModel)
+        {
+            this.xmlSerializerProcess.XmlSave(pFilePath, pOverlayDataModel, false);
+            return;
+        }
+        /// <summary> オーバーレイウィンドウ情報リストをXML形式で保存します。
+        /// </summary>
+        /// <param name="pFilePath"> 書き込みファイルパス </param>
+        /// <param name="pOverlayWindowDataList"> オーバーレイ情報リスト </param>
+        public void OverlayWindowSave(string pFilePath, IList<OverlayWindowData> pOverlayWindowDataList)
+        {
+            foreach (var data in pOverlayWindowDataList)
+            {
+                this.OverlayWindowSave(pFilePath, data);
+            }
+
+            return;
+        }
+        /// <summary> オーバーレイウィンドウ情報をXML形式で保存します。
+        /// </summary>
+        /// <param name="pFilePath"> 読み込みファイルパス </param>
+        /// <param name="pOverlayWindowData"> オーバーレイ情報 </param>
+        public void OverlayWindowSave(string pFilePath, OverlayWindowData pOverlayWindowData)
+        {
+            this.xmlSerializerProcess.XmlSave(pFilePath, pOverlayWindowData, false);
+            return;
+        }
+        /// <summary> オーバーレイセッティング情報リストをXML形式で保存します。
+        /// </summary>
+        /// <param name="pFilePath"> 書き込みファイルパス </param>
+        /// <param name="pOverlayOptionDataList"> オーバーレイオプションデータリスト </param>
+        public void OverlayOptionSave(string pFilePath, IList<OverlayOptionData> pOverlayOptionDataList)
+        {
+            foreach (var data in pOverlayOptionDataList)
+            {
+                this.OverlayOptionSave(pFilePath, data);
+            }
+
+            return;
+        }
+        /// <summary> オーバーレイセッティング情報をXML形式で保存します。
+        /// </summary>
+        /// <param name="pFilePath"> 書き込みファイルパス </param>
+        /// <param name="pOverlayOptionData"> オーバーレイオプションデータ </param>
+        public void OverlayOptionSave(string pFilePath, OverlayOptionData pOverlayOptionData)
+        {
+            this.xmlSerializerProcess.XmlSave(pFilePath, pOverlayOptionData, false);
+            return;
+        }
+
+      #endregion
 
         /// <summary> オーバーレイをインポートします。
         /// </summary>
@@ -76,16 +246,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         public void SetDefaultOverlayWindowData(OverlayWindowData pWindowData)
         {
-            pWindowData.OverlayName = "NewOverlay";
-            pWindowData.OverlayType = OverlayType.StandardTimeline;
-
             pWindowData.WindowTop = 10;
             pWindowData.WindowLeft = 10;
             pWindowData.WindowWidth = 300;
             pWindowData.WindowHeight = 300;
         }
 
-        public void SetDefaultOverlaySettingData(OverlaySettingsData pSettingsData)
+        public void SetDefaultOverlaySettingData(OverlayOptionData pOptionData)
         {
 
         }

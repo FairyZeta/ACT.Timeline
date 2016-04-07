@@ -16,11 +16,11 @@ using System.Windows.Interop;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
-    /// <summary> スタンダードタイムラインコントロール
+    /// <summary> オーバーレイフィルタカスタムコントロール
     /// </summary>
-    public partial class StandardTimelineView : UserControl
+    public partial class OverlayFilterCustomView : UserControl
     {
-        public StandardTimelineView()
+        public OverlayFilterCustomView()
         {
             InitializeComponent();
         }

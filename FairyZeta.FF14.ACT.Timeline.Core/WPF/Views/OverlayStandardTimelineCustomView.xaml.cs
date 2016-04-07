@@ -16,16 +16,13 @@ using System.Windows.Interop;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
-    /// <summary> 新規オーバーレイ作成ウィンドウ
+    /// <summary> スタンダードタイムラインカスタムコントロール
     /// </summary>
-    public partial class NewOverlayAddWindowView : Window
+    public partial class OverlayStandardTimelineCustomView : UserControl
     {
-        public NewOverlayAddWindowView()
+        public OverlayStandardTimelineCustomView()
         {
             InitializeComponent();
-
-            this.MouseLeftButtonDown += (sender, e) => this.DragMove();
         }
-
     }
 }

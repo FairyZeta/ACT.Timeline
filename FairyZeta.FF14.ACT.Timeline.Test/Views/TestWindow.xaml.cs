@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Interop;
 
-namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
+namespace FairyZeta.FF14.ACT.Timeline.Test.Views
 {
-    /// <summary> スタンダードタイムラインコントロール
+    /// <summary>
+    /// TestWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class StandardTimelineView : UserControl
+    public partial class TestWindow : Window
     {
-        public StandardTimelineView()
+        public TestWindow()
         {
             InitializeComponent();
         }

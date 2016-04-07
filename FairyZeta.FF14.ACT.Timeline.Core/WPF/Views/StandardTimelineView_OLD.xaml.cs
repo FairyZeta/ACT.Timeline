@@ -18,9 +18,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
     /// <summary> スタンダードタイムラインコントロール
     /// </summary>
-    public partial class StandardTimelineView : UserControl
+    public partial class StandardTimelineView_OLD : UserControl
     {
-        public StandardTimelineView()
+        public StandardTimelineView_OLD()
         {
             InitializeComponent();
         }

@@ -3,21 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Prism.Mvvm;
+using FairyZeta.FF14.ACT.Timeline.Core.Data;
+using System.Xml;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 {
-    /// <summary> [基底] タイムライン／データモデル
+    /// <summary> タイムライン／共通データモデル
     /// </summary>
-    public abstract class _DataModel : BindableBase
+    [Serializable]
+    public class CommonDataModel : _DataModel
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> 共通表示データ
+        /// </summary>
+        public CommonViewData CommonViewData { get; set; }
+
+        /// <summary> プラグイン設定データ
+        /// </summary>
+        public PluginSettingsData PluginSettingsData { get; set; }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> [基底] タイムライン／データモデル／コンストラクタ
+        /// <summary> タイムライン／共通表示データモデル／コンストラクタ
         /// </summary>
-        public _DataModel()
+        public CommonDataModel()
+            : base()
         {
             this.initDataModel();
             this.clear();
@@ -30,6 +41,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// <returns> 正常終了時 True </returns> 
         private bool initDataModel()
         {
+            this.CommonViewData = new CommonViewData();
             return true;
         }
 
@@ -38,15 +50,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// <summary> データの全体クリアを実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
-        public virtual bool Clear()
+        public override bool Clear()
         {
+            base.Clear();
             this.clear();
 
             return true;
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
-
+        
         /// <summary> データの単体クリアを実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 

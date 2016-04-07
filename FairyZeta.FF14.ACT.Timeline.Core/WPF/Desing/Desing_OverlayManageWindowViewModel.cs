@@ -23,7 +23,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         {
             this.initViewModel();
 
-            base.OverlayManageComponent = new Component.OverlayManageComponent();
+            base.OverlayManageComponent = new Component.OverlayManageComponent(new TimelineComponent());
             this.createDesingData_P001();
         }
 

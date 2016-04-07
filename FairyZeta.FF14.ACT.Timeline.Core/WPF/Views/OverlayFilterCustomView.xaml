@@ -1,0 +1,195 @@
+﻿<UserControl x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.OverlayFilterCustomView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
+             xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+             xmlns:enum="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=dData:Desing_OverlayCustomWindowViewModel, IsDesignTimeCreatable=True}">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="JobFilterTitleLabel" TargetType="{x:Type Label}">
+            </Style>
+
+            <Style x:Key="TypeFilterCheckBoxStyle" TargetType="{x:Type CheckBox}">
+                <Setter Property="Width" Value="140"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Margin" Value="10 2"/>
+            </Style>
+            
+            <Style x:Key="JobFilterCheckBoxStyle" TargetType="{x:Type CheckBox}">
+            </Style>
+            <Style x:Key="JobFilterCommonCheckBoxStyle" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource JobFilterCheckBoxStyle}">
+                <Setter Property="Width" Value="140"/>
+            </Style>
+            <Style x:Key="JobFilterJobCheckBoxStyle" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource JobFilterCheckBoxStyle}">
+                <Setter Property="Width" Value="70"/>
+                <Setter Property="Margin" Value="0 2"/>
+            </Style>
+            <Style x:Key="JobFilterEtcCheckBoxStyle" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource JobFilterCheckBoxStyle}">
+                <Setter Property="Width" Value="70"/>
+            </Style>
+
+            <Style x:Key="TankModeFilterCheckBoxStyle" TargetType="{x:Type CheckBox}">
+                <Setter Property="Width" Value="70"/>
+            </Style>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33*"/>
+                <RowDefinition Height="55*"/>
+                <RowDefinition Height="12*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+                <Grid Margin="5">
+                    <Label Content=" Overlay Type Filter " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                        <CheckBox Content="UNKNOWN" Style="{StaticResource TypeFilterCheckBoxStyle}"
+                                  IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TypeUNKNOWN}"
+                                  Command="{Binding OverlayTypeFilterCommand}" CommandParameter="{x:Static enum:TimelineType.UNKNOWN}"/>
+                        <CheckBox Content="ENEMY" Style="{StaticResource TypeFilterCheckBoxStyle}"
+                                  IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TypeENEMY}"
+                                  Command="{Binding OverlayTypeFirterCommand}" CommandParameter="{x:Static enum:TimelineType.ENEMY}"/>
+                        <CheckBox Content="TANK" Style="{StaticResource TypeFilterCheckBoxStyle}"
+                                  IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TypeTANK}"
+                                  Command="{Binding OverlayTypeFirterCommand}" CommandParameter="{x:Static enum:TimelineType.TANK}"/>
+                        <CheckBox Content="DPS" Style="{StaticResource TypeFilterCheckBoxStyle}"
+                                  IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TypeDPS}"
+                                  Command="{Binding OverlayTypeFirterCommand}" CommandParameter="{x:Static enum:TimelineType.DPS}"/>
+                        <CheckBox Content="HEALER" Style="{StaticResource TypeFilterCheckBoxStyle}"
+                                  IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TypeHEALER}"
+                                  Command="{Binding OverlayTypeFirterCommand}" CommandParameter="{x:Static enum:TimelineType.HEALER}"/>
+                        <CheckBox Content="PET" Style="{StaticResource TypeFilterCheckBoxStyle}"
+                                  IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TypePET}"
+                                  Command="{Binding OverlayTypeFirterCommand}" CommandParameter="{x:Static enum:TimelineType.PET}"/>
+                        <CheckBox Content="GIMMICK" Style="{StaticResource TypeFilterCheckBoxStyle}"
+                                  IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TypeGIMMICK}"
+                                  Command="{Binding OverlayTypeFirterCommand}" CommandParameter="{x:Static enum:TimelineType.GIMMICK}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+                <Grid Margin="5">
+                    <Label Content=" Overlay Job Filter " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                        
+                        <Label Content=" - Common - " />
+                        <WrapPanel Margin="10 0">
+                            <CheckBox Content="NON" Style="{StaticResource JobFilterCommonCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobNON}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.NON}"/>
+                            <CheckBox Content="UNKNOWN" Style="{StaticResource JobFilterCommonCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobUNKNOWN}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.UNKNOWN}"/>
+                        </WrapPanel>
+                            
+                        <Label Content=" - TANK - " />
+                        <WrapPanel Margin="10 0">
+                            <CheckBox Content="PLD" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobPLD}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.PLD}"/>
+                            <CheckBox Content="WAR" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobWAR}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.WAR}"/>
+                            <CheckBox Content="DKN" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobDKN}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.DKN}"/>
+                        </WrapPanel>
+
+                        <Label Content=" - DPS - " /> 
+                        <WrapPanel Margin="10 0">
+                            <CheckBox Content="MNK" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobMNK}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.MNK}"/>
+                            <CheckBox Content="DRG" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobDRG}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.DRG}"/>
+                            <CheckBox Content="BRD" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobBRD}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.BRD}"/>
+                            <CheckBox Content="NIN" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobNIN}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.NIN}"/>
+                            <CheckBox Content="BLM" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobBLM}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.BLM}"/>
+                            <CheckBox Content="SMN" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobSMN}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.SMN}"/>
+                            <CheckBox Content="MCN" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobMCN}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.MCN}"/>
+                        </WrapPanel>
+
+                        <Label Content=" - HEALER - " /> 
+                        <WrapPanel Margin="10 0">
+                            <CheckBox Content="WHM" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobWHM}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.WHM}"/>
+                            <CheckBox Content="SCH" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobSCH}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.SCH}"/>
+                            <CheckBox Content="AST" Style="{StaticResource JobFilterJobCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobAST}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.AST}"/>
+                        </WrapPanel>
+
+                        <Label Content=" - Etc. -" />
+                        <WrapPanel Margin="10 0">
+                            <CheckBox Content="EGI" Style="{StaticResource JobFilterEtcCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobEGI}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.EGI}"/>
+                            <CheckBox Content="FAIRY" Style="{StaticResource JobFilterEtcCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobFAIRY}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.FAIRY}"/>
+                            <CheckBox Content="TURRET" Style="{StaticResource JobFilterEtcCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.JobTURRET}"
+                                      Command="{Binding OverlayJobFirterCommand}" CommandParameter="{x:Static enum:Job.TURRET}"/>
+                        </WrapPanel>
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+                <Grid Margin="5">
+                    <Label Content=" Overlay TankMode Filter " Width="140" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+
+                        <WrapPanel Margin="10 0">
+                            <CheckBox Content="NON" Style="{StaticResource TankModeFilterCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TankModeNON}"
+                                      Command="{Binding OverlayTankModeFirterCommand}" CommandParameter="{x:Static enum:TankMode.NON}"/>
+                            <CheckBox Content="MT" Style="{StaticResource TankModeFilterCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TankModeMT}"
+                                      Command="{Binding OverlayTankModeFirterCommand}" CommandParameter="{x:Static enum:TankMode.MT}"/>
+                            <CheckBox Content="ST" Style="{StaticResource TankModeFilterCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TankModeST}"
+                                      Command="{Binding OverlayTankModeFirterCommand}" CommandParameter="{x:Static enum:TankMode.ST}"/>
+                            <CheckBox Content="OT" Style="{StaticResource TankModeFilterCheckBoxStyle}"
+                                      IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TankModeOT}"
+                                      Command="{Binding OverlayTankModeFirterCommand}" CommandParameter="{x:Static enum:TankMode.OT}"/>
+                        </WrapPanel>
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <view:StandardTimelineView Grid.Column="1" Grid.RowSpan="100" Margin="10 50 10 50"/>
+        </Grid>
+    </Border>
+</UserControl>

@@ -13,6 +13,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        #region #- [Property] CommonComponent.CommonComponent - ＜共通コンポーネント＞ -----
+        /// <summary> 共通コンポーネント </summary>
+        private CommonComponent _CommonComponent;
+        /// <summary> 共通コンポーネント </summary>
+        public CommonComponent CommonComponent
+        {
+            get { return this._CommonComponent; }
+            set
+            {
+                if (this._CommonComponent == value) return;
+
+                this._CommonComponent = value;
+                base.OnPropertyChanged("CommonComponent");
+            }
+        }
+        #endregion
+
         #region #- [Property] TimelineComponent.TimelineComponent - ＜タイムラインコンポーネント＞ -----
         /// <summary> タイムラインコンポーネント </summary>
         private TimelineComponent _TimelineComponent;
@@ -30,19 +47,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
         }
         #endregion
 
-        #region #- [Property] ViewControlComponent.ViewControlComponent - ＜ビューコントロールコンポーネント＞ -----
-        /// <summary> ビューコントロールコンポーネント </summary>
-        private OverlayViewComponent _ViewControlComponent;
-        /// <summary> ビューコントロールコンポーネント </summary>
-        public OverlayViewComponent ViewControlComponent
+        #region #- [Property] OverlayViewComponent.OverlayViewComponent - ＜オーバーレイ表示コンポーネント＞ -----
+        /// <summary> オーバーレイ表示コンポーネント </summary>
+        private OverlayViewComponent _OverlayViewComponent;
+        /// <summary> オーバーレイ表示コンポーネント </summary>
+        public OverlayViewComponent OverlayViewComponent
         {
-            get { return this._ViewControlComponent; }
+            get { return this._OverlayViewComponent; }
             set
             {
-                if (this._ViewControlComponent == value) return;
+                if (this._OverlayViewComponent == value) return;
 
-                this._ViewControlComponent = value;
-                base.OnPropertyChanged("ViewControlComponent");
+                this._OverlayViewComponent = value;
+                base.OnPropertyChanged("OverlayViewComponent");
             }
         }
         #endregion

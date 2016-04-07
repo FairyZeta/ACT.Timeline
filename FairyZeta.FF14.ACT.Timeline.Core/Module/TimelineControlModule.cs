@@ -76,7 +76,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             pTimerDataModel.TimerDeta.MainTimerTime += (decimal)0.1;
 
-            foreach (var item in pTimelineDataModel.TimelineActiveItemCollection)
+            foreach (var item in pTimelineDataModel.TimelineItemCollection)
             {
                 if (!item.Visibility) continue;
 

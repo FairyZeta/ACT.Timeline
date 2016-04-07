@@ -14,6 +14,8 @@
 
     <SolidColorBrush x:Key="RoleColor_Enemy1" Color="#E2EBF5"/>
 
+    <SolidColorBrush x:Key="RoleColor_GIMMICK" Color="#BFD64E00"/>
+    
     <SolidColorBrush x:Key="BaseColor_Blue1" Color="#E2EBF5"/>
     <SolidColorBrush x:Key="BaseColor_Blue1_Shadow" Color="#217AA2"/>
     <SolidColorBrush x:Key="BaseColor_Gold1" Color="#DED7BE"/>

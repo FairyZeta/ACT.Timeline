@@ -6,31 +6,24 @@ using System.Threading.Tasks;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 {
-    /// <summary> タイムライン／画面表示設定データ
+    /// <summary> タイムライン／オーバーレイカラー設定データ
     /// </summary>
-    public class OverlaySettingsData : _Data
+    public class OverlayColorSettingsData : _Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> メインウィンドウの高さ
-        /// </summary>
-        public double MainWindowHeight { get; set; }
-        /// <summary> メインウィンドウの幅
-        /// </summary>
-        public double MainWindowWideth { get; set; }
-
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        /// <summary> タイムライン／画面表示設定データ／コンストラクタ
+        
+        /// <summary> タイムライン／オーバーレイカラー設定データ／コンストラクタ
         /// </summary>
-        public OverlaySettingsData()
+        public OverlayColorSettingsData()
+            : base()
         {
             this.initData();
-            this.clear();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
-        
+
         /// <summary> データの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
@@ -53,14 +46,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
-
+        
         /// <summary> データの単体クリアを実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
-            this.MainWindowHeight = 0;
-            this.MainWindowWideth = 0;
             return true;
         }
     }

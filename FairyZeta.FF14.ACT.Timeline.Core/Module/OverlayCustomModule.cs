@@ -3,38 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 
-namespace FairyZeta.FF14.ACT.Timeline.Core.Component
+namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {
-    /// <summary> タイムライン／共通機能コンポーネント
+    /// <summary> タイムライン／オーバーレイカスタムモジュール
     /// </summary>
-    public class CommonComponent : _Component
+    public class OverlayCustomModule : _Module
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> 共通データモデル
-        /// </summary>
-        public CommonDataModel CommonDataModel { get; private set; }
-
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> タイムライン／共通機能コンポーネント／コンストラクタ
+        /// <summary> タイムライン／オーバーレイカスタムモジュール／コンストラクタ
         /// </summary>
-        public CommonComponent()
+        public OverlayCustomModule()
             : base()
         {
-            this.initComponent();
+            this.initModule();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> コンポーネントの初期化を実行します。
+        /// <summary> モジュールの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
-        private bool initComponent()
+        private bool initModule()
         {
-            this.CommonDataModel = new CommonDataModel();
             return true;
         }
 

@@ -79,12 +79,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         [DllImport("user32.dll")]
         static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
 
+        /// <summary> ウィンドウのクリックスルーを設定します。
+        /// </summary>
+        /// <param name="hwnd"> ウィンドウのIntPrt </param>
         public static void SetWindowExTransparent(IntPtr hwnd)
         {
             var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
         }
-        public static void makeNormal(IntPtr hwnd)
+        /// <summary> ウィンドウのクリックスルーを解除します。
+        /// </summary>
+        /// <param name="hwnd"> ウィンドウのIntPrt </param>
+        public static void InitWindowExTransparent(IntPtr hwnd)
         {
             int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle & ~WS_EX_TRANSPARENT);

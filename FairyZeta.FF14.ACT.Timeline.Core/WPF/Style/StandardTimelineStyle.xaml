@@ -25,6 +25,9 @@
             <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.DPS}">
                 <Setter Property="Foreground" Value="{StaticResource RoleColor_DPS2}"/>
             </DataTrigger>
+            <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.GIMMICK}">
+                <Setter Property="Foreground" Value="{StaticResource RoleColor_GIMMICK}"/>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 

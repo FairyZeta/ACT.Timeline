@@ -11,24 +11,26 @@
         GIMMICK
     }
 
-    public enum Category
+    public enum Job
     {
         UNKNOWN,
         NON,
 
         PLD,
-        MNK,
         WAR,
+        DKN,
+
+        MNK,
         DRG,
         BRD,
         NIN,
-        WHM,
         BLM,
         SMN,
-        SCH,
-        DKN,
-        AST,
         MCN,
+
+        WHM,
+        SCH,
+        AST,
 
         EGI,
         FAIRY,
@@ -54,7 +56,8 @@
     {
         NON,
         MT,
-        ST
+        ST,
+        OT
     }
 
     public enum WindowLock

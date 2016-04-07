@@ -6,14 +6,16 @@
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
         mc:Ignorable="d" 
-        d:DesignHeight="300" d:DesignWidth="300" 
-        Background="Transparent" AllowsTransparency="True" WindowStyle="None">
-
+        d:DesignHeight="300" d:DesignWidth="300"
+        Background="Transparent" AllowsTransparency="True" WindowStyle="None" ShowInTaskbar="False" 
+        Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowWidth, Mode=TwoWay}"
+        Height="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowHeight, Mode=TwoWay}">
+        
+    
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
                       ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" 
                       UseAeroCaptionButtons="False" />
-
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
@@ -30,6 +32,17 @@
     <Window.DataContext>
         <vm:OverlayWindowViewModel />
     </Window.DataContext>
+    
+    <Window.Style>
+        <Style TargetType="{x:Type Window}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowVisibility}" Value="False">
+                    <Setter Property="Opacity" Value="0"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+    
     <Grid>
         <view:StandardTimelineView DataContext="{Binding}" />
     </Grid>

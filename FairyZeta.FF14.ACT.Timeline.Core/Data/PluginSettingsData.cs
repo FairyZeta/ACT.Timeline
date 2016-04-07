@@ -6,55 +6,36 @@ using System.Threading.Tasks;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 {
-    /// <summary> オーバーレイ管理データ
+    /// <summary> タイムライン／プラグイン設定データ
     /// </summary>
-    public class OverlayManageData : _Data
+    public class PluginSettingsData : _Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
-        
-        #region #- [Property] bool.OverlayManageWindowClosed - ＜オーバーレイ管理ウィンドウクローズフラグ＞ -----
-        /// <summary> オーバーレイ管理ウィンドウクローズフラグ </summary>
-        private bool _OverlayManageWindowClosed;
-        /// <summary> オーバーレイ管理ウィンドウクローズフラグ </summary>
-        public bool OverlayManageWindowClosed
+
+        #region #- [Property] bool.AllOverlayVisibility - ＜全オーバーレイの表示状態＞ -----
+        /// <summary> 全オーバーレイの表示状態 </summary>
+        private bool _AllOverlayVisibility;
+        /// <summary> 全オーバーレイの表示状態 </summary>
+        public bool AllOverlayVisibility
         {
-            get { return this._OverlayManageWindowClosed; }
+            get { return this._AllOverlayVisibility; }
             set
             {
-                if (this._OverlayManageWindowClosed == value) return;
+                if (this._AllOverlayVisibility == value) return;
 
-                this._OverlayManageWindowClosed = value;
-                base.OnPropertyChanged("OverlayManageWindowClosed");
-            }
-        }
-        #endregion
-
-        #region #- [Property] bool.NowOverlayAddModal - ＜新規オーバーレイ追加モーダル表示＞ -----
-        /// <summary> 新規オーバーレイ追加モーダル表示 </summary>
-        private bool _NowOverlayAddModalVisibility;
-        /// <summary> 新規オーバーレイ追加モーダル表示 </summary>
-        public bool NowOverlayAddModalVisibility
-        {
-            get { return this._NowOverlayAddModalVisibility; }
-            set
-            {
-                if (this._NowOverlayAddModalVisibility == value) return;
-
-                this._NowOverlayAddModalVisibility = value;
-                base.OnPropertyChanged("NowOverlayAddModalVisibility");
+                this._AllOverlayVisibility = value;
+                base.OnPropertyChanged("AllOverlayVisibility");
             }
         }
         #endregion
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> オーバーレイ管理データ
+        /// <summary> タイムライン／プラグイン設定データ／コンストラクタ
         /// </summary>
-        public OverlayManageData()
-            : base()
+        public PluginSettingsData()
         {
             this.initData();
-            this.clear();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -64,7 +45,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool initData()
         {
-            
             return true;
         }
 
@@ -82,15 +62,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
-        
+
         /// <summary> データの単体クリアを実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
-            this.NowOverlayAddModalVisibility = false;
-            this.OverlayManageWindowClosed = false;
-
+            this.AllOverlayVisibility = false;
             return true;
         }
     }

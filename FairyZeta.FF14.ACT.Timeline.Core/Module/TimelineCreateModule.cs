@@ -52,52 +52,61 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             if (pBaseData.Items.Count() == 0) return;
 
-            decimal endTime = Convert.ToDecimal(pBaseData.EndTime);
-            for (decimal d = 0; d < endTime; d += (decimal)0.1)
-            {
-                TimelineItemData item = new TimelineItemData();
-                item.ActivityIndex = Convert.ToInt32(d * 10);
-                item.ActivityNo = d;
-
-                pDataModel.TimelineItemCollection.Add(item);
-            }
-
             foreach (var data in pBaseData.Items)
             {
-                var target = pDataModel.TimelineItemCollection.FirstOrDefault(item => item.ActivityNo == Convert.ToDecimal(this.DoubleToAdjustProcess.ToHalfAdjust(data.TimeFromStart, 1)));
-                if (target != null)
+                TimelineItemData target = new TimelineItemData();
+ 
+                target.ActivityNo = Convert.ToDecimal(this.DoubleToAdjustProcess.ToHalfAdjust(data.TimeFromStart, 1));
+                target.ActivityIndex = Convert.ToInt32(target.ActivityNo * 10);
+                target.ActiveTime = target.ActivityNo;
+                target.ActivityName = data.Name;
+                target.Duration = Convert.ToDecimal(data.Duration);
+                target.Jump = Convert.ToDecimal(data.Jump);
+                target.Visibility = true;
+                target.TimelineType = TimelineType.ENEMY;
+                target.ActivityTime = new TimeSpan(0, 0, Convert.ToInt32(target.EndTime));
+
+                target.ActiveIndicatorStartTime = target.ActiveTime - Convert.ToDecimal(target.ActiveIndicatorMaxValue);
+                target.DurationIndicatorMaxValue = data.Duration;
+                if(target.DurationIndicatorMaxValue > 0)
                 {
-                    target.ActiveTime = target.ActivityNo;
-                    target.ActivityName = data.Name;
-                    target.Duration = Convert.ToDecimal(data.Duration);
-                    target.Jump = Convert.ToDecimal(data.Jump);
-                    target.Visibility = true;
-                    target.TimelineType = TimelineType.ENEMY;
-                    target.ActivityTime = new TimeSpan(0, 0, Convert.ToInt32(target.EndTime));
-
-                    target.ActiveIndicatorStartTime = target.ActiveTime - Convert.ToDecimal(target.ActiveIndicatorMaxValue);
-                    target.DurationIndicatorMaxValue = data.Duration;
-                    if(target.DurationIndicatorMaxValue > 0)
-                    {
-                        target.DurationIndicatorVisibility = true;
-                    }
-
-
-                    if(target.ActivityName.IndexOf("[T]") > -1)
-                    {
-                        target.TimelineType = TimelineType.TANK;
-                    }
-                    else if (target.ActivityName.IndexOf("[H]") > -1)
-                    {
-                        target.TimelineType = TimelineType.HEALER;
-                    }
-                    else if (target.ActivityName.IndexOf("[D]") > -1)
-                    {
-                        target.TimelineType = TimelineType.DPS;
-                    }
-
-
+                    target.DurationIndicatorVisibility = true;
                 }
+
+
+                if(target.ActivityName.IndexOf("[T]") > -1)
+                {
+                    target.TimelineType = TimelineType.TANK;
+                }
+                else if (target.ActivityName.IndexOf("[H]") > -1)
+                {
+                    target.TimelineType = TimelineType.HEALER;
+                }
+                else if (target.ActivityName.IndexOf("[D]") > -1)
+                {
+                    target.TimelineType = TimelineType.DPS;
+                }
+                else if (target.ActivityName.IndexOf("[G]") > -1)
+                {
+                    target.TimelineType = TimelineType.GIMMICK;
+                }
+
+                else if (target.ActivityName.IndexOf("[PLD]") > -1)
+                {
+                    target.TimelineType = TimelineType.TANK;
+                }
+                else if (target.ActivityName.IndexOf("[WHM]") > -1)
+                {
+                    target.TimelineType = TimelineType.HEALER;
+                }
+                else if (target.ActivityName.IndexOf("[DRG]") > -1)
+                {
+                    target.TimelineType = TimelineType.DPS;
+                }
+
+
+                pDataModel.TimelineItemCollection.Add(target);
+                
             }
 
             foreach (var data in pBaseData.Alerts)
@@ -109,11 +118,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 }
             }
 
-            var activeItems = pDataModel.TimelineItemCollection.Where(i => !string.IsNullOrWhiteSpace(i.ActivityName));
-            foreach (var item in activeItems)
-            {
-                pDataModel.TimelineActiveItemCollection.Add(item);
-            }
+            //var activeItems = pDataModel.TimelineItemCollection.Where(i => !string.IsNullOrWhiteSpace(i.ActivityName));
+            //foreach (var item in activeItems)
+            //{
+            //    pDataModel.TimelineActiveItemCollection.Add(item);
+            //}
 
             pDataModel.TimelineItemViewSource.View.Refresh();
         }

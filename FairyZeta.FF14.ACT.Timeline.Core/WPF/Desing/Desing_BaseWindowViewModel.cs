@@ -44,17 +44,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         private void createDesingData_P001()
         {
             base.TimelineComponent = new Component.TimelineComponent();
-            base.ViewControlComponent = new Component.OverlayViewComponent();
+            base.OverlayViewComponent = new Component.OverlayViewComponent();
 
-            for (decimal d = 0; d < (decimal)60.0; d += (decimal)0.1)
+            for (decimal d = 0; d < (decimal)60.0; d += (decimal)1.0)
             {
                 TimelineItemData item = new TimelineItemData();
                 item.ActivityIndex = Convert.ToInt32(d * 10);
                 item.ActivityNo = d;
                 item.ActivityName = "デザイン＠" + item.ActivityNo.ToString();
                 item.Visibility = true;
+                item.TimelineType = TimelineType.ENEMY;
 
                 base.TimelineComponent.TimelineDataModel.TimelineItemCollection.Add(item);
+                base.OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource = new System.Windows.Data.CollectionViewSource() 
+                { Source = base.TimelineComponent.TimelineDataModel.TimelineItemCollection };
             }
         }
     }

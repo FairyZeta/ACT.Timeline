@@ -14,78 +14,81 @@
                 <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate x:Key="BasicTimeNoHeaderTemplate" DataType="DataGridColumnHeader">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1"/>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Border Margin="0 7"  Background="{StaticResource BaseColor_Blue1}" />
-                    <Label Content="T-No" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
-                </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="BasicViewTimeHeaderTemplate" DataType="DataGridColumnHeader">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1"/>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Border Margin="0 7"  Background="{StaticResource BaseColor_Blue1}" />
-                    <Label Content="Time" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
-                </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="BasicAlertHeaderTemplate" DataType="DataGridColumnHeader">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1"/>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Border Margin="0 7"  Background="{StaticResource BaseColor_Blue1}" />
-                    <Label Content="Alt" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
-                </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="BasicActionHeaderTemplate" DataType="DataGridColumnHeader">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1"/>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Border Margin="0 7"  Background="{StaticResource BaseColor_Blue1}" />
-                    <Label Content="Action" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
-                </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="BasicActiveHeaderTemplate" DataType="DataGridColumnHeader">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1"/>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Border Margin="0 7"  Background="{StaticResource BaseColor_Blue1}" />
-                    <Label Content="Active" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
-                </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="BasicTypeHeaderTemplate" DataType="DataGridColumnHeader">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1"/>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Border Margin="0 7"  Background="{StaticResource BaseColor_Blue1}" />
-                    <Label Content="Type" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
-                </Grid>
-            </DataTemplate>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+            
+            <Style x:Key="HeaderText" TargetType="{x:Type TextBlock}"/>
+            <Style x:Key="HeaderSplitter" TargetType="{x:Type GridSplitter}">
+                <Setter Property="Width" Value="1"/>
+                
+            </Style>
+            <Style x:Key="ContentSplitter" TargetType="{x:Type GridSplitter}">
 
-            <DataTemplate x:Key="BasicTimeNoCellTemplate" DataType="DataGridCell">
+            </Style>
+            
+            <ControlTemplate x:Key="BasicTimeNoHeaderTemplate" >
+                <Grid>
+                    <TextBlock Text="T-No" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicActionTimeHeaderTemplate" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Time" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicAlertHeaderTemplate" >
+                <Grid>
+                    <TextBlock Text="Alt" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicActionHeaderTemplate" >
+                <Grid>
+                    <TextBlock Text="Action" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicActiveHeaderTemplate" >
+                <Grid>
+                    <TextBlock Text="Active" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicTypeHeaderTemplate" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Type" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicJobHeaderTemplate" >
+                <Grid>
+                    <TextBlock Text="Job" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicJumpHeaderTemplate" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Jump" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="BasicTimeNoContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
                     <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActivityNo}" ContentStringFormat="{}{0:#0.0}"  HorizontalAlignment="Center"/>
                 </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="BasicViewTimeCellTemplate" DataType="DataGridCell">
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicActionTimeContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
                     <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActivityTime}" ContentStringFormat="{}{0:mm}:{0:ss}"  />
                 </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="BasicAlertCellTemplate" DataType="DataGridCell">
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicAlertContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
                     <Label Content="♪" >
                         <Label.Style>
@@ -99,14 +102,13 @@
                         </Label.Style>
                     </Label>
                 </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="BasicActionCellTemplate" DataType="DataGridCell">
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicActionContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
                     <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActivityName}"  />
                 </Grid>
-            </DataTemplate>
-            <!-- Active Cell -->
-            <DataTemplate x:Key="BasicActiveCellTemplate" DataType="DataGridCell">
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicActiveContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
                     <ProgressBar Minimum="{Binding ActiveIndicatorMinValue}" Value="{Binding ActiveIndicatorValue}" Maximum="{Binding ActiveIndicatorMaxValue}" 
                                  Template="{StaticResource BasicProgressBar}" FlowDirection="RightToLeft" Background="Transparent" BorderBrush="Transparent" >
@@ -140,22 +142,40 @@
                     </ProgressBar>
                     <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActiveTime}" ContentStringFormat="{}{0:#0.0}" HorizontalAlignment="Right"/>
                 </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="BasicTypeCellTemplate" DataType="DataGridCell">
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicTypeContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
                     <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding TimelineType}"  />
                 </Grid>
-            </DataTemplate>
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicJobContentTemplate" >
+                <Grid Style="{StaticResource BasicCellGrid}">
+                    <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding JobType}"  />
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="BasicJumpContentTemplate" >
+                <Grid Style="{StaticResource BasicCellGrid}">
+                    <Label Style="{StaticResource TimilineItemLabel}" Content="*"  />
+                </Grid>
+            </ControlTemplate>
             
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border Background="Black" Opacity="0.7" CornerRadius="5">
-        <Grid >
+    
+    <Grid >
+        <Grid.Resources>
+            <FrameworkElement x:Key="proxyElement" />
+        </Grid.Resources>
+        <ContentControl Visibility="Collapsed" Content="{StaticResource proxyElement}" />
+        <Border Background="Black" Opacity="0.7" CornerRadius="5"/>
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
+            <!-- ウィンドウヘッダー -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -168,37 +188,65 @@
                     <TextBlock Text="Irohasu Extreme" Foreground="{StaticResource BaseColor_Blue1}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <Button Style="{StaticResource CaptionButtonStyleKey}"
-                                Content="r" ToolTip="Close"
-                                Command="{Binding WindowClosedCommand}"/>
+                    <Button Content="r" ToolTip="Close"
+                            Command="{Binding OverlayViewComponent.OverlayClosedCommand}">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
             </Grid>
-            <DataGrid Grid.Row="1" ItemsSource="{Binding TimelineComponent.TimelineDataModel.TimelineItemViewSource.View}" AutoGenerateColumns="False" Background="Transparent" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                <DataGrid.Resources>
-                    <Style TargetType="{x:Type ScrollBar}">
-                        <Setter Property="Template" Value="{StaticResource MyScrollBar}"/>
-                    </Style>
-                    <Style TargetType="DataGridCell">
-                        <Setter Property="IsHitTestVisible" Value="False"/>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="BorderThickness" Value="0 0 0 1"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource BaseColor_Gold1}"/>
-                        <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="FontWeight" Value="Bold" />
-                    </Style>
-                </DataGrid.ColumnHeaderStyle>
-
-                <DataGrid.RowHeaderStyle>
-                    <Style TargetType="{x:Type DataGridRowHeader}">
-                        <Setter Property="Background" Value="Transparent" />
-                    </Style>
-                </DataGrid.RowHeaderStyle>
-                <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}">
-                        <Setter Property="Margin" Value="0"/>
+            <!-- コンテンツヘッダー -->
+            <Grid Grid.Row="1">
+                <Border BorderThickness="0 0 0 1" BorderBrush="{StaticResource BaseColor_Gold1}">
+                    <StackPanel Orientation="Horizontal">
+                    <!-- T-No -->
+                    <ItemsControl Grid.Column="0" Template="{StaticResource BasicTimeNoHeaderTemplate}"
+                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth}" 
+                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                    <!-- Time -->
+                    <ItemsControl Grid.Column="1" Template="{StaticResource BasicActionTimeHeaderTemplate}"
+                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth}" 
+                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                    <!-- Type -->
+                    <ItemsControl Grid.Column="2" Template="{StaticResource BasicTypeHeaderTemplate}"
+                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TypeWidth}" 
+                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                    <!-- Job -->
+                    <ItemsControl Grid.Column="3" Template="{StaticResource BasicJobHeaderTemplate}"
+                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JobWidth}" 
+                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                    <!-- Action -->
+                    <ItemsControl Grid.Column="4" Template="{StaticResource BasicActionHeaderTemplate}"
+                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionWidth}" 
+                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                    <!-- Active -->
+                    <ItemsControl Grid.Column="5" Template="{StaticResource BasicActiveHeaderTemplate}"
+                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActiveWidth}" 
+                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                    <!-- Alt -->
+                    <ItemsControl Grid.Column="6" Template="{StaticResource BasicAlertHeaderTemplate}"
+                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.AlertWidth}" 
+                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                    <!-- Jump -->
+                    <ItemsControl Grid.Column="7" Template="{StaticResource BasicJumpHeaderTemplate}"
+                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth}" 
+                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <!-- コンテンツ -->
+            <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
+                      Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Margin" Value="-10 0"/>
                         <Setter Property="Background" Value="Transparent" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Visibility}" Value="False">
@@ -206,17 +254,51 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </DataGrid.RowStyle>
-                
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn HeaderTemplate="{StaticResource BasicTimeNoHeaderTemplate}" CellTemplate="{StaticResource BasicTimeNoCellTemplate}" />
-                    <DataGridTemplateColumn HeaderTemplate="{StaticResource BasicViewTimeHeaderTemplate}" CellTemplate="{StaticResource BasicViewTimeCellTemplate}" />
-                    <DataGridTemplateColumn HeaderTemplate="{StaticResource BasicTypeHeaderTemplate}" CellTemplate="{StaticResource BasicTypeCellTemplate}" />
-                    <DataGridTemplateColumn HeaderTemplate="{StaticResource BasicActionHeaderTemplate}" CellTemplate="{StaticResource BasicActionCellTemplate}"/>
-                    <DataGridTemplateColumn HeaderTemplate="{StaticResource BasicActiveHeaderTemplate}" CellTemplate="{StaticResource BasicActiveCellTemplate}" />
-                    <DataGridTemplateColumn HeaderTemplate="{StaticResource BasicAlertHeaderTemplate}" CellTemplate="{StaticResource BasicAlertCellTemplate}"/>
-                </DataGrid.Columns>
-        </DataGrid>
+                    <Style TargetType="{x:Type ScrollBar}">
+                        <Setter Property="Template" Value="{StaticResource MyScrollBar}"/>
+                    </Style>
+                </ListView.Resources>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <!-- T-No -->
+                                <ItemsControl Grid.Column="0" Template="{StaticResource BasicTimeNoContentTemplate}"
+                                              Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
+                                              Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
+                                <!-- Time -->
+                                <ItemsControl Grid.Column="1" Template="{StaticResource BasicActionTimeContentTemplate}"
+                                              Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
+                                              Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
+                                <!-- Type -->
+                                <ItemsControl Grid.Column="2" Template="{StaticResource BasicTypeContentTemplate}"
+                                              Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TypeWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
+                                              Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
+                                <!-- Job -->
+                                <ItemsControl Grid.Column="3" Template="{StaticResource BasicJobContentTemplate}"
+                                              Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JobWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
+                                              Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
+                                <!-- Action -->
+                                <ItemsControl Grid.Column="4" Template="{StaticResource BasicActionContentTemplate}"
+                                              Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
+                                              Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
+                                <!-- Active -->
+                                <ItemsControl Grid.Column="5" Template="{StaticResource BasicActiveContentTemplate}"
+                                              Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActiveWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
+                                              Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
+                                <!-- Alt -->
+                                <ItemsControl Grid.Column="6" Template="{StaticResource BasicAlertContentTemplate}"
+                                              Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.AlertWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
+                                              Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
+                                <!-- Jump -->
+                                <ItemsControl Grid.Column="7" Template="{StaticResource BasicJumpContentTemplate}"
+                                              Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
+                                              Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
+                            </StackPanel>
+                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
         </Grid>
-    </Border>
+    </Grid>
 </UserControl>

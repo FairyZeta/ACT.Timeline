@@ -25,11 +25,5 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             InitializeComponent();
             this.MouseLeftButtonDown += (sender, e) => this.DragMove();
         }
-
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-            var hwnd = new WindowInteropHelper(this).Handle;
-        }
     }
 }
