@@ -69,7 +69,11 @@
             this.checkBoxAutoHide = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoloadAfterChangeZone = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoShow = new System.Windows.Forms.CheckBox();
-            this.groupOverlayManage = new System.Windows.Forms.GroupBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.elementHost = new System.Windows.Forms.Integration.ElementHost();
+            this.pluginApplicationView = new FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.PluginApplicationView();
             this.groupBoxEnvironment.SuspendLayout();
             this.groupBoxTimelines.SuspendLayout();
             this.groupBoxOverlay.SuspendLayout();
@@ -79,6 +83,9 @@
             this.groupBoxTracker.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
             this.groupBoxAutoLoader.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonResourceDirSelect
@@ -116,7 +123,7 @@
             this.groupBoxEnvironment.Controls.Add(this.labelResourceDir);
             this.groupBoxEnvironment.Controls.Add(this.buttonResourceDirOpen);
             this.groupBoxEnvironment.Controls.Add(this.buttonResourceDirSelect);
-            this.groupBoxEnvironment.Location = new System.Drawing.Point(16, 250);
+            this.groupBoxEnvironment.Location = new System.Drawing.Point(0, 242);
             this.groupBoxEnvironment.Name = "groupBoxEnvironment";
             this.groupBoxEnvironment.Size = new System.Drawing.Size(470, 126);
             this.groupBoxEnvironment.TabIndex = 3;
@@ -160,7 +167,7 @@
             this.groupBoxTimelines.Controls.Add(this.buttonRefreshList);
             this.groupBoxTimelines.Controls.Add(this.buttonLoad);
             this.groupBoxTimelines.Controls.Add(this.listTimelines);
-            this.groupBoxTimelines.Location = new System.Drawing.Point(15, 128);
+            this.groupBoxTimelines.Location = new System.Drawing.Point(0, 120);
             this.groupBoxTimelines.Name = "groupBoxTimelines";
             this.groupBoxTimelines.Size = new System.Drawing.Size(470, 116);
             this.groupBoxTimelines.TabIndex = 4;
@@ -214,9 +221,9 @@
             this.groupBoxOverlay.Controls.Add(this.labelFont);
             this.groupBoxOverlay.Controls.Add(this.labelCurrOpacity);
             this.groupBoxOverlay.Controls.Add(this.labelOpacity);
-            this.groupBoxOverlay.Location = new System.Drawing.Point(16, 382);
+            this.groupBoxOverlay.Location = new System.Drawing.Point(3, 369);
             this.groupBoxOverlay.Name = "groupBoxOverlay";
-            this.groupBoxOverlay.Size = new System.Drawing.Size(470, 224);
+            this.groupBoxOverlay.Size = new System.Drawing.Size(467, 218);
             this.groupBoxOverlay.TabIndex = 5;
             this.groupBoxOverlay.TabStop = false;
             this.groupBoxOverlay.Text = "Overlay";
@@ -261,7 +268,7 @@
             // 
             // buttonFontSelect
             // 
-            this.buttonFontSelect.Location = new System.Drawing.Point(375, 160);
+            this.buttonFontSelect.Location = new System.Drawing.Point(235, 160);
             this.buttonFontSelect.Name = "buttonFontSelect";
             this.buttonFontSelect.Size = new System.Drawing.Size(85, 20);
             this.buttonFontSelect.TabIndex = 0;
@@ -382,7 +389,7 @@
             this.groupBoxTracker.Controls.Add(this.labelLoadedTimeline);
             this.groupBoxTracker.Controls.Add(this.labelLoadedTimelineLabel);
             this.groupBoxTracker.Controls.Add(this.trackBar);
-            this.groupBoxTracker.Location = new System.Drawing.Point(15, 12);
+            this.groupBoxTracker.Location = new System.Drawing.Point(2, 3);
             this.groupBoxTracker.Name = "groupBoxTracker";
             this.groupBoxTracker.Size = new System.Drawing.Size(470, 111);
             this.groupBoxTracker.TabIndex = 6;
@@ -485,7 +492,7 @@
             this.groupBoxAutoLoader.Controls.Add(this.checkBoxAutoHide);
             this.groupBoxAutoLoader.Controls.Add(this.checkBoxAutoloadAfterChangeZone);
             this.groupBoxAutoLoader.Controls.Add(this.checkBoxAutoShow);
-            this.groupBoxAutoLoader.Location = new System.Drawing.Point(491, 10);
+            this.groupBoxAutoLoader.Location = new System.Drawing.Point(478, 6);
             this.groupBoxAutoLoader.Name = "groupBoxAutoLoader";
             this.groupBoxAutoLoader.Size = new System.Drawing.Size(278, 132);
             this.groupBoxAutoLoader.TabIndex = 7;
@@ -562,25 +569,56 @@
             this.checkBoxAutoShow.UseVisualStyleBackColor = true;
             this.checkBoxAutoShow.CheckedChanged += new System.EventHandler(this.checkBoxAutoShow_CheckedChanged);
             // 
-            // groupOverlayManage
+            // tabControl1
             // 
-            this.groupOverlayManage.Location = new System.Drawing.Point(491, 149);
-            this.groupOverlayManage.Name = "groupOverlayManage";
-            this.groupOverlayManage.Size = new System.Drawing.Size(278, 457);
-            this.groupOverlayManage.TabIndex = 8;
-            this.groupOverlayManage.TabStop = false;
-            this.groupOverlayManage.Text = "OverlayManage";
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(778, 619);
+            this.tabControl1.TabIndex = 8;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBoxTracker);
+            this.tabPage1.Controls.Add(this.groupBoxOverlay);
+            this.tabPage1.Controls.Add(this.groupBoxTimelines);
+            this.tabPage1.Controls.Add(this.groupBoxEnvironment);
+            this.tabPage1.Controls.Add(this.groupBoxAutoLoader);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(770, 593);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.elementHost);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(770, 593);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // elementHost
+            // 
+            this.elementHost.Location = new System.Drawing.Point(-4, 0);
+            this.elementHost.Name = "elementHost";
+            this.elementHost.Size = new System.Drawing.Size(771, 590);
+            this.elementHost.TabIndex = 0;
+            this.elementHost.Text = "elementHost";
+            this.elementHost.Child = this.pluginApplicationView;
             // 
             // ACTTabPageControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupOverlayManage);
-            this.Controls.Add(this.groupBoxTracker);
-            this.Controls.Add(this.groupBoxOverlay);
-            this.Controls.Add(this.groupBoxTimelines);
-            this.Controls.Add(this.groupBoxEnvironment);
-            this.Controls.Add(this.groupBoxAutoLoader);
+            this.Controls.Add(this.tabControl1);
             this.Name = "ACTTabPageControl";
             this.Size = new System.Drawing.Size(784, 622);
             this.groupBoxEnvironment.ResumeLayout(false);
@@ -596,6 +634,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).EndInit();
             this.groupBoxAutoLoader.ResumeLayout(false);
             this.groupBoxAutoLoader.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -643,6 +684,10 @@
         private System.Windows.Forms.CheckBox checkBoxAutoShow;
         private System.Windows.Forms.CheckBox checkBoxAutoHide;
         private System.Windows.Forms.CheckBox checkBoxResetTimelineCombatEnd;
-        private System.Windows.Forms.GroupBox groupOverlayManage;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Integration.ElementHost elementHost;
+        private WPF.Views.PluginApplicationView pluginApplicationView;
     }
 }

@@ -16,11 +16,11 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="5" >
             <TextBox x:Name="FilePathBox" Text="D:\TestTimeline\The Second Coil Of Bahamut - Turn (4).txt" Height="30" Width="400"/>
-            <Button Width="120" Height="30" Command="{Binding Test_TimelineTextLoadCommand}" CommandParameter="{Binding Text, ElementName=FilePathBox}"/>
+            <Button Width="120" Height="30" Command="{Binding TimelineTextLoadCommand}" CommandParameter="{Binding Text, ElementName=FilePathBox}"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5" >
             <Button Content="Overlay Manage" Width="120" Height="30" Margin="10 0" Command="{Binding ShowOverlayManageCommand}" />
-            <Button Content="Overlay Manage" Width="120" Height="30" Margin="10 0" Command="{Binding ShowTestWindowCommand}" />
+            <Button Content="ShowTestWindow" Width="120" Height="30" Margin="10 0" Command="{Binding ShowTestWindowCommand}" />
             <Button Content="Overlay Save Test" Width="120" Height="30" Margin="10 0" Command="{Binding DataSevaTestCommand}" CommandParameter="OverlayDataModel" />
             <Button Content="Overlay Save Test" Width="120" Height="30" Margin="10 0" Command="{Binding DataLoadTestCommand}" CommandParameter="OverlayDataModel" />
             <Button Content="T-Start" Width="120" Height="30" Command="{Binding TimelineComponent.TimerControlCommand}" CommandParameter="Start"/>

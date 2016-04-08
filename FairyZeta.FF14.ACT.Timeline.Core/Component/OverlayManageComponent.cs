@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Prism.Commands;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels;
@@ -27,18 +28,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// </summary>
         public OverlayManageDataModel OverlayManageDataModel { get; private set; }
 
-        #region #- [Property] OverlayDataModel.AddOverlayDataModel - ＜新規オーバーレイ追加用データモデル ＞ -----
-        /// <summary> 新規オーバーレイ追加用データモデル  </summary>
-        private OverlayDataModel _AddOverlayDataModel;
-        /// <summary> 新規オーバーレイ追加用データモデル  </summary>
-        public OverlayDataModel AddOverlayDataModel
+        #region #- [Property] OverlayDataModel.AddOverlayDataModel - ＜オーバーレイ操作用データモデル＞ -----
+        /// <summary> オーバーレイ操作用データモデル  </summary>
+        private OverlayDataModel _ControlOverlayDataModel;
+        /// <summary> オーバーレイ操作用データモデル  </summary>
+        public OverlayDataModel ControlOverlayDataModel
         {
-            get { return this._AddOverlayDataModel; }
+            get { return this._ControlOverlayDataModel; }
             set
             {
-                if (this._AddOverlayDataModel == value) return;
+                if (this._ControlOverlayDataModel == value) return;
 
-                this._AddOverlayDataModel = value;
+                this._ControlOverlayDataModel = value;
                 base.OnPropertyChanged("AddOverlayDataModel");
             }
         }
@@ -67,13 +68,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             get { return _NewOverlayAppendCommand = _NewOverlayAppendCommand ?? new DelegateCommand(this._NewOverlayAppendExecute, this._CanNewOverlayAppendExecute); }
         }
         #endregion 
-        #region #- [Command] DelegateCommand<bool?>.OverlayAddEnterCommand - ＜新規オーバーレイ追加確定コマンド＞ -----
-        /// <summary> 新規オーバーレイ追加確定コマンド＜コマンド＞ </summary>
-        private DelegateCommand<string> _OverlayAddEnterCommand;
-        /// <summary> 新規オーバーレイ追加確定コマンド＜コマンド＞ </summary>
-        public DelegateCommand<string> OverlayAddEnterCommand
+        #region #- [Command] DelegateCommand<bool?>.OverlayControlEnterCommand - ＜オーバーレイ操作確定コマンド＞ -----
+        /// <summary> オーバーレイ操作確定コマンド＜コマンド＞ </summary>
+        private DelegateCommand<string> _OverlayControlEnterCommand;
+        /// <summary> オーバーレイ操作確定コマンド＜コマンド＞ </summary>
+        public DelegateCommand<string> OverlayControlEnterCommand
         {
-            get { return _OverlayAddEnterCommand = _OverlayAddEnterCommand ?? new DelegateCommand<string>(this._OverlayAddEnterExecute, this._CanOverlayAddEnterExecute); }
+            get { return _OverlayControlEnterCommand = _OverlayControlEnterCommand ?? new DelegateCommand<string>(this._OverlayControlEnterExecute, this._CanOverlayControlEnterExecute); }
         }
         #endregion 
         
@@ -105,15 +106,27 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
+        #region #- [Command] DelegateCommand<OverlayViewComponent>.OverlayDeleteCommand - ＜オーバーレイ削除コマンド＞ -----
+        /// <summary> オーバーレイ削除コマンド＜コマンド＞ </summary>
+        private DelegateCommand<OverlayViewComponent> _OverlayDeleteCommand;
+        /// <summary> オーバーレイ削除コマンド＜コマンド＞ </summary>
+        public DelegateCommand<OverlayViewComponent> OverlayDeleteCommand
+        {
+            get { return _OverlayDeleteCommand = _OverlayDeleteCommand ?? new DelegateCommand<OverlayViewComponent>(this._OverlayDeleteExecute, this._CanOverlayDeleteExecute); }
+        }
+        #endregion 
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイ管理コンポーネント／コンストラクタ
         /// </summary>
-        public OverlayManageComponent(TimelineComponent pComponent)
-            : base()
+        public OverlayManageComponent(TimelineComponent pComponent, CommonDataModel pCommonDataModel)
+            : base(pCommonDataModel)
         {
             this.TimelineComponent = pComponent;
             this.initComponent();
+
+            this.OverlayManageModule.OverlayDataModelLoad(base.CommonDataModel, this.TimelineComponent, this.OverlayManageDataModel);
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -129,7 +142,27 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
-        
+
+        /// <summary> [TimerEvent] オーバーレイデータの自動セーブを実行します。
+        /// </summary>
+        /// <param name="o"> タイマーオブジェクト </param>
+        /// <param name="e"> タイマーイベント </param>
+        public void OverlayAutoSave(object o, ElapsedEventArgs e)
+        {
+            if (this.CommonDataModel.ApplicationData == null) return;
+
+            var targets = this.OverlayManageDataModel.OverlayViewComponentCollection.Where(d => d.OverlayDataModel.SaveChangedTarget);
+            if (targets.Count() == 0) return;
+            
+            List<OverlayDataModel> dataModelList = new List<OverlayDataModel>();
+            foreach(var item in targets)
+            {
+                dataModelList.Add(item.OverlayDataModel);
+            }
+
+            this.OverlayManageModule.OverlayDataModelSave(this.CommonDataModel.ApplicationData, dataModelList);
+        }
+
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
         #region #- [Method] CanExecute,Execute @ OverlayManageClosedCommand - ＜オーバーレイ管理終了コマンド＞ -----
@@ -154,49 +187,43 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         private void _NewOverlayAppendExecute()
         {
             // --- 追加用データ生成
-            this.AddOverlayDataModel = new OverlayDataModel();
-            this.OverlayManageModule.CreateOverlayTypeCollection(this.AddOverlayDataModel);
+            this.ControlOverlayDataModel = new OverlayDataModel();
+            this.OverlayManageModule.CreateOverlayTypeCollection(this.ControlOverlayDataModel);
 
             // --- モーダルを開く
+            this.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility = true;
             this.OverlayManageDataModel.OverlayManageData.NowOverlayAddModalVisibility = true;
         }
         #endregion 
         
-        #region #- [Method] CanExecute,Execute @ OverlayAddEnterCommand - ＜新規オーバーレイ追加確定コマンド＞ -----
-        /// <summary> 実行可能確認＜新規オーバーレイ追加確定コマンド＞ </summary>
+        #region #- [Method] CanExecute,Execute @ OverlayControlEnterCommand - ＜オーバーレイ操作確定コマンド＞ -----
+        /// <summary> 実行可能確認＜オーバーレイ操作確定コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
         /// <returns> 実行可能: ture / 実行不可能: false </returns>
-        private bool _CanOverlayAddEnterExecute(string para)
+        private bool _CanOverlayControlEnterExecute(string para)
         {
             return true;
         }
 
-        /// <summary> コマンド実行＜新規オーバーレイ追加確定コマンド＞ </summary>
+        /// <summary> コマンド実行＜オーバーレイ操作確定コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
-        private void _OverlayAddEnterExecute(string para)
+        private void _OverlayControlEnterExecute(string para)
         {
             switch (para)
             {
                 case "Add":
+                    this.OverlayManageModule.AddNewOverlay(this.OverlayManageDataModel, this.ControlOverlayDataModel, this.TimelineComponent, base.CommonDataModel);
+                    break;
+                case "Delete":
+
                     break;
                 default:
-                    this.OverlayManageDataModel.OverlayManageData.NowOverlayAddModalVisibility = false;
-                    return;
+                    break;
             }
 
-            // --- 判定後、追加
-            OverlayViewComponent component = new OverlayViewComponent();
-            component.OverlayDataModel = this.AddOverlayDataModel;
-            this.OverlayManageModule.SetDefaultOverlayWindowData(component.OverlayDataModel.OverlayWindowData);
-            this.OverlayManageModule.SetDefaultOverlaySettingData(component.OverlayDataModel.OverlayOptionData);
-
-            component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = this.TimelineComponent.TimelineDataModel.TimelineItemCollection };
-
-            this.OverlayManageDataModel.OverlayViewComponentCollection.Add(component);
-
-            this.OverlayManageModule.ShowOverlay(this.TimelineComponent, component);
-
+            this.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility = false;
             this.OverlayManageDataModel.OverlayManageData.NowOverlayAddModalVisibility = false;
+            this.OverlayManageDataModel.OverlayManageData.OverlayDeleteModalVisibility = false;
         }
         #endregion 
 
@@ -259,6 +286,28 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayManageModule.ShowCustomWindow(para);
         }
         #endregion 
+        
+        #region #- [Method] CanExecute,Execute @ OverlayDeleteCommand - ＜オーバーレイ削除コマンド＞ -----
+        /// <summary> 実行可能確認＜オーバーレイ削除コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        /// <returns> 実行可能: ture / 実行不可能: false </returns>
+        private bool _CanOverlayDeleteExecute(OverlayViewComponent para)
+        {
+            return true;
+        }
 
+        /// <summary> コマンド実行＜オーバーレイ削除コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _OverlayDeleteExecute(OverlayViewComponent para)
+        {
+            // --- 追加用データ生成
+            this.ControlOverlayDataModel = new OverlayDataModel();
+            this.OverlayManageModule.CreateOverlayTypeCollection(this.ControlOverlayDataModel);
+
+            // --- モーダルを開く
+            this.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility = true;
+            this.OverlayManageDataModel.OverlayManageData.OverlayDeleteModalVisibility = true;
+        }
+        #endregion 
     }
 }

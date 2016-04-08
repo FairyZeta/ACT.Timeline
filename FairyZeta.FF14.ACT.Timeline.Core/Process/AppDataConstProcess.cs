@@ -3,37 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Data;
+using FairyZeta.FF14.ACT.Timeline.Core.Data;
 
-namespace FairyZeta.FF14.ACT.Timeline.Core.DataFilter
+namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 {
-    /// <summary> [基底] タイムライン／データフィルタ
+    /// <summary> タイムライン／アプリケーションデータ初期設定プロセス
     /// </summary>
-    public class _DataFilter
+    public class AppDataConstProcess : _Process
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> [基底] タイムライン／データフィルタ／コンストラクタ
+        /// <summary> タイムライン／アプリケーションデータ初期設定プロセス
         /// </summary>
-        public _DataFilter()
+        public AppDataConstProcess()
+            : base()
         {
-            this.initFilter();
+            this.initProcess();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
-        
-        /// <summary> データフィルタの初期化を実行します。
+
+        /// <summary> プロセスの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
-        private bool initFilter()
+        private bool initProcess()
         {
             return true;
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> アプリケーションデータに各種ファイル名を設定します。
+        /// </summary>
+        /// <param name="pApplicationData"> 設定するファイル名 </param>
+        public void SetFileName(ApplicationData pApplicationData)
+        {
+            pApplicationData.TimelineSettingsFileName = "TimelineSettings.xml";
+            pApplicationData.OverlayDataPartName = "OverlayData";
+
+        }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 

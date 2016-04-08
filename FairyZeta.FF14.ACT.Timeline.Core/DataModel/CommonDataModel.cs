@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
-using System.Xml;
+using System.Xml.Serialization;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 {
@@ -15,8 +15,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> タイムラインアプリケーションデータ
+        /// </summary>
+        [XmlIgnore]
+        public ApplicationData ApplicationData { get; set; }
+
         /// <summary> 共通表示データ
         /// </summary>
+        [XmlIgnore]
         public CommonViewData CommonViewData { get; set; }
 
         /// <summary> プラグイン設定データ
@@ -41,7 +47,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// <returns> 正常終了時 True </returns> 
         private bool initDataModel()
         {
+            this.ApplicationData = new ApplicationData();
             this.CommonViewData = new CommonViewData();
+            this.PluginSettingsData = new PluginSettingsData();
+
             return true;
         }
 

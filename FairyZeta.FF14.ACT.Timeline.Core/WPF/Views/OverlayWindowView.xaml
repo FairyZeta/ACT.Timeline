@@ -23,9 +23,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/_TimelineStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="Button" x:Key="WindowButtons">
-                <Setter Property="Opacity" Value="0"/>
-            </Style>
         </ResourceDictionary>
     </Window.Resources>
     

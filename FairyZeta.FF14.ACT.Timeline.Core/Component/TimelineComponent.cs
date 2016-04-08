@@ -14,7 +14,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 {
     /// <summary> タイムライン／タイムラインコンポーネント
     /// </summary>
-    public class TimelineComponent
+    public class TimelineComponent : _Component
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -31,8 +31,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         public TimelineCreateModule TimelineCreateModule { get; private set; }
 
         public TimelineControlModule TimelineControlModule { get; private set; }
-
-        public ViewControlModule ViewControlModule { get; private set; }
 
         #endregion
 
@@ -54,7 +52,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
         /// <summary> タイムライン／タイムラインコンポーネント／コンストラクタ
         /// </summary>
-        public TimelineComponent()
+        public TimelineComponent(CommonDataModel pCommonDataModel)
+            : base(pCommonDataModel)
         {
             this.initComponent();
 
@@ -73,7 +72,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
             this.TimelineCreateModule = new TimelineCreateModule();
             this.TimelineControlModule = new TimelineControlModule(this.TimelineDataModel, this.TimerDataModel);
-            this.ViewControlModule = new ViewControlModule();
 
             return true;
         }

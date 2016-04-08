@@ -15,6 +15,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        #region #- [Property] int.ID - ＜管理用ID＞ -----
+        /// <summary> 管理用ID </summary>
+        private int _ID;
+        /// <summary> 管理用ID </summary>
+        public int ID
+        {
+            get { return this._ID; }
+            set
+            {
+                if (this._ID == value) return;
+
+                this._ID = value;
+                base.OnPropertyChanged("ID");
+            }
+        }
+        #endregion
+
         #region #- [Property] double.WindowWidth - ＜ウィンドウの幅＞ -----
         /// <summary> ウィンドウの高さ </summary>
         private double _WindowWidth;
@@ -200,6 +217,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
+            this.ID = 0;
             this.WindowVisibility = false;
             this.WindowLock = false;
             return true;

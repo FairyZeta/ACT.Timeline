@@ -29,6 +29,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] bool.ModalBaseVisibility - ＜モーダルベース表示状態＞ -----
+        /// <summary> モーダルベース表示状態 </summary>
+        private bool _ModalBaseVisibility;
+        /// <summary> モーダルベース表示状態 </summary>
+        public bool ModalBaseVisibility
+        {
+            get { return this._ModalBaseVisibility; }
+            set
+            {
+                if (this._ModalBaseVisibility == value) return;
+
+                this._ModalBaseVisibility = value;
+                base.OnPropertyChanged("ModalBaseVisibility");
+            }
+        }
+        #endregion
         #region #- [Property] bool.NowOverlayAddModal - ＜新規オーバーレイ追加モーダル表示＞ -----
         /// <summary> 新規オーバーレイ追加モーダル表示 </summary>
         private bool _NowOverlayAddModalVisibility;
@@ -42,6 +58,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._NowOverlayAddModalVisibility = value;
                 base.OnPropertyChanged("NowOverlayAddModalVisibility");
+            }
+        }
+        #endregion
+        #region #- [Property] bool.OverlayDeleteModalVisibility - ＜オーバーレイ削除モーダル表示状態＞ -----
+        /// <summary> オーバーレイ削除モーダル表示状態 </summary>
+        private bool _OverlayDeleteModalVisibility;
+        /// <summary> オーバーレイ削除モーダル表示状態 </summary>
+        public bool OverlayDeleteModalVisibility
+        {
+            get { return this._OverlayDeleteModalVisibility; }
+            set
+            {
+                if (this._OverlayDeleteModalVisibility == value) return;
+
+                this._OverlayDeleteModalVisibility = value;
+                base.OnPropertyChanged("OverlayDeleteModalVisibility");
             }
         }
         #endregion
@@ -88,7 +120,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
+            this.ModalBaseVisibility = false;
             this.NowOverlayAddModalVisibility = false;
+            this.OverlayDeleteModalVisibility = false;
             this.OverlayManageWindowClosed = false;
 
             return true;

@@ -14,6 +14,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
     {
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        private DataModel.CommonDataModel model;
         /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> [画面デザイン用] タイムライン／タイムラインデータモデル／コンストラクタ
@@ -32,6 +33,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         /// <returns> 正常終了時 True </returns> 
         private bool initComponent()
         {
+            model = new DataModel.CommonDataModel();
             return true;
         }
 
@@ -43,8 +45,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         /// </summary>
         private void createDesingData_P001()
         {
-            base.TimelineComponent = new Component.TimelineComponent();
-            base.OverlayViewComponent = new Component.OverlayViewComponent();
+            base.TimelineComponent = new Component.TimelineComponent(model);
+            base.OverlayViewComponent = new Component.OverlayViewComponent(model);
 
             for (decimal d = 0; d < (decimal)60.0; d += (decimal)1.0)
             {

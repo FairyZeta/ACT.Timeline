@@ -9,7 +9,10 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
+using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Component;
+using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
+using FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Forms
 {
@@ -17,9 +20,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Forms
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        public CommonDataModel CommonDataModel { get; private set; }
         public TimelineComponent TimelineComponent { get; private set; }
 
         private TimelineCore timelineCore;
+
+        private PluginApplicationView applicationView;
+        private PluginApplicationViewModel applicationViewModel;
 
         private bool updateFromOverlayMove;
 
@@ -29,7 +36,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Forms
         {
             InitializeComponent();
 
-            this.TimelineComponent = new Component.TimelineComponent();
+            this.applicationView = this.elementHost.Child as PluginApplicationView;
+            this.applicationViewModel = this.applicationView.DataContext as PluginApplicationViewModel;
+
+            this.TimelineComponent = new TimelineComponent(this.CommonDataModel);
 
             timelineCore = pTimelineCore;
             updateFromOverlayMove = false;

@@ -86,6 +86,9 @@
     <Compile Include="Component\OverlayManageComponent.cs" />
     <Compile Include="Component\_Component.cs" />
     <Compile Include="DataFilter\ActivityNameFilter.cs" />
+    <Compile Include="DataFilter\CommonFilter.cs" />
+    <Compile Include="DataFilter\JobFilter.cs" />
+    <Compile Include="DataFilter\TypeFilter.cs" />
     <Compile Include="DataFilter\_DataFilter.cs" />
     <Compile Include="DataModel\CommonDataModel.cs" />
     <Compile Include="DataModel\OverlayDataModel.cs" />
@@ -95,6 +98,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataModel\_DataModel.cs" />
+    <Compile Include="Data\ApplicationData.cs" />
     <Compile Include="Data\CommonViewData.cs" />
     <Compile Include="Data\OverlayColorSettingsData.cs" />
     <Compile Include="Data\OverlayContentSettingsData.cs" />
@@ -117,11 +121,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\_Data.cs" />
+    <Compile Include="Module\AppDataCreateModule.cs" />
     <Compile Include="Module\OverlayCustomModule.cs" />
     <Compile Include="Module\OverlayManageModule.cs" />
+    <Compile Include="Module\AppCommonTimerModule.cs" />
+    <Compile Include="Process\AppDataFileManageProcess.cs" />
+    <Compile Include="Process\AppDataPathCreateProcess.cs" />
+    <Compile Include="Process\AppDataConstProcess.cs" />
+    <Compile Include="Process\SetFilterProcess.cs" />
     <Compile Include="Module\TimelineControlModule.cs" />
     <Compile Include="Module\TimelineCreateModule.cs" />
-    <Compile Include="Module\ViewControlModule.cs" />
+    <Compile Include="Module\OverlayControlModule.cs" />
     <Compile Include="Module\ViewManageModule.cs" />
     <Compile Include="Module\_Module.cs" />
     <Compile Include="Process\OverlayViewOpenProcess.cs" />
@@ -161,12 +171,15 @@
     <Compile Include="WPF\Desing\Desing_BaseWindowViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WPF\Desing\Desing_TimelineDataModel.cs" />
     <Compile Include="WPF\ViewModels\OverlayWindowViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WPF\ViewModels\OverlayCustomWindowViewModel.cs" />
+    <Compile Include="WPF\ViewModels\PluginApplicationViewModel.cs" />
     <Compile Include="WPF\ViewModels\_ViewModels.cs" />
+    <Compile Include="WPF\Views\PluginApplicationView.xaml.cs">
+      <DependentUpon>PluginApplicationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\Views\OverlayCustomWindow.xaml.cs">
       <DependentUpon>OverlayCustomWindow.xaml</DependentUpon>
     </Compile>
@@ -270,6 +283,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WPF\Style\_TimelineStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\PluginApplicationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

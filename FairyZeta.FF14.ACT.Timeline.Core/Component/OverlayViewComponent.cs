@@ -11,13 +11,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 {
     /// <summary> タイムライン／オーバーレイ表示コンポーネント
     /// </summary>
-    public class OverlayViewComponent
+    public class OverlayViewComponent : _Component
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> オーバーレイデータモデル
         /// </summary>
         public OverlayDataModel OverlayDataModel { get; set; }
+
+        /// <summary> オーバーレイコントロールモジュール
+        /// </summary>
+        public OverlayControlModule OverlayControlModule { get; set; }
 
         #region #- [Command] DelegateCommand.OverlayClosedCommand - ＜オーバーレイ終了コマンド＞ -----
         /// <summary> オーバーレイ終了コマンド＜コマンド＞ </summary>
@@ -39,23 +43,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
-        #region #- [Command] DelegateCommand<Job>.OverlayJobFirterCommand - ＜オーバーレイジョブフィルタ設定コマンド＞ -----
+        #region #- [Command] DelegateCommand<Job>.OverlayJobFilterCommand - ＜オーバーレイジョブフィルタ設定コマンド＞ -----
         /// <summary> オーバーレイジョブフィルタ設定コマンド＜コマンド＞ </summary>
-        private DelegateCommand<Job?> _OverlayJobFirterCommand;
+        private DelegateCommand<Job?> _OverlayJobFilterCommand;
         /// <summary> オーバーレイジョブフィルタ設定コマンド＜コマンド＞ </summary>
-        public DelegateCommand<Job?> OverlayJobFirterCommand
+        public DelegateCommand<Job?> OverlayJobFilterCommand
         {
-            get { return _OverlayJobFirterCommand = _OverlayJobFirterCommand ?? new DelegateCommand<Job?>(this._OverlayJobFirterExecute, this._CanOverlayJobFirterExecute); }
+            get { return _OverlayJobFilterCommand = _OverlayJobFilterCommand ?? new DelegateCommand<Job?>(this._OverlayJobFilterExecute, this._CanOverlayJobFilterExecute); }
         }
         #endregion 
 
-        #region #- [Command] DelegateCommand<TankMode>.OverlayTankModeFirterCommand - ＜オーバーレイタンクモードフィルタ設定コマンド＞ -----
+        #region #- [Command] DelegateCommand<TankMode>.OverlayTankModeFilterCommand - ＜オーバーレイタンクモードフィルタ設定コマンド＞ -----
         /// <summary> オーバーレイタンクモードフィルタ設定コマンド＜コマンド＞ </summary>
-        private DelegateCommand<TankMode?> _OverlayTankModeFirterCommand;
+        private DelegateCommand<TankMode?> _OverlayTankModeFilterCommand;
         /// <summary> オーバーレイタンクモードフィルタ設定コマンド＜コマンド＞ </summary>
-        public DelegateCommand<TankMode?> OverlayTankModeFirterCommand
+        public DelegateCommand<TankMode?> OverlayTankModeFilterCommand
         {
-            get { return _OverlayTankModeFirterCommand = _OverlayTankModeFirterCommand ?? new DelegateCommand<TankMode?>(this._OverlayTankModeFirterExecute, this._CanOverlayTankModeFirterExecute); }
+            get { return _OverlayTankModeFilterCommand = _OverlayTankModeFilterCommand ?? new DelegateCommand<TankMode?>(this._OverlayTankModeFilterExecute, this._CanOverlayTankModeFilterExecute); }
         }
         #endregion 
 
@@ -78,15 +82,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             get { return _WidthValueDownCommand = _WidthValueDownCommand ?? new DelegateCommand<string>(this._WidthValueDownExecute); }
         }
         #endregion 
-        
-
-
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイ表示コンポーネント／コンストラクタ
         /// </summary>
-        public OverlayViewComponent()
+        public OverlayViewComponent(CommonDataModel pCommonDataModel)
+            : base(pCommonDataModel)
         {
             this.initComponent();
         }
@@ -99,6 +101,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         private bool initComponent()
         {
             this.OverlayDataModel = new OverlayDataModel();
+            this.OverlayControlModule = new OverlayControlModule();
+
             return true;
         }
 
@@ -135,38 +139,40 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         private void _OverlayTypeFilterExecute(TimelineType? para)
         {
             if (!para.HasValue) return;
+            this.OverlayControlModule.SetTimelineTypeFilter(this.OverlayDataModel, para.Value);
         }
         #endregion 
 
-        #region #- [Method] CanExecute,Execute @ OverlayJobFirterCommand - ＜オーバーレイジョブフィルタ設定コマンド＞ -----
+        #region #- [Method] CanExecute,Execute @ OverlayJobFilterCommand - ＜オーバーレイジョブフィルタ設定コマンド＞ -----
         /// <summary> 実行可能確認＜オーバーレイジョブフィルタ設定コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
         /// <returns> 実行可能: ture / 実行不可能: false </returns>
-        private bool _CanOverlayJobFirterExecute(Job? para)
+        private bool _CanOverlayJobFilterExecute(Job? para)
         {
             return true;
         }
 
         /// <summary> コマンド実行＜オーバーレイジョブフィルタ設定コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
-        private void _OverlayJobFirterExecute(Job? para)
+        private void _OverlayJobFilterExecute(Job? para)
         {
             if (!para.HasValue) return;
+            this.OverlayControlModule.SetJobFilter(this.OverlayDataModel, para.Value);
         }
         #endregion
 
-        #region #- [Method] CanExecute,Execute @ OverlayTankModeFirterCommand - ＜オーバーレイタンクモードフィルタ設定コマンド＞ -----
+        #region #- [Method] CanExecute,Execute @ OverlayTankModeFilterCommand - ＜オーバーレイタンクモードフィルタ設定コマンド＞ -----
         /// <summary> 実行可能確認＜オーバーレイタンクモードフィルタ設定コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
         /// <returns> 実行可能: ture / 実行不可能: false </returns>
-        private bool _CanOverlayTankModeFirterExecute(TankMode? para)
+        private bool _CanOverlayTankModeFilterExecute(TankMode? para)
         {
             return true;
         }
 
         /// <summary> コマンド実行＜オーバーレイタンクモードフィルタ設定コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
-        private void _OverlayTankModeFirterExecute(TankMode? para)
+        private void _OverlayTankModeFilterExecute(TankMode? para)
         {
             if (!para.HasValue) return;
         }

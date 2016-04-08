@@ -12,6 +12,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     {
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> タイムラインアイテムのジョブタイプ
+        /// </summary>
+        public Job JobType { get; set; }
+
+        /// <summary> タイムラインアイテムタイプ
+        /// </summary>
         public TimelineType TimelineType { get; set; }
 
         public ActivityAlert ActivityAlert { get; set; }

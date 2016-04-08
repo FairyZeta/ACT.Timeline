@@ -79,7 +79,7 @@ namespace FairyZeta.Framework.Process
             {
                 this.xmlSave(path, obj);
             }
-            finally
+            catch
             {
             }
 
@@ -110,11 +110,12 @@ namespace FairyZeta.Framework.Process
             try
             {
                 obj = this.xmlLoad(path, type);
+                return obj;
             }
-            finally
+            catch
             {
+                return null;
             }
-            return obj;
         }
 
         /// <summary> XMLファイルを逆シリアライズします。 

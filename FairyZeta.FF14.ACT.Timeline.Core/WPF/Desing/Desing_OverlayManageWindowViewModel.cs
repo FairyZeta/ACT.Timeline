@@ -14,6 +14,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        DataModel.CommonDataModel model;
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> [デザイン用] オーバーレイ管理ビューモデル／コンストラクタ
@@ -23,7 +25,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         {
             this.initViewModel();
 
-            base.OverlayManageComponent = new Component.OverlayManageComponent(new TimelineComponent());
+            base.OverlayManageComponent = new Component.OverlayManageComponent(new TimelineComponent(model), model);
             this.createDesingData_P001();
         }
 
@@ -34,6 +36,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         /// <returns> 正常終了時 True </returns> 
         private bool initViewModel()
         {
+            this.model = new DataModel.CommonDataModel();
             return true;
         }
 
@@ -47,7 +50,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         {
             for(int i = 0; i<30;i++)
             {
-                OverlayViewComponent component = new OverlayViewComponent();
+                OverlayViewComponent component = new OverlayViewComponent(model);
                 component.OverlayDataModel.OverlayWindowData.OverlayName = "デザイン用オーバーレイ" + i.ToString();
                 component.OverlayDataModel.OverlayWindowData.OverlayType = OverlayType.StandardTimeline;
 

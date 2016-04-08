@@ -151,19 +151,20 @@
                                 Command="{Binding OverlayManageComponent.OverlayManageClosedCommand}" Height="20" Width="20"/>
             </StackPanel>
 
-            <!-- 新規オーバーレイ追加モーダル -->
+            <!-- モーダル -->
             <Border Background="Black" Grid.ColumnSpan="100" Grid.RowSpan="100" Opacity="0.5">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="Visibility" Value="Collapsed"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.NowOverlayAddModalVisibility}" Value="True">
+                            <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
             </Border>
+            <!-- 新規追加モーダル -->
             <Border Background="White" Width="400" Height="180" Grid.ColumnSpan="100" Grid.RowSpan="100" CornerRadius="5">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
@@ -195,8 +196,8 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Button Content="Add" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayAddEnterCommand}" CommandParameter="Add"/>
-                        <Button Content="Cancel" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayAddEnterCommand}" />
+                        <Button Content="Add" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayControlEnterCommand}" CommandParameter="Add"/>
+                        <Button Content="Cancel" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayControlEnterCommand}" />
                     </StackPanel>
                 </Grid>
             </Border>
