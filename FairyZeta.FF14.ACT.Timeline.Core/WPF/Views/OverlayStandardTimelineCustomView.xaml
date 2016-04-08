@@ -1,0 +1,205 @@
+﻿<UserControl x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.OverlayStandardTimelineCustomView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
+             xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+             xmlns:enum="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=dData:Desing_OverlayCustomWindowViewModel, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="DataGridWidthTextBox" TargetType="{x:Type TextBox}">
+                <Setter Property="Width" Value="50"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            </Style>
+            <Style x:Key="DataGridCheckBoxStyle" TargetType="{x:Type CheckBox}">
+                <Setter Property="Width" Value="100"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="DoubleValueUpDownRepeatButton" TargetType="{x:Type RepeatButton}">
+                <Setter Property="Width" Value="20"/>
+                <Setter Property="Height" Value="10"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
+            <Style x:Key="DoubleValueUpRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
+                <Setter Property="Content" Value="+"/>
+                <Setter Property="BorderThickness" Value="0 1 1 1"/>
+                <Setter Property="Padding" Value="0 -5 0 0"/>
+            </Style>
+            <Style x:Key="DoubleValueDownRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
+                <Setter Property="Content" Value="-"/>
+                <Setter Property="BorderThickness" Value="0 0 1 1"/>
+                <Setter Property="Padding" Value="1 -5 0 0"/>
+            </Style>
+
+            <Style x:Key="ItemStackPanel" TargetType="{x:Type StackPanel}">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Margin" Value="0 2 0 2"/>
+            </Style>
+            
+            <Style x:Key="JobFilterTitleLabel" TargetType="{x:Type Label}">
+            </Style>
+
+            <Style x:Key="TypeFilterCheckBoxStyle" TargetType="{x:Type CheckBox}">
+                <Setter Property="Width" Value="140"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Margin" Value="10 2"/>
+            </Style>
+
+            <Style x:Key="TankModeFilterCheckBoxStyle" TargetType="{x:Type CheckBox}">
+                <Setter Property="Width" Value="70"/>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33*"/>
+                <RowDefinition Height="55*"/>
+                <RowDefinition Height="12*"/>
+            </Grid.RowDefinitions>
+            <TabControl Grid.RowSpan="100">
+                <TabItem Header="Common">
+                    <Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="DataGrid">
+                    <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+                        <Grid Margin="5">
+                            <Label Content=" Overlay Type Filter " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <CheckBox Content="T-No" Style="{StaticResource DataGridCheckBoxStyle}"
+                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility}"/>
+                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <StackPanel>
+                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="TimeNoWidth"/>
+                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="TimeNoWidth"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <CheckBox Content="Time" Style="{StaticResource DataGridCheckBoxStyle}"
+                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility}"/>
+                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <StackPanel>
+                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="ActionTimeWidth"/>
+                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="ActionTimeWidth"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <CheckBox Content="Type" Style="{StaticResource DataGridCheckBoxStyle}"
+                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility}"/>
+                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <StackPanel>
+                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="TypeWidth"/>
+                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="TypeWidth"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <CheckBox Content="Job" Style="{StaticResource DataGridCheckBoxStyle}"
+                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility}"/>
+                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <StackPanel>
+                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="JobWidth"/>
+                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="JobWidth"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <CheckBox Content="TankMode" Style="{StaticResource DataGridCheckBoxStyle}" IsEnabled="False"
+                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TankModeVisibility}"/>
+                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" IsEnabled="False"
+                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.TankModeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <StackPanel>
+                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}" IsEnabled="False"
+                                                CommandParameter="TankModeWidth"/>
+                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}" IsEnabled="False"
+                                                CommandParameter="TankModeWidth"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <CheckBox Content="Action" Style="{StaticResource DataGridCheckBoxStyle}"
+                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility}"/>
+                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <StackPanel>
+                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="ActionWidth"/>
+                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="ActionWidth"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <CheckBox Content="Active" Style="{StaticResource DataGridCheckBoxStyle}"
+                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility}"/>
+                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <StackPanel>
+                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="ActiveWidth"/>
+                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="ActiveWidth"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <CheckBox Content="Alert" Style="{StaticResource DataGridCheckBoxStyle}"
+                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility}"/>
+                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <StackPanel>
+                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="AlertWidth"/>
+                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="AlertWidth"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <CheckBox Content="Jump" Style="{StaticResource DataGridCheckBoxStyle}"
+                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility}"/>
+                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <StackPanel>
+                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="JumpWidth"/>
+                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="JumpWidth"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </TabItem>
+            </TabControl>
+            <view:StandardTimelineView Grid.Column="1" Grid.RowSpan="100" Margin="10 50 10 50"/>
+        </Grid>
+    </Border>
+</UserControl>

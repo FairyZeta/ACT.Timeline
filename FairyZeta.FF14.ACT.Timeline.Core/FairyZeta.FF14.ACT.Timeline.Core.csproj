@@ -102,6 +102,7 @@
     <Compile Include="Data\OverlayManageData.cs" />
     <Compile Include="Data\OverlayItemVisibilitySettingsData.cs" />
     <Compile Include="Data\OverlayGenericSettingsData.cs" />
+    <Compile Include="Data\OverlayOptionData.cs" />
     <Compile Include="Data\PluginSettingsData.cs" />
     <Compile Include="Data\TimelineBaseData.cs" />
     <Compile Include="Data\TimelineItemData.cs" />
@@ -112,7 +113,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\ViewManageData.cs" />
-    <Compile Include="Data\OverlayOptionData.cs" />
     <Compile Include="Data\OverlayWindowData.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -176,14 +176,14 @@
     <Compile Include="WPF\Views\OverlayManageWindowView.xaml.cs">
       <DependentUpon>OverlayManageWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WPF\Views\OverlayStandardTimelineCustomView.xaml.cs">
+      <DependentUpon>OverlayStandardTimelineCustomView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\Views\OverlayWindowView.xaml.cs">
       <DependentUpon>OverlayWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Views\OverlayGenericCustomView.xaml.cs">
       <DependentUpon>OverlayGenericCustomView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WPF\Views\OverlayStandardTimelineCustomView.xaml.cs">
-      <DependentUpon>OverlayStandardTimelineCustomView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Views\StandardTimelineView_OLD.xaml.cs">
       <DependentUpon>StandardTimelineView_OLD.xaml</DependentUpon>
@@ -228,7 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
-      <HintPath>D:\My System\Online Game\Tool\Advanced Combat Tracker\Advanced Combat Tracker.exe</HintPath>
+      <HintPath>..\..\..\..\Advanced Combat Tracker\Advanced Combat Tracker.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="LibZ.Bootstrap">
@@ -285,15 +285,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="WPF\Views\OverlayStandardTimelineCustomView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPF\Views\OverlayWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WPF\Views\OverlayGenericCustomView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="WPF\Views\OverlayStandardTimelineCustomView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
