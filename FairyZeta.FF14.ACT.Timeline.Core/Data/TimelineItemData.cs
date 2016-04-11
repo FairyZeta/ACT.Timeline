@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 {
@@ -25,7 +26,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// </summary>
         public TimelineType TimelineType { get; set; }
 
-        public ActivityAlert ActivityAlert { get; set; }
+        public TimelineAlertObjectModel ActivityAlert { get; set; }
 
         #region #- [Property] int.ActivityIndex - ＜アクティビティ管理番号＞ -----
         /// <summary> アクティビティ管理番号 </summary>
@@ -127,7 +128,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
                     return false;
                 }
                 return true;
-;
             }
         }
 
@@ -347,7 +347,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         /// <summary> OnPropertyChangedを発行し、画面を更新します。
         /// </summary>
-        public void ViewReflesh()
+        public void ViewRefresh()
         {
             base.OnPropertyChanged("ActiveTime");
             base.OnPropertyChanged("ActiveIndicatorVisibility");

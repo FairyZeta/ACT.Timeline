@@ -10,12 +10,21 @@ using FairyZeta.FF14.ACT.Timeline.Core.Forms;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
 {
-    public class TimelineCore : IActPluginV1
+    /// <summary> タイムライン／コア
+    /// </summary>
+    public class TimelineCore
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> プラグインタブに追加されるスクリーンスペース
+        /// </summary>
         public TabPage ScreenSpace { get; private set; }
+        /// <summary> プラグイン一覧に表示されるステータスメッセージ
+        /// </summary>
         public Label StatusText { get; private set; }
+        /// <summary> プラグインまでのディレクトリパス
+        /// </summary>
+        public string PuluginDirectoryPath { get; private set; }
 
         public TimelineController Controller { get; private set; }
 
@@ -28,24 +37,29 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        public TimelineCore()
+        /// <summary> タイムライン／コア／コンストラクタ
+        /// </summary>
+        public TimelineCore(TabPage pluginScreenSpace, Label pluginStatusText, string pPuluginDirectoryPath)
         {
-            // See |InitPlugin()|
+            this.ScreenSpace = pluginScreenSpace;
+            this.StatusText = pluginStatusText;
+            Globals.PluginDllDirectoryPath = pPuluginDirectoryPath;
+
+            this.initCore();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
-      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
+        /// <summary> コアの初期化を実行します。
+        /// </summary>
+        /// <returns> 正常終了時 True </returns> 
+        private bool initCore()
         {
             try
             {
                 // DI log writer
                 Globals.WriteLogImpl = (str) => { ActGlobals.oFormActMain.WriteInfoLog(String.Format("act_timeline: {0}", str)); };
 
-                this.ScreenSpace = pluginScreenSpace;
-                this.StatusText = pluginStatusText;
 
                 this.StatusText.Text = "Loading Sprache.dll";
 #if DEBUG
@@ -74,7 +88,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
                 //Settings.AddIntSetting("TextWidth");
                 //Settings.AddIntSetting("BarWidth");
                 //Settings.AddIntSetting("OpacityPercentage");
-                
+
                 SetupTab();
                 //InjectButton();
 
@@ -88,45 +102,35 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             {
                 if (StatusText != null)
                     StatusText.Text = "Plugin Init Failed: " + e.Message;
+                return false;
             }
+            return true;
         }
+
+      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
-        #region delegates for PluginSettings
-
-        public string TimelineTxtFilePath
+        private void SetupTab()
         {
-            get { return Controller.TimelineTxtFilePath; }
-            set { Controller.TimelineTxtFilePath = value; }
+            ScreenSpace.Text = "FZ.Timeline";
+
+            tabPageControl = new ACTTabPageControl();
+            ScreenSpace.Controls.Add(tabPageControl);
+            ScreenSpace.Resize += screenSpace_Resize;
+            screenSpace_Resize(this, null);
+
+            tabPageControl.Show();
         }
 
-        public string FontString
+        private void screenSpace_Resize(object sender, EventArgs e)
         {
-            get { return TypeDescriptor.GetConverter(typeof(Font)).ConvertToString(TimelineView.TimelineFont); }
-            set { TimelineView.TimelineFont = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromString(value) as Font; }
+            tabPageControl.Location = new System.Drawing.Point(0, 0);
+            tabPageControl.Size = ScreenSpace.Size;
         }
-
-        public int TextWidth
-        {
-            get { return TimelineView.TextWidth; }
-            set { TimelineView.TextWidth = value; }
-        }
-
-        public int BarWidth
-        {
-            get { return TimelineView.BarWidth; }
-            set { TimelineView.BarWidth = value; }
-        }
-
-        public int OpacityPercentage
-        {
-            get { return (int)(TimelineView.MyOpacity * 100.0); }
-            set { TimelineView.MyOpacity = (double)value / 100.0; }
-        }
-
-        #endregion
         
+
         void TimelineView_DoubleClick(object sender, EventArgs e)
         {
             TimelineView.Hide();
@@ -169,23 +173,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             checkBoxShowView.Location = new Point(mainFormSize.Width - 435, 0);
         }
 
-        void SetupTab()
-        {
-            ScreenSpace.Text = "ACT Timeline";
-
-            tabPageControl = new ACTTabPageControl();
-            ScreenSpace.Controls.Add(tabPageControl);
-            ScreenSpace.Resize += ScreenSpace_Resize;
-            ScreenSpace_Resize(this, null);
-
-            tabPageControl.Show();
-        }
-
-        void ScreenSpace_Resize(object sender, EventArgs e)
-        {
-            tabPageControl.Location = new System.Drawing.Point(0, 0);
-            tabPageControl.Size = ScreenSpace.Size;
-        }
 
         void SetupUpdateChecker()
         {

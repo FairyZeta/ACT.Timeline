@@ -139,12 +139,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             //this.TimelineLogAnalyzerModule.SyncAnalayz(this.TimelineDataModel, this.TimerDataModel, line);
 
             //TimelineAnchor anchor = timeline.FindAnchorMatchingLogline(CurrentTime, logInfo.logLine);
-            if (this.TimelineDataModel.JumpSyncAnchorData != null)
+            if (this.TimelineDataModel.SynchroAnchorData != null)
             {
                 // ジャンプ
-                if (this.TimelineDataModel.JumpSyncAnchorData.Jump >= 0)
+                if (this.TimelineDataModel.SynchroAnchorData.Jump >= 0)
                 {
-                    if (this.TimelineDataModel.JumpSyncAnchorData.Jump == 0)
+                    if (this.TimelineDataModel.SynchroAnchorData.Jump == 0)
                     {
                         // 自動終了
                         this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
@@ -152,7 +152,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     else
                     {
                         // 通常ジャンプ
-                        this.TimelineControlModule.RelativeClock.CurrentTime = this.TimelineDataModel.JumpSyncAnchorData.TimeFromStart;
+                        this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
                     }
                 }
                 // シンク
@@ -162,12 +162,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     if (this.CommonDataModel.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run)
                     {
                         this.TimelineControlModule.TimerStart(this.CommonDataModel);
-                        this.TimelineControlModule.RelativeClock.CurrentTime = this.TimelineDataModel.JumpSyncAnchorData.TimeFromStart;
+                        this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
                     }
                     // 通常シンク
                     else
                     {
-                        this.TimelineControlModule.RelativeClock.CurrentTime = this.TimelineDataModel.JumpSyncAnchorData.TimeFromStart;
+                        this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
                     }
                 }
             }

@@ -1,4 +1,4 @@
-﻿namespace FairyZeta.FF14.ACT.FormsTest
+﻿namespace FairyZeta.FF14.ACT.Timeline.FormsTest
 {
     partial class Form1
     {

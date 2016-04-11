@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FairyZeta.Framework.ObjectModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
@@ -111,7 +112,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             timer.Interval = 50;
             timer.Start();
 
-            relativeClock = new RelativeClock();
+            relativeClock = new RelativeClock(true);
             Paused = true;
 
             ActGlobals.oFormActMain.OnLogLineRead += act_OnLogLineRead;

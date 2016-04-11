@@ -1,5 +1,20 @@
 ﻿namespace FairyZeta.FF14.ACT.Timeline.Core
 {
+    /// <summary> ENUM:アプリケーションステータス
+    /// </summary>
+    public enum AppStatus
+    {
+        /// <summary> 初期セットアップ未済 </summary>
+        NotInitSetup,
+        /// <summary> 通常モード </summary>
+        NormalMode,
+        /// <summary> セーフモード </summary>
+        SafeMode,
+        /// <summary> エラー発生中 </summary>
+        ErrorRun,
+        /// <summary> 終了処理中 </summary>
+        ExitedRun
+    }
 
     /// <summary> ENUM:タイマー状態
     /// </summary>
@@ -37,61 +52,79 @@
         Init,
         /// <summary> 未読込 </summary>
         NonLoad,
+        /// <summary> 読込中 </summary>
+        NowLoading,
         /// <summary> 成功 </summary>
         Success,
         /// <summary> 失敗 </summary>
         Failure
     }
 
+    /// <summary> ENUM: タイムラインタイプ
+    /// </summary>
     public enum TimelineType
     {
+        /// <summary> 不明 </summary>
         UNKNOWN,
+        /// <summary> 敵 </summary>
         ENEMY,
+        /// <summary> タンク </summary>
         TANK,
+        /// <summary> DPS </summary>
         DPS,
+        /// <summary> ヒーラー </summary>
         HEALER,
+        /// <summary> ペット </summary>
         PET,
+        /// <summary> ギミック </summary>
         GIMMICK
     }
 
+    /// <summary> ENUM: ジョブ
+    /// </summary>
     public enum Job
     {
+        /// <summary> 不明 </summary>
         UNKNOWN,
+        /// <summary> 無し </summary>
         NON,
 
+        ///<summary> ナ / ナイト　：PLD / Paladin </summary>
         PLD,
+        ///<summary> 戦 / 戦士　　：WAR / Warrior </summary>
         WAR,
+        ///<summary> 暗 / 暗黒騎士：DKN / DarkKnight  </summary>
         DKN,
 
+        ///<summary> モ / モンク　：MNK / Monk </summary>
         MNK,
+        ///<summary> 竜 / 竜騎士　：DRG / Dragoon </summary>
         DRG,
+        ///<summary> 詩 / 吟遊詩人：BRD / Bard </summary>
         BRD,
+        ///<summary> 忍 / 忍者　　：NIN / Ninja </summary>
         NIN,
+        ///<summary> 黒 / 黒魔道士：BLM / BlackMage </summary>
         BLM,
+        ///<summary> 召 / 召喚士　：SMN / Summoner </summary>
         SMN,
+        ///<summary> 機 / 機工士　：MCN / Machinist </summary>
         MCN,
 
+        ///<summary> 白 / 白魔道士：WHM / WhiteMage </summary>
         WHM,
+        ///<summary> 学 / 学者　　：SCH / Scholar </summary>
         SCH,
+        ///<summary> 占 / 占星術師：AST / Astrologian  </summary>
         AST,
 
+        /// <summary> ｘｘ・エギ </summary>
         EGI,
+        /// <summary> フェアリー・ｘｘ </summary>
         FAIRY,
+        /// <summary> オートタレット・ｘｘ </summary>
         TURRET
 
-        //ナ / ナイト　：PLD / Paladin
-        //モ / モンク　：MNK / Monk
-        //戦 / 戦士　　：WAR / Warrior
-        //竜 / 竜騎士　：DRG / Dragoon
-        //詩 / 吟遊詩人：BRD / Bard
-        //忍 / 忍者　　：NIN / Ninja
-        //白 / 白魔道士：WHM / WhiteMage
-        //黒 / 黒魔道士：BLM / BlackMage
-        //召 / 召喚士　：SMN / Summoner
-        //学 / 学者　　：SCH / Scholar
-        //暗 / 暗黒騎士：DKN / DarkKnight*
-        //占 / 占星術師：AST / Astrologian*
-        //機 / 機工士　：MCN / Machinist*
     }
 
 

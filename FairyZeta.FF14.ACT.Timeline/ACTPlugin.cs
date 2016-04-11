@@ -60,8 +60,7 @@ namespace FairyZeta.FF14.ACT.Timeline
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void Initialize(TabPage pluginScreenSpace, Label pluginStatusText)
         {
-            this.TimelineCore = new TimelineCore();
-            this.TimelineCore.InitPlugin(pluginScreenSpace, pluginStatusText);
+            this.TimelineCore = new TimelineCore(pluginScreenSpace, pluginStatusText, pluginDirectory);
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

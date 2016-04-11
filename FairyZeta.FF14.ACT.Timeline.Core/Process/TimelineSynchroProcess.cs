@@ -7,17 +7,17 @@ using FairyZeta.FF14.ACT.Timeline.Core.Data;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 {
-    /// <summary> タイムライン／ジャンプ処理プロセス
+    /// <summary> タイムライン／シンクロ処理プロセス
     /// </summary>
-    public class TimelineJumpProcess : _Process
+    public class TimelineSynchroProcess : _Process
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> タイムライン／ジャンプ処理プロセス／コンストラクタ
+        /// <summary> タイムライン／シンクロ処理プロセス／コンストラクタ
         /// </summary>
-        public TimelineJumpProcess()
+        public TimelineSynchroProcess()
             : base()
         {
             this.initProcess();
@@ -35,14 +35,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
-
-        /// <summary> ログの内容からジャンプまたはに一致するデータがあるかを判定します。
+        /// <summary> ログの内容からjumpまたはsyncに一致するデータがあるかを判定します。
         /// </summary>
-        /// <param name="pJumpItemList"> ジャンプアイテムリスト </param>
+        /// <param name="pJumpItemList"> 判定用アイテムリスト </param>
         /// <param name="pTimerData"> 現在のタイマー情報 </param>
         /// <param name="pLogLine"> 判定するログ </param>
-        /// <returns> 一致データがある場合は ジャンプ対象データ を返却、ない場合は Null 返却</returns>
-        public TimelineAnchorData JumpSyncDecision(IList<TimelineAnchorData> pItemList, TimerData pTimerData, string pLogLine)
+        /// <returns> 一致データがある場合は 対象データ, ない場合は Null </returns>
+        public TimelineAnchorData SynchronizeDecision(IList<TimelineAnchorData> pItemList, TimerData pTimerData, string pLogLine)
         {
             var jumplist = pItemList.Where(j => j.ActiveAt(pTimerData.CurrentCombatTime));
             foreach (var item in jumplist)
@@ -50,25 +49,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
                 if (item.Regex.IsMatch(pLogLine))
                     return item;
             }
-
-            return null;
-        }
-
-        /// <summary> ログの内容からジャンプに一致するデータがあるかを判定します。
-        /// </summary>
-        /// <param name="pJumpItemList"> ジャンプアイテムリスト </param>
-        /// <param name="pTimerData"> 現在のタイマー情報 </param>
-        /// <param name="pLogLine"> 判定するログ </param>
-        /// <returns> 一致データがある場合は ジャンプ対象データ を返却、ない場合は Null 返却</returns>
-        public TimelineAnchorData JumpDecision(IList<TimelineAnchorData> pJumpItemList, TimerData pTimerData, string pLogLine)
-        {
-            var jumplist = pJumpItemList.Where(j => j.ActiveAt(pTimerData.CurrentCombatTime));
-            foreach (var item in jumplist)
-            {
-                if (item.Regex.IsMatch(pLogLine))
-                    return item;
-            }
-
+            
             return null;
         }
 

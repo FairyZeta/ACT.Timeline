@@ -89,6 +89,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
             this.TimelineComponent = new TimelineComponent(this.CommonDataModel);
             this.OverlayManageComponent = new OverlayManageComponent(this.TimelineComponent, this.CommonDataModel);
 
+            this.CommonDataModel.AppStatusData.AppStatus = AppStatus.NormalMode;
 
             return true;
         }

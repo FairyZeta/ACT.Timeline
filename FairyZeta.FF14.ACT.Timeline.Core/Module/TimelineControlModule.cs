@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Diagnostics;
+using FairyZeta.Framework.ObjectModel;
 using FairyZeta.FF14.ACT.DataModel;
 using FairyZeta.FF14.ACT.Process;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
@@ -19,13 +20,21 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> タイムラインメインタイマー
+        /// <summary> 戦闘用メインタイマー
         /// </summary>
         public DispatcherTimer CurrentCombatTimer { get; set; }
 
-        private Stopwatch stopwatch;
+        /// <summary> オートロード用タイマー
+        /// </summary>
+        public DispatcherTimer AutoLoadTimer { get; set; }
 
-        public RelativeClock RelativeClock { get; private set; }
+        /// <summary> 戦闘用メイン計測時計
+        /// </summary>
+        public RelativeClock CurrentCombatRelativeClock { get; private set; }
+
+        /// <summary> ACTサウンド再生プロセス
+        /// </summary>
+        private SoundPlayProcess soundPlayProcess;
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -45,7 +54,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         private bool initModule()
         {
             this.CurrentCombatTimer = new DispatcherTimer();
-            this.RelativeClock = new RelativeClock();
+            this.CurrentCombatRelativeClock = new RelativeClock(false);
             return true;
         }
 
@@ -65,7 +74,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
                 case TimerStatus.Stop:
-                    this.RelativeClock.CurrentTime = 0;
+                    this.CurrentCombatRelativeClock.CurrentTime = 0;
                     break;
                 case TimerStatus.Pause:
                     break;
@@ -92,13 +101,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             pCommonDM.AppStatusData.CurrentCombatTimerStatus = TimerStatus.Stop;
             this.CurrentCombatTimer.Stop();
-            this.RelativeClock.CurrentTime = 0;
+            this.CurrentCombatRelativeClock.CurrentTime = 0;
 
             pTimerDM.TimerDeta.CurrentCombatTime = pTimerDM.TimerDeta.CurrentCombatStartTime;
 
             foreach (var item in pTimelineDM.TimelineItemCollection)
             {
-                item.ViewReflesh();
+                item.ViewRefresh();
             }
         }
 
@@ -136,8 +145,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             this.TimerStart(pCommonDM);
         }
 
-        //private double const upDateTime = Math.Round(0.1);
-
         /// <summary> 戦闘時間が進む時の処理を実行します。
         /// </summary>
         /// <param name="pTimerDataModel"></param>
@@ -146,14 +153,21 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             if (pCommonDM.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run) return;
 
-            pTimerDataModel.TimerDeta.CurrentCombatTime = this.RelativeClock.CurrentTime;
+            pTimerDataModel.TimerDeta.CurrentCombatTime = this.CurrentCombatRelativeClock.CurrentTime;
 
             foreach (var item in pTimelineDataModel.TimelineItemCollection)
             {
-                item.ViewReflesh();
+                item.ViewRefresh();
             }
 
+            // アラート再生
+            var pendingAlerts = pTimelineDataModel.PendingAlertsAt(pTimerDataModel.TimerDeta.CurrentCombatTime, AppConst.TooOldThreshold);
+            foreach (var pendingAlert in pendingAlerts)
+            {
+                pendingAlert.Processed = soundPlayProcess.PlayAlert(pendingAlert, pCommonDM.PluginSettingsData.PlaySoundByACT);
+            }
         }
+
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 

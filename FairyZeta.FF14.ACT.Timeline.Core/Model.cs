@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FairyZeta.FF14.ACT.Data;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
 {
@@ -25,46 +26,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             : base(String.Format("Resource \"{0}\" could not be found.", alias)) { }
     }
 
-    public class AlertSound
-    {
-        public string Filename { get; private set; }
-
-        List<string> aliases;
-        public IEnumerable<string> Aliases { get { return aliases; } }
-
-        public void AddAlias(string alias)
-        {
-            aliases.Add(alias);
-        }
-
-        public AlertSound(string filename)
-        {
-            aliases = new List<string>();
-            Filename = filename;
-        }
-    };
-    //TTS用クラス
-    public class AlertTTS : AlertSound
-    {
-        public AlertTTS(string txt) : base(txt)
-        {
-        }
-    }
-
     public class AlertSoundAssets
     {
-        List<AlertSound> allAlertSounds;
-        Dictionary<string, AlertSound> aliasMap;
+        List<AlertSoundData> allAlertSounds;
+        Dictionary<string, AlertSoundData> aliasMap;
 
         public AlertSoundAssets()
         {
-            allAlertSounds = new List<AlertSound>();
-            aliasMap = new Dictionary<string, AlertSound>();
+            allAlertSounds = new List<AlertSoundData>();
+            aliasMap = new Dictionary<string, AlertSoundData>();
         }
 
-        public AlertSound Get(string filenameOrAlias)
+        public AlertSoundData Get(string filenameOrAlias)
         {
-            AlertSound sound;
+            AlertSoundData sound;
             if (aliasMap.TryGetValue(filenameOrAlias, out sound))
             {
                 return sound;
@@ -76,7 +51,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             {
                 //tts判定
                 if (filenameOrAlias.IndexOf("tts ") == 0)
-                    return new AlertTTS(filenameOrAlias.Substring(4));
+                    return new AlertTtsData(filenameOrAlias.Substring(4));
 
                 // try prepending resource path
                 string filenameWithResourcePath = String.Format("{0}/{1}", Globals.SoundFilesRoot, filenameOrAlias);
@@ -89,12 +64,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
                 return sound;
             }
 
-            sound = new AlertSound(filenameOrAlias);
+            sound = new AlertSoundData(filenameOrAlias);
             allAlertSounds.Add(sound);
             return sound;
         }
 
-        public void RegisterAlias(AlertSound sound, string alias)
+        public void RegisterAlias(AlertSoundData sound, string alias)
         {
             try
             {
@@ -106,36 +81,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             }
         }
 
-        public IEnumerable<AlertSound> All
+        public IEnumerable<AlertSoundData> All
         {
             get { return allAlertSounds; }
         }
     };
 
-    public class ActivityAlert : IComparable<ActivityAlert>
-    {
-        public double TimeFromStart {
-            get {
-                return Activity.TimeFromStart - ReminderTimeOffset;
-            }  
-        }
-        public double ReminderTimeOffset { get; set; }
-        public AlertSound Sound { get; set; }
-        public TimelineActivity Activity { get; set; }
-        public bool Processed { get; set; }
 
-        public const double TooOldThreshold = 3.0;
-
-        public ActivityAlert()
-        {
-            Processed = false;
-        }
-    
-        public int CompareTo(ActivityAlert other)
-        {
-            return TimeFromStart.CompareTo(other.TimeFromStart);
-        }
-    };
 
 
     public class TimelineActivity
@@ -190,28 +142,4 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         }
     }
 
-    public class RelativeClock
-    {
-        System.Diagnostics.Stopwatch sw;
-        private double offset;
-
-        public RelativeClock()
-        {
-            sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
-        }
-
-        public double CurrentTime
-        {
-            get
-            {
-                return offset + ((double)sw.ElapsedMilliseconds) / 1000;
-            }
-            set
-            {
-                sw.Restart();
-                offset = value;
-            }
-        }
-    }
 }

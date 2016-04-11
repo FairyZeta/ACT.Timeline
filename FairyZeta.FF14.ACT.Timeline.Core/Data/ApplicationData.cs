@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
@@ -37,6 +38,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <summary> オーバーレイデータのファイルパス一覧
         /// </summary>
         public List<string> OverlayDataFilePathList { get; set; }
+
+        #endregion
+
+        #region --- Get xxx ---
+
+        /// <summary> (notSet) タイムライン設定データのフルパス
+        /// </summary>
+        public string GetTimelineSettingsFullPath
+        {
+            get { return Path.Combine(this.RoamingDirectoryPath, this.TimelineSettingsFileName); }
+        }
 
         #endregion
 

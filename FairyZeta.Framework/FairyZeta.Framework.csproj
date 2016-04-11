@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Module\SerializerModule.cs" />
     <Compile Include="Module\_Module.cs" />
+    <Compile Include="ObjectModel\RelativeClock.cs" />
     <Compile Include="Process\XmlSerializerProcess.cs" />
     <Compile Include="Process\_Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

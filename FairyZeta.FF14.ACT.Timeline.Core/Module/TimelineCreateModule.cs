@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FairyZeta.Core.Process;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
+using FairyZeta.FF14.ACT.Timeline.Core.Process;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {
@@ -19,7 +20,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> [Util] double処理用プロセス
         /// </summary>
-        public DoubleToAdjustProcess DoubleToAdjustProcess { get; private set; }
+        private DoubleToAdjustProcess doubleToAdjustProcess;
+        /// <summary> タイムラインアイテム解析プロセス
+        /// </summary>
+        private TimelineItemAnalyzProcess timelineItemAnalyzProcess;
 
         #endregion
 
@@ -40,7 +44,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <returns> 正常終了時 True </returns> 
         private bool initModule()
         {
-            this.DoubleToAdjustProcess = new DoubleToAdjustProcess();
+            this.doubleToAdjustProcess = new DoubleToAdjustProcess();
+            this.timelineItemAnalyzProcess = new TimelineItemAnalyzProcess();
+
             return true;
         }
 
@@ -52,7 +58,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <param name="pTimelineDM"> 作成データを格納するタイムラインデータモデル </param>
         public void CreateTimelineDataModel(CommonDataModel pCommonDM, TimelineDataModel pTimelineDM, TimerDataModel pTimerDM)
         {
-            pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NonLoad;
+            this.TimelineDataClear(pCommonDM, pTimelineDM);
+            pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NowLoading;
 
             if (pCommonDM.SelectedTimelineFileData == null)
             {
@@ -80,31 +87,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 pTimelineDM.TimelineAnchorDataCollection.Add(anc);
             }
 
-            //// ジャンプコレクションの生成
-            //var jumpList = baseData.Anchors.Where(j => j.Jump >= 0);
-            //foreach (var anc in jumpList)
-            //{
-            //    pTimelineDM.JumpItemCollection.Add(anc);
-            //}
-            //
-            //// シンクコレクションの生成
-            //var syncList = baseData.Anchors.Where(s => s.Jump == -1.0);
-            //foreach (var anc in syncList)
-            //{
-            //    pTimelineDM.SyncItemCollection.Add(anc);
-            //}
-
             // タイムラインアイテムコレクションの生成
             foreach (var data in baseData.Items)
             {
                 TimelineItemData target = new TimelineItemData(pTimerDM.TimerDeta);
 
-                target.ActivityNo = this.DoubleToAdjustProcess.ToHalfAdjust(data.TimeFromStart, 1);
+                target.ActivityNo = this.doubleToAdjustProcess.ToHalfAdjust(data.TimeFromStart, 1);
                 target.ActivityIndex = Convert.ToInt32(target.ActivityNo * 10);
                 target.Duration = data.Duration;
                 target.ActivityName = data.Name;
-                target.TimelineType = TimelineType.ENEMY;
-                target.JobType = Job.NON;
                 target.ActivityTime = new TimeSpan(0, 0, Convert.ToInt32(target.EndTime));
 
                 target.ActiveIndicatorStartTime = target.ActiveTime - target.ActiveIndicatorMaxValue;
@@ -113,58 +104,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                     target.DurationIndicatorVisibility = true;
                 }
 
+                // タイムラインタイプとジョブを設定
+                this.timelineItemAnalyzProcess.SetTimelineType(target);
+                this.timelineItemAnalyzProcess.SetTimelineJob(target);
 
-                if(target.ActivityName.IndexOf("[T]") > -1)
-                {
-                    target.TimelineType = TimelineType.TANK;
-                }
-                else if (target.ActivityName.IndexOf("[H]") > -1)
-                {
-                    target.TimelineType = TimelineType.HEALER;
-                }
-                else if (target.ActivityName.IndexOf("[D]") > -1)
-                {
-                    target.TimelineType = TimelineType.DPS;
-                }
-                else if (target.ActivityName.IndexOf("[G]") > -1)
-                {
-                    target.TimelineType = TimelineType.GIMMICK;
-                }
-
-                else if (target.ActivityName.IndexOf("[PLD]") > -1)
-                {
-                    target.TimelineType = TimelineType.TANK;
-                }
-                else if (target.ActivityName.IndexOf("[WHM]") > -1)
-                {
-                    target.TimelineType = TimelineType.HEALER;
-                }
-                else if (target.ActivityName.IndexOf("[DRG]") > -1)
-                {
-                    target.TimelineType = TimelineType.DPS;
-                }
-                else if (target.ActivityName.IndexOf("[SCH]") > -1)
-                {
-                    target.JobType = Job.SCH;
-                    target.TimelineType = TimelineType.HEALER;
-                }
-                else if (target.ActivityName.IndexOf("[FAIRY]") > -1)
-                {
-                    target.JobType = Job.FAIRY;
-                    target.TimelineType = TimelineType.PET;
-                }
-
-                target.SyncItemData = pTimelineDM.TimelineAnchorDataCollection.FirstOrDefault(s => s.TimeFromStart == target.ActivityNo);
                 // ジャンプとシンクの設定
-                //if(pTimelineDM.SyncItemCollection.Count > 0)
-                //{
-                //    target.SyncItemData = pTimelineDM.SyncItemCollection.FirstOrDefault(s => s.TimeFromStart == target.ActivityNo);
-                //}
-                //if(pTimelineDM.JumpItemCollection.Count > 0)
-                //{
-                //    target.JumpItemData = pTimelineDM.JumpItemCollection.FirstOrDefault(j => j.TimeFromStart == target.ActivityNo);
-                //}
+                target.JumpItemData = pTimelineDM.TimelineAnchorDataCollection
+                    .FirstOrDefault(s => s.Jump >= 0 && s.TimeFromStart == target.ActivityNo);
+                target.SyncItemData = pTimelineDM.TimelineAnchorDataCollection
+                    .FirstOrDefault(s => s.Jump == -1.0 && s.TimeFromStart == target.ActivityNo);
 
+                // add
                 pTimelineDM.TimelineItemCollection.Add(target);
                 
             }
@@ -172,18 +122,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             // アラートコレクションの生成
             foreach (var data in baseData.Alerts)
             {
-                var targt = pTimelineDM.TimelineItemCollection.FirstOrDefault(item => item.ActivityNo == this.DoubleToAdjustProcess.ToHalfAdjust(data.TimeFromStart, 1));
-                if(targt != null)
-                {
-                    targt.ActivityAlert = data;
-                }
+                pTimelineDM.AlertStartTimeList.Add(data.TimeFromStart);
+                pTimelineDM.TimelineAlertCollection.Add(data);
             }
 
-            //var activeItems = pDataModel.TimelineItemCollection.Where(i => !string.IsNullOrWhiteSpace(i.ActivityName));
-            //foreach (var item in activeItems)
-            //{
-            //    pDataModel.TimelineActiveItemCollection.Add(item);
-            //}
+
+            pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.Success;
+        }
+
+        /// <summary> タイムラインデータのクリアを実行し、ステータスを変更します。
+        /// </summary>
+        /// <param name="pCommonDM"></param>
+        /// <param name="pTimelineDM"></param>
+        public void TimelineDataClear(CommonDataModel pCommonDM, TimelineDataModel pTimelineDM)
+        {
+            pTimelineDM.Clear();
+            pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NonLoad;
+
+            return;
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

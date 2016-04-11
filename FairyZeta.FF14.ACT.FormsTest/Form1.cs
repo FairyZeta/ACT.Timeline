@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FairyZeta.FF14.ACT.FormsTest
+namespace FairyZeta.FF14.ACT.Timeline.FormsTest
 {
     public partial class Form1 : Form
     {

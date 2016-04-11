@@ -12,6 +12,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     { 
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        #region #- [Property] AppStatus.AppStatus - ＜アプリケーション状態＞ -----
+        /// <summary> アプリケーション状態 </summary>
+        private AppStatus _AppStatus;
+        /// <summary> アプリケーション状態 </summary>
+        public AppStatus AppStatus
+        {
+            get { return _AppStatus; }
+            set
+            {
+                if (_AppStatus != value)
+                {
+                    _AppStatus = value;
+                }
+            }
+        }
+        #endregion ---------------------------------------- /
+
         #region #- [Property] DirectoryStatus.TimelineResourceDirectoryStatus - ＜タイムラインリソースディレクトリ状態＞ -----
         /// <summary> タイムラインリソースディレクトリ状態 </summary>
         private DirectoryStatus _TimelineResourceDirectoryStatus;
@@ -97,6 +114,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool initData()
         {
+            this.AppStatus = AppStatus.NotInitSetup;
             this.TimelineResourceDirectoryStatus = DirectoryStatus.Init;
             this.SoundResourceDirectoryStatus = DirectoryStatus.Init;
             this.CurrentCombatTimerStatus = TimerStatus.Init;

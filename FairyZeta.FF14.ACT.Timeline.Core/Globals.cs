@@ -82,5 +82,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         }
 
         static public bool ResetTimelineCombatEnd;
+
+        static public string PluginDllDirectoryPath;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 {
@@ -23,9 +24,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         private List<TimelineAnchorData> anchors;
         private IntervalTree.IntervalTree<double, TimelineAnchorData> anchorsTree;
 
+        public AlertSoundAssets AlertSoundAssets { get; private set; }
+
+        public double EndTime { get; private set; }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        public TimelineBaseData(string name, List<TimelineActivity> items_, List<TimelineAnchorData> anchors_, List<ActivityAlert> alerts_, AlertSoundAssets soundAssets)
+        public TimelineBaseData(string name, List<TimelineActivity> items_, List<TimelineAnchorData> anchors_, List<TimelineAlertObjectModel> alerts_, AlertSoundAssets soundAssets)
         {
             Name = name;
             items = items_;
@@ -100,12 +105,26 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             return null;
         }
 
-        List<ActivityAlert> alerts;
+
+        #region --- alert --- ※移植済
+        List<TimelineAlertObjectModel> alerts;
+
+        /// <summary> アラートの開始時間リスト
+        /// </summary>
         List<double> alertsTimeFromStart;
-        public IEnumerable<ActivityAlert> Alerts { get { return alerts; } }
+
+        public IEnumerable<TimelineAlertObjectModel> Alerts 
+        { 
+            get 
+            { 
+                return alerts; 
+            } 
+        }
+
         public int FindFirstAlertIndexAfterStartTime(double t)
         {
             int i = alertsTimeFromStart.BinarySearch(t);
+
             if (i < 0)
                 return ~i;
 
@@ -114,25 +133,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
             return i;
         }
-        public IEnumerable<ActivityAlert> PendingAlertsAt(double t)
+        public IEnumerable<TimelineAlertObjectModel> PendingAlertsAt(double t, double pTooOldThreshold)
         {
-            int firstAlertIndex = FindFirstAlertIndexAfterStartTime(t - ActivityAlert.TooOldThreshold);
-            return alerts
-                .Skip(firstAlertIndex)
-                .TakeWhile(a => (a.TimeFromStart < t))
-                .Where(a => !a.Processed);
+            int firstAlertIndex = FindFirstAlertIndexAfterStartTime(t - pTooOldThreshold);
+
+            return alerts.Skip(firstAlertIndex).TakeWhile(a => (a.TimeFromStart < t)).Where(a => !a.Processed);
         }
 
         public void ResetAllAlerts()
         {
-            foreach (ActivityAlert alert in Alerts)
+            foreach (TimelineAlertObjectModel alert in Alerts)
                 alert.Processed = false;
         }
 
-        public AlertSoundAssets AlertSoundAssets { get; private set; }
-
-        public double EndTime { get; private set; }
-
+        #endregion
     }
     
 }

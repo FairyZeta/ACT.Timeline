@@ -5,6 +5,9 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using FairyZeta.Framework.ObjectModel;
+using FairyZeta.FF14.ACT.Data;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
@@ -14,6 +17,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         private DataGridView dataGridView;
         private OverlayButtonsForm buttons;
         private CachedSoundPlayer soundplayer;
+        private ACT.Process.SoundPlayProcess soundPlayProcess;
 
         private int numberOfRowsToDisplay;
         public int NumberOfRowsToDisplay
@@ -144,6 +148,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         
         public TimelineView(TimelineController controller_)
         {
+            this.soundPlayProcess = new ACT.Process.SoundPlayProcess();
+
             controller = controller_;
             controller.TimelineUpdate += controller_TimelineUpdate;
             controller.CurrentTimeUpdate += controller_CurrentTimeUpdate;
@@ -268,7 +274,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             if (playSoundByACT)
                 return;
 
-            foreach (AlertSound sound in controller.Timeline.AlertSoundAssets.All)
+            foreach (var sound in controller.Timeline.AlertSoundAssets.All)
             {
                 if (System.IO.File.Exists(sound.Filename))
                     soundplayer.WarmUpCache(sound.Filename);
@@ -289,10 +295,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             else
             {
                 // play pending alerts
-                var pendingAlerts = timeline.PendingAlertsAt(controller.CurrentTime);
-                foreach (ActivityAlert pendingAlert in pendingAlerts)
+                var pendingAlerts = timeline.PendingAlertsAt(controller.CurrentTime, AppConst.TooOldThreshold);
+                foreach (var pendingAlert in pendingAlerts)
                 {
-                    ProcessAlert(pendingAlert);
+                    pendingAlert.Processed = soundPlayProcess.PlayAlert(pendingAlert, this.PlaySoundByACT);
                 }
 
                 // sync dataGridView
@@ -301,23 +307,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             }
         }
 
-        void ProcessAlert(ActivityAlert alert)
-        {
-            //TTSクラスならACT本体に読み上げさせる
-            if (alert.Sound is AlertTTS)
-            {
-                ActGlobals.oFormActMain.TTS(alert.Sound.Filename);
-            }
-            else 
-            if (PlaySoundByACT)
-            {
-                ActGlobals.oFormActMain.PlaySoundMethod(alert.Sound.Filename, 100);
-            } else {
-                soundplayer.PlaySound(alert.Sound.Filename);
-            }
-
-            alert.Processed = true;
-        }
     }
 
     class TimeLeftColumn : DataGridViewColumn

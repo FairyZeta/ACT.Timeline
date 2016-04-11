@@ -78,6 +78,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         }
         #endregion
 
+        /// <summary> (get) オーバーレイの一時的な非表示 
+        /// <para> 表示する場合は True, 非表示の場合は False </para>
+        /// </summary>
+        public bool OverlayPassVisibility
+        {
+            get 
+            { 
+                return true; 
+            }
+        }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／共通表示データモデル／コンストラクタ
@@ -109,6 +120,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> OnPropertyChangedを発行し、画面を更新します。
+        /// </summary>
+        public void ViewRefresh()
+        {
+            base.OnPropertyChanged("OverlayPassVisibility");
+            this.TimelineFileViewSource.View.Refresh();
+        }
 
         /// <summary> データの全体クリアを実行します。
         /// </summary>

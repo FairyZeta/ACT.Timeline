@@ -113,8 +113,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.AppDataCreateModule.UpdateDataList(pCommonDataModel.ApplicationData);
 
             // --- プラグイン設定 ---
-            var loadSettingData = this.AppCommonModule.PluginSettingsDataLoad(
-                Path.Combine(this.CommonDataModel.ApplicationData.RoamingDirectoryPath, this.CommonDataModel.ApplicationData.TimelineSettingsFileName));
+            var loadSettingData = this.AppCommonModule.PluginSettingsDataLoad(this.CommonDataModel.ApplicationData.GetTimelineSettingsFullPath);
             if (loadSettingData != null)
             {
                 this.CommonDataModel.PluginSettingsData = loadSettingData;
@@ -137,8 +136,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             if (this.CommonDataModel.ApplicationData == null) return;
 
-            this.AppCommonModule.PluginSettingsDataSave(
-                Path.Combine(this.CommonDataModel.ApplicationData.RoamingDirectoryPath, this.CommonDataModel.ApplicationData.TimelineSettingsFileName), this.CommonDataModel.PluginSettingsData);
+            this.AppCommonModule.PluginSettingsDataSave(this.CommonDataModel.ApplicationData.GetTimelineSettingsFullPath, this.CommonDataModel.PluginSettingsData);
 
         }
 

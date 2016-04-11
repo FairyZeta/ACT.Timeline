@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Media;
 
-namespace FairyZeta.FF14.ACT.Timeline.Core
+namespace FairyZeta.FF14.ACT
 {
-    class CachedSoundPlayer
+    public class CachedSoundPlayer
     {
         Dictionary<string, SoundPlayer> cache;
 

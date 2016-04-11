@@ -2,7 +2,9 @@
 using System.Globalization;
 using Sprache;
 using System;
+using FairyZeta.FF14.ACT.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
 {
@@ -10,7 +12,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
     {
         public string ActivityName;
         public double ReminderTime;
-        public AlertSound AlertSound;
+        public AlertSoundData AlertSound;
     }
 
     public class TimelineConfig
@@ -19,7 +21,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         public List<TimelineAnchorData> Anchors;
         public List<AlertAll> AlertAlls;
         public List<string> HideAlls;
-        public List<ActivityAlert> Alerts;
+        public List<TimelineAlertObjectModel> Alerts;
         public AlertSoundAssets AlertSoundAssets;
 
         public TimelineConfig()
@@ -28,7 +30,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             Anchors = new List<TimelineAnchorData>();
             AlertAlls = new List<AlertAll>();
             HideAlls = new List<string>();
-            Alerts = new List<ActivityAlert>();
+            Alerts = new List<TimelineAlertObjectModel>();
             AlertSoundAssets = new AlertSoundAssets();
         }
     }
@@ -151,7 +153,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         static readonly Parser<ConfigOp> AlertSoundAliasStatement =
             AlertSoundAlias.Select<Tuple<string, string>, ConfigOp>((Tuple<string, string> t) => ((TimelineConfig config) =>
             {
-                AlertSound alertSound = config.AlertSoundAssets.Get(t.Item2);
+                AlertSoundData alertSound = config.AlertSoundAssets.Get(t.Item2);
                 config.AlertSoundAssets.RegisterAlias(alertSound, t.Item1);
             }));
 
@@ -229,7 +231,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             {
                 foreach (TimelineActivity matchingActivity in config.Items.FindAll(activity => activity.Name == alertAll.ActivityName))
                 {
-                    var alert = new ActivityAlert { Activity = matchingActivity, ReminderTimeOffset = alertAll.ReminderTime, Sound = alertAll.AlertSound };
+                    var alert = new TimelineAlertObjectModel { Activity = matchingActivity, ReminderTimeOffset = alertAll.ReminderTime, AlertSoundData = alertAll.AlertSound };
                     config.Alerts.Add(alert);
                 }
             }

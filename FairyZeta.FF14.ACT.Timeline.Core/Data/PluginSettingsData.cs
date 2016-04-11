@@ -71,6 +71,58 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] string.LastLoadTimelineFileName - ＜最後に読み込んだタイムラインのファイル名＞ -----
+        /// <summary> 最後に読み込んだタイムラインのファイル名 </summary>
+        private string _LastLoadTimelineFileName;
+        /// <summary> 最後に読み込んだタイムラインのファイル名 </summary>
+        public string LastLoadTimelineFileName
+        {
+            get { return this._LastLoadTimelineFileName; }
+            set
+            {
+                if (this._LastLoadTimelineFileName == value) return;
+
+                this._LastLoadTimelineFileName = value;
+                base.OnPropertyChanged("LastLoadTimelineFileName");
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+        #region #- [Property] string.LastLoadTimelineDirectoryPath - ＜最後に読み込んだタイムラインのディレクトリパス＞ -----
+        /// <summary> 最後に読み込んだタイムラインのディレクトリパス </summary>
+        private string _LastLoadTimelineDirectoryPath;
+        /// <summary> 最後に読み込んだタイムラインのディレクトリパス </summary>
+        public string LastLoadTimelineDirectoryPath
+        {
+            get { return this._LastLoadTimelineDirectoryPath; }
+            set
+            {
+                if (this._LastLoadTimelineDirectoryPath == value) return;
+
+                this._LastLoadTimelineDirectoryPath = value;
+                base.OnPropertyChanged("LastLoadTimelineDirectoryPath");
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+
+        #region #- [Property] bool.PlaySoundByACT - ＜サウンド再生設定(true => ACT本体でサウンド再生)＞ -----
+        /// <summary> サウンド再生設定(true => ACT本体でサウンド再生) </summary>
+        private bool _PlaySoundByACT;
+        /// <summary> サウンド再生設定(true => ACT本体でサウンド再生) </summary>
+        public bool PlaySoundByACT
+        {
+            get { return this._PlaySoundByACT; }
+            set
+            {
+                if (this._PlaySoundByACT == value) return;
+
+                this._PlaySoundByACT = value;
+                base.OnPropertyChanged("PlaySoundByACT");
+            }
+        }
+        #endregion
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／プラグイン設定データ／コンストラクタ
@@ -116,6 +168,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.PluginDllPath = string.Empty;
             this.SoundResourceDirectory = string.Empty;
             this.TimelineResourceDirectory = string.Empty;
+
+            this.LastLoadTimelineFileName = string.Empty;
+            this.LastLoadTimelineDirectoryPath = string.Empty;
+
+            this.PlaySoundByACT = true;
 
             return true;
         }

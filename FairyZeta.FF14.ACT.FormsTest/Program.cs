@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FairyZeta.FF14.ACT.FormsTest
+namespace FairyZeta.FF14.ACT.Timeline.FormsTest
 {
     static class Program
     {
