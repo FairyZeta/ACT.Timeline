@@ -1,0 +1,27 @@
+﻿<mui:ModernWindow 
+  x:Class="FairyZeta.Framework.Test.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:local="clr-namespace:FairyZeta.Framework.Test"
+  xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+  mc:Ignorable="d"
+  Title="FairyZeta.Framework.Test"
+  IsTitleVisible="True"
+  ContentSource="/Pages/GeneralPage.xaml"
+  Width="960" Height="540" 
+  FontFamily="Arial, メイリオ"
+  TextOptions.TextFormattingMode="Ideal"
+  TextOptions.TextHintingMode="Auto"
+  TextOptions.TextRenderingMode="ClearType">
+
+  <mui:ModernWindow.MenuLinkGroups>
+    <mui:LinkGroup DisplayName="Menu">
+      <mui:LinkGroup.Links>
+        <mui:Link DisplayName="General" Source="/Pages/GeneralPage.xaml" />
+      </mui:LinkGroup.Links>
+    </mui:LinkGroup>
+  </mui:ModernWindow.MenuLinkGroups>
+  
+</mui:ModernWindow>
