@@ -114,9 +114,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Test.ViewModels
         /// <summary> コマンド実行＜テストウィンドウオープン＞ </summary>
         private void _ShowTestWindowExecute()
         {
-            TestWindow window = new TestWindow();
+            var datas = base.OverlayManageComponent.OverlayManageDataModel.OverlayViewComponentCollection.Where(a => a.OverlayDataModel.OverlayWindowData.WindowIntPtr != IntPtr.Zero);
 
-            window.Show();
+            foreach (var ip in datas)
+            {
+                WindowsServices.WindowCloseSendMessage(ip.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+            }
         }
         #endregion ---------- /
     }

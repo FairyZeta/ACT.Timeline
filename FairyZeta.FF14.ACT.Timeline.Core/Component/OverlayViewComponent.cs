@@ -121,6 +121,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> コマンド実行＜オーバーレイ終了コマンド＞ </summary>
         private void _OverlayClosedExecute()
         {
+            WindowsServices.WindowCloseSendMessage(this.OverlayDataModel.OverlayWindowData.WindowIntPtr);
             this.OverlayDataModel.OverlayWindowData.WindowVisibility = false;
         }
         #endregion 

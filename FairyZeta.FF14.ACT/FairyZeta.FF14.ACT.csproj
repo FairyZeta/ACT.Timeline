@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Act.ENUM.cs" />
     <Compile Include="DataModel\TimerSetDataModel.cs" />
+    <Compile Include="Process\LogAnalyzerProcess.cs" />
     <Compile Include="Module\_Module.cs" />
     <Compile Include="Process\ActTimerProcess.cs">
       <SubType>Code</SubType>

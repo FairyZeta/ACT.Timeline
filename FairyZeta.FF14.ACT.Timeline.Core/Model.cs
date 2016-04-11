@@ -137,42 +137,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         }
     };
 
-    public class TimelineAnchor
-    {
-        public double TimeFromStart { get; set; }
-        public Regex Regex { get; set; }
-        public double WindowBefore { get; set; }
-        public double WindowAfter { get; set; }
-        public double Window
-        {
-            set
-            {
-                WindowBefore = value / 2;
-                WindowAfter = value / 2;
-            }
-        }
-        public double Jump { get; set; }
-
-        public TimelineInterval Interval
-        {
-            get
-            {
-                return new TimelineInterval(TimeFromStart - WindowBefore, TimeFromStart + WindowAfter);
-            }
-        }
-
-        public const double DefaultWindow = 5.0;
-
-        public TimelineAnchor()
-        {
-            Window = DefaultWindow;
-        }
-
-        public bool ActiveAt(double t)
-        {
-            return (TimeFromStart - WindowBefore) < t && t < (TimeFromStart + WindowAfter);
-        }
-    };
 
     public class TimelineActivity
     {

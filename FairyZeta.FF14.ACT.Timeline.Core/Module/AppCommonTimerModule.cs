@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
+using System.Windows.Threading;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {
@@ -15,7 +15,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> アプリケーション起動後1秒毎に処理するタイマー
         /// </summary>
-        public Timer SecTimer01 { get; private set; }
+        public  DispatcherTimer SecTimer01 { get; private set; }
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
         
@@ -34,7 +34,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <returns> 正常終了時 True </returns> 
         private bool initModule()
         {
-            this.SecTimer01 = new Timer(1000);
+            this.SecTimer01 = new DispatcherTimer();
+            SecTimer01.Interval = new TimeSpan(0, 0, 1);
 
             return true;
         }

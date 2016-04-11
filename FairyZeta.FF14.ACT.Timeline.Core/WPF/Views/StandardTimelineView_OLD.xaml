@@ -201,7 +201,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2">
                     <TextBlock Text="[Line-Time] " Foreground="{StaticResource BaseColor_Gold1}"/>
-                    <TextBlock Text="{Binding TimelineComponent.TimerDataModel.TimerDeta.MainTimerTime, StringFormat={}{0:00:00.0}}" Foreground="{StaticResource BaseColor_Blue1}"/>
+                    <TextBlock Text="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, StringFormat={}{0:00:00.0}}" Foreground="{StaticResource BaseColor_Blue1}"/>
                     <TextBlock Text=" / " Foreground="{StaticResource BaseColor_Gold1}"/>
                     <TextBlock Text="Irohasu Extreme" Foreground="{StaticResource BaseColor_Blue1}"/>
                 </StackPanel>

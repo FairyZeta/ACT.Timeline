@@ -59,30 +59,28 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
                 // Control.CheckForIllegalCrossThreadCalls = true;
 #endif
 
-                Controller = new TimelineController();
+                //Controller = new TimelineController();
 
-                TimelineView = new TimelineView(Controller);
-                TimelineView.Show();
-                TimelineView.DoubleClick += TimelineView_DoubleClick;
+                //TimelineView = new TimelineView(Controller);
+                //TimelineView.Show();
+                //TimelineView.DoubleClick += TimelineView_DoubleClick;
 
-                TimelineAutoLoader = new TimelineAutoLoader(this);
-                TimelineAutoLoader.Start();
+                //TimelineAutoLoader = new TimelineAutoLoader(this);
+                //TimelineAutoLoader.Start();
 
-                Settings = new PluginSettings(this);
-                Settings.AddStringSetting("TimelineTxtFilePath");
-                Settings.AddStringSetting("FontString");
-                Settings.AddIntSetting("TextWidth");
-                Settings.AddIntSetting("BarWidth");
-                Settings.AddIntSetting("OpacityPercentage");
-
-                ActGlobals.oFormActMain.OnCombatEnd += CombatEnd;
-
+                //Settings = new PluginSettings(this);
+                //Settings.AddStringSetting("TimelineTxtFilePath");
+                //Settings.AddStringSetting("FontString");
+                //Settings.AddIntSetting("TextWidth");
+                //Settings.AddIntSetting("BarWidth");
+                //Settings.AddIntSetting("OpacityPercentage");
+                
                 SetupTab();
-                InjectButton();
+                //InjectButton();
 
-                Settings.Load();
+                //Settings.Load();
 
-                SetupUpdateChecker();
+                //SetupUpdateChecker();
 
                 StatusText.Text = "Plugin Started (^^)!";
             }
@@ -128,16 +126,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         }
 
         #endregion
-
-        void CombatEnd(bool isImport, CombatToggleEventArgs encounterInfo)
-        {
-            if (!isImport && Globals.ResetTimelineCombatEnd)
-            {
-                Controller.Paused = true;
-                Controller.CurrentTime = 0;
-            }
-        }
-
+        
         void TimelineView_DoubleClick(object sender, EventArgs e)
         {
             TimelineView.Hide();
@@ -184,7 +173,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         {
             ScreenSpace.Text = "ACT Timeline";
 
-            tabPageControl = new ACTTabPageControl(this);
+            tabPageControl = new ACTTabPageControl();
             ScreenSpace.Controls.Add(tabPageControl);
             ScreenSpace.Resize += ScreenSpace_Resize;
             ScreenSpace_Resize(this, null);
@@ -229,7 +218,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             if (Controller != null)
                 Controller.Stop();
 
-            ActGlobals.oFormActMain.OnCombatEnd -= CombatEnd;
+            //ActGlobals.oFormActMain.OnCombatEnd -= CombatEnd;
             ActGlobals.oFormActMain.UpdateCheckClicked -= CheckForUpdate;
 
             if (StatusText != null)

@@ -20,12 +20,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         private List<TimelineActivity> items;
         private List<double> itemsEndTime;
 
-        private List<TimelineAnchor> anchors;
-        private IntervalTree.IntervalTree<double, TimelineAnchor> anchorsTree;
+        private List<TimelineAnchorData> anchors;
+        private IntervalTree.IntervalTree<double, TimelineAnchorData> anchorsTree;
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        public TimelineBaseData(string name, List<TimelineActivity> items_, List<TimelineAnchor> anchors_, List<ActivityAlert> alerts_, AlertSoundAssets soundAssets)
+        public TimelineBaseData(string name, List<TimelineActivity> items_, List<TimelineAnchorData> anchors_, List<ActivityAlert> alerts_, AlertSoundAssets soundAssets)
         {
             Name = name;
             items = items_;
@@ -38,8 +38,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             itemsEndTime = items.Select(a => a.EndTime).ToList();
 
             anchors = anchors_.OrderBy(anchor => anchor.TimeFromStart).ToList();
-            anchorsTree = new IntervalTree.IntervalTree<double, TimelineAnchor>();
-            foreach (TimelineAnchor a in anchors)
+            anchorsTree = new IntervalTree.IntervalTree<double, TimelineAnchorData>();
+            foreach (TimelineAnchorData a in anchors)
                 anchorsTree.Add(a.Interval, a);
 
             alerts = alerts_;
@@ -79,19 +79,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
                     select e).Take(limit);
         }
 
-        public IEnumerable<TimelineAnchor> Anchors
+        public IEnumerable<TimelineAnchorData> Anchors
         {
             get { return anchors; }
         }
-        public IEnumerable<TimelineAnchor> ActiveAnchorsAt(double t)
+        public IEnumerable<TimelineAnchorData> ActiveAnchorsAt(double t)
         {
             return anchorsTree
                 .GetIntervalsIncludingPoint(t)
                 .Select(kv => kv.Value);
         }
-        public TimelineAnchor FindAnchorMatchingLogline(double t, string line)
+        public TimelineAnchorData FindAnchorMatchingLogline(double t, string line)
         {
-            foreach (TimelineAnchor anchor in ActiveAnchorsAt(t))
+            foreach (TimelineAnchorData anchor in ActiveAnchorsAt(t))
             {
                 if (anchor.Regex.IsMatch(line))
                     return anchor;

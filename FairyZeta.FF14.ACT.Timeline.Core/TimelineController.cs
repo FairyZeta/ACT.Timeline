@@ -10,6 +10,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 {
     public class TimelineController
     {
+
         private string timelineTxtFilePath;
         public string TimelineTxtFilePath
         {
@@ -123,7 +124,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 
             string line = logInfo.logLine;
 
-            TimelineAnchor anchor = timeline.FindAnchorMatchingLogline(CurrentTime, logInfo.logLine);
+            TimelineAnchorData anchor = timeline.FindAnchorMatchingLogline(CurrentTime, logInfo.logLine);
             if (anchor != null)
             {
                 if (anchor.Jump == 0)

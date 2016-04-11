@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
         mc:Ignorable="d" 
-        Height="630" Width="900" 
+        Height="700" Width="900" 
         MinHeight="630" MinWidth="900" 
         
         d:DesignHeight="630" d:DesignWidth="900" 
@@ -34,23 +34,37 @@
         <vm:PluginApplicationViewModel />
     </UserControl.DataContext>
     
-    <Border Background="White" CornerRadius="5" BorderBrush="Gray" BorderThickness="1">
+    <Border Background="White" BorderBrush="Gray" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
             <StackPanel>
-                <Label Content="- Overlay Custom -"/>
+                <Label Content="- Timeline -"/>
             </StackPanel>
             <TabControl Grid.Row="1" TabStripPlacement="Left" >
                 <TabItem Header="Generic" Style="{StaticResource BasicTabItemStyle}">
-                    <view:OverlayGenericCustomView />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="180"/>
+                        </Grid.RowDefinitions>
+                        <view:TimelineTrackerView Grid.Row="0" DataContext="{Binding}"/>
+                        <view:TimelineFileListView Grid.Row="1" DataContext="{Binding}"/>
+                        <view:TimelineEnvironmentView Grid.Row="2" DataContext="{Binding}"/>
+                        <view:TimelineAutoloadView Grid.Row="3" DataContext="{Binding}"/>
+                    </Grid>
                 </TabItem>
-                <TabItem Header="Filter" Style="{StaticResource BasicTabItemStyle}">
-                    <view:OverlayFilterCustomView />
+                <TabItem Header="Overlay Manage" Style="{StaticResource BasicTabItemStyle}">
+                    <view:OverlayManageView />
                 </TabItem>
-                <TabItem Header="View" Style="{StaticResource BasicTabItemStyle}">
+                <TabItem Header="Timeline Edit" Style="{StaticResource BasicTabItemStyle}">
+                    <Label Content="Timeline Edit, Coming soon..."/>
+                </TabItem>
+                <TabItem Header="About" Style="{StaticResource BasicTabItemStyle}">
                     <view:OverlayStandardTimelineCustomView />
                 </TabItem>
             </TabControl>

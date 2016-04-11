@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:custom="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Custom"
              xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+             xmlns:converter="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Converter"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="400"
+             d:DesignHeight="600" d:DesignWidth="800" 
              d:DataContext="{d:DesignInstance Type=dData:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}">
     
     <UserControl.Resources>
@@ -13,16 +15,15 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
+            
+            <converter:OpacityConverter x:Key="opacityConverter"/>
             <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
             
             <Style x:Key="HeaderText" TargetType="{x:Type TextBlock}"/>
             <Style x:Key="HeaderSplitter" TargetType="{x:Type GridSplitter}">
                 <Setter Property="Width" Value="1"/>
-                
             </Style>
             <Style x:Key="ContentSplitter" TargetType="{x:Type GridSplitter}">
-
             </Style>
             
             <ControlTemplate x:Key="BasicTimeNoHeaderTemplate" >
@@ -45,7 +46,7 @@
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicActionHeaderTemplate" >
-                <Grid>
+                <Grid Margin="20 0 0 0">
                     <TextBlock Text="Action" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
                 </Grid>
             </ControlTemplate>
@@ -78,39 +79,45 @@
                 </Grid>
             </ControlTemplate>
 
+            <!-- コンテンツ -->
             <ControlTemplate x:Key="BasicTimeNoContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActivityNo}" ContentStringFormat="{}{0:#0.0}"  HorizontalAlignment="Center"/>
+                    <custom:OutlinedTextBlock Text="{Binding ActivityNo}" Style="{StaticResource TimilineItemTextStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <!--custom:OutlinedTextBlock Style="{StaticResource TimilineItemTextStyle}" Text="{Binding ActivityNo}" HorizontalAlignment="Center"/-->
+                    <!--ContentStringFormat="{}{0:#0.0}"  -->
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicActionTimeContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActivityTime}" ContentStringFormat="{}{0:mm}:{0:ss}"  />
+                    <custom:OutlinedTextBlock Text="{Binding ActivityTime}" Style="{StaticResource TimilineItemTextStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicAlertContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <Label Content="♪" >
-                        <Label.Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource TimilineItemLabel}">
+                    <custom:OutlinedTextBlock Text="♪" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <custom:OutlinedTextBlock.Style>
+                            <Style TargetType="{x:Type custom:OutlinedTextBlock}" BasedOn="{StaticResource TimilineItemTextStyle}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ActivityAlert}" Value="{x:Null}">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </Label.Style>
-                    </Label>
+                        </custom:OutlinedTextBlock.Style>
+                    </custom:OutlinedTextBlock>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicActionContentTemplate" >
-                <Grid Style="{StaticResource BasicCellGrid}">
-                    <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActivityName}"  />
+                <Grid Style="{StaticResource BasicCellGrid}" Margin="10 0 0 0">
+                    <custom:OutlinedTextBlock Text="{Binding ActivityName}" Style="{StaticResource TimilineItemTextStyle}"  VerticalAlignment="Center" />
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicActiveContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <ProgressBar Minimum="{Binding ActiveIndicatorMinValue}" Value="{Binding ActiveIndicatorValue}" Maximum="{Binding ActiveIndicatorMaxValue}" 
+                    <ProgressBar Minimum="{Binding ActiveIndicatorMinValue}" 
+                                 Value="{Binding DataContext.TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" 
+                                 Maximum="{Binding ActiveIndicatorMaxValue}" 
+                                 Height="20" Margin="0 0 35 0"
                                  Template="{StaticResource BasicProgressBar}" FlowDirection="RightToLeft" Background="Transparent" BorderBrush="Transparent" >
                         <ProgressBar.Style>
                             <Style TargetType="ProgressBar">
@@ -128,38 +135,38 @@
                             </Style>
                         </ProgressBar.Style>
                     </ProgressBar>
-                    <ProgressBar Minimum="{Binding DurationIndicatorMinValue}" Value="{Binding DurationIndicatorValue}" Maximum="{Binding DurationIndicatorMaxValue}" 
+                    <ProgressBar Minimum="{Binding ActivityNo}" 
+                                 Value="{Binding DataContext.TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}"
+                                 Maximum="{Binding DurationIndicatorMaxValue}" 
+                                 Height="20" Margin="0 0 35 0"
                                  Template="{StaticResource BasicProgressBar}" Background="Transparent" BorderBrush="Transparent">
                         <ProgressBar.Style>
                             <Style TargetType="ProgressBar">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding DurationIndicatorMaxValue}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </ProgressBar.Style>
                     </ProgressBar>
-                    <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActiveTime}" ContentStringFormat="{}{0:#0.0}" HorizontalAlignment="Right"/>
+                    <custom:OutlinedTextBlock Text="{Binding ActiveTime}" Style="{StaticResource TimilineItemTextStyle}"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <!--  <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding ActiveTime}" ContentStringFormat="{}{0:#0.0}" HorizontalAlignment="Right"/>-->
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicTypeContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding TimelineType}"  />
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicJobContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <Label Style="{StaticResource TimilineItemLabel}" Content="{Binding JobType}"  />
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicJumpContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <Label Style="{StaticResource TimilineItemLabel}" Content="*"  />
                 </Grid>
             </ControlTemplate>
             
         </ResourceDictionary>
+        
+        
     </UserControl.Resources>
 
     
@@ -168,24 +175,19 @@
             <FrameworkElement x:Key="proxyElement" />
         </Grid.Resources>
         <ContentControl Visibility="Collapsed" Content="{StaticResource proxyElement}" />
-        <Border Background="Black" Opacity="0.7" CornerRadius="5"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <Border Background="Black" Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}" CornerRadius="5"/>
+        <StackPanel Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Converter={StaticResource opacityConverter}}">
             <!-- ウィンドウヘッダー -->
-            <Grid>
+            <Grid Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarVisibility, Converter={StaticResource BoolToVisibility}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition  Width="30"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2">
                     <TextBlock Text="[Line-Time] " Foreground="{StaticResource BaseColor_Gold1}"/>
-                    <TextBlock Text="{Binding TimelineComponent.TimerDataModel.TimerDeta.MainTimerTime, StringFormat={}{0:00:00.0}}" Foreground="{StaticResource BaseColor_Blue1}"/>
+                    <TextBlock Text="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, StringFormat={}{0:0000.0}{0:-sec}}" Foreground="{StaticResource BaseColor_Blue1}"/>
                     <TextBlock Text=" / " Foreground="{StaticResource BaseColor_Gold1}"/>
-                    <TextBlock Text="Irohasu Extreme" Foreground="{StaticResource BaseColor_Blue1}"/>
+                    <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}" Foreground="{StaticResource BaseColor_Blue1}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" >
                     <Button Content="r" ToolTip="Close"
@@ -203,7 +205,7 @@
                 </StackPanel>
             </Grid>
             <!-- コンテンツヘッダー -->
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}">
                 <Border BorderThickness="0 0 0 1" BorderBrush="{StaticResource BaseColor_Gold1}">
                     <StackPanel Orientation="Horizontal">
                     <!-- T-No -->
@@ -243,19 +245,25 @@
             </Grid>
             <!-- コンテンツ -->
             <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
-                      Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                      Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                      IsHitTestVisible="False">
                 <ListView.Resources>
                     <Style TargetType="{x:Type ListViewItem}">
-                        <Setter Property="Margin" Value="-10 0"/>
+                        <Setter Property="Margin" Value="-10 -3"/>
                         <Setter Property="Background" Value="Transparent" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Visibility}" Value="False">
+                            <DataTrigger Binding="{Binding TimelineVisibility}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                     <Style TargetType="{x:Type ScrollBar}">
                         <Setter Property="Template" Value="{StaticResource MyScrollBar}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentScrollBarVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" Value="false">
+                                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </ListView.Resources>
                 <ListView.ItemTemplate>
@@ -299,6 +307,6 @@
                 </ListView.ItemTemplate>
             </ListView>
             
-        </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -11,56 +11,67 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     public class TimerData : _Data
     {
 
-        #region #- [Property] decimal.MainTimerTime - ＜メインタイマーの時間＞ -----
-        /// <summary> メインタイマーの時間 </summary>
-        private decimal _MainTimerTime;
-        /// <summary> メインタイマーの時間 </summary>
-        public decimal MainTimerTime
+      /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
+
+      /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
+
+      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+      /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region #- [Property] double.CurrentCombatTime - ＜現在の戦闘時間＞ -----
+        /// <summary> 現在の時間 </summary>
+        private double _CurrentCombatTime;
+        /// <summary> 現在の時間 </summary>
+        public double CurrentCombatTime
         {
-            get { return this._MainTimerTime; }
+            get { return this._CurrentCombatTime; }
             set
             {
-                if (this._MainTimerTime == value) return;
+                if (this._CurrentCombatTime == value) return;
 
-                this._MainTimerTime = value;
-                base.OnPropertyChanged("MainTimerTime");
+                this._CurrentCombatTime = value;
+                base.OnPropertyChanged("CurrentCombatTime");
             }
         }
         #endregion
 
-        #region #- [Property] decimal.MainTimerEndTime - ＜メインタイマーの終了時間＞ -----
-        /// <summary> メインタイマーの終了時間 </summary>
-        private decimal _MainTimerEndTime;
-        /// <summary> メインタイマーの終了時間 </summary>
-        public decimal MainTimerEndTime
+        #region #- [Property] double.CurrentCombatEndTime - ＜現在の戦闘終了時間＞ -----
+        /// <summary> 現在の終了時間 </summary>
+        private double _CurrentCombatEndTime;
+        /// <summary> 現在の終了時間 </summary>
+        public double CurrentCombatEndTime
         {
-            get { return this._MainTimerEndTime; }
+            get { return this._CurrentCombatEndTime; }
             set
             {
-                if (this._MainTimerEndTime == value) return;
+                if (this._CurrentCombatEndTime == value) return;
 
-                this._MainTimerEndTime = value;
-                base.OnPropertyChanged("MainTimerEndTime");
+                this._CurrentCombatEndTime = value;
+                base.OnPropertyChanged("CurrentCombatEndTime");
             }
         }
         #endregion
 
-        #region #- [Property] decimal.MainTimerStartTime - ＜メインタイマーの開始時間＞ -----
-        /// <summary> メインタイマーの開始時間 </summary>
-        private decimal _MainTimerStartTime;
-        /// <summary> メインタイマーの開始時間 </summary>
-        public decimal MainTimerStartTime
+        #region #- [Property] double.CurrentCombatStartTime - ＜現在の開始時間＞ -----
+        /// <summary> 現在の開始時間 </summary>
+        private double _CurrentCombatStartTime;
+        /// <summary> 現在の開始時間 </summary>
+        public double CurrentCombatStartTime
         {
-            get { return this._MainTimerStartTime; }
+            get { return this._CurrentCombatStartTime; }
             set
             {
-                if (this._MainTimerStartTime == value) return;
+                if (this._CurrentCombatStartTime == value) return;
 
-                this._MainTimerStartTime = value;
-                base.OnPropertyChanged("MainTimerStartTime");
+                this._CurrentCombatStartTime = value;
+                base.OnPropertyChanged("CurrentCombatStartTime");
             }
         }
         #endregion
+
 
         /// <summary> タイムライン／タイマーデータ／コンストラクタ
         /// </summary>

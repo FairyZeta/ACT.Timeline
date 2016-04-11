@@ -11,9 +11,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
     /// </summary>
     public class TimerDataModel : _DataModel
     {
+      /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
         /// <summary> タイマーデータ
         /// </summary>
         public TimerData TimerDeta { get; private set; }
+
+      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／タイマーデータモデル／コンストラクタ
         /// </summary>
@@ -22,6 +26,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         {
             this.initDataModel();
         }
+
+      /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> データモデルの初期化を実行します。
         /// </summary>

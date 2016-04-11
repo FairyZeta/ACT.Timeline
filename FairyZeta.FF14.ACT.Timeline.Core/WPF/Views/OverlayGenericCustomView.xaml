@@ -33,10 +33,12 @@
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Overlay Type" Width="100" HorizontalContentAlignment="Center"/>
                             <Label Content=":"/>
+                            <Label Content="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayType}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Overlay Name" Width="100" HorizontalContentAlignment="Center"/>
                             <Label Content=":"/>
+                            <Label Content="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}"/>
                         </StackPanel>
 
                         <Label Margin="15" Content="Sry, Name and Type custom  coming soon."/>

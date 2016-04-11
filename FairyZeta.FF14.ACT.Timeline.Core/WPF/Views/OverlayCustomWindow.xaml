@@ -8,15 +8,9 @@
         mc:Ignorable="d" 
         Height="630" Width="900" 
         MinHeight="630" MinWidth="900" 
-        
         d:DesignHeight="630" d:DesignWidth="900" 
-        Background="Transparent" AllowsTransparency="True" WindowStyle="None">
-
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
-                      ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" 
-                      UseAeroCaptionButtons="False" />
-    </WindowChrome.WindowChrome>
+        Background="Transparent" AllowsTransparency="True" WindowStyle="None"
+        Style="{DynamicResource DefaultWindowStyle}">
 
     <Window.Resources>
         <ResourceDictionary>

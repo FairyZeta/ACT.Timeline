@@ -53,13 +53,13 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="33*"/>
-                <RowDefinition Height="55*"/>
-                <RowDefinition Height="12*"/>
+                <RowDefinition Height="54*"/>
+                <RowDefinition Height="13*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
                 <Grid Margin="5">
-                    <Label Content=" Overlay Type Filter " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                    <Label Content=" Overlay Type Filter " Width="130" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <StackPanel Margin="0 5" DataContext="{Binding OverlayViewComponent}">
                         <CheckBox Content="UNKNOWN" Style="{StaticResource TypeFilterCheckBoxStyle}"
                                   IsChecked="{Binding OverlayDataModel.OverlayFilterSettingsData.TypeUNKNOWN}"
                                   Command="{Binding OverlayTypeFilterCommand}" CommandParameter="{x:Static enum:TimelineType.UNKNOWN}"/>
@@ -86,7 +86,7 @@
             </Border>
             <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
                 <Grid Margin="5">
-                    <Label Content=" Overlay Job Filter " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Content=" Overlay Job Filter " Width="130" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
                         
                         <Label Content=" - Common - " />
@@ -168,7 +168,7 @@
             </Border>
             <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
                 <Grid Margin="5">
-                    <Label Content=" Overlay TankMode Filter " Width="140" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Content=" Overlay TankMode Filter " Width="160" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
 
                         <WrapPanel Margin="10 0">

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FairyZeta.FF14.ACT.Timeline.Core</RootNamespace>
-    <AssemblyName>BindingCoil.ACTTimeline</AssemblyName>
+    <AssemblyName>FairyZeta.FF14.ACT.Timeline.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>D:\My System\Online Game\Tool\Advanced Combat Tracker\Plugin\TestTimeline\dll\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -86,7 +86,9 @@
     <Compile Include="Component\OverlayManageComponent.cs" />
     <Compile Include="Component\_Component.cs" />
     <Compile Include="DataFilter\ActivityNameFilter.cs" />
-    <Compile Include="DataFilter\CommonFilter.cs" />
+    <Compile Include="DataFilter\CommonFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DataFilter\JobFilter.cs" />
     <Compile Include="DataFilter\TypeFilter.cs" />
     <Compile Include="DataFilter\_DataFilter.cs" />
@@ -98,8 +100,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataModel\_DataModel.cs" />
-    <Compile Include="Data\ApplicationData.cs" />
-    <Compile Include="Data\CommonViewData.cs" />
+    <Compile Include="Data\AppEnableManageData.cs" />
+    <Compile Include="Data\ApplicationData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\AppStatusData.cs" />
+    <Compile Include="Data\AppCommonData.cs" />
+    <Compile Include="Data\ITimelineAnchor.cs" />
     <Compile Include="Data\OverlayColorSettingsData.cs" />
     <Compile Include="Data\OverlayContentSettingsData.cs" />
     <Compile Include="Data\OverlayFilterSettingsData.cs" />
@@ -108,7 +115,9 @@
     <Compile Include="Data\OverlayGenericSettingsData.cs" />
     <Compile Include="Data\OverlayOptionData.cs" />
     <Compile Include="Data\PluginSettingsData.cs" />
+    <Compile Include="Data\TimelineAnchorData.cs" />
     <Compile Include="Data\TimelineBaseData.cs" />
+    <Compile Include="Data\TimelineFileData.cs" />
     <Compile Include="Data\TimelineItemData.cs" />
     <Compile Include="Data\OverlayViewData.cs">
       <SubType>Code</SubType>
@@ -121,29 +130,39 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\_Data.cs" />
-    <Compile Include="Module\AppDataCreateModule.cs" />
-    <Compile Include="Module\OverlayCustomModule.cs" />
-    <Compile Include="Module\OverlayManageModule.cs" />
-    <Compile Include="Module\AppCommonTimerModule.cs" />
-    <Compile Include="Process\AppDataFileManageProcess.cs" />
-    <Compile Include="Process\AppDataPathCreateProcess.cs" />
-    <Compile Include="Process\AppDataConstProcess.cs" />
-    <Compile Include="Process\SetFilterProcess.cs" />
-    <Compile Include="Module\TimelineControlModule.cs" />
-    <Compile Include="Module\TimelineCreateModule.cs" />
-    <Compile Include="Module\OverlayControlModule.cs" />
-    <Compile Include="Module\ViewManageModule.cs" />
-    <Compile Include="Module\_Module.cs" />
-    <Compile Include="Process\OverlayViewOpenProcess.cs" />
-    <Compile Include="Process\_Process.cs" />
-    <Compile Include="Timeline.ENUM.cs" />
-    <Compile Include="TimelineCore.cs" />
     <Compile Include="Forms\ACTTabPageControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\ACTTabPageControl.Designer.cs">
       <DependentUpon>ACTTabPageControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Module\AppDataCreateModule.cs" />
+    <Compile Include="Module\AppCommonModule.cs" />
+    <Compile Include="Module\OverlayControlModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Module\OverlayCustomModule.cs" />
+    <Compile Include="Module\OverlayManageModule.cs" />
+    <Compile Include="Module\AppCommonTimerModule.cs" />
+    <Compile Include="Module\TimelineLogAnalyzerModule.cs" />
+    <Compile Include="Process\AppDataFileManageProcess.cs" />
+    <Compile Include="Process\AppDataConstProcess.cs" />
+    <Compile Include="Process\AppDataPathCreateProcess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Process\SaveChangedResetProcess.cs" />
+    <Compile Include="Process\SetFilterProcess.cs" />
+    <Compile Include="Module\TimelineControlModule.cs" />
+    <Compile Include="Module\TimelineCreateModule.cs" />
+    <Compile Include="Module\ViewManageModule.cs" />
+    <Compile Include="Module\_Module.cs" />
+    <Compile Include="Process\OverlayViewOpenProcess.cs" />
+    <Compile Include="Process\TickTimer.cs" />
+    <Compile Include="Process\TimelineJumpProcess.cs" />
+    <Compile Include="Process\TimelineSyncProcess.cs" />
+    <Compile Include="Process\_Process.cs" />
+    <Compile Include="Timeline.ENUM.cs" />
+    <Compile Include="TimelineCore.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="3rdparty\IntervalTree.cs" />
     <Compile Include="Model.cs" />
@@ -164,19 +183,40 @@
     </Compile>
     <Compile Include="UpdateChecker.cs" />
     <Compile Include="Win32APIUtils.cs" />
+    <Compile Include="WPF\Behavior\PropertyChangedCommandBehavior.cs" />
     <Compile Include="WPF\Behavior\WindowCloseAttachedBehavior.cs" />
     <Compile Include="WPF\Behavior\WindowStateChangeAttachedBehavior.cs" />
+    <Compile Include="WPF\Converter\OpacityConverter.cs" />
+    <Compile Include="WPF\Custom\OutlinedTextBlock.cs" />
     <Compile Include="WPF\Desing\Desing_OverlayCustomWindowViewModel.cs" />
     <Compile Include="WPF\Desing\Desing_OverlayManageWindowViewModel.cs" />
     <Compile Include="WPF\Desing\Desing_BaseWindowViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WPF\Desing\Desing_PluginApplicationViewModel.cs" />
     <Compile Include="WPF\ViewModels\OverlayWindowViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WPF\ViewModels\OverlayCustomWindowViewModel.cs" />
-    <Compile Include="WPF\ViewModels\PluginApplicationViewModel.cs" />
+    <Compile Include="WPF\ViewModels\PluginApplicationViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WPF\ViewModels\_ViewModels.cs" />
+    <Compile Include="WPF\Views\TimelineAutoloadView.xaml.cs">
+      <DependentUpon>TimelineAutoloadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Views\TimelineEnvironmentView.xaml.cs">
+      <DependentUpon>TimelineEnvironmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Views\TimelineFileListView.xaml.cs">
+      <DependentUpon>TimelineFileListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Views\TimelineTrackerView.xaml.cs">
+      <DependentUpon>TimelineTrackerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Views\OverlayManageView.xaml.cs">
+      <DependentUpon>OverlayManageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\Views\PluginApplicationView.xaml.cs">
       <DependentUpon>PluginApplicationView.xaml</DependentUpon>
     </Compile>
@@ -186,8 +226,8 @@
     <Compile Include="WPF\Views\OverlayFilterCustomView.xaml.cs">
       <DependentUpon>OverlayFilterCustomView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WPF\Views\OverlayManageWindowView.xaml.cs">
-      <DependentUpon>OverlayManageWindowView.xaml</DependentUpon>
+    <Compile Include="WPF\Views\OverlayManageWindow.xaml.cs">
+      <DependentUpon>OverlayManageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Views\OverlayStandardTimelineCustomView.xaml.cs">
       <DependentUpon>OverlayStandardTimelineCustomView.xaml</DependentUpon>
@@ -209,7 +249,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\ACTTabPageControl.resx">
       <DependentUpon>ACTTabPageControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="OverlayButtonsForm.resx">
       <DependentUpon>OverlayButtonsForm.cs</DependentUpon>
@@ -241,8 +280,8 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
-      <HintPath>..\..\..\..\Advanced Combat Tracker\Advanced Combat Tracker.exe</HintPath>
-      <Private>False</Private>
+      <HintPath>D:\My System\Online Game\Tool\Advanced Combat Tracker\Advanced Combat Tracker.exe</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="LibZ.Bootstrap">
       <HintPath>..\packages\LibZ.Bootstrap.1.1.0.2\lib\net40-client\LibZ.Bootstrap.dll</HintPath>
@@ -252,7 +291,8 @@
     <Reference Include="Prism">
       <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
     </Reference>
-    <Reference Include="Sprache">
+    <Reference Include="Sprache, Version=1.10.0.36, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Sprache.1.10.0.36\lib\net40\Sprache.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -262,6 +302,7 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
     <Reference Include="UIAutomationProvider" />
@@ -282,7 +323,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="WPF\Style\__ColorBaseStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Style\_AppBaseStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WPF\Style\_TimelineStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\TimelineAutoloadView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\TimelineEnvironmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\TimelineFileListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\TimelineTrackerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\OverlayManageView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -298,7 +367,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WPF\Views\OverlayManageWindowView.xaml">
+    <Page Include="WPF\Views\OverlayManageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

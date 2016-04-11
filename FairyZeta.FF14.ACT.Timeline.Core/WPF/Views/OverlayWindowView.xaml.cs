@@ -25,5 +25,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             InitializeComponent();
             this.MouseLeftButtonDown += (sender, e) => this.DragMove();
         }
+        
+        private void Window_SourceInitialized(object sender, EventArgs e)
+        {
+            var helper = new WindowInteropHelper(this);
+            var exStyle = WindowsServices.GetWindowLontPtr(helper.Handle, (int)WindowsServices.GetWindowLongFields.GWL_EXSTYLE).ToInt32();
+            exStyle = exStyle | (int)WindowsServices.ExtendedWindowStyles.WS_EX_TOOLWINDOW;
+            WindowsServices.SetWindowLongPtr(helper.Handle, (int)WindowsServices.GetWindowLongFields.GWL_EXSTYLE, new IntPtr(exStyle));
+        }
+        
     }
 }

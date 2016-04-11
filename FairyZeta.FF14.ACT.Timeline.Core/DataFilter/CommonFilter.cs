@@ -3,57 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
-namespace FairyZeta.FF14.ACT.Timeline.Core.Data
+namespace FairyZeta.FF14.ACT.Timeline.Core.DataFilter
 {
-    /// <summary> タイムライン／共通表示データ
+    /// <summary> タイムライン／汎用フィルタ
     /// </summary>
-    public class CommonViewData : _Data
+    public class CommonFilter : _DataFilter
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        /// <summary> タイムライン／共通表示データ／コンストラクタ
+    
+        /// <summary> タイムライン／汎用フィルタ／コンストラクタ
         /// </summary>
-        public CommonViewData()
+        public CommonFilter()
             : base()
         {
-            this.initData();
-            this.clear();
+            this.initFilter();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> データの初期化を実行します。
+        /// <summary> フィルタの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
-        private bool initData()
+        private bool initFilter()
         {
             return true;
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> データの全体クリアを実行します。
+        /// <summary> フィルタ表示をリセットします。
         /// </summary>
-        /// <returns> 正常終了時 True </returns> 
-        public override bool Clear()
+        /// <param name="sender"> 対象オブジェクト </param>
+        /// <param name="e"> フィルターイベント </param>
+        public void Filter_Reset(object sender, FilterEventArgs e)
         {
-            base.Clear();
-            this.clear();
+            e.Accepted = true;
 
-            return true;
+            return;
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
-        
-        /// <summary> データの単体クリアを実行します。
-        /// </summary>
-        /// <returns> 正常終了時 True </returns> 
-        private bool clear()
-        {
-            return true;
-        }
+
     }
 }

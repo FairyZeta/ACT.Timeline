@@ -63,7 +63,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 
         /// <summary> オーバーレイディレクトリに入っているxmlファイル一覧を更新します。
         /// </summary>
-        /// <param name="pApplicationData"></param>
+        /// <param name="pApplicationData"> 情報を参照するアプリケーションデータ </param>
         public void UpdateOverlayFileList(ApplicationData pApplicationData)
         {
             pApplicationData.OverlayDataFilePathList.Clear();
@@ -79,6 +79,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
                 }
             }
 
+        }
+        /// <summary> オーバーレイのxml設定ファイルを削除します。
+        /// </summary>
+        /// <param name="pApplicationData"> 情報を参照するアプリケーションデータ </param>
+        /// <param name="pFileName"> 削除ファイル名 </param>
+        public void DeleteOverlayXaml(ApplicationData pApplicationData, string pFileName)
+        {
+            if (string.IsNullOrWhiteSpace(pFileName)) return;
+
+            string fullPath = Path.Combine(pApplicationData.OverlayDataDirectoryPath, pFileName);
+            if (!File.Exists(fullPath)) return;
+
+            File.Delete(fullPath);
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

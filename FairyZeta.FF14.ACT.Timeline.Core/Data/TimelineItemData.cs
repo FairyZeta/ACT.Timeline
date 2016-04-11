@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 {
@@ -11,6 +12,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     public class TimelineItemData : _Data
     {
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> (参照専用) タイマーデータ
+        /// </summary>
+        private TimerData timerData;
 
         /// <summary> タイムラインアイテムのジョブタイプ
         /// </summary>
@@ -41,9 +46,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         #region #- [Property] double.ActivityNo - ＜アクティビティ番号(秒)＞ -----
         /// <summary> アクティビティ番号(秒) </summary>
-        private decimal _ActivityNo;
+        private double _ActivityNo;
         /// <summary> アクティビティ番号(秒) </summary>
-        public decimal ActivityNo
+        public double ActivityNo
         {
             get { return this._ActivityNo; }
             set
@@ -90,65 +95,63 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
-        #region #- [Property] decimal.ActiveTime - ＜アクティブになるまでの残り時間＞ -----
-        /// <summary> アクティブになるまでの残り時間 </summary>
-        private decimal _ActiveTime;
-        /// <summary> アクティブになるまでの残り時間 </summary>
-        public decimal ActiveTime
+        /// <summary> (get) アクティブになるまでの残り時間 
+        /// </summary>
+        public double ActiveTime
         {
-            get { return this._ActiveTime; }
-            set
+            get 
             {
-                if (this._ActiveTime == value) return;
+                if (this.timerData == null) return 0;
 
-                this._ActiveTime = value;
-                base.OnPropertyChanged("ActiveTime");
+                return this.EndTime - this.timerData.CurrentCombatTime;
             }
         }
-        #endregion
 
-        public decimal Duration { get; set; }
-        public decimal Jump { get; set; }
+        public double Duration { get; set; }
 
-        #region #- [Property] bool.Visibility - ＜タイムラインリスト表示判定フラグ＞ -----
-        /// <summary> タイムラインリスト表示判定フラグ </summary>
-        private bool _Visibility;
-        /// <summary> タイムラインリスト表示判定フラグ </summary>
-        public bool Visibility
+        /// <summary> このアイテムのジャンプ元データ
+        /// </summary>
+        public TimelineAnchorData JumpItemData { get; set; }
+        /// <summary> このアイテムのシンク元データ
+        /// </summary>
+        public TimelineAnchorData SyncItemData { get; set; }
+
+        /// <summary> (get) タイムラインリスト表示判定フラグ 
+        /// </summary>
+        public bool TimelineVisibility
         {
-            get { return this._Visibility; }
-            set
+            get
             {
-                if (this._Visibility == value) return;
-
-                this._Visibility = value;
-                base.OnPropertyChanged("Visibility");
+                if (this.ActiveTime <= 0)
+                {
+                    return false;
+                }
+                return true;
+;
             }
         }
-        #endregion
 
 
-        #region #- [Property] bool.ActiveIndicatorVisibility - ＜アクティブインジケータ表示フラグ＞ -----
-        /// <summary> アクティブインジケータ表示フラグ </summary>
-        private bool _ActiveIndicatorVisibility;
-        /// <summary> アクティブインジケータ表示フラグ </summary>
+        /// <summary> (get) アクティブインジケータ表示フラグ 
+        /// </summary>
         public bool ActiveIndicatorVisibility
         {
-            get { return this._ActiveIndicatorVisibility; }
-            set
+            get
             {
-                if (this._ActiveIndicatorVisibility == value) return;
+                if (this.Duration > 0 && this.ActiveTime - this.Duration <= 0 )
+                {
+                    return false;
+                }
 
-                this._ActiveIndicatorVisibility = value;
-                base.OnPropertyChanged("ActiveIndicatorVisibility");
+                return true;
             }
         }
-        #endregion
-        #region #- [Property] decimal.ActiveIndicatorStartTime - ＜アクティブインジケータ開始時間＞ -----
+
+        #region #- [Property] double.ActiveIndicatorStartTime - ＜アクティブインジケータ開始時間＞ -----
         /// <summary> アクティブインジケータ開始時間 </summary>
-        private decimal _ActiveIndicatorStartTime;
+        private double _ActiveIndicatorStartTime;
         /// <summary> アクティブインジケータ開始時間 </summary>
-        public decimal ActiveIndicatorStartTime
+        public double ActiveIndicatorStartTime
         {
             get { return this._ActiveIndicatorStartTime; }
             set
@@ -182,7 +185,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <summary> アクティブインジケータ最小値 </summary>
         public double ActiveIndicatorMinValue
         {
-            get { return this._ActiveIndicatorMinValue; }
+            get
+            {
+                return this.ActivityNo - 12.0;
+            }
             set
             {
                 if (this._ActiveIndicatorMinValue == value) return;
@@ -198,13 +204,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <summary> アクティブインジケータ最大値 </summary>
         public double ActiveIndicatorMaxValue
         {
-            get { return this._ActiveIndicatorMaxValue; }
+            get 
+            { 
+                return this.ActivityNo; 
+            }
             set
             {
-                if (this._ActiveIndicatorMaxValue == value) return;
+                return;
+                //if (this._ActiveIndicatorMaxValue == value) return;
 
-                this._ActiveIndicatorMaxValue = value;
-                base.OnPropertyChanged("ActiveIndicatorMaxValue");
+                //this._ActiveIndicatorMaxValue = value;
+                //base.OnPropertyChanged("ActiveIndicatorMaxValue");
             }
         }
         #endregion
@@ -273,22 +283,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             }
         }
         #endregion
-        #region #- [Property] double.DurationIndicatorMaxValue - ＜アクションインジケータ最大値＞ -----
-        /// <summary> アクションインジケータ最大値 </summary>
-        private double _DurationIndicatorMaxValue;
+
+
         /// <summary> アクションインジケータ最大値 </summary>
         public double DurationIndicatorMaxValue
         {
-            get { return this._DurationIndicatorMaxValue; }
-            set
+            get
             {
-                if (this._DurationIndicatorMaxValue == value) return;
-
-                this._DurationIndicatorMaxValue = value;
-                base.OnPropertyChanged("DurationIndicatorMaxValue");
+                return this.ActivityNo + 2.0;
             }
         }
-        #endregion
+
         #region #- [Property] double.DurationIndicatorDefaultValue - ＜アクションインジケータ初期値＞ -----
         /// <summary> アクションインジケータ初期値 </summary>
         private double _DurationIndicatorDefaultValue;
@@ -306,7 +311,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
-        public decimal EndTime
+
+        public double EndTime
         {
             get
             {
@@ -319,9 +325,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         /// <summary> タイムライン／タイムラインアイテムデータ／コンストラクタ
         /// </summary>
-        public TimelineItemData()
+        public TimelineItemData(TimerData pTimerData)
             :base()
         {
+            this.timerData = pTimerData;
             this.initData();
             this.clear();
         }
@@ -337,6 +344,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> OnPropertyChangedを発行し、画面を更新します。
+        /// </summary>
+        public void ViewReflesh()
+        {
+            base.OnPropertyChanged("ActiveTime");
+            base.OnPropertyChanged("ActiveIndicatorVisibility");
+            base.OnPropertyChanged("TimelineVisibility");
+        }
 
         /// <summary> データの全体クリアを実行します。
         /// </summary>
@@ -356,7 +372,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
-            this.ActiveIndicatorVisibility = true;
+            this.JobType = Job.UNKNOWN;
+            this.TimelineType = Core.TimelineType.UNKNOWN;
+
+            this.ActivityTime = new TimeSpan();
+
+            this.ActivityName = string.Empty;
+
             this.ActiveIndicatorValue = 0;
             this.ActiveIndicatorMinValue = 0;
             this.ActiveIndicatorMaxValue = 12;
@@ -365,7 +387,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.DurationIndicatorVisibility = false;
             this.DurationIndicatorValue = 0;
             this.DurationIndicatorMinValue = 0;
-            this.DurationIndicatorMaxValue = 0;
             this.DurationIndicatorDefaultValue = 0;
 
             return true;

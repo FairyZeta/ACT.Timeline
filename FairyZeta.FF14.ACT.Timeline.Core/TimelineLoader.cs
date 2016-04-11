@@ -16,7 +16,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
     public class TimelineConfig
     {
         public List<TimelineActivity> Items;
-        public List<TimelineAnchor> Anchors;
+        public List<TimelineAnchorData> Anchors;
         public List<AlertAll> AlertAlls;
         public List<string> HideAlls;
         public List<ActivityAlert> Alerts;
@@ -25,7 +25,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         public TimelineConfig()
         {
             Items = new List<TimelineActivity>();
-            Anchors = new List<TimelineAnchor>();
+            Anchors = new List<TimelineAnchorData>();
             AlertAlls = new List<AlertAll>();
             HideAlls = new List<string>();
             Alerts = new List<ActivityAlert>();
@@ -63,7 +63,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             from slash2 in Parse.Char('/')
             select regex;
 
-        static readonly Parser<double> Duration = 
+        static readonly Parser<double> Duration =
             from spaces in Spaces
             from durationPrefix in Parse.String("duration").Or(Parse.String("効果時間"))
             from spaces2 in Parse.Optional(Spaces)
@@ -77,12 +77,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         };
         static readonly SyncWindowSettings DefaultWindow = new SyncWindowSettings
         {
-            WindowBefore = TimelineAnchor.DefaultWindow / 2,
-            WindowAfter = TimelineAnchor.DefaultWindow / 2
+            WindowBefore = TimelineAnchorData.DefaultWindow / 2,
+            WindowAfter = TimelineAnchorData.DefaultWindow / 2
         };
         static readonly Parser<SyncWindowSettings> SingleWindow =
             from value in DecimalDouble
-            select new SyncWindowSettings { WindowBefore = value / 2, WindowAfter = value / 2};
+            select new SyncWindowSettings { WindowBefore = value / 2, WindowAfter = value / 2 };
         static readonly Parser<SyncWindowSettings> BeforeAfterWindow =
             from beforeWindow in DecimalDouble
             from sep in Parse.Regex(@"[, 　]+")
@@ -130,7 +130,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
                 if (t.Item2 != null)
                 {
                     var windowSettings = t.Item2.Item2;
-                    config.Anchors.Add(new TimelineAnchor {
+                    config.Anchors.Add(new TimelineAnchorData
+                    {
                         Jump = t.Item1.Jump,
                         TimeFromStart = t.Item1.TimeFromStart,
                         Regex = new System.Text.RegularExpressions.Regex(t.Item2.Item1),
@@ -139,7 +140,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
                     });
                 }
             })).Named("TimelineActivityStatement");
-        
+
         static readonly Parser<Tuple<string, string>> AlertSoundAlias =
             from define_alertsound in Parse.Regex(@"^define\s+alertsound\s+")
             from alias in MaybeQuotedString
@@ -148,7 +149,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             select new Tuple<string, string>(alias, target);
 
         static readonly Parser<ConfigOp> AlertSoundAliasStatement =
-            AlertSoundAlias.Select<Tuple<string, string>, ConfigOp>((Tuple<string, string> t) => ((TimelineConfig config) => {
+            AlertSoundAlias.Select<Tuple<string, string>, ConfigOp>((Tuple<string, string> t) => ((TimelineConfig config) =>
+            {
                 AlertSound alertSound = config.AlertSoundAssets.Get(t.Item2);
                 config.AlertSoundAssets.RegisterAlias(alertSound, t.Item1);
             }));
@@ -203,11 +205,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             from stmts in TimelineStatement.DelimitedBy(StatementSeparator.Many())
             select stmts;
 
-        public static readonly Parser<TimelineConfig> TimelineConfig = TimelineStatements.Select(stmts => {
-           TimelineConfig config = new TimelineConfig();
-           foreach (ConfigOp op in stmts)
-               op(config);
-           return config;
+        public static readonly Parser<TimelineConfig> TimelineConfig = TimelineStatements.Select(stmts =>
+        {
+            TimelineConfig config = new TimelineConfig();
+            foreach (ConfigOp op in stmts)
+                op(config);
+            return config;
         }).End();
     }
 

@@ -23,14 +23,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <summary> オーバーレイオープンプロセス
         /// </summary>
         private OverlayViewOpenProcess overlayViewOpenProcess;
-
         /// <summary> XMLシリアライズプロセス
         /// </summary>
         private XmlSerializerProcess xmlSerializerProcess;
-
         /// <summary> フィルタセットプロセス
         /// </summary>
         private SetFilterProcess setFilterProcess;
+        /// <summary> ファイル管理プロセス
+        /// </summary>
+        private AppDataFileManageProcess appDataFileManageProcess;
+        /// <summary> セーブ対象状態リセットプロセス
+        /// </summary>
+        private SaveChangedResetProcess saveChangedResetProcess;
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -52,6 +56,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             this.overlayViewOpenProcess = new OverlayViewOpenProcess();
             this.xmlSerializerProcess = new XmlSerializerProcess();
             this.setFilterProcess = new SetFilterProcess();
+            this.appDataFileManageProcess = new AppDataFileManageProcess();
+            this.saveChangedResetProcess = new SaveChangedResetProcess();
+
             return true;
         }
 
@@ -84,7 +91,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             this.ShowOverlay(pTimelineComponent, component);
         }
 
-        /// <summary> 保存されているオーバーレイを全て読込します。
+        /// <summary> 保存されているオーバーレイを全てロードします。
         /// </summary>
         public void OverlayDataModelLoad(CommonDataModel pCommonDataModel, TimelineComponent pTimelineComponent, OverlayManageDataModel pOverlayManageDataModel)
         {
@@ -112,9 +119,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> 既存のオーバーレイを削除します。
         /// </summary>
-        public void DeleteOverlay()
+        public void DeleteOverlay(OverlayViewComponent pOverlayViewComponent, CommonDataModel pCommonDataModel, OverlayManageDataModel pOverlayManageDataModel)
         {
+            if (pCommonDataModel == null || pCommonDataModel.ApplicationData == null) return;
 
+            string fileName = pCommonDataModel.ApplicationData.OverlayDataPartName + String.Format("{0:0000}", pOverlayViewComponent.OverlayDataModel.OverlayWindowData.ID) + ".xml"; 
+            
+            pOverlayManageDataModel.OverlayViewComponentCollection.Remove(pOverlayViewComponent);
+
+            WindowsServices.WindowCloseSendMessage(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr = IntPtr.Zero;
+
+            pOverlayViewComponent = null;
         }
 
         /// <summary> オーバーレイを表示します。
@@ -123,6 +139,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <param name="pOverlayViewComponent">  </param>
         public void ShowOverlay(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
         {
+            if (!pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowVisibility) return;
+
             this.overlayViewOpenProcess.NewOverlayOpen(pTimelineComponent, pOverlayViewComponent);
         }
 
@@ -238,10 +256,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             if (pApplicationData == null || pOverlayDataModel == null) return;
 
-            string fileName = pApplicationData.OverlayDataPartName + String.Format("{0:000}", pOverlayDataModel.OverlayWindowData.ID) + ".xml"; 
+            string fileName = pApplicationData.OverlayDataPartName + String.Format("{0:0000}", pOverlayDataModel.OverlayWindowData.ID) + ".xml"; 
             string fullPath = Path.Combine(pApplicationData.OverlayDataDirectoryPath, fileName);
 
             this.xmlSerializerProcess.XmlSave(fullPath, pOverlayDataModel, true);
+
+            this.saveChangedResetProcess.OverlayDataSaveChangedReset(pOverlayDataModel);
+
             return;
         }
         /// <summary> オーバーレイウィンドウ情報リストをXML形式で保存します。

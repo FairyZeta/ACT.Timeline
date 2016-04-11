@@ -9,15 +9,11 @@
         d:DesignHeight="300" d:DesignWidth="300"
         Background="Transparent" AllowsTransparency="True" WindowStyle="None" ShowInTaskbar="False" 
         Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowWidth, Mode=TwoWay}"
-        Height="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowHeight, Mode=TwoWay}">
+        Height="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowHeight, Mode=TwoWay}"
+        Top="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowTop, Mode=TwoWay}"
+        Left="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLeft, Mode=TwoWay}">
         
     
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
-                      ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" 
-                      UseAeroCaptionButtons="False" />
-    </WindowChrome.WindowChrome>
-
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -31,7 +27,7 @@
     </Window.DataContext>
     
     <Window.Style>
-        <Style TargetType="{x:Type Window}">
+        <Style TargetType="{x:Type Window}" BasedOn="{StaticResource DefaultWindowStyle}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowVisibility}" Value="False">
                     <Setter Property="Opacity" Value="0"/>

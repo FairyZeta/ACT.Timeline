@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <SolidColorBrush x:Key="RoleColor_TANK1" Color="#BF344396"/>
+    <SolidColorBrush x:Key="RoleColor_TANK2" Color="#E24054BF"/>
+    <SolidColorBrush x:Key="RoleColor_HEALER1" Color="#BF396527"/>
+    <SolidColorBrush x:Key="RoleColor_HEALER2" Color="#E24C8D32"/>
+    <SolidColorBrush x:Key="RoleColor_DPS1" Color="#BF653232"/>
+    <SolidColorBrush x:Key="RoleColor_DPS2" Color="#E2A04242"/>
+    <SolidColorBrush x:Key="RoleColor_Pet1" Color="#BF969334"/>
+    <SolidColorBrush x:Key="RoleColor_UNKNOWN1" Color="#BFD3D3D3"/>
+    <SolidColorBrush x:Key="RoleColor_Me1" Color="#BFFFF700"/>
+
+    <SolidColorBrush x:Key="RoleColor_Enemy1" Color="#E2EBF5"/>
+
+    <SolidColorBrush x:Key="RoleColor_GIMMICK" Color="#BFD64E00"/>
+    
+    <SolidColorBrush x:Key="BaseColor_Blue1" Color="#FFC6D3DE"/>
+    <SolidColorBrush x:Key="BaseColor_Blue1_Shadow" Color="#FF035B8D"/>
+    <SolidColorBrush x:Key="BaseColor_Gold1" Color="#DED7BE"/>
+    <SolidColorBrush x:Key="BaseColor_Gold1_Shadow" Color="#795516"/>
+
+</ResourceDictionary>

@@ -91,7 +91,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 
             view.Show();
 
-            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPrt = new WindowInteropHelper(view).Handle;
+            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr = new WindowInteropHelper(view).Handle;
+
+            if(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock)
+            {
+                WindowsServices.SetWindowExTransparent(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+            }
         }
 
     }

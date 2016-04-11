@@ -19,19 +19,27 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// </summary>
         public TimelineBaseData Timeline { get; set; }
 
-        /// <summary> 有効な(時間や名前が入っている)タイムラインアイテムコレクション
-        /// </summary>
-        public ObservableCollection<TimelineItemData> TimelineActiveItemCollection { get; private set; }
         /// <summary> タイムラインアイテムコレクション
         /// </summary>
         public ObservableCollection<TimelineItemData> TimelineItemCollection { get; private set; }
-        /// <summary> 画面表示用タイムラインビューソース
+        /// <summary> ジャンプアイテムコレクション
         /// </summary>
-        public CollectionViewSource TimelineItemViewSource { get; private set; }
+        //public ObservableCollection<TimelineAnchorData> JumpItemCollection { get; private set; }
+        /// <summary> シンクアイテムコレクション
+        /// </summary>
+        //public ObservableCollection<TimelineAnchorData> SyncItemCollection { get; private set; }
+        /// <summary> アンカーデータコレクション
+        /// </summary>
+        public ObservableCollection<TimelineAnchorData> TimelineAnchorDataCollection { get; private set; }
 
-        /// <summary> ActivityNameによるフィルター
+        /// <summary> ジャンプ発生時の対象ジャンプデータ
         /// </summary>
-        public ActivityNameFilter ActivityNameFilter { get; private set; }
+        //public TimelineAnchorData JumpTargetData { get; set; }
+        /// <summary> シンク発生時の対象シンクデータ
+        /// </summary>
+        //public TimelineAnchorData SyncTargetData { get; set; }
+
+        public TimelineAnchorData JumpSyncAnchorData { get; set; }
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -51,14 +59,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         private bool initDataModel()
         {
             this.TimelineItemCollection = new ObservableCollection<TimelineItemData>();
-            this.TimelineItemViewSource = new CollectionViewSource() { Source = this.TimelineItemCollection };
-
-            this.TimelineActiveItemCollection = new ObservableCollection<TimelineItemData>();
-
-            this.ActivityNameFilter = new ActivityNameFilter();
-            this.TimelineItemViewSource.Filter += new FilterEventHandler(this.ActivityNameFilter.Filter_ActivityNonName);
-            this.TimelineItemViewSource.View.Refresh();
-
+            //this.JumpItemCollection = new ObservableCollection<TimelineAnchorData>();
+            //this.SyncItemCollection = new ObservableCollection<TimelineAnchorData>();
+            this.TimelineAnchorDataCollection = new ObservableCollection<TimelineAnchorData>();
+            
             return true;
         }
 

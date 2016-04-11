@@ -1,25 +1,25 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="__ColorBaseStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
-    <SolidColorBrush x:Key="RoleColor_TANK1" Color="#BF344396"/>
-    <SolidColorBrush x:Key="RoleColor_TANK2" Color="#E24054BF"/>
-    <SolidColorBrush x:Key="RoleColor_HEALER1" Color="#BF396527"/>
-    <SolidColorBrush x:Key="RoleColor_HEALER2" Color="#E24C8D32"/>
-    <SolidColorBrush x:Key="RoleColor_DPS1" Color="#BF653232"/>
-    <SolidColorBrush x:Key="RoleColor_DPS2" Color="#E2A04242"/>
-    <SolidColorBrush x:Key="RoleColor_Pet1" Color="#BF969334"/>
-    <SolidColorBrush x:Key="RoleColor_UNKNOWN1" Color="#BFD3D3D3"/>
-    <SolidColorBrush x:Key="RoleColor_Me1" Color="#BFFFF700"/>
-
-    <SolidColorBrush x:Key="RoleColor_Enemy1" Color="#E2EBF5"/>
-
-    <SolidColorBrush x:Key="RoleColor_GIMMICK" Color="#BFD64E00"/>
-    
-    <SolidColorBrush x:Key="BaseColor_Blue1" Color="#E2EBF5"/>
-    <SolidColorBrush x:Key="BaseColor_Blue1_Shadow" Color="#217AA2"/>
-    <SolidColorBrush x:Key="BaseColor_Gold1" Color="#DED7BE"/>
-    <SolidColorBrush x:Key="BaseColor_Gold1_Shadow" Color="#795516"/>
+    <System:Double x:Key="CaptionHeight">26</System:Double>
+    <Style TargetType="{x:Type Window}" x:Key="DefaultWindowStyle">
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CornerRadius="3" GlassFrameThickness="1" ResizeBorderThickness="8" UseAeroCaptionButtons="False" CaptionHeight="{DynamicResource CaptionHeight}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Background" Value="#FF494949"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
 
     <Style x:Key="CaptionButtonStyleKey" TargetType="{x:Type Button}">
         <Setter Property="OverridesDefaultStyle" Value="True" />

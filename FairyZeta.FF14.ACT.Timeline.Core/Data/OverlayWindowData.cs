@@ -171,10 +171,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
-        /// <summary> 画面のIntPrt
+        /// <summary> 画面のIntPtr
         /// </summary>
         [XmlIgnore]
-        public IntPtr WindowIntPrt { get; set; }
+        public IntPtr WindowIntPtr { get; set; }
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 

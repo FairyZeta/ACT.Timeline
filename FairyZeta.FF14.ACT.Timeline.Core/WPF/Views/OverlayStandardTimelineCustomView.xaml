@@ -78,6 +78,115 @@
             <TabControl Grid.RowSpan="100">
                 <TabItem Header="Common">
                     <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+                            <Grid Margin="5">
+                                <Label Content=" Overlay FontSize " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                                    <StackPanel Margin="0 5" DataContext="{Binding OverlayViewComponent}">
+                                        <StackPanel Style="{StaticResource ItemStackPanel}">
+                                            <Label Content="TitleBar FontSize" Padding="0" Width="120"/>
+                                            <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <StackPanel>
+                                                <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="TitleBarFontSize"/>
+                                                <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="TitleBarFontSize"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Margin="0 5" DataContext="{Binding OverlayViewComponent}">
+                                        <StackPanel Style="{StaticResource ItemStackPanel}">
+                                            <Label Content="Header FontSize" Padding="0" Width="120"/>
+                                            <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <StackPanel>
+                                                <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="HeaderFontSize"/>
+                                                <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="HeaderFontSize"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Margin="0 5" DataContext="{Binding OverlayViewComponent}">
+                                        <StackPanel Style="{StaticResource ItemStackPanel}">
+                                            <Label Content="Content FontSize" Padding="0" Width="120" />
+                                            <TextBox Style="{StaticResource DataGridWidthTextBox}" 
+                                             Text="{Binding OverlayDataModel.OverlayGenericSettingsData.ContentFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <StackPanel>
+                                                <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
+                                                CommandParameter="ContentFontSize"/>
+                                                <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
+                                                CommandParameter="ContentFontSize"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+                            <Grid Margin="5">
+                                <Label Content=" Overlay Opacity " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Content="Background"/>
+                                        <Slider Grid.Column="1" Width="100" Minimum="0" Maximum="100"
+                                                Value="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity}"/>
+                                        <Label Grid.Column="2" Content="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity}"/>
+                                    </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Content="Content"/>
+                                        <Slider Grid.Column="1" Width="100" Minimum="0" Maximum="100"
+                                                Value="{Binding OverlayDataModel.OverlayGenericSettingsData.ContentOpacity}"/>
+                                        <Label Grid.Column="2" Content="{Binding OverlayDataModel.OverlayGenericSettingsData.ContentOpacity}"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+                            <Grid Margin="5">
+                                <Label Content=" Overlay Visibility " Width="120" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox Grid.Column="0" Content="TitleBar Visibility" 
+                                                  IsChecked="{Binding OverlayDataModel.OverlayGenericSettingsData.TitleBarVisibility}"/>
+                                    </Grid>
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox Grid.Column="0" Content="ContentHeader Visibility" 
+                                                  IsChecked="{Binding OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility}"/>
+                                    </Grid>
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </TabItem>
                 <TabItem Header="DataGrid">

@@ -11,6 +11,7 @@ using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
 using System.Windows.Data;
+using System.Windows;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 {
@@ -28,7 +29,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// </summary>
         public OverlayManageDataModel OverlayManageDataModel { get; private set; }
 
-        #region #- [Property] OverlayDataModel.AddOverlayDataModel - ＜オーバーレイ操作用データモデル＞ -----
+        #region #- [Property] OverlayViewComponent.ControlOverlayViewComponent - ＜オーバーレイ操作用コンポーネント＞ -----
+        /// <summary> オーバーレイ操作用コンポーネント </summary>
+        private OverlayViewComponent _ControlOverlayViewComponent;
+        /// <summary> オーバーレイ操作用コンポーネント </summary>
+        public OverlayViewComponent ControlOverlayViewComponent
+        {
+            get { return this._ControlOverlayViewComponent; }
+            set
+            {
+                if (this._ControlOverlayViewComponent == value) return;
+
+                this._ControlOverlayViewComponent = value;
+                base.OnPropertyChanged("ControlOverlayViewComponent");
+            }
+        }
+        #endregion
+        #region #- [Property] OverlayDataModel.ControlOverlayDataModel - ＜オーバーレイ操作用データモデル＞ -----
         /// <summary> オーバーレイ操作用データモデル  </summary>
         private OverlayDataModel _ControlOverlayDataModel;
         /// <summary> オーバーレイ操作用データモデル  </summary>
@@ -40,7 +57,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                 if (this._ControlOverlayDataModel == value) return;
 
                 this._ControlOverlayDataModel = value;
-                base.OnPropertyChanged("AddOverlayDataModel");
+                base.OnPropertyChanged("ControlOverlayDataModel");
             }
         }
         #endregion
@@ -96,13 +113,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             get { return _OverlayViewLockCommand = _OverlayViewLockCommand ?? new DelegateCommand<OverlayViewComponent>(this._OverlayViewLockExecute, this._CanOverlayViewLockExecute); }
         }
         #endregion
-        #region #- [Command] DelegateCommand<OverlayViewComponent>.OvarlayCustomWindoOpenCommand - ＜オーバーレイカスタムウインドウオープンコマンド＞ -----
+        #region #- [Command] DelegateCommand<OverlayViewComponent>.OverlayCustomWindoOpenCommand - ＜オーバーレイカスタムウインドウオープンコマンド＞ -----
         /// <summary> オーバーレイカスタムウインドウオープンコマンド＜コマンド＞ </summary>
-        private DelegateCommand<OverlayViewComponent> _OvarlayCustomWindoOpenCommand;
+        private DelegateCommand<OverlayViewComponent> _OverlayCustomWindoOpenCommand;
         /// <summary> オーバーレイカスタムウインドウオープンコマンド＜コマンド＞ </summary>
-        public DelegateCommand<OverlayViewComponent> OvarlayCustomWindoOpenCommand
+        public DelegateCommand<OverlayViewComponent> OverlayCustomWindoOpenCommand
         {
-            get { return _OvarlayCustomWindoOpenCommand = _OvarlayCustomWindoOpenCommand ?? new DelegateCommand<OverlayViewComponent>(this._OvarlayCustomWindoOpenExecute, this._CanOvarlayCustomWindoOpenExecute); }
+            get { return _OverlayCustomWindoOpenCommand = _OverlayCustomWindoOpenCommand ?? new DelegateCommand<OverlayViewComponent>(this._OverlayCustomWindoOpenExecute, this._CanOverlayCustomWindoOpenExecute); }
         }
         #endregion 
 
@@ -126,7 +143,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.TimelineComponent = pComponent;
             this.initComponent();
 
+            // 保存されているオーバーレイをロード
             this.OverlayManageModule.OverlayDataModelLoad(base.CommonDataModel, this.TimelineComponent, this.OverlayManageDataModel);
+
+            // オーバーレイが0件時に自動作成
+            
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -147,7 +168,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// </summary>
         /// <param name="o"> タイマーオブジェクト </param>
         /// <param name="e"> タイマーイベント </param>
-        public void OverlayAutoSave(object o, ElapsedEventArgs e)
+        public void OverlayAutoSaveEvent(object o, EventArgs e)
         {
             if (this.CommonDataModel.ApplicationData == null) return;
 
@@ -215,7 +236,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     this.OverlayManageModule.AddNewOverlay(this.OverlayManageDataModel, this.ControlOverlayDataModel, this.TimelineComponent, base.CommonDataModel);
                     break;
                 case "Delete":
-
+                    this.OverlayManageModule.DeleteOverlay(this.ControlOverlayViewComponent, base.CommonDataModel, this.OverlayManageDataModel);
                     break;
                 default:
                     break;
@@ -240,6 +261,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <param name="para"> コマンドパラメーター </param>
         private void _OverlayViewChangedExecute(OverlayViewComponent para)
         {
+            if (para == null) return;
+
+            if (para.OverlayDataModel.OverlayWindowData.WindowVisibility)
+            {
+                this.OverlayManageModule.ShowOverlay(this.TimelineComponent, para);
+            }
+            else
+            {
+                WindowsServices.WindowCloseSendMessage(para.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+                para.OverlayDataModel.OverlayWindowData.WindowIntPtr = IntPtr.Zero;
+            }
 
         }
         #endregion 
@@ -261,27 +293,27 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
             if(para.OverlayDataModel.OverlayWindowData.WindowLock)
             {
-                WindowsServices.SetWindowExTransparent(para.OverlayDataModel.OverlayWindowData.WindowIntPrt);
+                WindowsServices.SetWindowExTransparent(para.OverlayDataModel.OverlayWindowData.WindowIntPtr);
             }
             else
             {
-                WindowsServices.InitWindowExTransparent(para.OverlayDataModel.OverlayWindowData.WindowIntPrt);
+                WindowsServices.InitWindowExTransparent(para.OverlayDataModel.OverlayWindowData.WindowIntPtr);
             }
         }
         #endregion 
         
-        #region #- [Method] CanExecute,Execute @ OvarlayCustomWindoOpenCommand - ＜オーバーレイカスタムウインドウオープンコマンド＞ -----
+        #region #- [Method] CanExecute,Execute @ OverlayCustomWindoOpenCommand - ＜オーバーレイカスタムウインドウオープンコマンド＞ -----
         /// <summary> 実行可能確認＜オーバーレイカスタムウインドウオープンコマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
         /// <returns> 実行可能: ture / 実行不可能: false </returns>
-        private bool _CanOvarlayCustomWindoOpenExecute(OverlayViewComponent para)
+        private bool _CanOverlayCustomWindoOpenExecute(OverlayViewComponent para)
         {
             return true;
         }
 
         /// <summary> コマンド実行＜オーバーレイカスタムウインドウオープンコマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
-        private void _OvarlayCustomWindoOpenExecute(OverlayViewComponent para)
+        private void _OverlayCustomWindoOpenExecute(OverlayViewComponent para)
         {
             this.OverlayManageModule.ShowCustomWindow(para);
         }
@@ -301,7 +333,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         private void _OverlayDeleteExecute(OverlayViewComponent para)
         {
             // --- 追加用データ生成
-            this.ControlOverlayDataModel = new OverlayDataModel();
+            this.ControlOverlayViewComponent = para;
+            this.ControlOverlayDataModel = para.OverlayDataModel;
             this.OverlayManageModule.CreateOverlayTypeCollection(this.ControlOverlayDataModel);
 
             // --- モーダルを開く
