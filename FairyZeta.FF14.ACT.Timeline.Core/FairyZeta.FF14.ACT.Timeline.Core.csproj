@@ -108,6 +108,7 @@
     <Compile Include="Data\AppStatusData.cs" />
     <Compile Include="Data\AppCommonData.cs" />
     <Compile Include="Data\ITimelineAnchor.cs" />
+    <Compile Include="Data\OverlayBarSettingsData.cs" />
     <Compile Include="Data\OverlayColorSettingsData.cs" />
     <Compile Include="Data\OverlayContentSettingsData.cs" />
     <Compile Include="Data\OverlayFilterSettingsData.cs" />

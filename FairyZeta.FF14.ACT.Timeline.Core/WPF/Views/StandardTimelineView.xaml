@@ -125,7 +125,7 @@
                     <ProgressBar Minimum="{Binding ActiveIndicatorMinValue}" 
                                  Value="{Binding DataContext.TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" 
                                  Maximum="{Binding ActiveIndicatorMaxValue}" 
-                                 Height="20" Margin="0 0 35 0"
+                                 Margin="0 0 35 0"
                                  Template="{StaticResource BasicProgressBar}" FlowDirection="RightToLeft" Background="Transparent" BorderBrush="Transparent" >
                         <ProgressBar.Style>
                             <Style TargetType="ProgressBar">
@@ -146,7 +146,7 @@
                     <ProgressBar Minimum="{Binding ActivityNo}" 
                                  Value="{Binding DataContext.TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}"
                                  Maximum="{Binding DurationIndicatorMaxValue}" 
-                                 Height="20" Margin="0 0 35 0"
+                                 Margin="0 0 35 0"
                                  Template="{StaticResource BasicProgressBar}" Background="Transparent" BorderBrush="Transparent">
                         <ProgressBar.Style>
                             <Style TargetType="ProgressBar">
@@ -155,7 +155,7 @@
                             </Style>
                         </ProgressBar.Style>
                     </ProgressBar>
-                    <TextBlock Text="{Binding ActiveTime,StringFormat=N2}" Style="{StaticResource OutlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding ActiveTime,StringFormat=N0}" Style="{StaticResource OutlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicTypeContentTemplate" >

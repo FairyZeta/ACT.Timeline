@@ -17,39 +17,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// </summary>
         public List<TimelineItemData> CombatTimeChangedRefreshList { get; private set; }
 
-        public TimeSpan CurrentCombatStartTimeSpan
-        {
-            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatStartTime)); }
-        }
-
-        public TimeSpan CurrentCombatTimeSpan
-        {
-            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatTime)); }
-        }
-
-        public TimeSpan CurrentCombatEndTimeSpan
-        {
-            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatEndTime)); }
-        }
-
-      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
-
-      /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
-
-      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        /// <summary> OnPropertyChangedを発行し、画面を更新します。
-        /// </summary>
-        public void ViewRefresh()
-        {
-            foreach (var item in this.CombatTimeChangedRefreshList)
-            {
-                item.ViewRefresh();
-            }
-        }
-
-      /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
-
         #region #- [Property] double.CurrentCombatTime - ＜現在の戦闘時間＞ -----
         /// <summary> 現在の時間 </summary>
         private double _CurrentCombatTime;
@@ -64,7 +31,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
                 base.OnPropertyChanged("CurrentCombatTime");
                 base.OnPropertyChanged("CurrentCombatTimeSpan");
 
-                this.ViewRefresh();
+                this.CurrentTimeChangedRefresh();
             }
         }
         #endregion
@@ -105,6 +72,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        public TimeSpan CurrentCombatStartTimeSpan
+        {
+            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatStartTime)); }
+        }
+
+        public TimeSpan CurrentCombatTimeSpan
+        {
+            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatTime)); }
+        }
+
+        public TimeSpan CurrentCombatEndTimeSpan
+        {
+            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatEndTime)); }
+        }
+
+      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／タイマーデータ／コンストラクタ
         /// </summary>
@@ -115,6 +98,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.clear();
         }
 
+      /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
+
         /// <summary> データの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
@@ -123,6 +108,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.CombatTimeChangedRefreshList = new List<TimelineItemData>();
             return true;
         }
+
+      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> CurrentTime変更時に画面を更新します。
+        /// </summary>
+        public void CurrentTimeChangedRefresh()
+        {
+            foreach (var item in this.CombatTimeChangedRefreshList)
+            {
+                item.ViewRefresh();
+            }
+        }
+
+      /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> データの全体クリアを実行します。
         /// </summary>
