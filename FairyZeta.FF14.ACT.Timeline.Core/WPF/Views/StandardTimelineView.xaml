@@ -155,7 +155,7 @@
                             </Style>
                         </ProgressBar.Style>
                     </ProgressBar>
-                    <TextBlock Text="{Binding ActiveTime,StringFormat=N0}" Style="{StaticResource OutlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding ActiveTime,StringFormat=N2}" Style="{StaticResource OutlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicTypeContentTemplate" >
