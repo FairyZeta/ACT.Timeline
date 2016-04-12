@@ -256,7 +256,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                         }
 
                         this.CommonDataModel.LogDataCollection.Add(
-                            Globals.SysLogger.SystemLog.Success.INFO.Write(string.Format("Timeline AutoLoad Success. ( File = {0} )", findName, Globals.ProjectName));
+                            Globals.SysLogger.SystemLog.Success.INFO.Write(string.Format("Timeline AutoLoad Success. ( File = {0} )", findName, Globals.ProjectName)));
                         this.CommonDataModel.AppStatusData.AutoLoadStatus = TimelineLoadStatus.Success;
                         this.CommonDataModel.ViewRefresh();
 
