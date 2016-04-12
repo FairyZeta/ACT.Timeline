@@ -87,7 +87,7 @@
                             <Grid Margin="5">
                                 <Label Content=" Overlay FontSize " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
-                                    <StackPanel Margin="0 5" DataContext="{Binding OverlayViewComponent}">
+                                    <StackPanel Margin="0 5" >
                                         <StackPanel Style="{StaticResource ItemStackPanel}">
                                             <Label Content="TitleBar FontSize" Padding="0" Width="120"/>
                                             <TextBox Style="{StaticResource DataGridWidthTextBox}" 
@@ -100,7 +100,7 @@
                                             </StackPanel>
                                         </StackPanel>
                                     </StackPanel>
-                                    <StackPanel Margin="0 5" DataContext="{Binding OverlayViewComponent}">
+                                    <StackPanel Margin="0 5" >
                                         <StackPanel Style="{StaticResource ItemStackPanel}">
                                             <Label Content="Header FontSize" Padding="0" Width="120"/>
                                             <TextBox Style="{StaticResource DataGridWidthTextBox}" 
@@ -113,7 +113,7 @@
                                             </StackPanel>
                                         </StackPanel>
                                     </StackPanel>
-                                    <StackPanel Margin="0 5" DataContext="{Binding OverlayViewComponent}">
+                                    <StackPanel Margin="0 5" >
                                         <StackPanel Style="{StaticResource ItemStackPanel}">
                                             <Label Content="Content FontSize" Padding="0" Width="120" />
                                             <TextBox Style="{StaticResource DataGridWidthTextBox}" 

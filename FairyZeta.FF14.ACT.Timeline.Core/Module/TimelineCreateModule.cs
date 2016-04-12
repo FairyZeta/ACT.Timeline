@@ -56,10 +56,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         /// <param name="pCommonDM"> 共通データモデル </param>
         /// <param name="pTimelineDM"> 作成データを格納するタイムラインデータモデル </param>
+        /// <param name="pTimerDM"> タイマーデータモデル </param>
         public void CreateTimelineDataModel(CommonDataModel pCommonDM, TimelineDataModel pTimelineDM, TimerDataModel pTimerDM)
         {
-            this.TimelineDataClear(pCommonDM, pTimelineDM);
+            switch(pCommonDM.AppStatusData.TimelineLoadStatus)
+            {
+                case TimelineLoadStatus.NowLoading:
+                    return;
+            }
+
+            this.TimelineDataClear(pCommonDM, pTimelineDM, pTimerDM);
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NowLoading;
+
+            Globals.SoundFilesRoot = pCommonDM.PluginSettingsData.SoundResourceDirectory;
 
             if (pCommonDM.SelectedTimelineFileData == null)
             {
@@ -71,10 +80,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             {
                 pTimelineDM.Timeline = TimelineLoader.LoadFromFile(pCommonDM.SelectedTimelineFileData.TimelineFileFullPath);
             }
-            catch
+            catch (Exception e)
             {
+                Globals.ErrLogger.SystemLog.Failure.ERROR.Write(e.Message);
+                pCommonDM.AppCommonData.TimelineLoadErrorMsg = "LoadError: " + e.Message;
                 pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.Failure;
+
                 return;
+            }
+            finally
+            {
             }
 
             var baseData = pTimelineDM.Timeline;
@@ -96,7 +111,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 target.ActivityIndex = Convert.ToInt32(target.ActivityNo * 10);
                 target.Duration = data.Duration;
                 target.ActivityName = data.Name;
-                target.ActivityTime = new TimeSpan(0, 0, Convert.ToInt32(target.EndTime));
 
                 target.ActiveIndicatorStartTime = target.ActiveTime - target.ActiveIndicatorMaxValue;
                 if(target.DurationIndicatorMaxValue > 0)
@@ -126,6 +140,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 pTimelineDM.TimelineAlertCollection.Add(data);
             }
 
+            // タイマー情報セット
+            if (pTimelineDM.TimelineItemCollection.Count > 0)
+            {
+                pTimerDM.TimerDeta.CurrentCombatEndTime = pTimelineDM.TimelineItemCollection.Max(i => i.EndTime);
+            }
+
+            // 最終ロードファイルの変更
+            pCommonDM.PluginSettingsData.LastLoadTimelineFileName = pCommonDM.SelectedTimelineFileData.TimelineFileName;
+            pCommonDM.PluginSettingsData.LastLoadTimelineFullPath = pCommonDM.SelectedTimelineFileData.TimelineFileFullPath;
 
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.Success;
         }
@@ -134,8 +157,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         /// <param name="pCommonDM"></param>
         /// <param name="pTimelineDM"></param>
-        public void TimelineDataClear(CommonDataModel pCommonDM, TimelineDataModel pTimelineDM)
+        public void TimelineDataClear(CommonDataModel pCommonDM, TimelineDataModel pTimelineDM, TimerDataModel pTimerDM)
         {
+            pTimerDM.TimerDeta.Clear();
             pTimelineDM.Clear();
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NonLoad;
 

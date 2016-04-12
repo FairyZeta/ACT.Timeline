@@ -104,6 +104,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <param name="pCommonDataModel"> セットアップに使用するアプリケーションデータ </param>
         public void SetupApplication(CommonDataModel pCommonDataModel)
         {
+            // ロガー生成
+            this.AppDataCreateModule.CreateLogger();
+
             if (pCommonDataModel == null) return;
 
             // --- 初期設定 ---

@@ -46,6 +46,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] string.TimelineLoadErrorMsg - ＜タイムラインロードエラーメッセージ＞ -----
+        /// <summary> タイムラインロードエラーメッセージ </summary>
+        private string _TimelineLoadErrorMsg;
+        /// <summary> タイムラインロードエラーメッセージ </summary>
+        public string TimelineLoadErrorMsg
+        {
+            get { return this._TimelineLoadErrorMsg; }
+            set
+            {
+                if (this._TimelineLoadErrorMsg == value) return;
+
+                this._TimelineLoadErrorMsg = value;
+                base.OnPropertyChanged("TimelineLoadErrorMsg");
+            }
+        }
+        #endregion
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／共通データ／コンストラクタ

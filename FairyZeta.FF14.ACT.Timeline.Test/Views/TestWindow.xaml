@@ -3,10 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="TestWindow" Height="300" Width="300">
     <Grid>
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <TextBlock FontSize="36" Canvas.Top="2" Canvas.Left="10">Outline</TextBlock>
+            <TextBlock FontSize="36" Canvas.Top="2" Canvas.Left="12">Outline</TextBlock>
+            <TextBlock FontSize="36" Canvas.Top="4" Canvas.Left="10">Outline</TextBlock>
+            <TextBlock FontSize="36" Canvas.Top="4" Canvas.Left="12">Outline</TextBlock>
 
-            <Slider/><ScrollBar />
-            <TextBox Width="100" Height="30" Text="100" />
-        </StackPanel>
+            <TextBlock FontSize="36" Canvas.Top="3" Canvas.Left="11" Foreground="White">Outline</TextBlock>
+        </Grid>
+        
+        <Grid Grid.Row="1">
+            <TextBlock FontSize="36" Margin="-1 -1 0 0" Foreground="Aqua">ポートへリックスのアルダシールに</TextBlock>
+            <TextBlock FontSize="36" Margin=" 1 -1 0 0" Foreground="Aqua">Outline</TextBlock>
+            <TextBlock FontSize="36" Margin="-1  1 0 0" Foreground="Aqua">Outline</TextBlock>
+            <TextBlock FontSize="36" Margin=" 1  1 0 0" Foreground="Aqua">Outline</TextBlock>
+
+            <TextBlock FontSize="36" Margin="0 0 0 0" Foreground="White">Outline</TextBlock>
+        </Grid>
     </Grid>
 </Window>

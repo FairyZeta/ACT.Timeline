@@ -161,7 +161,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     // 自動開始判定
                     if (this.CommonDataModel.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run)
                     {
-                        this.TimelineControlModule.TimerStart(this.CommonDataModel);
+                        this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimerDataModel);
                         this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
                     }
                     // 通常シンク
@@ -208,7 +208,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             switch (para)
             {
                 case "Start":
-                    this.TimelineControlModule.TimerStart(this.CommonDataModel);
+                    this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimerDataModel);
                     break;
                 case "Stop":
                     this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);

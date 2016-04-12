@@ -190,6 +190,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
             switch(para)
             {
+                case "TitleBarFontSize":
+                    this.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize += d;
+                    break;
+                case "HeaderFontSize":
+                    this.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize += d;
+                    break;
+                case "ContentFontSize":
+                    this.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize += d;
+                    break;
+
                 case "TimeNoWidth":
                     this.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth += d;
                     break;
@@ -232,6 +242,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
             switch (para)
             {
+                case "TitleBarFontSize":
+                    this.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize += d;
+                    break;
+                case "HeaderFontSize":
+                    this.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize += d;
+                    break;
+                case "ContentFontSize":
+                    this.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize += d;
+                    break;
+
                 case "TimeNoWidth":
                     this.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth += d;
                     break;

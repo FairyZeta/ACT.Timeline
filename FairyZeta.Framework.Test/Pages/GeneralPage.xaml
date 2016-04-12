@@ -1,0 +1,41 @@
+﻿<UserControl 
+  x:Class="FairyZeta.Framework.Test.Pages.GeneralPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+  xmlns:local="clr-namespace:FairyZeta.Framework.Test.Pages"
+  xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+  mc:Ignorable="d" 
+  d:DesignWidth="960" d:DesignHeight="540"
+  TextOptions.TextFormattingMode="Ideal"
+  TextOptions.TextHintingMode="Auto"
+  TextOptions.TextRenderingMode="ClearType">
+
+  <Grid Style="{StaticResource ContentRoot}">
+
+    <StackPanel>
+      <Button
+        x:Name="OpenFontDialogButton"
+        Content="Open FontDialog"
+        Margin="4"/>
+
+      <TextBlock
+        x:Name="SampleTextBlock"
+        Height="auto"
+        Margin="4"
+        Text="サンプルテキスト"/>
+
+      <Button
+        x:Name="OpenColorDialogButton"
+        Content="Open ColorDialog"
+        Margin="4"/>
+
+      <Rectangle 
+        x:Name="SampleColorRectangle" 
+        Height="60" Margin="4" />
+
+    </StackPanel>
+
+  </Grid>
+</UserControl>

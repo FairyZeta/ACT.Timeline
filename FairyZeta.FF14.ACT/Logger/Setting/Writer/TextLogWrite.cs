@@ -78,7 +78,7 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.Writer
             // ログフォルダが存在するかどうか確認
             if (!Directory.Exists(this.FileLogSetting.FilePath))
             {
-                return;
+                Directory.CreateDirectory(this.FileLogSetting.FilePath);
             }
 
             // 日付が変わっていた場合、ファイル名をリネームする

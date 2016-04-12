@@ -1,10 +1,21 @@
 ﻿using System.IO;
 using System.Text.RegularExpressions;
+using FairyZeta.FF14.ACT.Logger;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
 {
     public class Globals
     {
+        /// <summary> システムログ出力
+        /// </summary>
+        public static ActLogger SysLogger { get; set; }
+        /// <summary> エラーログ出力
+        /// </summary>
+        public static ActLogger ErrLogger { get; set; }
+        /// <summary> プロジェクト名
+        /// </summary>
+        public static string ProjectName { get; set; }
+
         static private readonly Regex stripEndSlashesRegex = new Regex(@"/*$");
         static string StripEndSlashes(string pathstr)
         {
@@ -23,7 +34,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 
         static public string SoundFilesRoot
         {
-            get { return ResourceRoot + "/wav"; }
+            get; //{ return ResourceRoot + "/wav"; }
+            set;
         }
 
         static public int NumberOfSoundFilesInResourcesDir()

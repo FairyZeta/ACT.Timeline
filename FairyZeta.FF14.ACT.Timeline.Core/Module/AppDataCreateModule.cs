@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Reflection;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Process;
@@ -50,6 +51,36 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> ロガーの生成を実行します。
+        /// </summary>
+        public void CreateLogger()
+        {
+            if (string.IsNullOrWhiteSpace(Globals.PluginDllDirectoryPath))
+            {
+                Globals.PluginDllDirectoryPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            }
+
+            // Globals設定
+            Globals.ProjectName = "Timeline.Core";
+
+            // システムメッセージ用ロガー生成
+            Globals.SysLogger = new FF14.ACT.Logger.ActLogger();
+            Globals.SysLogger.Setting.FileLogSetting.FilePath = Globals.PluginDllDirectoryPath + "/Log/System";
+            Globals.SysLogger.Setting.FileLogSetting.FileName = "SysLog";
+            Globals.SysLogger.Setting.FileLogSetting.FileExtension = ".txt";
+            Globals.SysLogger.Setting.FileLogSetting.AddFileNameDate = true;
+            Globals.SysLogger.Setting.FileLogSetting.FileNameDateFormat = "yyyyMMdd";
+            Globals.SysLogger.Setting.SetupTextLogger(Globals.SysLogger.Setting.FileLogSetting);
+            // スタックトレース用ロガー生成
+            Globals.ErrLogger = new FF14.ACT.Logger.ActLogger();
+            Globals.ErrLogger.Setting.FileLogSetting.FilePath = Globals.PluginDllDirectoryPath + "/Log/Error";
+            Globals.ErrLogger.Setting.FileLogSetting.FileName = "ErrorLog";
+            Globals.ErrLogger.Setting.FileLogSetting.FileExtension = ".txt";
+            Globals.ErrLogger.Setting.FileLogSetting.AddFileNameDate = true;
+            Globals.ErrLogger.Setting.FileLogSetting.FileNameDateFormat = "yyyyMMdd_HHmmss";
+            Globals.ErrLogger.Setting.SetupTextLogger(Globals.ErrLogger.Setting.FileLogSetting);
+        }
 
         /// <summary> アプリケーションデータの初期設定を実行します
         /// </summary>

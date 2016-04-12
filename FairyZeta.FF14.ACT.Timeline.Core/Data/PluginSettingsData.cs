@@ -88,19 +88,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             }
         }
         #endregion
-        #region #- [Property] string.LastLoadTimelineDirectoryPath - ＜最後に読み込んだタイムラインのディレクトリパス＞ -----
-        /// <summary> 最後に読み込んだタイムラインのディレクトリパス </summary>
-        private string _LastLoadTimelineDirectoryPath;
-        /// <summary> 最後に読み込んだタイムラインのディレクトリパス </summary>
-        public string LastLoadTimelineDirectoryPath
+        #region #- [Property] string.LastLoadTimelineFullPath - ＜最後に読み込んだタイムラインのフルパス＞ -----
+        /// <summary> 最後に読み込んだタイムラインのフルパス </summary>
+        private string _LastLoadTimelineFullPath;
+        /// <summary> 最後に読み込んだタイムラインのフルパス </summary>
+        public string LastLoadTimelineFullPath
         {
-            get { return this._LastLoadTimelineDirectoryPath; }
+            get { return this._LastLoadTimelineFullPath; }
             set
             {
-                if (this._LastLoadTimelineDirectoryPath == value) return;
+                if (this._LastLoadTimelineFullPath == value) return;
 
-                this._LastLoadTimelineDirectoryPath = value;
-                base.OnPropertyChanged("LastLoadTimelineDirectoryPath");
+                this._LastLoadTimelineFullPath = value;
+                base.OnPropertyChanged("LastLoadTimelineFullPath");
                 base.SaveChangedTarget = true;
             }
         }
@@ -170,7 +170,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.TimelineResourceDirectory = string.Empty;
 
             this.LastLoadTimelineFileName = string.Empty;
-            this.LastLoadTimelineDirectoryPath = string.Empty;
+            this.LastLoadTimelineFullPath = string.Empty;
 
             this.PlaySoundByACT = true;
 

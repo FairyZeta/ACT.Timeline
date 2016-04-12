@@ -13,11 +13,40 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> 戦闘時間変更時にOnPropertyChangedを発行させたいアイテムリスト
+        /// </summary>
+        public List<TimelineItemData> CombatTimeChangedRefreshList { get; private set; }
+
+        public TimeSpan CurrentCombatStartTimeSpan
+        {
+            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatStartTime)); }
+        }
+
+        public TimeSpan CurrentCombatTimeSpan
+        {
+            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatTime)); }
+        }
+
+        public TimeSpan CurrentCombatEndTimeSpan
+        {
+            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatEndTime)); }
+        }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> OnPropertyChangedを発行し、画面を更新します。
+        /// </summary>
+        public void ViewRefresh()
+        {
+            foreach (var item in this.CombatTimeChangedRefreshList)
+            {
+                item.ViewRefresh();
+            }
+        }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -31,9 +60,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             set
             {
                 if (this._CurrentCombatTime == value) return;
-
                 this._CurrentCombatTime = value;
                 base.OnPropertyChanged("CurrentCombatTime");
+                base.OnPropertyChanged("CurrentCombatTimeSpan");
+
+                this.ViewRefresh();
             }
         }
         #endregion
@@ -51,6 +82,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._CurrentCombatEndTime = value;
                 base.OnPropertyChanged("CurrentCombatEndTime");
+                base.OnPropertyChanged("CurrentCombatEndTimeSpan");
             }
         }
         #endregion
@@ -68,6 +100,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._CurrentCombatStartTime = value;
                 base.OnPropertyChanged("CurrentCombatStartTime");
+                base.OnPropertyChanged("CurrentCombatStartTimeSpan");
             }
         }
         #endregion
@@ -79,6 +112,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             : base()
         {
             this.initData();
+            this.clear();
         }
 
         /// <summary> データの初期化を実行します。
@@ -86,6 +120,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool initData()
         {
+            this.CombatTimeChangedRefreshList = new List<TimelineItemData>();
             return true;
         }
 
@@ -106,6 +141,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         private bool clear()
         {
             return true;
+        }
+    }
+
+
+    public static class TaskEnumerableExtensions
+    {
+        public static Task WhenAll(this IEnumerable<Task> tasks)
+        {
+            return Task.WhenAll(tasks);
+        }
+
+        public static Task<T[]> WhenAll<T>(this IEnumerable<Task<T>> tasks)
+        {
+            return Task.WhenAll(tasks);
         }
     }
 }

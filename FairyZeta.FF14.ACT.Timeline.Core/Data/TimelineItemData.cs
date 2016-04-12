@@ -57,27 +57,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
                 if (this._ActivityNo == value) return;
 
                 this._ActivityNo = value;
-                base.OnPropertyChanged("ActivityTime");
+                base.OnPropertyChanged("ActivityTimeSpan");
+                base.OnPropertyChanged("EndTime");
             }
         }
         #endregion
 
-        #region #- [Property] TimeSpan.ActivityTime - ＜アクティビティタイム＞ -----
-        /// <summary> アクティビティタイム </summary>
-        private TimeSpan _ActivityTime;
-        /// <summary> アクティビティタイム </summary>
-        public TimeSpan ActivityTime
+
+        /// <summary> (get) アクティビティタイム </summary>
+        public TimeSpan ActivityTimeSpan
         {
-            get { return this._ActivityTime; }
-            set
+            get
             {
-                if (this._ActivityTime == value) return;
-
-                this._ActivityTime = value;
-                base.OnPropertyChanged("ActivityTime");
+                return new TimeSpan(0, 0, Convert.ToInt32(this.EndTime));
             }
         }
-        #endregion
+
         
         #region #- [Property] string.ActivityName - ＜アクティビティ名＞ -----
         /// <summary> アクティビティ名 </summary>
@@ -328,7 +323,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         public TimelineItemData(TimerData pTimerData)
             :base()
         {
-            this.timerData = pTimerData;
+            if (pTimerData != null)
+            {
+                this.timerData = pTimerData;
+                pTimerData.CombatTimeChangedRefreshList.Add(this);
+            }   
             this.initData();
             this.clear();
         }
@@ -352,6 +351,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             base.OnPropertyChanged("ActiveTime");
             base.OnPropertyChanged("ActiveIndicatorVisibility");
             base.OnPropertyChanged("TimelineVisibility");
+
+            return;
         }
 
         /// <summary> データの全体クリアを実行します。
@@ -373,9 +374,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         private bool clear()
         {
             this.JobType = Job.UNKNOWN;
-            this.TimelineType = Core.TimelineType.UNKNOWN;
-
-            this.ActivityTime = new TimeSpan();
+            this.TimelineType = TimelineType.UNKNOWN;
 
             this.ActivityName = string.Empty;
 

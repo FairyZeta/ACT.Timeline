@@ -33,6 +33,7 @@ namespace FairyZeta.FF14.ACT.Process
         /// <returns> 正常終了時 True </returns> 
         private bool initProcess()
         {
+            this.soundplayer = new CachedSoundPlayer();
             return true;
         }
 
@@ -46,9 +47,12 @@ namespace FairyZeta.FF14.ACT.Process
         public bool PlayAlert(IAlertSoundIO pIAlertSoundIO, bool pPlaySoundByACT)
         {
             //TTSクラスならACT本体に読み上げさせる
-            if (pIAlertSoundIO.AlertSoundData is AlertTtsData && ActGlobals.oFormActMain != null)
+            if (pIAlertSoundIO.AlertSoundData is AlertTtsData)
             {
-                ActGlobals.oFormActMain.TTS(pIAlertSoundIO.AlertSoundData.Filename);
+                if (ActGlobals.oFormActMain != null)
+                {
+                    ActGlobals.oFormActMain.TTS(pIAlertSoundIO.AlertSoundData.Filename);
+                }
             }
             else if (pPlaySoundByACT && ActGlobals.oFormActMain != null)
             {

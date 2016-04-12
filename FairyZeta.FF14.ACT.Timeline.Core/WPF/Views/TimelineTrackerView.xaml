@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:enum="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
              xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
@@ -33,17 +34,43 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Label Content=" Tracker " Width="70" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="100" Orientation="Horizontal">
                     <Label Content="Loaded Timeline : "/>
-                    <Label Content=" -- Not Binding --"/>
+                    <Label>
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.Init}">
+                                        <Setter Property="Content" Value=" -- Non Loaded -- "/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.NonLoad}">
+                                        <Setter Property="Content" Value=" -- Non Loaded -- "/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.NowLoading}">
+                                        <Setter Property="Content" Value=" Now Loading ... "/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.Success}">
+                                        <Setter Property="Content" Value="{Binding CommonComponent.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.Failure}">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                        <Setter Property="Content" Value="{Binding CommonComponent.CommonDataModel.AppCommonData.TimelineLoadErrorMsg}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
                 </StackPanel>
                 <Border Grid.Row="1" Margin="0 5" VerticalAlignment="Center">
-                    <Slider Margin="5 0"/>
+                    <Slider Margin="5 0"
+                            Minimum="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatStartTime}"
+                            Value="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime}"
+                            Maximum="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatEndTime}"/>
                 </Border>
-                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 5" Orientation="Horizontal">
-                    <Label Content="00:00"/>
-                    <Label Content=" / "/>
-                    <Label Content="00:00"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 5" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTimeSpan}"/>
+                    <TextBlock Text=" / "/>
+                    <TextBlock Text="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatEndTimeSpan}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.ColumnSpan="100" Margin="0 5" Orientation="Horizontal">
                     <Button Width="120" Height="24" Margin="20 5" Content="Rewind"

@@ -55,6 +55,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             this.CurrentCombatTimer = new DispatcherTimer();
             this.CurrentCombatRelativeClock = new RelativeClock(false);
+            this.soundPlayProcess = new SoundPlayProcess();
+
             return true;
         }
 
@@ -69,14 +71,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         
         /// <summary> タイマー処理を開始します。
         /// </summary>
-        public void TimerStart(CommonDataModel pCommonDM)
+        public void TimerStart(CommonDataModel pCommonDM, TimerDataModel pTimerDM)
         {
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
+                case TimerStatus.Init:
                 case TimerStatus.Stop:
-                    this.CurrentCombatRelativeClock.CurrentTime = 0;
-                    break;
                 case TimerStatus.Pause:
+                    this.CurrentCombatRelativeClock.CurrentTime = pTimerDM.TimerDeta.CurrentCombatTime;
                     break;
                 case TimerStatus.Run:
                     return;
@@ -92,6 +94,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
+                case TimerStatus.Init:
                 case TimerStatus.Stop:
                 case TimerStatus.Pause:
                     return;
@@ -117,6 +120,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
+                case TimerStatus.Init:
                 case TimerStatus.Stop:
                 case TimerStatus.Pause:
                     return;
@@ -134,6 +138,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
+                case TimerStatus.Init:
                 case TimerStatus.Stop:
                 case TimerStatus.Pause:
                 case TimerStatus.Run:
@@ -142,7 +147,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             this.TimerStop(pCommonDM, pTimerDM, pTimelineDM);
 
-            this.TimerStart(pCommonDM);
+            this.TimerStart(pCommonDM, pTimerDM);
         }
 
         /// <summary> 戦闘時間が進む時の処理を実行します。
@@ -154,11 +159,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             if (pCommonDM.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run) return;
 
             pTimerDataModel.TimerDeta.CurrentCombatTime = this.CurrentCombatRelativeClock.CurrentTime;
-
-            foreach (var item in pTimelineDataModel.TimelineItemCollection)
-            {
-                item.ViewRefresh();
-            }
 
             // アラート再生
             var pendingAlerts = pTimelineDataModel.PendingAlertsAt(pTimerDataModel.TimerDeta.CurrentCombatTime, AppConst.TooOldThreshold);
