@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.TimelineStatusView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
+        xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
+             xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+             xmlns:fzBehavior="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
+             xmlns:enum="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
+        mc:Ignorable="d" 
+        Height="150"  
+        d:DesignHeight="630" d:DesignWidth="900"
+        d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/_TimelineStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+    </UserControl.Resources>
+
+    <Border Background="White" >
+        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="700"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Content=" Timeline Status " Width="120" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="100" Orientation="Horizontal">
+                    <Label Content="Loaded Timeline : "/>
+                    <Label>
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.Init}">
+                                        <Setter Property="Content" Value=" -- Non Loaded -- "/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.NonLoad}">
+                                        <Setter Property="Content" Value=" -- Non Loaded -- "/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.NowLoading}">
+                                        <Setter Property="Content" Value=" Now Loading ... "/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.Success}">
+                                        <Setter Property="Content" Value="{Binding CommonComponent.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.AppStatusData.TimelineLoadStatus}" Value="{x:Static enum:TimelineLoadStatus.Failure}">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                        <Setter Property="Content" Value="{Binding CommonComponent.CommonDataModel.AppCommonData.TimelineLoadErrorMsg}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Border>
+
+</UserControl>

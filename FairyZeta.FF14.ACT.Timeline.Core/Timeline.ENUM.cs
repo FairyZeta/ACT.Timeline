@@ -57,7 +57,9 @@
         /// <summary> 成功 </summary>
         Success,
         /// <summary> 失敗 </summary>
-        Failure
+        Failure,
+        /// <summary> ロードファイル無し(AutoLoad) </summary>
+        NotFoundTimeline
     }
 
     /// <summary> ENUM: タイムラインタイプ

@@ -272,11 +272,27 @@
                 </Border>
             </Grid>
             <!-- コンテンツ -->
+            <!--<ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
+                      FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize}"
+                      Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                      IsHitTestVisible="False" >-->
             <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
                       FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize}"
                       Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                      IsHitTestVisible="False">
-                <ListView.Resources>
+                      IsHitTestVisible="False" 
+                      ScrollViewer.CanContentScroll="True"
+          ScrollViewer.IsDeferredScrollingEnabled="True"
+          ScrollViewer.PanningMode="VerticalOnly"
+          ScrollViewer.VerticalScrollBarVisibility="Visible"
+          VirtualizingPanel.IsVirtualizing="True"
+          VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical"
+                                    CanVerticallyScroll="True"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.Resources>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Setter Property="Margin" Value="-10 -3"/>
                         <Setter Property="Background" Value="Transparent" />

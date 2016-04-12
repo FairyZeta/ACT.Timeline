@@ -119,6 +119,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             {
                 item.ViewRefresh();
             }
+
+            Console.WriteLine(string.Format("CurrentTimeChangedRefresh End: {0}", this._CurrentCombatTime));
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

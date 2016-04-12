@@ -16,7 +16,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        #region --- DataModels ---
+      #region --- DataModels ---
         
         /// <summary> タイムラインデータモデル
         /// </summary>
@@ -25,9 +25,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// </summary>
         public TimerDataModel TimerDataModel { get; private set; }
 
-        #endregion
+      #endregion
 
-        #region --- Modules ---
+      #region --- Modules ---
+
+        public AppCommonModule AppCommonModule { get; private set; }
 
         public TimelineCreateModule TimelineCreateModule { get; private set; }
 
@@ -37,7 +39,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// </summary>
         public TimelineLogAnalyzerModule TimelineLogAnalyzerModule { get; private set; }
 
-        #endregion
+      #endregion
 
       #region --- Commands ---
 
@@ -73,9 +75,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.initComponent();
 
             // タイマーセットアップ
-            //this.TimelineControlModule.TimerSetup();
+            this.TimelineControlModule.TimerSetup();
             this.TimelineControlModule.CurrentCombatTimer.Tick += new EventHandler(this.TimelineTimerTickEvent);
-            //this.TimelineControlModule.CurrentCombatTimer.Elapsed += new System.Timers.ElapsedEventHandler();
+            this.TimelineControlModule.AutoLoadTimer.Tick += new EventHandler(this.TimelineAutoLoadEvent);
 
             // ACTイベント登録
             if (ActGlobals.oFormActMain != null)
@@ -83,6 +85,25 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                 ActGlobals.oFormActMain.OnCombatEnd += ActEvent_CombatEnd;
                 ActGlobals.oFormActMain.OnLogLineRead += ActEvent_OnLogLineRead;
             }
+
+            // オートロードが有効かつプラグイン起動の場合、オートロード, 無効な場合、最終ロードファイルを読込
+            if (this.CommonDataModel.PluginSettingsData.TimelineAutoLoadEnabled && ActGlobals.oFormActMain != null)
+            {
+                this.TimelineAutoLoadEvent(null, null);
+            }
+            else
+            {
+                this.CommonDataModel.SelectedTimelineFileData = new Data.TimelineFileData() 
+                { 
+                    TimelineFileName = this.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName,
+                    TimelineFileFullPath = System.IO.Path.Combine(this.CommonDataModel.PluginSettingsData.LastLoadTimelineFullPath, this.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName)
+                };
+                this.TimelineCreateModule.CreateTimelineDataModel(this.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
+                this.CommonDataModel.SelectedTimelineFileData = null;
+            }
+
+            // オートロードタイマースタート
+            this.TimelineControlModule.AutoLoadTimer.Start();
         }
 
 
@@ -93,6 +114,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <returns> 正常終了時 True </returns> 
         private bool initComponent()
         {
+            this.AppCommonModule = new AppCommonModule();
             this.TimelineDataModel = new TimelineDataModel();
             this.TimerDataModel = new TimerDataModel();
 
@@ -127,7 +149,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// </summary>
         /// <param name="isImport"></param>
         /// <param name="logInfo"></param>
-        private void ActEvent_OnLogLineRead(bool isImport, LogLineEventArgs logInfo)
+        public void ActEvent_OnLogLineRead(bool isImport, LogLineEventArgs logInfo)
         {
             //if (isImport || timeline == null) return;
 
@@ -182,11 +204,81 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <param name="encounterInfo"></param>
         public void ActEvent_CombatEnd(bool isImport, CombatToggleEventArgs encounterInfo)
         {
-            if (!isImport && Globals.ResetTimelineCombatEnd)
+            if (!isImport && this.CommonDataModel.PluginSettingsData.ResetTimelineCombatEndEnabled)
             {
-            //    Controller.Paused = true;
-            //    Controller.CurrentTime = 0;
+                  this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+                  this.TimelineControlModule.CurrentCombatRelativeClock.StopClock(0);
             }
+        }
+
+        /// <summary> [タイマー用] タイムラインオートロードイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void TimelineAutoLoadEvent(object sender, EventArgs e)
+        {
+            if (this.CommonDataModel.AppStatusData.AutoLoadStatus == TimelineLoadStatus.NowLoading) return;
+            if (!this.CommonDataModel.PluginSettingsData.TimelineAutoLoadEnabled) return;
+            if (ActGlobals.oFormActMain == null) return;
+
+            var zonename = ActGlobals.oFormActMain.CurrentZone;
+            if (zonename.Length == 0) return;
+
+            if (this.CommonDataModel.LocationData.CurrentZoneName != zonename)
+            {
+                this.AppCommonModule.CheckTimelineResourceDirectory(this.CommonDataModel);
+                this.AppCommonModule.CheckSoundResourceDirectory(this.CommonDataModel);
+
+                Globals.SysLogger.SystemLog.Success.INFO.Write(string.Format("Timeline AutoLoad Start. ( Zone = {0} )", zonename), Globals.ProjectName);
+                this.CommonDataModel.AppStatusData.AutoLoadStatus = TimelineLoadStatus.NowLoading;
+
+                var file = zonename;
+                foreach (char c in System.IO.Path.GetInvalidFileNameChars())
+                {
+                    file = file.Replace(c, '_');
+                }
+
+                List<string> findList = new List<string>();
+                findList.Add(string.Format("{0}.txt", file));
+
+                foreach (string findName in findList)
+                {
+                    var target = this.CommonDataModel.TimelineFileCollection.FirstOrDefault(f => f.TimelineFileName == findName);
+                    if (target != null)
+                    {
+                        this.CommonDataModel.SelectedTimelineFileData = target;
+                        this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+                        this.TimelineCreateModule.CreateTimelineDataModel(base.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
+
+                        if (this.CommonDataModel.PluginSettingsData.AutoShowTimelineEnabled)
+                        {
+                            this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = true;
+                        }
+
+                        this.CommonDataModel.LogDataCollection.Add(
+                            Globals.SysLogger.SystemLog.Success.INFO.Write(string.Format("Timeline AutoLoad Success. ( File = {0} )", findName, Globals.ProjectName));
+                        this.CommonDataModel.AppStatusData.AutoLoadStatus = TimelineLoadStatus.Success;
+                        this.CommonDataModel.ViewRefresh();
+
+                        break;
+                    }
+                    else
+                    {
+                        if (this.CommonDataModel.PluginSettingsData.AutoHideTimelineEnabled)
+                        {
+                            this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = false;
+                        }
+
+                        this.CommonDataModel.LogDataCollection.Add(
+                            Globals.SysLogger.SystemLog.Failure.INFO.Write(string.Format("Timeline AutoLoad Failure. File Not Found. ( File = {0} )", findName), Globals.ProjectName));
+                        this.CommonDataModel.AppStatusData.AutoLoadStatus = TimelineLoadStatus.NotFoundTimeline;
+                        this.CommonDataModel.ViewRefresh();
+                    }
+                }
+
+                this.CommonDataModel.LocationData.CurrentZoneName = zonename;
+            }
+
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

@@ -73,6 +73,15 @@ namespace FairyZeta.Framework.ObjectModel
 
         /// <summary> 時間計測を停止します。
         /// </summary>
+        /// <param name="pCurrentTime"> 停止後にオフセットする時間 </param>
+        public void StopClock(double pCurrentTime)
+        {
+            this.stopwatch.Stop();
+            this.offset = 0;
+        }
+
+        /// <summary> 時間計測を停止します。
+        /// </summary>
         public void StopClock()
         {
             this.stopwatch.Stop();

@@ -48,6 +48,7 @@
     <Compile Include="DataModel\TimerSetDataModel.cs" />
     <Compile Include="Data\AlertSoundData.cs" />
     <Compile Include="Data\AlertTtsData.cs" />
+    <Compile Include="Data\LocationData.cs" />
     <Compile Include="Data\_Data.cs" />
     <Compile Include="IAlertSoundIO.cs" />
     <Compile Include="Logger\ActLogger.cs" />

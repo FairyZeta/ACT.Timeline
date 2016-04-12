@@ -16,11 +16,11 @@ using System.Windows.Interop;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
-    /// <summary> TimelineAutoloadView
+    /// <summary> TimelineStatusView
     /// </summary>
-    public partial class TimelineAutoloadView : UserControl
+    public partial class TimelineStatusView : UserControl
     {
-        public TimelineAutoloadView()
+        public TimelineStatusView()
         {
             InitializeComponent();
         }

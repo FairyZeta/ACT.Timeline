@@ -123,6 +123,104 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] bool.TimelineAutoLoadEnable - ＜タイムライン自動読込の有効状態＞ -----
+        /// <summary> タイムライン自動読込の有効状態 </summary>
+        private bool _TimelineAutoLoadEnabled;
+        /// <summary> タイムライン自動読込の有効状態 </summary>
+        public bool TimelineAutoLoadEnabled
+        {
+            get { return this._TimelineAutoLoadEnabled; }
+            set
+            {
+                if (this._TimelineAutoLoadEnabled == value) return;
+
+                this._TimelineAutoLoadEnabled = value;
+                base.OnPropertyChanged("TimelineAutoLoadEnabled");
+            }
+        }
+        #endregion
+        #region #- [Property] bool.AutoShowTimelineEnabled - ＜タイムラインがあるコンテンツ自動表示の有効状態＞ -----
+        /// <summary> タイムラインがあるコンテンツ自動表示の有効状態 </summary>
+        private bool _AutoShowTimelineEnabled;
+        /// <summary> タイムラインがあるコンテンツ自動表示の有効状態 </summary>
+        public bool AutoShowTimelineEnabled
+        {
+            get { return this._AutoShowTimelineEnabled; }
+            set
+            {
+                if (this._AutoShowTimelineEnabled == value) return;
+
+                this._AutoShowTimelineEnabled = value;
+                base.OnPropertyChanged("AutoShowTimelineEnabled");
+            }
+        }
+        #endregion
+        #region #- [Property] bool.AutoHideTimelineEnabled - ＜タイムラインがないコンテンツ自動非表示の有効状態＞ -----
+        /// <summary> タイムラインがないコンテンツ自動非表示の有効状態 </summary>
+        private bool _AutoHideTimelineEnabled;
+        /// <summary> タイムラインがないコンテンツ自動非表示の有効状態 </summary>
+        public bool AutoHideTimelineEnabled
+        {
+            get { return this._AutoHideTimelineEnabled; }
+            set
+            {
+                if (this._AutoHideTimelineEnabled == value) return;
+
+                this._AutoHideTimelineEnabled = value;
+                base.OnPropertyChanged("AutoHideTimelineEnabled");
+            }
+        }
+        #endregion
+        #region #- [Property] bool.ResetTimelineCombatEndEnabled - ＜戦闘終了時の自動リセット有効状態＞ -----
+        /// <summary> 戦闘終了時の自動リセット有効状態 </summary>
+        private bool _ResetTimelineCombatEndEnabled;
+        /// <summary> 戦闘終了時の自動リセット有効状態 </summary>
+        public bool ResetTimelineCombatEndEnabled
+        {
+            get { return this._ResetTimelineCombatEndEnabled; }
+            set
+            {
+                if (this._ResetTimelineCombatEndEnabled == value) return;
+
+                this._ResetTimelineCombatEndEnabled = value;
+                base.OnPropertyChanged("ResetTimelineCombatEndEnabled");
+            }
+        }
+        #endregion
+
+        #region #- [Property] bool.AutoUpdateChackEnabled - ＜プラグインアップデートチェックの有効状態＞ -----
+        /// <summary> プラグインアップデートチェックの有効状態 </summary>
+        private bool _AutoUpdateChackEnabled;
+        /// <summary> プラグインアップデートチェックの有効状態 </summary>
+        public bool AutoUpdateChackEnabled
+        {
+            get { return this._AutoUpdateChackEnabled; }
+            set
+            {
+                if (this._AutoUpdateChackEnabled == value) return;
+
+                this._AutoUpdateChackEnabled = value;
+                base.OnPropertyChanged("AutoUpdateChackEnabled");
+            }
+        }
+        #endregion
+        #region #- [Property] bool.BuildRevisonUpdateIgnore - ＜軽度アップデートチェックの無視設定＞ -----
+        /// <summary> 軽度アップデートチェックの無視設定 </summary>
+        private bool _BuildRevisonUpdateIgnore;
+        /// <summary> 軽度アップデートチェックの無視設定 </summary>
+        public bool BuildRevisonUpdateIgnore
+        {
+            get { return this._BuildRevisonUpdateIgnore; }
+            set
+            {
+                if (this._BuildRevisonUpdateIgnore == value) return;
+
+                this._BuildRevisonUpdateIgnore = value;
+                base.OnPropertyChanged("BuildRevisonUpdateIgnore");
+            }
+        }
+        #endregion
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／プラグイン設定データ／コンストラクタ
@@ -173,6 +271,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.LastLoadTimelineFullPath = string.Empty;
 
             this.PlaySoundByACT = true;
+
+            this.TimelineAutoLoadEnabled = true;
+            this.AutoShowTimelineEnabled = true;
+            this.AutoHideTimelineEnabled = true;
+            this.ResetTimelineCombatEndEnabled = true;
+
+            this.AutoUpdateChackEnabled = true;
+            this.BuildRevisonUpdateIgnore = true;
 
             return true;
         }

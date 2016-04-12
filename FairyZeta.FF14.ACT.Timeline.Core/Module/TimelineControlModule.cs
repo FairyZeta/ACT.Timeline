@@ -54,6 +54,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         private bool initModule()
         {
             this.CurrentCombatTimer = new DispatcherTimer();
+            this.AutoLoadTimer = new DispatcherTimer();
             this.CurrentCombatRelativeClock = new RelativeClock(false);
             this.soundPlayProcess = new SoundPlayProcess();
 
@@ -64,9 +65,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> タイマーのセットアップを実行します。
         /// </summary>
-        public void TimerSetup(Action act)
+        public void TimerSetup()
         {
-            this.CurrentCombatTimer.Interval = TimeSpan.FromMilliseconds(100);
+            this.CurrentCombatTimer.Interval = TimeSpan.FromMilliseconds(10);
+            this.AutoLoadTimer.Interval = TimeSpan.FromMilliseconds(3000);
         }
         
         /// <summary> タイマー処理を開始します。

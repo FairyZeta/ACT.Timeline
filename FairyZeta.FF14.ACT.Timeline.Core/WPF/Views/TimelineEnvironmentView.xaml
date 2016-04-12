@@ -70,13 +70,10 @@
                 </Grid>
                 <Grid Grid.Row="3" Margin="0 5" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="250"/>
                         <ColumnDefinition Width="250"/>
                     </Grid.ColumnDefinitions>
-                    <CheckBox Content="Play Sound By ACT" Margin="10 0" VerticalAlignment="Center"
-                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.PlaySoundByACT}"/>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
                         <Label Content="Timeline Dir :"/>
                         <Label Content="{Binding CommonComponent.CommonDataModel.AppCommonData.TimelineDirectoryStatus}"/>
                     </StackPanel>

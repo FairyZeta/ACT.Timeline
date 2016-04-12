@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
+using FairyZeta.FF14.ACT.Data;
+using FairyZeta.FF14.ACT.Logger.LogData;
 using System.Xml.Serialization;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
@@ -37,6 +39,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         [XmlIgnore]
         public AppEnableManageData AppEnableManageData { get; set; }
 
+        /// <summary> ログデータコレクション
+        /// </summary>
+        public ObservableCollection<BasicLogData> LogDataCollection { get; set; }
+
         #region #- [Property] PluginSettingsData.PluginSettingsData - ＜プラグイン設定データ＞ -----
         /// <summary> プラグイン設定データ </summary>
         private PluginSettingsData _PluginSettingsData;
@@ -61,6 +67,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// </summary>
         public CollectionViewSource TimelineFileViewSource { get; private set; }
 
+        /// <summary> 現在の位置情報
+        /// </summary>
+        public LocationData LocationData { get; private set; }
+
         #region #- [Property] TimelineFileData.SelectedTimelineFileData - ＜選択されているタイムラインファイルデータ＞ -----
         /// <summary> 選択されているタイムラインファイルデータ </summary>
         private TimelineFileData _SelectedTimelineFileData;
@@ -84,8 +94,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         public bool OverlayPassVisibility
         {
             get 
-            { 
-                return true; 
+            {
+                if (!this.PluginSettingsData.AllOverlayVisibility)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
@@ -115,6 +132,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 
             this.TimelineFileCollection = new ObservableCollection<TimelineFileData>();
             this.TimelineFileViewSource = new CollectionViewSource() { Source = this.TimelineFileCollection };
+
+            this.LogDataCollection = new ObservableCollection<BasicLogData>();
+
+            this.LocationData = new LocationData();
 
             return true;
         }

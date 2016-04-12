@@ -42,11 +42,11 @@ namespace FairyZeta.FF14.ACT.Logger.LogType.LogResult.LogLevel
             this.LoggerSetting = in_LS;
         }
 
-        /// <summary> ログの書き込みを実行します。 
+        /// <summary> ログの書き込みを実行し、生成したログファイルをフィードバックします。
         /// <para> -> プロジェクト名は「－」として書き込まれます。</para>
         /// </summary>
         /// <param name="in_LogMsg"> ログに書き込むメッセージ </param>
-        public void Write(string in_LogMsg)
+        public BasicLogData Write(string in_LogMsg)
         {
             BasicLogData log = new BasicLogData();
             log.LogMessage = in_LogMsg;
@@ -54,14 +54,16 @@ namespace FairyZeta.FF14.ACT.Logger.LogType.LogResult.LogLevel
             log.StackTrace = new StackTrace(true);
 
             this.write(log);
+
+            return log;
         }
 
-        /// <summary> ログの書き込みを実行します。 
+        /// <summary> ログの書き込みを実行し、生成したログファイルをフィードバックします。
         /// <para> -> 入力されたプロジェクト名をログファイルに書き込みます。</para>
         /// </summary>
         /// <param name="in_LogMsg"> ログに書き込むメッセージ </param>
         /// <param name="in_ProjectName"> ログ出力元のプロジェクト名 </param>
-        public void Write(string in_LogMsg, string in_ProjectName)
+        public BasicLogData Write(string in_LogMsg, string in_ProjectName)
         {
             BasicLogData log = new BasicLogData();
             log.LogMessage = in_LogMsg;
@@ -69,6 +71,8 @@ namespace FairyZeta.FF14.ACT.Logger.LogType.LogResult.LogLevel
             log.StackTrace = new StackTrace(true);
 
             this.write(log);
+
+            return log;
         }
 
       /*--- メソッド：Private -----------------------------------------------------------------------------------------------------------------------------------------*/

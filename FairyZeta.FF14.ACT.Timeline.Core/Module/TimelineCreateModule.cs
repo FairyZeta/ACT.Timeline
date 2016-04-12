@@ -82,9 +82,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             }
             catch (Exception e)
             {
-                Globals.ErrLogger.SystemLog.Failure.ERROR.Write(e.Message);
+                pCommonDM.LogDataCollection.Add(Globals.ErrLogger.SystemLog.Failure.ERROR.Write(e.Message));
                 pCommonDM.AppCommonData.TimelineLoadErrorMsg = "LoadError: " + e.Message;
                 pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.Failure;
+
+                pCommonDM.SelectedTimelineFileData.TimelineFileName = string.Empty;
+                pCommonDM.SelectedTimelineFileData.TimelineFileFullPath = string.Empty;
 
                 return;
             }

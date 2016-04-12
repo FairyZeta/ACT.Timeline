@@ -96,6 +96,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] TimelineLoadStatus.AutoLoadStatus - ＜オートロード状態＞ -----
+        /// <summary> オートロード状態 </summary>
+        private TimelineLoadStatus _AutoLoadStatus;
+        /// <summary> オートロード状態 </summary>
+        public TimelineLoadStatus AutoLoadStatus
+        {
+            get { return this._AutoLoadStatus; }
+            set
+            {
+                if (this._AutoLoadStatus == value) return;
+
+                this._AutoLoadStatus = value;
+                base.OnPropertyChanged("AutoLoadStatus");
+            }
+        }
+        #endregion
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
         
         /// <summary> タイムライン／アプリケーションステータスデータ／コンストラクタ
@@ -119,6 +136,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.SoundResourceDirectoryStatus = DirectoryStatus.Init;
             this.CurrentCombatTimerStatus = TimerStatus.Init;
             this.TimelineLoadStatus = TimelineLoadStatus.Init;
+            this.AutoLoadStatus = TimelineLoadStatus.Init;
             return true;
         }
 
