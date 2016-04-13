@@ -13,7 +13,6 @@
         Top="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowTop, Mode=TwoWay}"
         Left="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLeft, Mode=TwoWay}">
         
-    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -29,9 +28,6 @@
     <Window.Style>
         <Style TargetType="{x:Type Window}" BasedOn="{StaticResource DefaultWindowStyle}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowVisibility}" Value="False">
-                    <Setter Property="Opacity" Value="0"/>
-                </DataTrigger>
             </Style.Triggers>
         </Style>
     </Window.Style>

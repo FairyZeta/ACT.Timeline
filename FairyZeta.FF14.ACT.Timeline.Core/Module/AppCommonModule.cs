@@ -21,6 +21,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         private XmlSerializerProcess xmlSerializerProcess;
 
+        /// <summary> アセンブリデータ取得プロセス
+        /// </summary>
+        private GetAssemblyDataProcess getAssemblyDataProcess;
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
         
         /// <summary> タイムライン／アプリケーション共通モジュール
@@ -159,10 +163,33 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <summary> プラグインのデフォルト設定を実行します。
         /// </summary>
         /// <param name="pCommonDataModel"></param>
-        public void SetDefaultPluginSettings(CommonDataModel pCommonDataModel)
+        public void SetDefaultPluginSettings(CommonDataModel pCommonDM)
         {
-
             return;
+        }
+
+        /// <summary> デフォルトリソースディレクトリを設定します。
+        /// </summary>
+        /// <param name="pCommonDM"> 参照と設定に使用する共通データモデル </param>
+        public void SetDefaultResourceDirectory(CommonDataModel pCommonDM)
+        {
+            if (!string.IsNullOrWhiteSpace(Globals.PluginDllDirectoryPath))
+            {
+                pCommonDM.PluginSettingsData.TimelineResourceDirectory = Globals.PluginDllDirectoryPath + @"\timeline";
+                pCommonDM.PluginSettingsData.SoundResourceDirectory = Globals.PluginDllDirectoryPath + @"\wav";
+            }
+            else if (!string.IsNullOrWhiteSpace(pCommonDM.PluginSettingsData.PluginDllPath))
+            {
+                pCommonDM.PluginSettingsData.TimelineResourceDirectory = pCommonDM.PluginSettingsData.PluginDllPath + @"\timeline";
+                pCommonDM.PluginSettingsData.SoundResourceDirectory = pCommonDM.PluginSettingsData.PluginDllPath + @"\wav";
+            }
+            else
+            {
+                string path = this.getAssemblyDataProcess.GetAssemblyDirectory();
+
+                pCommonDM.PluginSettingsData.TimelineResourceDirectory = path + @"\timeline";
+                pCommonDM.PluginSettingsData.SoundResourceDirectory = path + @"\wav";
+            }
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

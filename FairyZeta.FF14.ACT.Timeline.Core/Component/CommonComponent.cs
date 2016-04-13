@@ -64,6 +64,26 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
+        #region #- [Command] DelegateCommand.FolderBrowserDialogOpenCommand - ＜フォルダ選択ダイアログオープン＞ -----
+        /// <summary> フォルダ選択ダイアログオープン＜コマンド＞ </summary>
+        private DelegateCommand<string> _FolderBrowserDialogOpenCommand;
+        /// <summary> フォルダ選択ダイアログオープン＜コマンド＞ </summary>
+        public DelegateCommand<string> FolderBrowserDialogOpenCommand
+        {
+            get { return _FolderBrowserDialogOpenCommand = _FolderBrowserDialogOpenCommand ?? new DelegateCommand<string>(this._FolderBrowserDialogOpenExecute); }
+        }
+        #endregion 
+
+        #region #- [Command] DelegateCommand.SetDefaultResourceDirectoryCommand - ＜デフォルトリソースディレクトリ設定コマンド＞ -----
+        /// <summary> デフォルトリソースディレクトリ設定コマンド＜コマンド＞ </summary>
+        private DelegateCommand _SetDefaultResourceDirectoryCommand;
+        /// <summary> デフォルトリソースディレクトリ設定コマンド＜コマンド＞ </summary>
+        public DelegateCommand SetDefaultResourceDirectoryCommand
+        {
+            get { return _SetDefaultResourceDirectoryCommand = _SetDefaultResourceDirectoryCommand ?? new DelegateCommand(this._SetDefaultResourceDirectoryExecute); }
+        }
+        #endregion 
+
       #endregion
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -104,9 +124,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <param name="pCommonDataModel"> セットアップに使用するアプリケーションデータ </param>
         public void SetupApplication(CommonDataModel pCommonDataModel)
         {
-            // ロガー生成
-            this.AppDataCreateModule.CreateLogger();
-
             if (pCommonDataModel == null) return;
 
             // --- 初期設定 ---
@@ -141,6 +158,28 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
             this.AppCommonModule.PluginSettingsDataSave(this.CommonDataModel.ApplicationData.GetTimelineSettingsFullPath, this.CommonDataModel.PluginSettingsData);
 
+        }
+
+
+        /// <summary> ACT本体に表示されるチェックボックスの値変更コマンド
+        /// </summary>
+        public void ActCheckBoxCheckedChanged(object sender, EventArgs e)
+        {
+            var chk = sender as System.Windows.Forms.CheckBox;
+            this.CommonDataModel.PluginSettingsData.ActCheckBoxValue = chk.Checked;
+
+            this.CommonDataModel.ViewRefresh();
+            
+            if (chk.Checked)
+            {
+                this.CommonDataModel.LogDataCollection.Add(
+                    Globals.SysLogger.ActionLog.Success.INFO.Write("Overlay View Changed: All Visible", Globals.ProjectName));
+            }
+            else
+            {
+                this.CommonDataModel.LogDataCollection.Add(
+                    Globals.SysLogger.ActionLog.Success.INFO.Write("Overlay View Changed: All Hide", Globals.ProjectName));
+            }
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
@@ -189,6 +228,52 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.AppCommonModule.CheckTimelineResourceDirectory(this.CommonDataModel);
         }
         #endregion 
+        
+        #region #- [Method] Execute @ FolderBrowserDialogOpenCommand - ＜フォルダ選択ダイアログオープン＞ -----
 
+        /// <summary> コマンド実行＜フォルダ選択ダイアログオープン＞ </summary>
+        /// <param name="para"> パラメータ </param>
+        private void _FolderBrowserDialogOpenExecute(string para)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            dialog.Description = string.Format("Selected Resource Directory : {0}", para);
+            switch (para)
+            {
+                case "Timeline":
+
+                    if (Directory.Exists(this.CommonDataModel.PluginSettingsData.TimelineResourceDirectory))
+                        dialog.SelectedPath =this.CommonDataModel.PluginSettingsData.TimelineResourceDirectory;
+
+                    if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                        return;
+
+                    this.CommonDataModel.PluginSettingsData.TimelineResourceDirectory = dialog.SelectedPath;
+
+                    break;
+
+                case "Sound":
+
+                    if (Directory.Exists(this.CommonDataModel.PluginSettingsData.SoundResourceDirectory))
+                        dialog.SelectedPath = this.CommonDataModel.PluginSettingsData.SoundResourceDirectory;
+
+                    if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                        return;
+
+                    this.CommonDataModel.PluginSettingsData.SoundResourceDirectory = dialog.SelectedPath;
+                    break;
+            }
+        }
+
+        #endregion 
+
+        #region #- [Method] CanExecute,Execute @ SetDefaultResourceDirectoryCommand - ＜デフォルトリソースディレクトリ設定コマンド＞ -----
+
+        /// <summary> コマンド実行＜デフォルトリソースディレクトリ設定コマンド＞ </summary>
+        private void _SetDefaultResourceDirectoryExecute()
+        {
+            this.AppCommonModule.SetDefaultResourceDirectory(this.CommonDataModel);
+        }
+
+        #endregion 
     }
 }

@@ -119,6 +119,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._PlaySoundByACT = value;
                 base.OnPropertyChanged("PlaySoundByACT");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -136,6 +137,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._TimelineAutoLoadEnabled = value;
                 base.OnPropertyChanged("TimelineAutoLoadEnabled");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -152,6 +154,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._AutoShowTimelineEnabled = value;
                 base.OnPropertyChanged("AutoShowTimelineEnabled");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -168,6 +171,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._AutoHideTimelineEnabled = value;
                 base.OnPropertyChanged("AutoHideTimelineEnabled");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -184,6 +188,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._ResetTimelineCombatEndEnabled = value;
                 base.OnPropertyChanged("ResetTimelineCombatEndEnabled");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -201,6 +206,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._AutoUpdateChackEnabled = value;
                 base.OnPropertyChanged("AutoUpdateChackEnabled");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -217,6 +223,25 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._BuildRevisonUpdateIgnore = value;
                 base.OnPropertyChanged("BuildRevisonUpdateIgnore");
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+
+        #region #- [Property] bool.ActCheckBoxValue - ＜ACT本体チェックボックスの値＞ -----
+        /// <summary> ACT本体チェックボックスの値 </summary>
+        private bool _ActCheckBoxValue;
+        /// <summary> ACT本体チェックボックスの値 </summary>
+        public bool ActCheckBoxValue
+        {
+            get { return this._ActCheckBoxValue; }
+            set
+            {
+                if (this._ActCheckBoxValue == value) return;
+
+                this._ActCheckBoxValue = value;
+                base.OnPropertyChanged("ActCheckBoxValue");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -279,6 +304,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
             this.AutoUpdateChackEnabled = true;
             this.BuildRevisonUpdateIgnore = true;
+
+            this.ActCheckBoxValue = true;
 
             return true;
         }

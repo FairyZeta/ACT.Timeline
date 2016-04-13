@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="Data\AppStatusData.cs" />
     <Compile Include="Data\AppCommonData.cs" />
+    <Compile Include="Data\FormActMainControlData.cs" />
     <Compile Include="Data\ITimelineAnchor.cs" />
     <Compile Include="Data\OverlayBarSettingsData.cs" />
     <Compile Include="Data\OverlayColorSettingsData.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Data\OverlayGenericSettingsData.cs" />
     <Compile Include="Data\OverlayOptionData.cs" />
     <Compile Include="Data\PluginSettingsData.cs" />
+    <Compile Include="Module\AutoUpdateCheckModule.cs" />
     <Compile Include="ObjectModel\TimelineAlertObjectModel.cs" />
     <Compile Include="Data\TimelineAnchorData.cs" />
     <Compile Include="Data\TimelineBaseData.cs" />
@@ -161,7 +163,6 @@
     <Compile Include="Module\ViewManageModule.cs" />
     <Compile Include="Module\_Module.cs" />
     <Compile Include="Process\OverlayViewOpenProcess.cs" />
-    <Compile Include="Process\TickTimer.cs" />
     <Compile Include="Process\TimelineSynchroProcess.cs" />
     <Compile Include="Process\_Process.cs" />
     <Compile Include="Timeline.ENUM.cs" />
@@ -177,7 +178,6 @@
     </Compile>
     <Compile Include="PluginSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimelineAutoLoader.cs" />
     <Compile Include="TimelineController.cs" />
     <Compile Include="TimelineLoader.cs" />
     <Compile Include="TimelineView.cs">

@@ -1,20 +1,64 @@
 ﻿using System.IO;
 using System.Text.RegularExpressions;
+using System.Reflection;
 using FairyZeta.FF14.ACT.Logger;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
 {
+    /// <summary> タイムライン／static
+    /// </summary>
     public class Globals
     {
-        /// <summary> システムログ出力
-        /// </summary>
-        public static ActLogger SysLogger { get; set; }
-        /// <summary> エラーログ出力
-        /// </summary>
-        public static ActLogger ErrLogger { get; set; }
+      /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region #- [Property] ActLogger.SysLogger - ＜システムログ出力＞ -----
+        /// <summary> システムログ出力 </summary>
+        private static ActLogger _SysLogger;
+        /// <summary> システムログ出力 </summary>
+        public static ActLogger SysLogger
+        {
+            get 
+            {
+                if (_SysLogger == null) Globals.CreateLogger();
+
+                return _SysLogger;
+            }
+            set { _SysLogger = value; }
+        }
+        #endregion 
+        
+        #region #- [Property] ActLogger.ErrLogger - ＜システムログ出力＞ -----
+        /// <summary> エラーログ出力 </summary>
+        private static ActLogger _ErrLogger;
+        /// <summary> エラーログ出力 </summary>
+        public static ActLogger ErrLogger
+        {
+            get
+            {
+                if (_ErrLogger == null) Globals.CreateLogger();
+
+                return _ErrLogger;
+            }
+            set { _ErrLogger = value; }
+        }
+        #endregion 
+
         /// <summary> プロジェクト名
         /// </summary>
         public static string ProjectName { get; set; }
+
+        /// <summary> プラグインDLLまでのパス
+        /// </summary>
+        public static string PluginDllDirectoryPath { get; set; }
+
+      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
+
+      /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
+
+      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+      /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
+
 
         static private readonly Regex stripEndSlashesRegex = new Regex(@"/*$");
         static string StripEndSlashes(string pathstr)
@@ -95,6 +139,40 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 
         static public bool ResetTimelineCombatEnd;
 
-        static public string PluginDllDirectoryPath;
+        /// <summary> ロガーの生成を実行します。
+        /// </summary>
+        public static void CreateLogger()
+        {
+            if (string.IsNullOrWhiteSpace(Globals.PluginDllDirectoryPath))
+            {
+                Globals.PluginDllDirectoryPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            }
+
+            // Globals設定
+            Globals.ProjectName = "Timeline.Core";
+
+            // システムメッセージ用ロガー生成
+            if (Globals._SysLogger == null)
+            {
+                Globals._SysLogger = new FF14.ACT.Logger.ActLogger();
+                Globals._SysLogger.Setting.FileLogSetting.FilePath = Globals.PluginDllDirectoryPath + "/Log/System";
+                Globals._SysLogger.Setting.FileLogSetting.FileName = "SysLog";
+                Globals._SysLogger.Setting.FileLogSetting.FileExtension = ".txt";
+                Globals._SysLogger.Setting.FileLogSetting.AddFileNameDate = true;
+                Globals._SysLogger.Setting.FileLogSetting.FileNameDateFormat = "yyyyMMdd";
+                Globals._SysLogger.Setting.SetupTextLogger(Globals.SysLogger.Setting.FileLogSetting);
+            }
+            // スタックトレース用ロガー生成
+            if (Globals._ErrLogger == null)
+            {
+                Globals._ErrLogger = new FF14.ACT.Logger.ActLogger();
+                Globals._ErrLogger.Setting.FileLogSetting.FilePath = Globals.PluginDllDirectoryPath + "/Log/Error";
+                Globals._ErrLogger.Setting.FileLogSetting.FileName = "ErrorLog";
+                Globals._ErrLogger.Setting.FileLogSetting.FileExtension = ".txt";
+                Globals._ErrLogger.Setting.FileLogSetting.AddFileNameDate = true;
+                Globals._ErrLogger.Setting.FileLogSetting.FileNameDateFormat = "yyyyMMdd_HHmmss";
+                Globals._ErrLogger.Setting.SetupTextLogger(Globals.ErrLogger.Setting.FileLogSetting);
+            }
+        }
     }
 }

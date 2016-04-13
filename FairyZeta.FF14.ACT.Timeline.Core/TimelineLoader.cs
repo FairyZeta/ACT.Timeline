@@ -2,6 +2,7 @@
 using System.Globalization;
 using Sprache;
 using System;
+using System.IO;
 using FairyZeta.FF14.ACT.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
@@ -220,8 +221,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
     {
         static public TimelineBaseData LoadFromFile(string path)
         {
-            string text = System.IO.File.ReadAllText(path, System.Text.Encoding.UTF8);
-            return LoadFromText(System.IO.Path.GetFileName(path), text);
+            string text = File.ReadAllText(path, System.Text.Encoding.UTF8);
+            return LoadFromText(Path.GetFileName(path), text);
         }
 
         static public TimelineBaseData LoadFromText(string name, string text)

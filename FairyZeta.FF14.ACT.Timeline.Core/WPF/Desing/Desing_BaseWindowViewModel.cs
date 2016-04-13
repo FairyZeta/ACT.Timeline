@@ -15,6 +15,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
         private DataModel.CommonDataModel model;
+
         /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> [画面デザイン用] タイムライン／タイムラインデータモデル／コンストラクタ
@@ -45,21 +46,21 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         /// </summary>
         private void createDesingData_P001()
         {
-            base.TimelineComponent = new Component.TimelineComponent(model);
-            base.OverlayViewComponent = new Component.OverlayViewComponent(model);
+                base.TimelineComponent = new Component.TimelineComponent(model);
+                base.OverlayViewComponent = new Component.OverlayViewComponent(model);
 
-            for (double d = 0; d < (double)60.0; d += (double)1.0)
-            {
-                TimelineItemData item = new TimelineItemData(new TimerData());
-                item.ActivityIndex = Convert.ToInt32(d * 10);
-                item.ActivityNo = d;
-                item.ActivityName = "デザイン＠" + item.ActivityNo.ToString();
-                item.TimelineType = TimelineType.ENEMY;
+                for (double d = 0; d < (double)60.0; d += (double)1.0)
+                {
+                    TimelineItemData item = new TimelineItemData(new TimerData());
+                    item.ActivityIndex = Convert.ToInt32(d * 10);
+                    item.ActivityNo = d;
+                    item.ActivityName = "デザイン＠" + item.ActivityNo.ToString();
+                    item.TimelineType = TimelineType.ENEMY;
 
-                base.TimelineComponent.TimelineDataModel.TimelineItemCollection.Add(item);
-                base.OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource = new System.Windows.Data.CollectionViewSource() 
-                { Source = base.TimelineComponent.TimelineDataModel.TimelineItemCollection };
-            }
+                    base.TimelineComponent.TimelineDataModel.TimelineItemCollection.Add(item);
+                    base.OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource = new System.Windows.Data.CollectionViewSource() { Source = base.TimelineComponent.TimelineDataModel.TimelineItemCollection };
+                }
+
         }
     }
 }

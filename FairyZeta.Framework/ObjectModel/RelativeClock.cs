@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace FairyZeta.Framework.ObjectModel
 {
-    /// <summary> 補正機能付きリレーシブクロック
+    /// <summary> 補正機能付きストップウォッチ
     /// </summary>
     public class RelativeClock
     {
@@ -38,7 +38,7 @@ namespace FairyZeta.Framework.ObjectModel
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> 補正機能付きリレーシブクロック／コンストラクタ
+        /// <summary> 補正機能付きストップウォッチ／コンストラクタ
         /// </summary>
         /// <param name="pInitStart"> インスタンス生成後に自動開始する場合 True </param>
         /// <param name="pOffsetTime"> 初期設定するオフセットタイム </param>

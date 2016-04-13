@@ -131,8 +131,7 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.Writer
             // ログフォルダが存在するかどうか確認
             if (!Directory.Exists(this.FileLogSetting.FilePath))
             {
-                // フォルダが無いと、どうにもならないので終了…
-                return;
+                Directory.CreateDirectory(this.FileLogSetting.FilePath);
             }
 
             // ログの書き込みを実行

@@ -60,9 +60,12 @@
     <Compile Include="Converters\FontFamilyToNameConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="FontInfo.cs" />
+    <Compile Include="Framework.ENUM.cs" />
+    <Compile Include="Module\NetworkModule.cs" />
     <Compile Include="Module\SerializerModule.cs" />
     <Compile Include="Module\_Module.cs" />
     <Compile Include="ObjectModel\RelativeClock.cs" />
+    <Compile Include="Process\GetAssemblyDataProcess.cs" />
     <Compile Include="Process\XmlSerializerProcess.cs" />
     <Compile Include="Process\_Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

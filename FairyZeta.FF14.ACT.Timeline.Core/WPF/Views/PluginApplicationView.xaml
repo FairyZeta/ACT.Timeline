@@ -62,7 +62,7 @@
                 <TabItem Header="Option Settings" Style="{StaticResource BasicTabItemStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="300"/>
+                            <RowDefinition Height="330"/>
                             <RowDefinition Height="180"/>
                         </Grid.RowDefinitions>
                         <view:TimelineOptionSettingsView Grid.Row="0" DataContext="{Binding}"/>

@@ -62,6 +62,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
         public PluginApplicationViewModel()
             : base()
         {
+            // とりあえずロガー生成
+            Globals.CreateLogger();
+
             this.initViewModel();
 
             if (Application.Current != null)
@@ -73,6 +76,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
             this.CommonComponent.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayManageComponent.OverlayAutoSaveEvent);
             this.CommonComponent.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.CommonComponent.PluginSettingAutoSaveEvent);
             this.CommonComponent.AppCommonTimerModule.SecTimer01.Start();
+
         }
 
 
@@ -90,6 +94,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
             this.OverlayManageComponent = new OverlayManageComponent(this.TimelineComponent, this.CommonDataModel);
 
             this.CommonDataModel.AppStatusData.AppStatus = AppStatus.NormalMode;
+
+            // セットアップ終了
+            this.CommonComponent.CommonDataModel.LogDataCollection.Add(
+                Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Component Setup End."));
 
             return true;
         }

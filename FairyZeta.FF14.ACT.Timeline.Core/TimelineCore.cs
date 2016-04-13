@@ -7,6 +7,8 @@ using System.Threading;
 using System.Windows.Forms;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
 using FairyZeta.FF14.ACT.Timeline.Core.Forms;
+using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
+using FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
 {
@@ -26,12 +28,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         /// </summary>
         public string PuluginDirectoryPath { get; private set; }
 
+        /// <summary> ActTabに表示されているタブページのビューモデル
+        /// </summary>
+        private PluginApplicationViewModel pluginApplicationViewModel;
+
         public TimelineController Controller { get; private set; }
 
         private ACTTabPageControl tabPageControl;
         public TimelineView TimelineView { get; private set; }
-        public TimelineAutoLoader TimelineAutoLoader { get; private set; }
-        private CheckBox checkBoxShowView;
 
         public PluginSettings Settings { get; private set; }
 
@@ -57,16 +61,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         {
             try
             {
+                // ロガー生成
+                Globals.CreateLogger();
                 // DI log writer
                 Globals.WriteLogImpl = (str) => { ActGlobals.oFormActMain.WriteInfoLog(String.Format("act_timeline: {0}", str)); };
 
 
-                this.StatusText.Text = "Loading Sprache.dll";
+                //this.StatusText.Text = "Loading Sprache.dll";
 #if DEBUG
                 // Sprache.dll is already injected by libZ in Release builds.
-                Assembly.LoadFrom("Sprache.dll");
+                //Assembly.LoadFrom("Sprache.dll");
 #endif
-                this.StatusText.Text = "Sprache.dll Load Success!";
+                //this.StatusText.Text = "Sprache.dll Load Success!";
 
 #if DEBUG
                 // See Issue #1
@@ -89,19 +95,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
                 //Settings.AddIntSetting("BarWidth");
                 //Settings.AddIntSetting("OpacityPercentage");
 
-                SetupTab();
-                //InjectButton();
+                this.SetupTab();
+                Globals.SysLogger.SystemLog.NonState.DEBUG.Write("CreateInjectButton.");
+                this.CreateInjectButton(this.pluginApplicationViewModel.CommonComponent);
 
                 //Settings.Load();
 
                 //SetupUpdateChecker();
 
-                StatusText.Text = "Plugin Started (^^)!";
+                StatusText.Text = "Plugin Started.";
+                Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Plugin Load End.", Globals.ProjectName);
             }
             catch (Exception e)
             {
                 if (StatusText != null)
                     StatusText.Text = "Plugin Init Failed: " + e.Message;
+                Globals.ErrLogger.WriteStackTrace(e);
+
                 return false;
             }
             return true;
@@ -109,10 +119,34 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> Actからプラグインが切り離されたときの処理
+        /// </summary>
+        public void DeInitPlugin()
+        {
+            // ACT本体搭載のチェックボックスを削除
+            if (this.pluginApplicationViewModel.CommonComponent.CommonDataModel.FormActMainControlData.ActCheckBox != null)
+                ActGlobals.oFormActMain.Controls.Remove(this.pluginApplicationViewModel.CommonComponent.CommonDataModel.FormActMainControlData.ActCheckBox);
+
+            //if (TimelineAutoLoader != null)
+            //    TimelineAutoLoader.Stop();
+            
+            if (TimelineView != null)
+                TimelineView.Close();
+
+            if (Controller != null)
+                Controller.Stop();
+
+            //ActGlobals.oFormActMain.OnCombatEnd -= CombatEnd;
+            ActGlobals.oFormActMain.UpdateCheckClicked -= CheckForUpdate;
+
+            if (StatusText != null)
+                StatusText.Text = "Plugin Exited.";
+        }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
-
-
+    
+        /// <summary> Actタブに表示される画面のセットアップを実行します。
+        /// </summary>
         private void SetupTab()
         {
             ScreenSpace.Text = "FZ.Timeline";
@@ -122,56 +156,60 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             ScreenSpace.Resize += screenSpace_Resize;
             screenSpace_Resize(this, null);
 
+            this.pluginApplicationViewModel = tabPageControl.PluginApplicationView.DataContext as PluginApplicationViewModel;
+
             tabPageControl.Show();
         }
 
+        /// <summary> タブページリサイズイベントを登録します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void screenSpace_Resize(object sender, EventArgs e)
         {
             tabPageControl.Location = new System.Drawing.Point(0, 0);
             tabPageControl.Size = ScreenSpace.Size;
         }
-        
 
-        void TimelineView_DoubleClick(object sender, EventArgs e)
+        /// <summary> ACT本体に表示されるチェックボックスを生成します。
+        /// </summary>
+        private void CreateInjectButton(Component.CommonComponent pCommonComponent)
         {
-            TimelineView.Hide();
-            checkBoxShowView.Checked = false;
-        }
+            Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Start CreateInjectButton.");
+            pCommonComponent.CommonDataModel.FormActMainControlData.ActCheckBox = new CheckBox();
+            CheckBox pCheckBox = pCommonComponent.CommonDataModel.FormActMainControlData.ActCheckBox;
+            Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Start CheckBox Setting.");
+            pCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            pCheckBox.Name = "checkBoxShowView";
+            pCheckBox.Size = new System.Drawing.Size(90, 24);
+            pCheckBox.Text = "Show Timeline";
+            pCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            pCheckBox.UseVisualStyleBackColor = true;
+            pCheckBox.Checked = pCommonComponent.CommonDataModel.PluginSettingsData.ActCheckBoxValue;
+            pCheckBox.CheckedChanged += pCommonComponent.ActCheckBoxCheckedChanged;
 
-        void InjectButton()
-        {
-            checkBoxShowView = new CheckBox();
-            checkBoxShowView.Appearance = System.Windows.Forms.Appearance.Button;
-            checkBoxShowView.Name = "checkBoxShowView";
-            checkBoxShowView.Size = new System.Drawing.Size(90, 24);
-            checkBoxShowView.Text = "Show Timeline";
-            checkBoxShowView.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            checkBoxShowView.UseVisualStyleBackColor = true;
-            checkBoxShowView.Checked = true;
-            checkBoxShowView.CheckedChanged += checkBoxShowView_CheckedChanged;
-            Settings.AddControlSetting("TimelineShown", checkBoxShowView);
-
+            Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Start Resize Setting.");
             var formMain = ActGlobals.oFormActMain;
             formMain.Resize += formMain_Resize;
-            formMain.Controls.Add(checkBoxShowView);
-            formMain.Controls.SetChildIndex(checkBoxShowView, 0);
+            formMain.Controls.Add(pCheckBox);
+            formMain.Controls.SetChildIndex(pCheckBox, 0);
 
             formMain_Resize(this, null);
+            Globals.SysLogger.SystemLog.NonState.DEBUG.Write("End CreateInjectButton.");
         }
 
-        void checkBoxShowView_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxShowView.Checked)
-                TimelineView.Show();
-            else
-                TimelineView.Hide();
-        }
-
+        /// <summary> チェックボックスリサイズ（配置変更）イベントを登録します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void formMain_Resize(object sender, EventArgs e)
         {
-            // update button location
+            if (this.pluginApplicationViewModel == null)
+                return;
+
             var mainFormSize = ActGlobals.oFormActMain.Size;
-            checkBoxShowView.Location = new Point(mainFormSize.Width - 435, 0);
+            this.pluginApplicationViewModel.CommonComponent.CommonDataModel.FormActMainControlData.ActCheckBox.Location = new Point(mainFormSize.Width - 435, 0);
+ 
         }
 
 
@@ -189,28 +227,5 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             updateChecker.PerformCheckOnNewThread();
         }
 
-        public void DeInitPlugin()
-        {
-            if (checkBoxShowView != null)
-                ActGlobals.oFormActMain.Controls.Remove(checkBoxShowView);
-
-            if (TimelineAutoLoader != null)
-                TimelineAutoLoader.Stop();
-
-            if (Settings != null)
-                Settings.Save();
-
-            if (TimelineView != null)
-                TimelineView.Close();
-
-            if (Controller != null)
-                Controller.Stop();
-
-            //ActGlobals.oFormActMain.OnCombatEnd -= CombatEnd;
-            ActGlobals.oFormActMain.UpdateCheckClicked -= CheckForUpdate;
-
-            if (StatusText != null)
-                StatusText.Text = "Plugin Exited m(_ _)m";
-        }
     }
 }

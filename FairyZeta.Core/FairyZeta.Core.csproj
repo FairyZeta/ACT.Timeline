@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Process\DoubleToAdjustProcess.cs" />
     <Compile Include="Process\DoubleToRoundProcess.cs" />
+    <Compile Include="Process\StringParserProcess.cs" />
     <Compile Include="Process\_Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -38,7 +38,8 @@
                 <Label Content=" Environment " Width="100" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                 <Label Content="Resource Directory :"/>
-                <Button Width="120" Height="24" HorizontalAlignment="Right" Content="Set Default Directory" Margin="10 0"/>
+                <Button Width="140" Height="24" HorizontalAlignment="Right" Content="Set Default Directory" Margin="10 0"
+                        Command="{Binding CommonComponent.SetDefaultResourceDirectoryCommand}"/>
                 
                 <Grid Grid.Row="1" Margin="5 0" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
@@ -52,7 +53,9 @@
                             <fzBehavior:PropertyChangedCommandBehavior DependencyPropertyName="Text" PropertyChangedCommand="{Binding CommonComponent.TimelineResourceDirectoryCahngedCommand}" />
                         </i:Interaction.Behaviors>
                     </TextBox>
-                    <Button Grid.Column="2" Width="24" Height="24" Content="..."/>
+                    <Button Grid.Column="2" Width="24" Height="24" Content="..."
+                            Command="{Binding CommonComponent.FolderBrowserDialogOpenCommand}"
+                            CommandParameter="Timeline"/>
                 </Grid>
                 <Grid Grid.Row="2" Margin="5 0" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
@@ -66,7 +69,9 @@
                             <fzBehavior:PropertyChangedCommandBehavior DependencyPropertyName="Text" PropertyChangedCommand="{Binding CommonComponent.SoundResourceDirectoryCahngedCommand}" />
                         </i:Interaction.Behaviors>
                     </TextBox>
-                    <Button Grid.Column="2" Width="24" Height="24" Content="..."/>
+                    <Button Grid.Column="2" Width="24" Height="24" Content="..."
+                            Command="{Binding CommonComponent.FolderBrowserDialogOpenCommand}"
+                            CommandParameter="Timeline"/>
                 </Grid>
                 <Grid Grid.Row="3" Margin="0 5" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>

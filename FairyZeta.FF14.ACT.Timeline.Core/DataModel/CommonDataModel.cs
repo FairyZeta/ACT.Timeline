@@ -14,29 +14,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 {
     /// <summary> タイムライン／共通データモデル
     /// </summary>
-    [Serializable]
     public class CommonDataModel : _DataModel
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムラインアプリケーションデータ
         /// </summary>
-        [XmlIgnore]
         public ApplicationData ApplicationData { get; set; }
 
         /// <summary> 共通画面表示データ
         /// </summary>
-        [XmlIgnore]
         public AppCommonData AppCommonData { get; set; }
 
         /// <summary> アプリケーションステータスデータ
         /// </summary>
-        [XmlIgnore]
         public AppStatusData AppStatusData { get; set; }
 
         /// <summary> アプリケーション機能管理データ
         /// </summary>
-        [XmlIgnore]
         public AppEnableManageData AppEnableManageData { get; set; }
 
         /// <summary> ログデータコレクション
@@ -88,6 +83,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         }
         #endregion
 
+        /// <summary> ACT本体搭載のコントロールデータ
+        /// </summary>
+        public FormActMainControlData FormActMainControlData { get; private set; }
+
         /// <summary> (get) オーバーレイの一時的な非表示 
         /// <para> 表示する場合は True, 非表示の場合は False </para>
         /// </summary>
@@ -96,13 +95,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             get 
             {
                 if (!this.PluginSettingsData.AllOverlayVisibility)
-                {
                     return false;
-                }
-                else
-                {
-                    return true;
-                }
+                if (this.FormActMainControlData.ActCheckBox != null && !this.PluginSettingsData.ActCheckBoxValue)
+                    return false;
+
+                return true;
+                
             }
         }
 
@@ -136,6 +134,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             this.LogDataCollection = new ObservableCollection<BasicLogData>();
 
             this.LocationData = new LocationData();
+
+            this.FormActMainControlData = new FormActMainControlData();
 
             return true;
         }
