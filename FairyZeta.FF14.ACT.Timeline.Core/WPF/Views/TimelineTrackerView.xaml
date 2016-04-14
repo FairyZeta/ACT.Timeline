@@ -34,6 +34,7 @@
                 <Label Content=" Tracker " Width="70" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Border Grid.Row="0" Margin="0 5" VerticalAlignment="Center">
                     <Slider Margin="5 0"
+                            IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.TimelineTrackerEnabled}"
                             Minimum="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatStartTime}"
                             Value="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime}"
                             Maximum="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatEndTime}"/>
@@ -45,15 +46,15 @@
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.ColumnSpan="100" Margin="0 5" Orientation="Horizontal">
                     <Button Width="120" Height="24" Margin="20 5" Content="Rewind"
-                            IsEnabled="True"
+                            IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.TimelineRewindEnabled}"
                             Command="{Binding TimelineComponent.TimerControlCommand}"
-                            CommandParameter="ReBoot"/>
+                            CommandParameter="Rewind"/>
                     <Button Width="120" Height="24" Margin="5" Content="Pause" 
-                            IsEnabled="True"
+                            IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.TimelinePauseEnabled}"
                             Command="{Binding TimelineComponent.TimerControlCommand}"
                             CommandParameter="Pause"/>
                     <Button Width="120" Height="24" Margin="5" Content="Play"
-                            IsEnabled="True"
+                            IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.TimelinePlayEnabled}"
                             Command="{Binding TimelineComponent.TimerControlCommand}"
                             CommandParameter="Start"/>
                 </StackPanel>

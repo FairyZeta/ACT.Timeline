@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     public class OverlayViewData : _Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
-
+        
         /// <summary> 画面表示されるタイムラインビューソース
         /// </summary>
         public CollectionViewSource TimelineViewSource { get; set; }

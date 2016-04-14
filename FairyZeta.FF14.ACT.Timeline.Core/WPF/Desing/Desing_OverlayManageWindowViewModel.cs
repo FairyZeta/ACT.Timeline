@@ -37,6 +37,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         private bool initViewModel()
         {
             this.model = new DataModel.CommonDataModel();
+            model.AppStatusData.AppMode = AppMode.Desing;
+
             return true;
         }
 

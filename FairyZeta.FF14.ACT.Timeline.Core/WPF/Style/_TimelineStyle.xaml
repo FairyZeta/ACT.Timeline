@@ -6,7 +6,7 @@
         <ResourceDictionary Source="__ColorBaseStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <System:Double x:Key="CaptionHeight">26</System:Double>
+    <System:Double x:Key="CaptionHeight">0</System:Double>
     <Style TargetType="{x:Type Window}" x:Key="DefaultWindowStyle">
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>

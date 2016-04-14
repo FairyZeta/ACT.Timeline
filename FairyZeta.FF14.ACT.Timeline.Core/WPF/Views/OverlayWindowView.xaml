@@ -5,13 +5,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
+        xmlns:core="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
+             xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
         mc:Ignorable="d" 
         d:DesignHeight="300" d:DesignWidth="300"
         Background="Transparent" AllowsTransparency="True" WindowStyle="None" ShowInTaskbar="False" 
         Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowWidth, Mode=TwoWay}"
         Height="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowHeight, Mode=TwoWay}"
         Top="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowTop, Mode=TwoWay}"
-        Left="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLeft, Mode=TwoWay}">
+        Left="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLeft, Mode=TwoWay}"
+             d:DataContext="{d:DesignInstance Type=dvm:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}"
+             >
         
     <Window.Resources>
         <ResourceDictionary>
@@ -33,7 +37,30 @@
     </Window.Style>
     
     <Grid>
-        <view:StandardTimelineView DataContext="{Binding}" />
+        <view:StandardTimelineView DataContext="{Binding}" >
+            <UserControl.Style>
+                <Style TargetType="{x:Type UserControl}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.StandardTimeline}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+        </view:StandardTimelineView>
+        <view:TimelineControlView DataContext="{Binding}" >
+            <UserControl.Style>
+                <Style TargetType="{x:Type UserControl}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.TimelineControl}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </UserControl.Style>
+        </view:TimelineControlView>
     </Grid>
     
 </Window>

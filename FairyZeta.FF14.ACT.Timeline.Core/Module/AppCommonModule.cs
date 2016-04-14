@@ -55,14 +55,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             pCommonDataModel.TimelineFileCollection.Clear();
             pCommonDataModel.SelectedTimelineFileData = null;
-            pCommonDataModel.AppEnableManageData.TimelineFileLoadEnable = false;
+            pCommonDataModel.AppEnableManageData.TimelineFileLoadEnabled = false;
 
             if (string.IsNullOrWhiteSpace(pCommonDataModel.PluginSettingsData.TimelineResourceDirectory)
                 || !Directory.Exists(pCommonDataModel.PluginSettingsData.TimelineResourceDirectory))
             {
                 pCommonDataModel.AppCommonData.TimelineDirectoryStatus = "Directory Not Found.";
                 pCommonDataModel.AppStatusData.TimelineResourceDirectoryStatus = DirectoryStatus.NotFound;
-
                 return;
             }
 
@@ -73,7 +72,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 this.CreateTimelineFileCollection(pCommonDataModel);
                 pCommonDataModel.SelectedTimelineFileData = pCommonDataModel.TimelineFileCollection[0];
 
-                pCommonDataModel.AppEnableManageData.TimelineFileLoadEnable = true;
+                pCommonDataModel.AppEnableManageData.TimelineFileLoadEnabled = true;
             }
             else
             {

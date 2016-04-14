@@ -35,7 +35,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         public TimelineController Controller { get; private set; }
 
         private ACTTabPageControl tabPageControl;
-        public TimelineView TimelineView { get; private set; }
+        //public TimelineView TimelineView { get; private set; }
 
         public PluginSettings Settings { get; private set; }
 
@@ -130,8 +130,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             //if (TimelineAutoLoader != null)
             //    TimelineAutoLoader.Stop();
             
-            if (TimelineView != null)
-                TimelineView.Close();
+            //if (TimelineView != null)
+            //    TimelineView.Close();
 
             if (Controller != null)
                 Controller.Stop();

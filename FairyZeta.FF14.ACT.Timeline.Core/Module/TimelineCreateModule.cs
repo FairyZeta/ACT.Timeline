@@ -67,12 +67,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             this.TimelineDataClear(pCommonDM, pTimelineDM, pTimerDM);
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NowLoading;
+            this.TimelineFunctionEnabledChange(pCommonDM);
 
             Globals.SoundFilesRoot = pCommonDM.PluginSettingsData.SoundResourceDirectory;
 
             if (pCommonDM.SelectedTimelineFileData == null)
             {
                 pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.Failure;
+                this.TimelineFunctionEnabledChange(pCommonDM);
                 return;
             }
 
@@ -85,6 +87,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 pCommonDM.LogDataCollection.Add(Globals.ErrLogger.SystemLog.Failure.ERROR.Write(e.Message));
                 pCommonDM.AppCommonData.TimelineLoadErrorMsg = "LoadError: " + e.Message;
                 pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.Failure;
+                this.TimelineFunctionEnabledChange(pCommonDM);
 
                 pCommonDM.SelectedTimelineFileData.TimelineFileName = string.Empty;
                 pCommonDM.SelectedTimelineFileData.TimelineFileFullPath = string.Empty;
@@ -154,6 +157,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             pCommonDM.PluginSettingsData.LastLoadTimelineFullPath = pCommonDM.SelectedTimelineFileData.TimelineFileFullPath;
 
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.Success;
+            this.TimelineFunctionEnabledChange(pCommonDM);
         }
 
         /// <summary> タイムラインデータのクリアを実行し、ステータスを変更します。
@@ -164,9 +168,67 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             pTimerDM.TimerDeta.Clear();
             pTimelineDM.Clear();
+
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NonLoad;
+            this.TimelineFunctionEnabledChange(pCommonDM);
+
 
             return;
+        }
+
+        /// <summary> タイムラインロードステータスを参照し、機能の有効状態を更新します。
+        /// </summary>
+        /// <param name="pCommonDM"></param>
+        public void TimelineFunctionEnabledChange(CommonDataModel pCommonDM)
+        {
+            switch (pCommonDM.AppStatusData.TimelineLoadStatus)
+            {
+                case TimelineLoadStatus.NowLoading:
+
+                    pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = false;
+                    pCommonDM.AppEnableManageData.RefreshTimelineListEnabled = false;
+
+                    pCommonDM.AppEnableManageData.TimelinePlayEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelinePauseEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelineRewindEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelineTrackerEnabled = false;
+
+                    break;
+
+                case TimelineLoadStatus.Success:
+                    
+                    pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = true;
+                    if (pCommonDM.SelectedTimelineFileData == null)
+                    {
+                        pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = false;
+                    }
+                    pCommonDM.AppEnableManageData.RefreshTimelineListEnabled = true;
+
+                    pCommonDM.AppEnableManageData.TimelinePlayEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelinePauseEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelineRewindEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelineTrackerEnabled = true;
+
+                    break;
+
+                case TimelineLoadStatus.NonLoad:
+                case TimelineLoadStatus.NotFoundTimeline:
+                case TimelineLoadStatus.Failure:
+                    
+                    pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = true;
+                    if (pCommonDM.SelectedTimelineFileData == null)
+                    {
+                        pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = false;
+                    }
+                    pCommonDM.AppEnableManageData.RefreshTimelineListEnabled = true;
+
+                    pCommonDM.AppEnableManageData.TimelinePlayEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelinePauseEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelineRewindEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelineTrackerEnabled = false;
+
+                    break;
+            }
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

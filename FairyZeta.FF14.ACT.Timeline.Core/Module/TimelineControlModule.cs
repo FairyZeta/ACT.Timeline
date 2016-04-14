@@ -88,6 +88,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             this.CurrentCombatTimer.Start();
             pCommonDM.AppStatusData.CurrentCombatTimerStatus = TimerStatus.Run;
+            this.TimerFunctionEnabledChange(pCommonDM);
         }
 
         /// <summary> タイマー処理を停止します。
@@ -105,6 +106,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             }
 
             pCommonDM.AppStatusData.CurrentCombatTimerStatus = TimerStatus.Stop;
+            this.TimerFunctionEnabledChange(pCommonDM);
             this.CurrentCombatTimer.Stop();
             this.CurrentCombatRelativeClock.CurrentTime = 0;
 
@@ -132,6 +134,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             this.CurrentCombatTimer.Stop();
             pCommonDM.AppStatusData.CurrentCombatTimerStatus = TimerStatus.Pause;
+            this.TimerFunctionEnabledChange(pCommonDM);
         }
 
         /// <summary> タイマーをリブートします。
@@ -170,6 +173,59 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             }
         }
 
+        /// <summary> タイマーステータスを参照し、機能の有効状態を更新します。
+        /// </summary>
+        /// <param name="pCommonDM"></param>
+        public void TimerFunctionEnabledChange(CommonDataModel pCommonDM)
+        {
+            switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
+            {
+                case TimerStatus.Pause:
+                    pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = true;
+                    if (pCommonDM.SelectedTimelineFileData == null)
+                    {
+                        pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = false;
+                    }
+                    pCommonDM.AppEnableManageData.RefreshTimelineListEnabled = true;
+
+                    pCommonDM.AppEnableManageData.TimelinePlayEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelinePauseEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelineRewindEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelineTrackerEnabled = true;
+
+                    break;
+
+                case TimerStatus.Run:
+
+                    pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = false;
+                    pCommonDM.AppEnableManageData.RefreshTimelineListEnabled = true;
+
+                    pCommonDM.AppEnableManageData.TimelinePlayEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelinePauseEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelineRewindEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelineTrackerEnabled = false;
+
+                    break;
+
+                case TimerStatus.Init:
+                case TimerStatus.Stop:
+                    
+                    pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = true;
+                    if (pCommonDM.SelectedTimelineFileData == null)
+                    {
+                        pCommonDM.AppEnableManageData.TimelineFileLoadEnabled = false;
+                    }
+                    pCommonDM.AppEnableManageData.RefreshTimelineListEnabled = true;
+
+                    pCommonDM.AppEnableManageData.TimelinePlayEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelinePauseEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelineRewindEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelineTrackerEnabled = true;
+
+                    break;
+            }
+
+        }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 

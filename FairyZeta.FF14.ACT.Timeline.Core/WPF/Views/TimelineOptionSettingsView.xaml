@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.TimelineOptionSettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
+        xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
+             xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+        mc:Ignorable="d" 
+        Height="330"  
+        d:DesignHeight="630" d:DesignWidth="900" 
+        d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/_TimelineStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+    </UserControl.Resources>
+
+
+    <Border Background="White" >
+        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Content=" Option Settings" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <StackPanel Grid.Row="0" Margin="5">
+                    <TextBlock Text=" - Generic -" Margin="5"/>
+                    <CheckBox Content="Reset Timeline at combat end" Margin="10 2" 
+                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.ResetTimelineCombatEndEnabled}"/>
+                    <TextBlock Text=" - Sound -" Margin="5"/>
+                    <CheckBox Content="Play Sound By ACT" Margin="10 2" VerticalAlignment="Center"
+                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.PlaySoundByACT}"/>
+                    <TextBlock Text=" - Auto Operation -" Margin="5"/>
+                    <CheckBox Content="Autoload after change zone" Margin="10 2"
+                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.TimelineAutoLoadEnabled}"/>
+                    <CheckBox Content="Auto show timeline" Margin="10 2"
+                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.AutoShowTimelineEnabled}"/>
+                    <CheckBox Content="Auto hide timeline" Margin="10 2"
+                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.AutoHideTimelineEnabled}"/>
+                    <TextBlock Text=" - Update Check -" Margin="5"/>
+                    <CheckBox Content="Plugin auto update check enable" Margin="10 2" VerticalAlignment="Center"
+                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.AutoUpdateChackEnabled}"/>
+                    <CheckBox Content="Ignore the slight update ( x.y.z.z  = z update ignore )" Margin="10 2" VerticalAlignment="Center"
+                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.BuildRevisonUpdateIgnore}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Border>
+
+</UserControl>

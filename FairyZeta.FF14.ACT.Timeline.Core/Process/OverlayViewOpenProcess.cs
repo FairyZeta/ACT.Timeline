@@ -49,6 +49,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
                 case OverlayType.StandardTimeline:
                     this.openStandardTimelineView(pTimelineComponent, pOverlayViewComponent);
                     break;
+                case OverlayType.TimelineControl:
+                    this.openOverlayControlView(pTimelineComponent, pOverlayViewComponent);
+                    break;
                 default:
                     return;
             }
@@ -68,7 +71,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 
             vm.OverlayViewComponent = pOverlayViewComponent;
 
-            window.Show();
+            if (pOverlayViewComponent.CommonDataModel.AppStatusData.AppMode != AppMode.Desing)
+            {
+                window.Show();
+            }
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
@@ -79,19 +85,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// <param name="pOverlayViewComponent"> オーバーレイ表示コンポーネント </param>
         private void openStandardTimelineView(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
         {
-            OverlayWindowView view = new OverlayWindowView();
+            OverlayWindowView window = new OverlayWindowView();
 
-            view.Topmost = true;
-            var vm = view.DataContext as OverlayWindowViewModel;
+            window.Topmost = true;
+            var vm = window.DataContext as OverlayWindowViewModel;
             if (vm != null)
             {
                 vm.TimelineComponent = pTimelineComponent;
                 vm.OverlayViewComponent = pOverlayViewComponent;
             }
 
-            view.Show();
+            if (pOverlayViewComponent.CommonDataModel.AppStatusData.AppMode != AppMode.Desing)
+            {
+                window.Show();
+            }
 
-            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr = new WindowInteropHelper(view).Handle;
+            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr = new WindowInteropHelper(window).Handle;
 
             if(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock)
             {
@@ -99,5 +108,37 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
             }
         }
 
+        /// <summary> タイムラインコントロールビューを開きます。
+        /// </summary>
+        /// <param name="pTimelineComponent"> タイムラインコンポーネント </param>
+        /// <param name="pOverlayViewComponent"> オーバーレイ表示コンポーネント </param>
+        private void openOverlayControlView(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
+        {
+            OverlayWindowView window = new OverlayWindowView();
+
+            window.Topmost = true;
+            window.ResizeMode = System.Windows.ResizeMode.NoResize;
+            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowHeight = 24;
+            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowWidth = 150;
+
+            var vm = window.DataContext as OverlayWindowViewModel;
+            if (vm != null)
+            {
+                vm.TimelineComponent = pTimelineComponent;
+                vm.OverlayViewComponent = pOverlayViewComponent;
+            }
+
+            if (pOverlayViewComponent.CommonDataModel.AppStatusData.AppMode != AppMode.Desing)
+            {
+                window.Show();
+            }
+
+            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr = new WindowInteropHelper(window).Handle;
+
+            if (pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock)
+            {
+                WindowsServices.SetWindowExTransparent(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+            }
+        }
     }
 }

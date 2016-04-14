@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>D:\My System\Online Game\Tool\Advanced Combat Tracker\Plugin\TestTimeline\dll\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -74,7 +74,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +121,9 @@
     <Compile Include="Data\OverlayOptionData.cs" />
     <Compile Include="Data\PluginSettingsData.cs" />
     <Compile Include="Module\AutoUpdateCheckModule.cs" />
+    <Compile Include="Module\TimelineLogAnalyzerModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ObjectModel\TimelineAlertObjectModel.cs" />
     <Compile Include="Data\TimelineAnchorData.cs" />
     <Compile Include="Data\TimelineBaseData.cs" />
@@ -149,13 +154,11 @@
     <Compile Include="Module\OverlayCustomModule.cs" />
     <Compile Include="Module\OverlayManageModule.cs" />
     <Compile Include="Module\AppCommonTimerModule.cs" />
-    <Compile Include="Module\TimelineLogAnalyzerModule.cs" />
     <Compile Include="Process\AppDataFileManageProcess.cs" />
     <Compile Include="Process\AppDataConstProcess.cs" />
     <Compile Include="Process\AppDataPathCreateProcess.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Process\TimelineItemAnalyzProcess.cs" />
     <Compile Include="Process\SaveChangedResetProcess.cs" />
     <Compile Include="Process\SetFilterProcess.cs" />
     <Compile Include="Module\TimelineControlModule.cs" />
@@ -163,6 +166,9 @@
     <Compile Include="Module\ViewManageModule.cs" />
     <Compile Include="Module\_Module.cs" />
     <Compile Include="Process\OverlayViewOpenProcess.cs" />
+    <Compile Include="Process\TimelineItemAnalyzProcess.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Process\TimelineSynchroProcess.cs" />
     <Compile Include="Process\_Process.cs" />
     <Compile Include="Timeline.ENUM.cs" />
@@ -180,9 +186,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimelineController.cs" />
     <Compile Include="TimelineLoader.cs" />
-    <Compile Include="TimelineView.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UpdateChecker.cs" />
     <Compile Include="Win32APIUtils.cs" />
     <Compile Include="WPF\Behavior\PropertyChangedCommandBehavior.cs" />
@@ -204,14 +207,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WPF\ViewModels\_ViewModels.cs" />
+    <Compile Include="WPF\Views\TimelineControlView.xaml.cs">
+      <DependentUpon>TimelineControlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\Views\TimelineLogView.xaml.cs">
       <DependentUpon>TimelineLogView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WPF\Views\TimelineStatusView.xaml.cs">
-      <DependentUpon>TimelineStatusView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="WPF\Views\TimelineOptionSettingsView.xaml.cs">
       <DependentUpon>TimelineOptionSettingsView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WPF\Views\TimelineStatusView.xaml.cs">
+      <DependentUpon>TimelineStatusView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Views\TimelineEnvironmentView.xaml.cs">
       <DependentUpon>TimelineEnvironmentView.xaml</DependentUpon>
@@ -288,20 +295,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
-      <HintPath>..\..\..\..\Advanced Combat Tracker\Advanced Combat Tracker.exe</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LibZ.Bootstrap">
-      <HintPath>..\packages\LibZ.Bootstrap.1.1.0.2\lib\net40-client\LibZ.Bootstrap.dll</HintPath>
+      <HintPath>D:\Advanced Combat Tracker.exe</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Prism">
       <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
     </Reference>
-    <Reference Include="Sprache, Version=1.10.0.36, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sprache, Version=2.0.0.51, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Sprache.1.10.0.36\lib\net40\Sprache.dll</HintPath>
+      <HintPath>..\packages\Sprache.2.0.0.51\lib\portable-net4+netcore45+win8+wp8+sl5+MonoAndroid+Xamarin.iOS10+MonoTouch\Sprache.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -343,15 +346,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="WPF\Views\TimelineControlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WPF\Views\TimelineLogView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WPF\Views\TimelineStatusView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="WPF\Views\TimelineOptionSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Views\TimelineStatusView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -428,15 +435,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set LIBZ="$(SolutionDir)packages\LibZ.Bootstrap.1.1.0.2\tools\libz.exe"
-set EXE_7ZA="$(SolutionDir)packages\7ZipCLI.9.20.0\tools\7za.exe"
-if $(ConfigurationName) == Release (
-%25LIBZ%25 inject-dll --assembly $(TargetName).dll --include *.dll --exclude  $(TargetName).dll --move
-cd $(TargetDir)..\
-%25EXE_7ZA%25 a act_timeline.zip bin\BindingCoil.ACTTimeline.dll resources
-) ELSE (
-echo "no post build on Debug"
-)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

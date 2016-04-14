@@ -141,6 +141,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
+            this.CurrentCombatTime = 0;
+            this.CurrentCombatStartTime = 0;
+            this.CurrentCombatEndTime = 0;
+
+            this.CurrentTimeChangedRefresh();
+
             return true;
         }
     }

@@ -57,14 +57,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
         
+        /// <summary> タイムライン／プラグインアプリケーションビューモデル／デザイン用コンストラクタ
+        /// </summary>
+        public PluginApplicationViewModel(AppMode pAppMode)
+            : base(pAppMode)
+        {
+            this.initViewModel();
+        }
+
         /// <summary> タイムライン／プラグインアプリケーションビューモデル 
         /// </summary>
         public PluginApplicationViewModel()
             : base()
         {
-            // とりあえずロガー生成
-            Globals.CreateLogger();
-
             this.initViewModel();
 
             if (Application.Current != null)
@@ -88,6 +93,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
         private bool initViewModel()
         {
             this.CommonDataModel = new CommonDataModel();
+
+            if (base.AppMode == AppMode.Desing)
+                this.CommonDataModel.AppStatusData.AppMode = AppMode.Desing;
 
             this.CommonComponent = new CommonComponent(this.CommonDataModel, true);
             this.TimelineComponent = new TimelineComponent(this.CommonDataModel);

@@ -143,6 +143,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                 this.AppCommonModule.SetDefaultPluginSettings(this.CommonDataModel);
             }
 
+            if (string.IsNullOrWhiteSpace(this.CommonDataModel.PluginSettingsData.TimelineResourceDirectory)
+                && string.IsNullOrWhiteSpace(this.CommonDataModel.PluginSettingsData.SoundResourceDirectory))
+            {
+                this.AppCommonModule.SetDefaultResourceDirectory(this.CommonDataModel);
+            }
+
             // --- プラグイン画面情報更新 ---
             this.AppCommonModule.CheckTimelineResourceDirectory(this.CommonDataModel);
             this.AppCommonModule.CheckSoundResourceDirectory(this.CommonDataModel);

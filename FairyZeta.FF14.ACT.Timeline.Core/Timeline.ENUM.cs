@@ -1,5 +1,17 @@
 ﻿namespace FairyZeta.FF14.ACT.Timeline.Core
 {
+    /// <summary> ENUM: アプリケーションモード
+    /// </summary>
+    public enum AppMode
+    {
+        /// <summary> 通常モード </summary>
+        Normal,
+        /// <summary> デザインモード </summary>
+        Desing,
+        /// <summary> デバッグモード </summary>
+        Debug
+    }
+
     /// <summary> ENUM:アプリケーションステータス
     /// </summary>
     public enum AppStatus
@@ -146,7 +158,8 @@
 
     public enum OverlayType
     {
-        StandardTimeline
+        StandardTimeline,
+        TimelineControl
     }
 
 }

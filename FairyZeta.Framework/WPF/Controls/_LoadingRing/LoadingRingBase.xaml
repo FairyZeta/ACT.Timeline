@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="FairyZeta.Framework.WPF.Controls.LoadingRingBase"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="ring">
+    <Grid>
+        <Canvas Name="canvas" />
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Text="{Binding ElementName=ring, Path=Text}"
+                   Foreground="{Binding ElementName=ring, Path=Foreground}" />
+    </Grid>
+</UserControl>

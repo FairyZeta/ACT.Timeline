@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -96,7 +95,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                 this.CommonDataModel.SelectedTimelineFileData = new Data.TimelineFileData() 
                 { 
                     TimelineFileName = this.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName,
-                    TimelineFileFullPath = System.IO.Path.Combine(this.CommonDataModel.PluginSettingsData.LastLoadTimelineFullPath, this.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName)
+                    TimelineFileFullPath = System.IO.Path.Combine(this.CommonDataModel.PluginSettingsData.LastLoadTimelineFullPath)
                 };
                 this.TimelineCreateModule.CreateTimelineDataModel(this.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
                 this.CommonDataModel.SelectedTimelineFileData = null;
@@ -253,6 +252,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                         if (this.CommonDataModel.PluginSettingsData.AutoShowTimelineEnabled)
                         {
                             this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = true;
+                            this.CommonDataModel.ViewRefresh();
                         }
 
                         this.CommonDataModel.LogDataCollection.Add(
@@ -267,10 +267,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                         if (this.CommonDataModel.PluginSettingsData.AutoHideTimelineEnabled)
                         {
                             this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = false;
+                            this.CommonDataModel.ViewRefresh();
                         }
+
+                        this.TimelineCreateModule.TimelineDataClear(this.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
 
                         this.CommonDataModel.LogDataCollection.Add(
                             Globals.SysLogger.SystemLog.Failure.INFO.Write(string.Format("Timeline AutoLoad Failure. File Not Found. ( File = {0} )", findName), Globals.ProjectName));
+                        this.CommonDataModel.LogDataCollection.Add(
+                            Globals.SysLogger.SystemLog.Failure.INFO.Write(string.Format("Timeline Unloaded."), Globals.ProjectName));
                         this.CommonDataModel.AppStatusData.AutoLoadStatus = TimelineLoadStatus.NotFoundTimeline;
                         this.CommonDataModel.ViewRefresh();
                     }

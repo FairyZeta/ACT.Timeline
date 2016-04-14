@@ -35,6 +35,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         private bool initComponent()
         {
             model = new DataModel.CommonDataModel();
+            model.AppStatusData.AppMode = AppMode.Desing;
             return true;
         }
 
@@ -49,6 +50,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
                 base.TimelineComponent = new Component.TimelineComponent(model);
                 base.OverlayViewComponent = new Component.OverlayViewComponent(model);
 
+                model.PluginSettingsData.ActCheckBoxValue = false;
                 for (double d = 0; d < (double)60.0; d += (double)1.0)
                 {
                     TimelineItemData item = new TimelineItemData(new TimerData());

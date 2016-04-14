@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FairyZeta.FF14.ACT.Timeline</RootNamespace>
-    <AssemblyName>FairyZeta.FF14.ACT.Timeline</AssemblyName>
+    <AssemblyName>FZ.Timeline</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
-      <HintPath>D:\My System\Online Game\Tool\Advanced Combat Tracker\Advanced Combat Tracker.exe</HintPath>
+      <HintPath>D:\Advanced Combat Tracker.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,6 +54,30 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rd /S /Q .\de
+rd /S /Q .\en
+rd /S /Q .\es
+rd /S /Q .\fr
+rd /S /Q .\it
+rd /S /Q .\ja
+rd /S /Q .\ko
+rd /S /Q .\ru
+rd /S /Q .\zh-Hans
+rd /S /Q .\zh-Hant
+
+if "$(ConfigurationName)"=="Debug" goto DelEnd
+del /F /Q .\*.pdb
+del /F /Q .\*.xml
+:DelEnd
+
+rd /S /Q .\dll
+md .\dll
+:mdEnd
+
+move /Y .\*.dll .\dll
+move /Y .\dll\FZ.Timeline.dll .\</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

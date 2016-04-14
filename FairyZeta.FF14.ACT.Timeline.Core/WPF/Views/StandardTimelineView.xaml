@@ -4,13 +4,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:custom="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Custom"
-             xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+             xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
              xmlns:fControl="clr-namespace:FairyZeta.Framework.Controls;assembly=FairyZeta.Framework"
              xmlns:converter="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Converter"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800" 
-             d:DataContext="{d:DesignInstance Type=dData:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}">
-    
+             d:DesignHeight="600" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=dvm:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}"
+             >
+    <UserControl.Style>
+        <Style TargetType="{x:Type UserControl}">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.PluginSettingsData.ActCheckBoxValue}" Value="false">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -183,30 +194,8 @@
         <Grid.Resources>
             <FrameworkElement x:Key="proxyElement" />
         </Grid.Resources>
-        <ContentControl Visibility="Collapsed" Content="{StaticResource proxyElement}" />
-        <Border Background="Black" CornerRadius="5">
-            <Border.Style>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="Opacity" Value="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.OverlayPassVisibility}" Value="False">
-                            <Setter Property="Opacity" Value="0"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-        </Border>
-        <StackPanel >
-            <StackPanel.Style>
-                <Style TargetType="{x:Type StackPanel}">
-                    <Setter Property="Opacity" Value="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Converter={StaticResource opacityConverter}}"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.OverlayPassVisibility}" Value="False">
-                            <Setter Property="Opacity" Value="0"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </StackPanel.Style>
+        <Border Background="Black" CornerRadius="5" Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}"/>
+        <StackPanel Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Converter={StaticResource opacityConverter}}">
             <!-- ウィンドウヘッダー -->
             <Grid Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarVisibility, Converter={StaticResource BoolToVisibility}}">
                 <Grid.ColumnDefinitions>
@@ -297,14 +286,15 @@
                       FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize}"
                       Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                       IsHitTestVisible="False" >-->
-            <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
+            <Viewbox>
+                <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
                       FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize}"
                       Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                       IsHitTestVisible="False" 
                       ScrollViewer.CanContentScroll="True"
           ScrollViewer.IsDeferredScrollingEnabled="True"
           ScrollViewer.PanningMode="VerticalOnly"
-          ScrollViewer.VerticalScrollBarVisibility="Visible"
+          ScrollViewer.VerticalScrollBarVisibility="Hidden"
           VirtualizingPanel.IsVirtualizing="True"
           VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.ItemsPanel>
@@ -372,7 +362,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
+            </Viewbox>
+
         </StackPanel>
     </Grid>
 </UserControl>

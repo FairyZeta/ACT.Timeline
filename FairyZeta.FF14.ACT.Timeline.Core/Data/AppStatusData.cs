@@ -12,6 +12,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     { 
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        #region #- [Property] AppMode.AppMode - ＜アプリケーションモード＞ -----
+        /// <summary> アプリケーションモード </summary>
+        private AppMode _AppMode;
+        /// <summary> アプリケーションモード </summary>
+        public AppMode AppMode
+        {
+            get { return this._AppMode; }
+            set
+            {
+                if (this._AppMode == value) return;
+
+                this._AppMode = value;
+                base.OnPropertyChanged("AppMode");
+            }
+        }
+        #endregion
+
         #region #- [Property] AppStatus.AppStatus - ＜アプリケーション状態＞ -----
         /// <summary> アプリケーション状態 </summary>
         private AppStatus _AppStatus;
@@ -131,6 +148,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool initData()
         {
+            this.AppMode = AppMode.Normal;
             this.AppStatus = AppStatus.NotInitSetup;
             this.TimelineResourceDirectoryStatus = DirectoryStatus.Init;
             this.SoundResourceDirectoryStatus = DirectoryStatus.Init;

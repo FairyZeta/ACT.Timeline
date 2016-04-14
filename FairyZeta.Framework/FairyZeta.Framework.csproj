@@ -69,6 +69,16 @@
     <Compile Include="Process\XmlSerializerProcess.cs" />
     <Compile Include="Process\_Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WPF\Adorner\DragAdorner.cs" />
+    <Compile Include="WPF\Controls\_ComboBox\NumericComboBox.cs" />
+    <Compile Include="WPF\Controls\_LoadingRing\LoadingArc.cs" />
+    <Compile Include="WPF\Controls\_LoadingRing\LoadingDottedRing.cs" />
+    <Compile Include="WPF\Controls\_LoadingRing\LoadingRingBase.xaml.cs">
+      <DependentUpon>LoadingRingBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\_LoadingRing\LoadingSegments.cs" />
+    <Compile Include="WPF\Controls\_LoadingRing\LoadingSolidRing.cs" />
+    <Compile Include="WPF\Controls\_TextBox\NumericTextBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\OutlineTextControl.xaml">
@@ -83,12 +93,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="WPF\Controls\_LoadingRing\LoadingRingBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModel\" />
+    <Folder Include="WPF\ControlTemplate\" />
+    <Folder Include="WPF\Style\" />
+    <Folder Include="WPF\Trigger\" />
+    <Folder Include="WPF\ViewModels\" />
+    <Folder Include="WPF\Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

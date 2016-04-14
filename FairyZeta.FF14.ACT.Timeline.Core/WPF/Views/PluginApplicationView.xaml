@@ -4,12 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
+        xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
         mc:Ignorable="d" 
         Height="700" Width="900" 
         MinHeight="630" MinWidth="900" 
         
         d:DesignHeight="630" d:DesignWidth="900" 
+             d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}"
         Background="Transparent">
 
 
@@ -76,7 +78,6 @@
                     <Label Content="Timeline Edit, Coming soon... Probably it is about May, 2016"/>
                 </TabItem>
                 <TabItem Header="About" Style="{StaticResource BasicTabItemStyle}">
-                    <view:OverlayStandardTimelineCustomView />
                 </TabItem>
             </TabControl>
         </Grid>
