@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.TimelineAboutView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
+        xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
+        xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+        mc:Ignorable="d" 
+        d:DesignHeight="800" d:DesignWidth="1280" 
+        d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/_TimelineStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+    </UserControl.Resources>
+    
+    <Border Background="White">
+        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+            <Border.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="12"/>
+                </Style>
+            </Border.Resources>
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="600"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Content=" About " Width="50" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="30"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text=" - FairyZeta Timeline - " VerticalAlignment="Center" FontSize="18"/>
+                    <StackPanel Grid.Row="1">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="GitHob: " Width="60" HorizontalContentAlignment="Right"/>
+                            <Label>
+                                <Hyperlink NavigateUri="https://github.com/FairyZeta" RequestNavigate="Hyperlink_RequestNavigate">
+                                    <TextBlock Text="https://github.com/FairyZeta"/>
+                                </Hyperlink>
+                            </Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Twittr: " Width="60" HorizontalContentAlignment="Right"/>
+                            <Label>
+                                <Hyperlink NavigateUri="https://twitter.com/FairyZeta" RequestNavigate="Hyperlink_RequestNavigate">
+                                    <TextBlock Text="https://twitter.com/FairyZeta"/>
+                                </Hyperlink>
+                            </Label>
+                        </StackPanel>
+                        <TextBlock Text="要望、機能案、質問、クレーム、バグ報告など大歓迎。上記までお願いします。" Margin="5 5 5 2"/>
+                        <TextBlock Text="時間はかかるかもしれませんが、要望には可能な限り対応します。" Margin="5 2"/>
+                        <TextBlock />
+                        <TextBlock Text="Timelineプログラムのソースコードおよび使用ファイルは" Margin="5 2"/>
+                        <TextBlock Text="三条項BSDライセンス(3-clause BSD license) です。" Margin="5 2"/>
+                        <TextBlock Text="著作権の放棄は無責任なのでしませんが" Margin="5 2"/>
+                        <TextBlock Text="GitHub上の公開ソースコードは、連絡不要で自由に利用して頂いて問題ありません。" Margin="5 2"/>
+                    </StackPanel>
+                </Grid>
+                <Border BorderBrush="LightGray" BorderThickness="0 0 0 1" Margin="20 0"/>
+                <Grid Grid.Row="1"  Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="30"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text=" - Special Thanks - " VerticalAlignment="Center" FontSize="18"/>
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Text="BindingCoil様:"/>
+                        <TextBlock Text="・Timelineの原型を利用させて頂いてます。"/>
+                        <TextBlock Text="090様:"/>
+                        <TextBlock Text="・Timelineソースコードを利用させて頂きました。"/>
+                        <TextBlock Text="anoyetta様:"/>
+                        <TextBlock Text="・カラー／フォントの変更ダイアログを提供して頂きました。"/>
+                        <TextBlock Text="　※現在まだ組み込めてません…。"/>
+                        <TextBlock Text=""/>
+                        <TextBlock Text="魔王魂様:"/>
+                        <TextBlock Text="・同梱タイムラインのサウンドを利用しています。ほんといつもお世話になってます。"/>
+                        <UserControl Margin="20 0">
+                            <Hyperlink NavigateUri="http://maoudamashii.jokersounds.com" RequestNavigate="Hyperlink_RequestNavigate">
+                                <TextBlock Text="http://maoudamashii.jokersounds.com"/>
+                            </Hyperlink>
+                        </UserControl>
+                    </StackPanel>
+                </Grid>
+                <Border Grid.RowSpan="100" BorderBrush="LightGray" BorderThickness="0 0 1 0" Margin="0 20"/>
+                <Grid Grid.Column="1" Grid.RowSpan="100" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="30"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text=" - Update Schedule - " VerticalAlignment="Center" FontSize="18"/>
+                    <StackPanel Grid.Row="1">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="5 2"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Label Content="【機能更新の予定】"  HorizontalAlignment="Left"/>
+
+                        <TextBlock Text="処理速度チューニング　（v0.1 現在、重すぎる。とにかく何より最優先。）" />
+                        <TextBlock Text="全体デザインの修正 　(十分な処理速度が出てからの話)" />
+                        <TextBlock Text="プラグインステータス表示" />
+                        <TextBlock Text="多言語対応、特に日本語" />
+                        <TextBlock Text="戦闘時間の表示 （v1.0現在、処理が重いので切ってます）" />
+                        <TextBlock Text="オーバーレイフォントのカスタム変更" />
+                        <TextBlock Text="オーバーレイヘッダー表示項目の順番カスタム変更" />
+                        <TextBlock Text="タイトルバーアイテムカラー変更" />
+                        <TextBlock Text="ヘッダーアイテムカラー変更" />
+                        <TextBlock Text="コンテンツアイテムカラー変更" />
+                        <TextBlock Text="プレビュー編集の背景変更" />
+                        <TextBlock Text="オーバーレイのインポート、エクスポート" />
+                        <TextBlock Text="URL入力によるオーバーレイの直接インポート" />
+                        <TextBlock Text="URL入力によるタイムラインファイルの直接保存" />
+                        <TextBlock Text="オーバーレイのコピー作成" />
+                        <TextBlock Text="ソースフォルダの複数持ち" />
+                        <TextBlock Text="カラーのプロファイル化" />
+                        <TextBlock Text="オーバーレイのアクションバーカスタム" />
+                        <TextBlock Text="(x,y指定による)自由配置型オーバーレイカスタム" />
+                        <TextBlock Text="上記他、新型オーバーレイ表示" />
+                        <TextBlock Text="タイマー処理間隔の設定変更" />
+                        <TextBlock Text="音声ファイルをwav以外も可能に"/>
+                        <TextBlock Text="タンクモードの変更システム（MTとSTのフィルタ切り替え）"/>
+                        <TextBlock Text="タイムラインのマージ機能"/>
+                        <TextBlock Text="タイムラインエディタ"/>
+                        <TextBlock Text="ログからタイムラインの自動作成"/>
+                        <TextBlock Text="アップデートの周期的な自動確認、通知（上部に。メールみたいな感じ）"/>
+                        <TextBlock Text="アップデートの手動確認ボタン"/>
+                        <TextBlock Text="通知音の設定（オートロード時に音を鳴らすとか）"/>
+                        <TextBlock Text=""/>
+                        <TextBlock Text="etc..."/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
+    
+</UserControl>

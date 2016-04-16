@@ -227,6 +227,9 @@
     <Compile Include="WPF\Views\TimelineFileListView.xaml.cs">
       <DependentUpon>TimelineFileListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WPF\Views\TimelineAboutView.xaml.cs">
+      <DependentUpon>TimelineAboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\Views\TimelineTrackerView.xaml.cs">
       <DependentUpon>TimelineTrackerView.xaml</DependentUpon>
     </Compile>
@@ -367,6 +370,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WPF\Views\TimelineFileListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\TimelineAboutView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -71,7 +71,7 @@
                     </TextBox>
                     <Button Grid.Column="2" Width="24" Height="24" Content="..."
                             Command="{Binding CommonComponent.FolderBrowserDialogOpenCommand}"
-                            CommandParameter="Timeline"/>
+                            CommandParameter="Sound"/>
                 </Grid>
                 <Grid Grid.Row="3" Margin="0 5" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>

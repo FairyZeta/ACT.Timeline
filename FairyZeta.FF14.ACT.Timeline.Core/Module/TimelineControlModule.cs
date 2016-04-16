@@ -73,17 +73,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         
         /// <summary> タイマー処理を開始します。
         /// </summary>
-        public void TimerStart(CommonDataModel pCommonDM, TimerDataModel pTimerDM)
+        public void TimerStart(CommonDataModel pCommonDM, TimerDataModel pTimerDM, TimelineDataModel pTimelineDM)
         {
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
                 case TimerStatus.Init:
                 case TimerStatus.Stop:
                 case TimerStatus.Pause:
-                    this.CurrentCombatRelativeClock.CurrentTime = pTimerDM.TimerDeta.CurrentCombatTime;
                     break;
                 case TimerStatus.Run:
                     return;
+            }
+
+            this.CurrentCombatRelativeClock.CurrentTime = pTimerDM.TimerDeta.CurrentCombatTime;
+
+            var artList = pTimelineDM.TimelineAlertCollection.Where(a => a.TimeFromStart >= pTimerDM.TimerDeta.CurrentCombatTime);
+            foreach (var art in artList)
+            {
+                art.Processed = false;
             }
 
             this.CurrentCombatTimer.Start();
@@ -100,7 +107,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 case TimerStatus.Init:
                 case TimerStatus.Stop:
                 case TimerStatus.Pause:
-                    return;
                 case TimerStatus.Run:
                     break;
             }
@@ -152,7 +158,30 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             this.TimerStop(pCommonDM, pTimerDM, pTimelineDM);
 
-            this.TimerStart(pCommonDM, pTimerDM);
+            this.TimerStart(pCommonDM, pTimerDM, pTimelineDM);
+        }
+
+        /// <summary> タイマーを0に巻き戻し、ステータスがRunの場合は再スタートさせます。
+        /// </summary>
+        public void TimerRewind(CommonDataModel pCommonDM, TimerDataModel pTimerDM, TimelineDataModel pTimelineDM)
+        {
+            switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
+            {
+                case TimerStatus.Init:
+                case TimerStatus.Stop:
+                case TimerStatus.Pause:
+                case TimerStatus.Run:
+                    break;
+            }
+
+            var status = pCommonDM.AppStatusData.CurrentCombatTimerStatus;
+
+            this.TimerStop(pCommonDM, pTimerDM, pTimelineDM);
+
+            if (status == TimerStatus.Run)
+            {
+                this.TimerStart(pCommonDM, pTimerDM, pTimelineDM);
+            }
         }
 
         /// <summary> 戦闘時間が進む時の処理を実行します。

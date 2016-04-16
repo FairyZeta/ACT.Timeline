@@ -78,7 +78,9 @@
                     <Label Content="Timeline Edit, Coming soon... Probably it is about May, 2016"/>
                 </TabItem>
                 <TabItem Header="About" Style="{StaticResource BasicTabItemStyle}">
+                    <view:TimelineAboutView />
                 </TabItem>
+                
             </TabControl>
         </Grid>
     </Border>
