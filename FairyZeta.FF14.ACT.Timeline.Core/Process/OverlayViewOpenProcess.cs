@@ -65,6 +65,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// <param name="pOverlayViewComponent"> カスタム対象のオーバーレイコンポーネント </param>
         public void NewOverlayCustomWindowOpen(OverlayViewComponent pOverlayViewComponent)
         {
+            pOverlayViewComponent.OverlayDataModel.OverlayViewData.OverlayCustomClosed = false;
+
             OverlayCustomWindow window = new OverlayCustomWindow();
 
             var vm = window.DataContext as OverlayCustomWindowViewModel;

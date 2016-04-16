@@ -5,12 +5,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
+        xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+        xmlns:behavior="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
         mc:Ignorable="d" 
         Height="630" Width="900" 
         MinHeight="630" MinWidth="900" 
         d:DesignHeight="630" d:DesignWidth="900" 
         Background="Transparent" AllowsTransparency="True" WindowStyle="None"
-        Style="{DynamicResource DefaultWindowStyle}">
+        behavior:WindowCloseAttachedBehavior.Close="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.OverlayCustomClosed}"
+        Style="{DynamicResource DefaultWindowStyle}"
+             d:DataContext="{d:DesignInstance Type=dvm:Desing_OverlayCustomWindowViewModel, IsDesignTimeCreatable=True}">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -41,6 +45,15 @@
             </Grid.RowDefinitions>
             <StackPanel>
                 <Label Content="- Overlay Custom -"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 2 2 0" >
+                <Button Content="r" ToolTip="Close" Foreground="Black"
+                        Command="{Binding OverlayViewComponent.OverlayCustomClosedCommand}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
             <TabControl Grid.Row="1" TabStripPlacement="Left" >
                 <TabItem Header="Generic" Style="{StaticResource BasicTabItemStyle}">

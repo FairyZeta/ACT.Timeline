@@ -6,6 +6,7 @@
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
         xmlns:behavior="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
+        xmlns:core="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
         mc:Ignorable="d" 
         d:DesignHeight="300" d:DesignWidth="800" 
         Background="Transparent"
@@ -37,7 +38,6 @@
                     <Button Margin="5 2" Content="Impont Overlay" IsEnabled="False" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Margin="5 2" Content="Show Timeline Controller"/>
                 </StackPanel>
             </DockPanel>
             <DataGrid x:Name="OverlayListView"  Grid.Row="2" BorderThickness="0" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
@@ -89,10 +89,20 @@
                                                   IsChecked="{Binding OverlayDataModel.OverlayWindowData.WindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   Command="{Binding DataContext.OverlayManageComponent.OverlayViewChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                   CommandParameter="{Binding}"/>
-                                    <ToggleButton Content="Lock" Style="{StaticResource OvarlayControlToggleButton}"
+                                    <ToggleButton Content="Lock"
                                                   IsChecked="{Binding OverlayDataModel.OverlayWindowData.WindowLock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   Command="{Binding DataContext.OverlayManageComponent.OverlayViewLockCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                  CommandParameter="{Binding}"/>
+                                                  CommandParameter="{Binding}">
+                                        <ToggleButton.Style>
+                                            <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource OvarlayControlToggleButton}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.TimelineControl}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ToggleButton.Style>
+                                    </ToggleButton>
                                 </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -115,9 +125,20 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="Custom" Style="{StaticResource OvarlayControlButton}" 
+                                    <Button Content="Custom" 
                                             Command="{Binding DataContext.OverlayManageComponent.OverlayCustomWindoOpenCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding}"/>
+                                            CommandParameter="{Binding}">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource OvarlayControlButton}" >
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.TimelineControl}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        
+                                    </Button>
                                     <Button Content="Export" Style="{StaticResource OvarlayControlButton}" IsEnabled="False"/>
                                     <Button Content="Delete" Style="{StaticResource OvarlayControlButton}"
                                             Command="{Binding DataContext.OverlayManageComponent.OverlayDeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"

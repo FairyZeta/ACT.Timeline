@@ -22,91 +22,72 @@
             <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
 
             <ControlTemplate x:Key="TimelineRewindButton" TargetType="{x:Type Button}">
-                <Grid>    
-                    <Border BorderBrush="{StaticResource BaseColor_Gold1}" BorderThickness="1" CornerRadius="3">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF4F4D4F" Offset="0"/>
-                                <GradientStop Color="#FF313031" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Grid>
-                            <Polyline Points="9,2 5,7 9,12"
-                                      Stroke="#FFCCB077" StrokeThickness="2" />
-                            <Polyline Points="16,2 12,7 16,12"
-                                      Stroke="#FFCCB077" StrokeThickness="2" />
-                        </Grid>
-                    </Border>
-                    <Border Background="#16FFFFFF" BorderThickness="1" CornerRadius="2" Margin="1">
-                        <Border.Style>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                    </Border>
-                </Grid>
+                <Border x:Name="BaseBorder" BorderBrush="{StaticResource BaseColor_Gold1}" BorderThickness="1" CornerRadius="3">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF4F4D4F" Offset="0"/>
+                            <GradientStop Color="#FF313031" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid VerticalAlignment="Center">
+                        <Polyline Points="9,2 5,7 9,12"
+                                    Stroke="#FFCCB077" StrokeThickness="2" />
+                        <Polyline Points="16,2 12,7 16,12"
+                                    Stroke="#FFCCB077" StrokeThickness="2" />
+                    </Grid>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="BaseBorder" Property="Background" Value="#FF777777"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter TargetName="BaseBorder" Property="Background" Value="#FF303030"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
             </ControlTemplate>
             <ControlTemplate x:Key="TimelinePauseButton" TargetType="{x:Type Button}">
-                <Grid>
-                    <Border BorderBrush="{StaticResource BaseColor_Gold1}" BorderThickness="1" CornerRadius="3">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF4F4D4F" Offset="0"/>
-                                <GradientStop Color="#FF313031" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Grid>
-                            <Polygon Points="7,4 7,10 14,10 14,4"
-                                      Stroke="#FFCCB077" Fill="#FFCCB077" StrokeThickness="2" />
-                        </Grid>
-                    </Border>
-                    <Border Background="#16FFFFFF" BorderThickness="1" CornerRadius="2" Margin="1">
-                        <Border.Style>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                    </Border>
-                </Grid>
-
+                <Border x:Name="BaseBorder" BorderBrush="{StaticResource BaseColor_Gold1}" BorderThickness="1" CornerRadius="3">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF4F4D4F" Offset="0"/>
+                            <GradientStop Color="#FF313031" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid VerticalAlignment="Center">
+                        <Polygon Points="7,2 7,8 14,8 14,2"
+                                    Stroke="#FFCCB077" Fill="#FFCCB077" StrokeThickness="2" />
+                    </Grid>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="BaseBorder" Property="Background" Value="#FF777777"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter TargetName="BaseBorder" Property="Background" Value="#FF303030"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
             </ControlTemplate>
             <ControlTemplate x:Key="TimelinePlayButton" TargetType="{x:Type Button}">
-                <Grid>
-                    <Border BorderBrush="{StaticResource BaseColor_Gold1}" BorderThickness="1" CornerRadius="3">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF4F4D4F" Offset="0"/>
-                                <GradientStop Color="#FF313031" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Grid>
-                            <Polygon Points="8,4 8,10 15,7"
-                                      Stroke="#FFCCB077" Fill="#FFCCB077" StrokeThickness="2" />
-                        </Grid>
-                    </Border>
-                    <Border Background="#16FFFFFF" BorderThickness="1" CornerRadius="2" Margin="1">
-                        <Border.Style>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                    </Border>
-                </Grid>
+                <Border x:Name="BaseBorder" BorderBrush="{StaticResource BaseColor_Gold1}" BorderThickness="1" CornerRadius="3">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF4F4D4F" Offset="0"/>
+                            <GradientStop Color="#FF313031" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid VerticalAlignment="Center">
+                        <Polygon Points="8,2 8,8 14,5"
+                                    Stroke="#FFCCB077" Fill="#FFCCB077" StrokeThickness="2" />
+                    </Grid>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="BaseBorder" Property="Background" Value="#FF777777"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter TargetName="BaseBorder" Property="Background" Value="#FF303030"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
 
             </ControlTemplate>
             
@@ -120,11 +101,17 @@
         <StackPanel Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Converter={StaticResource opacityConverter}}">
             <Grid Height="24">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="36"/>
                     <ColumnDefinition />
+                    <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2" VerticalAlignment="Center">
-                    <TextBlock Foreground="{StaticResource BaseColor_Blue1}"
-                               FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}">
+                <Grid Grid.Column="0" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Margin="0 0" Style="{StaticResource OutlineTextBlock}"
+                               FontSize="14" Text="--:--"/>
+
+                    <!--
+                    <TextBlock Margin="0 0" Style="{StaticResource OutlineTextBlock}"
+                               FontSize="14">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0:00}:{1:00;00}">
                                 <Binding Path="TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTimeSpan.Minutes" />
@@ -132,21 +119,27 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-                    <Button Width="24" Margin="5 0"
+                    -->
+                </Grid>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Width="24" Height="18" Margin="5 0"
                             Template="{StaticResource TimelineRewindButton}" ToolTip="Rewind"
+                            IsEnabled="{Binding TimelineComponent.CommonDataModel.AppEnableManageData.TimelineRewindEnabled}"
                             Command="{Binding TimelineComponent.TimerControlCommand}"
                             CommandParameter="Rewind"/>
-                    <Button Width="24" Margin="2 0"
+                    <Button Width="24" Height="18" Margin="2 0"
                             Template="{StaticResource TimelinePauseButton}" ToolTip="Pause"
+                            IsEnabled="{Binding TimelineComponent.CommonDataModel.AppEnableManageData.TimelinePauseEnabled}"
                             Command="{Binding TimelineComponent.TimerControlCommand}"
                             CommandParameter="Pause"/>
-                    <Button Width="24" Margin="2 0"
+                    <Button Width="24" Height="18" Margin="2 0"
                             Template="{StaticResource TimelinePlayButton}" ToolTip="Play"
+                            IsEnabled="{Binding TimelineComponent.CommonDataModel.AppEnableManageData.TimelinePlayEnabled}"
                             Command="{Binding TimelineComponent.TimerControlCommand}"
                             CommandParameter="Start"/>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <Button Content="r" ToolTip="Close"
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Content="r" ToolTip="Close" Margin="3 0"
                             Command="{Binding OverlayViewComponent.OverlayClosedCommand}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">

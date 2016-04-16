@@ -23,6 +23,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> オーバーレイコントロールモジュール
         /// </summary>
         public OverlayControlModule OverlayControlModule { get; set; }
+        /// <summary> オーバーレイ管理モジュール
+        /// </summary>
+        public OverlayManageModule OverlayManageModule { get; set; } 
 
         #region #- [Command] DelegateCommand.OverlayClosedCommand - ＜オーバーレイ終了コマンド＞ -----
         /// <summary> オーバーレイ終了コマンド＜コマンド＞ </summary>
@@ -84,6 +87,28 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
+        #region #- [Command] DelegateCommand.OverlayCustomOpenCommand - ＜オーバーレイカスタムオープンコマンド＞ -----
+        /// <summary> オーバーレイカスタムオープンコマンド＜コマンド＞ </summary>
+        private DelegateCommand _OverlayCustomOpenCommand;
+        /// <summary> オーバーレイカスタムオープンコマンド＜コマンド＞ </summary>
+        public DelegateCommand OverlayCustomOpenCommand
+        {
+            get { return _OverlayCustomOpenCommand = _OverlayCustomOpenCommand ?? new DelegateCommand(this._OverlayCustomOpenExecute, this._CanOverlayCustomOpenExecute); }
+        }
+        #endregion 
+
+
+        #region #- [Command] DelegateCommand.OverlayCustomClosedCommand - ＜オーバーレイカスタム終了コマンド＞ -----
+        /// <summary> オーバーレイカスタム終了コマンド＜コマンド＞ </summary>
+        private DelegateCommand _OverlayCustomClosedCommand;
+        /// <summary> オーバーレイカスタム終了コマンド＜コマンド＞ </summary>
+        public DelegateCommand OverlayCustomClosedCommand
+        {
+            get { return _OverlayCustomClosedCommand = _OverlayCustomClosedCommand ?? new DelegateCommand(this._OverlayCustomClosedExecute); }
+        }
+        #endregion 
+
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイ表示コンポーネント／コンストラクタ
@@ -103,6 +128,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             this.OverlayDataModel = new OverlayDataModel();
             this.OverlayControlModule = new OverlayControlModule();
+            this.OverlayManageModule = new OverlayManageModule();
 
             return true;
         }
@@ -283,6 +309,31 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             }
 
         }
+        #endregion 
+
+        #region #- [Method] CanExecute,Execute @ OverlayCustomOpenCommand - ＜オーバーレイカスタムオープンコマンド＞ -----
+        /// <summary> 実行可能確認＜オーバーレイカスタムオープンコマンド＞ </summary>
+        /// <returns> 実行可能: ture / 実行不可能: false </returns>
+        private bool _CanOverlayCustomOpenExecute()
+        {
+            return true;
+        }
+
+        /// <summary> コマンド実行＜オーバーレイカスタムオープンコマンド＞ </summary>
+        private void _OverlayCustomOpenExecute()
+        {
+            this.OverlayManageModule.ShowCustomWindow(this);
+        }
+        #endregion 
+
+        #region #- [Method] Execute @ OverlayCustomClosedCommand - ＜オーバーレイカスタム終了コマンド＞ -----
+
+        /// <summary> コマンド実行＜オーバーレイカスタム終了コマンド＞ </summary>
+        private void _OverlayCustomClosedExecute()
+        {
+            this.OverlayDataModel.OverlayViewData.OverlayCustomClosed = true;
+        }
+
         #endregion 
     }
 }

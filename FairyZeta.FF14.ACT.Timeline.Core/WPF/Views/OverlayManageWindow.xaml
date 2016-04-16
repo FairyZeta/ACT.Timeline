@@ -6,11 +6,11 @@
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
         xmlns:behavior="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
-        behavior:WindowCloseAttachedBehavior.Close="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.OverlayManageWindowClosed}"
         mc:Ignorable="d" 
         d:DesignHeight="300" d:DesignWidth="800" 
         Background="Transparent" AllowsTransparency="True" WindowStyle="None"
         xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+        behavior:WindowCloseAttachedBehavior.Close="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.OverlayManageWindowClosed}"
         d:DataContext="{d:DesignInstance Type=dData:Desing_OverlayManageWindowViewModel, IsDesignTimeCreatable=True}">
 
     <Window.Resources>

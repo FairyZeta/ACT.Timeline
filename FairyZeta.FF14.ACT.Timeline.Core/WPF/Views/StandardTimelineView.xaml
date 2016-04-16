@@ -158,7 +158,7 @@
                             </Style>
                         </ProgressBar.Style>
                     </ProgressBar>
-                    <TextBlock Text="{Binding ActiveTime,StringFormat=N2}" Style="{StaticResource OutlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding ActiveTime,StringFormat=N1}" Style="{StaticResource OutlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicTypeContentTemplate" >
@@ -192,7 +192,7 @@
             <Grid Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarVisibility, Converter={StaticResource BoolToVisibility}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
-                    <ColumnDefinition  Width="30"/>
+                    <ColumnDefinition  Width="60"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2">
                     <TextBlock Text="[Line-Time] " Foreground="{StaticResource BaseColor_Gold1}"
@@ -216,6 +216,18 @@
                                FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 2 2 0" >
+                    <Button Content="g" ToolTip="Close"
+                            Command="{Binding OverlayViewComponent.OverlayCustomOpenCommand}">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <Button Content="r" ToolTip="Close"
                             Command="{Binding OverlayViewComponent.OverlayClosedCommand}">
                         <Button.Style>

@@ -13,7 +13,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     public class OverlayViewData : _Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
-        
+
+        #region #- [Property] bool.OverlayCustomClosed - ＜オーバーレイカスタムウィンドウを閉じる＞ -----
+        /// <summary> オーバーレイカスタムウィンドウを閉じる </summary>
+        private bool _OverlayCustomClosed;
+        /// <summary> オーバーレイカスタムウィンドウを閉じる </summary>
+        public bool OverlayCustomClosed
+        {
+            get { return this._OverlayCustomClosed; }
+            set
+            {
+                if (this._OverlayCustomClosed == value) return;
+
+                this._OverlayCustomClosed = value;
+                base.OnPropertyChanged("OverlayCustomClosed");
+            }
+        }
+        #endregion
+
         /// <summary> 画面表示されるタイムラインビューソース
         /// </summary>
         public CollectionViewSource TimelineViewSource { get; set; }
