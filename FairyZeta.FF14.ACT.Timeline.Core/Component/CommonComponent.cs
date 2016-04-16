@@ -160,6 +160,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             // プラグイン設定自動セーブ開始
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.PluginSettingAutoSaveEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.NewPluginCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Start();
 
             return true;
@@ -172,7 +173,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             // プラグイン設定自動セーブ終了
             this.AppCommonTimerModule.SecTimer01.Stop();
-            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.PluginSettingAutoSaveEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.NewPluginCheckEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.NewPluginCheckEvent);
 
             return true;
         }
@@ -190,6 +192,21 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.AppCommonModule.PluginSettingsDataSave(this.CommonDataModel.ApplicationData.GetTimelineSettingsFullPath, this.CommonDataModel.PluginSettingsData);
 
         }
+
+        /// <summary> [TimerEvent] プラグインの新バージョンがあるかを確認します。
+        /// </summary>
+        /// <param name="o"> タイマーオブジェクト </param>
+        /// <param name="e"> タイマーイベント </param>
+        public void NewPluginCheckEvent(object o, EventArgs e)
+        {
+            if (this.AppCommonModule.PluginUpdateObjectModel.NewPlugin)
+            {
+                this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.NewPluginCheckEvent);
+                this.AppCommonModule.PluginUpdateObjectModel.DialogOpen();
+            }
+
+        }
+
 
 
         /// <summary> ACT本体に表示されるチェックボックスの値変更コマンド

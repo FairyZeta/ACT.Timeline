@@ -96,7 +96,7 @@ namespace FairyZeta.FF14.ACT.Component
 
                 case "ZipDownload":
                     this.PluginUpdateObjectModel.UpdateStatusData.UpdateDialogResult = UpdateDialogResult.ZipDownload;
-                    var result = Task.Run(() =>  this.PluginUpdateObjectModel.ZipDownloadAsync());
+                    Task.Run(() =>  this.PluginUpdateObjectModel.ZipDownload());
                     
                     break;
             

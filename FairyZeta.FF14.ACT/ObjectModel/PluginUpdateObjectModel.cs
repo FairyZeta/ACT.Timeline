@@ -34,6 +34,10 @@ namespace FairyZeta.FF14.ACT.ObjectModel
         /// </summary>
         public UpdateCheckSettingsData UpdateCheckSettingsData { get; private set; }
 
+        /// <summary> 新しいプラグインを見つけた場合 True
+        /// </summary>
+        public bool NewPlugin { get; private set; }
+
         #endregion
 
         #region --- Logic Object ---
@@ -69,7 +73,7 @@ namespace FairyZeta.FF14.ACT.ObjectModel
 
             this.downloadUnit = new DownloadUnit();
             this.xmlSerializerProcess = new XmlSerializerProcess();
-
+            this.NewPlugin = false;
             return true;
         }
 
@@ -89,13 +93,17 @@ namespace FairyZeta.FF14.ACT.ObjectModel
 
             bool downloadResult = this.downloadUnit.FileDownload(pSettingsData.InfoDonwloadUri, pSettingsData.SaveInfoDirectory, pSettingsData.SaveInfoFileName, Framework.SaveType.OverRide);
             if (!downloadResult)
+            {
                 Console.WriteLine("アップデート確認NG: バージョンファイル取得失敗");
                 return false;
+            }
 
             this.NewPluginVersionInfo = this.xmlSerializerProcess.XmlLoad(Path.Combine(pSettingsData.SaveInfoDirectory, pSettingsData.SaveInfoFileName), typeof(PluginVersionInfo), true) as PluginVersionInfo;
             if (this.NewPluginVersionInfo == null)
+            {
                 Console.WriteLine("アップデート確認NG: シリアライズ失敗");
                 return false;
+            }
 
             Version v = new Version(this.NewPluginVersionInfo.PluginVersion);
             if (pSettingsData.PluginVersion >= v)
@@ -104,16 +112,21 @@ namespace FairyZeta.FF14.ACT.ObjectModel
                 return true;
             }
 
+            this.NewPlugin = true;
+            Console.WriteLine("アップデート確認OK: 最新版あり");
+            return true;
+
+        }
+
+        /// <summary> アップデート確認のダイアログを開きます。
+        /// </summary>
+        public void DialogOpen()
+        {
             UpdateDialogWindow window = new UpdateDialogWindow();
             UpdateDialogWindowViewModel vm = window.DataContext as UpdateDialogWindowViewModel;
             vm.UpdateDialogComponent.PluginUpdateObjectModel = this;
 
             window.Show();
-            
-            Console.WriteLine("アップデート確認OK: 最新版あり");
-            return true;
-
-            // ここから先の処理はDialogComponentに任せる
         }
 
         /// <summary> PluginVersionInfoをシリアル化してセーブします。
@@ -147,7 +160,7 @@ namespace FairyZeta.FF14.ACT.ObjectModel
 
         /// <summary> 自身に格納されている新バージョン情報を参照し、ZIPファイルをダウンロードします。
         /// </summary>
-        public async Task<bool> ZipDownloadAsync()
+        public bool ZipDownload()
         {
             this.UpdateStatusData.ZipDownloadStatus = DownloadStatus.NowDownloading;
 
@@ -159,7 +172,8 @@ namespace FairyZeta.FF14.ACT.ObjectModel
 
             string dName = Path.GetFileName(this.NewPluginVersionInfo.PluginDownloadUri);
 
-            bool downloadResult = await this.downloadUnit.FileDownloadAsync(this.NewPluginVersionInfo.PluginDownloadUri, this.UpdateStatusData.ZipDownloadDirectoryPath, dName, Framework.SaveType.OverRide);
+            bool downloadResult = this.downloadUnit.FileDownload(this.NewPluginVersionInfo.PluginDownloadUri, this.UpdateStatusData.ZipDownloadDirectoryPath, dName, Framework.SaveType.OverRide);
+            //bool downloadResult = this.downloadUnit.FileDownload(this.NewPluginVersionInfo.CheckPluginInfoUri, this.UpdateStatusData.ZipDownloadDirectoryPath, dName, Framework.SaveType.OverRide);
             if (!downloadResult)
             {
                 this.UpdateStatusData.ZipDownloadStatus = DownloadStatus.Failure;

@@ -215,7 +215,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             pCommonDM.PluginVersionInfo.PluginName = "FZ.Timeline";
             pCommonDM.PluginVersionInfo.PluginWebUri = "https://github.com/FairyZeta/ACT.Timeline/releases";
-            pCommonDM.PluginVersionInfo.CheckPluginInfoUri = "https://github.com/FairyZeta/ACT.Timeline/" + pCommonDM.ApplicationData.VersionInfoFileName;
+            pCommonDM.PluginVersionInfo.CheckPluginInfoUri = "https://raw.githubusercontent.com/FairyZeta/ACT.Timeline/master/" + pCommonDM.ApplicationData.VersionInfoFileName;
             pCommonDM.PluginVersionInfo.PluginVersion = name.Version.ToString();
             pCommonDM.PluginVersionInfo.PluginDownloadUri
                 = pCommonDM.PluginVersionInfo.PluginWebUri 
@@ -252,13 +252,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             UpdateCheckSettingsData data = new UpdateCheckSettingsData();
             
             data.PluginVersion = name.Version;
+            //data.PluginVersion = new Version(0,0,0,1);
             data.InfoDonwloadUri = pCommonDM.PluginVersionInfo.CheckPluginInfoUri;
             data.SaveInfoDirectory = pCommonDM.ApplicationData.RoamingDirectoryPath;
             data.SaveInfoFileName = "New" + pCommonDM.ApplicationData.VersionInfoFileName;
             data.SaveZipDirectory = pCommonDM.PluginSettingsData.PluginDllPath + @"\Download";
 
             Task.Run(() => this.PluginUpdateObjectModel.UpdateCheck(data));
-
+            Console.WriteLine("続行");
             return true;
         }
 

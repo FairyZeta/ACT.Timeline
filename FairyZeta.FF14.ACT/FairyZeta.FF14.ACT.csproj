@@ -112,6 +112,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="STATask.cs" />
     <Compile Include="WPF\ViewModels\UpdateDialogWindowViewModel.cs" />
     <Compile Include="WPF\Views\UpdateDialogWindow.xaml.cs">
       <DependentUpon>UpdateDialogWindow.xaml</DependentUpon>
@@ -130,7 +131,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Icon\File064_001.png" />
+    <Resource Include="Resources\Icon\File064_001.png" />
     <EmbeddedResource Include="Resources\Icon\KeyLock016_001.png" />
     <EmbeddedResource Include="Resources\Icon\KeyOpen016_001.png" />
   </ItemGroup>
