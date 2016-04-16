@@ -57,6 +57,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             this.PluginHistoryObjectModel = new PluginHistoryObjectModel();
             this.PluginUpdateObjectModel = new PluginUpdateObjectModel();
             this.xmlSerializerProcess = new XmlSerializerProcess();
+            this.getAssemblyDataProcess = new GetAssemblyDataProcess();
             return true;
         }
 
@@ -191,10 +192,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 pCommonDM.PluginSettingsData.TimelineResourceDirectory = Globals.PluginDllDirectoryPath + @"\timeline";
                 pCommonDM.PluginSettingsData.SoundResourceDirectory = Globals.PluginDllDirectoryPath + @"\wav";
             }
-            else if (!string.IsNullOrWhiteSpace(pCommonDM.PluginSettingsData.PluginDllPath))
+            else if (!string.IsNullOrWhiteSpace(pCommonDM.ApplicationData.PluginDllDirectory))
             {
-                pCommonDM.PluginSettingsData.TimelineResourceDirectory = pCommonDM.PluginSettingsData.PluginDllPath + @"\timeline";
-                pCommonDM.PluginSettingsData.SoundResourceDirectory = pCommonDM.PluginSettingsData.PluginDllPath + @"\wav";
+                pCommonDM.PluginSettingsData.TimelineResourceDirectory = pCommonDM.ApplicationData.PluginDllDirectory + @"\timeline";
+                pCommonDM.PluginSettingsData.SoundResourceDirectory = pCommonDM.ApplicationData.PluginDllDirectory + @"\wav";
             }
             else
             {
@@ -252,14 +253,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             UpdateCheckSettingsData data = new UpdateCheckSettingsData();
             
             data.PluginVersion = name.Version;
-            //data.PluginVersion = new Version(0,0,0,1);
+            pCommonDM.LogDataCollection.Add(
+                Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write(string.Format("PluginVersion: {0}", name.Version)));
             data.InfoDonwloadUri = pCommonDM.PluginVersionInfo.CheckPluginInfoUri;
             data.SaveInfoDirectory = pCommonDM.ApplicationData.RoamingDirectoryPath;
             data.SaveInfoFileName = "New" + pCommonDM.ApplicationData.VersionInfoFileName;
-            data.SaveZipDirectory = pCommonDM.PluginSettingsData.PluginDllPath + @"\Download";
-
+            if (!string.IsNullOrWhiteSpace(pCommonDM.ApplicationData.PluginDllDirectory))
+            {
+                data.SaveZipDirectory = pCommonDM.ApplicationData.PluginDllDirectory + @"\Download";
+            }
+            else
+            {
+                data.SaveZipDirectory = this.getAssemblyDataProcess.GetAssemblyDirectory() + @"\Download";
+            }
             Task.Run(() => this.PluginUpdateObjectModel.UpdateCheck(data));
-            Console.WriteLine("続行");
             return true;
         }
 

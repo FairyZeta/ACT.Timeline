@@ -38,6 +38,12 @@ namespace FairyZeta.FF14.ACT.ObjectModel
         /// </summary>
         public bool NewPlugin { get; private set; }
 
+        /// <summary>
+        /// </summary>
+        public bool UpdateClose { get; set; }
+
+        public bool DialogOpenFLG { get; set; }
+
         #endregion
 
         #region --- Logic Object ---
@@ -74,6 +80,9 @@ namespace FairyZeta.FF14.ACT.ObjectModel
             this.downloadUnit = new DownloadUnit();
             this.xmlSerializerProcess = new XmlSerializerProcess();
             this.NewPlugin = false;
+
+            this.DialogOpenFLG = false;
+            this.UpdateClose = false;
             return true;
         }
 
@@ -88,8 +97,6 @@ namespace FairyZeta.FF14.ACT.ObjectModel
         {
             Console.WriteLine("アップデート確認開始");
             this.UpdateCheckSettingsData = pSettingsData;
-            this.UpdateStatusData.NowPluginVerzion = pSettingsData.PluginVersion;
-            this.UpdateStatusData.ZipDownloadDirectoryPath = pSettingsData.SaveZipDirectory;
 
             bool downloadResult = this.downloadUnit.FileDownload(pSettingsData.InfoDonwloadUri, pSettingsData.SaveInfoDirectory, pSettingsData.SaveInfoFileName, Framework.SaveType.OverRide);
             if (!downloadResult)
@@ -122,10 +129,17 @@ namespace FairyZeta.FF14.ACT.ObjectModel
         /// </summary>
         public void DialogOpen()
         {
+            if (this.DialogOpenFLG)
+                return;
+
             UpdateDialogWindow window = new UpdateDialogWindow();
             UpdateDialogWindowViewModel vm = window.DataContext as UpdateDialogWindowViewModel;
             vm.UpdateDialogComponent.PluginUpdateObjectModel = this;
 
+            window.Topmost = true;
+            window.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+
+            this.DialogOpenFLG = true;
             window.Show();
         }
 
@@ -156,6 +170,8 @@ namespace FairyZeta.FF14.ACT.ObjectModel
             if (this.NewPluginVersionInfo == null)
                 return;
 
+            System.Diagnostics.Process.Start(
+                "EXPLORER.EXE", this.UpdateCheckSettingsData.SaveZipDirectory);
         }
 
         /// <summary> 自身に格納されている新バージョン情報を参照し、ZIPファイルをダウンロードします。
@@ -163,24 +179,32 @@ namespace FairyZeta.FF14.ACT.ObjectModel
         public bool ZipDownload()
         {
             this.UpdateStatusData.ZipDownloadStatus = DownloadStatus.NowDownloading;
+            this.UpdateStatusData.CommandButtonEnabled = false;
 
             if (this.NewPluginVersionInfo == null)
             {
                 this.UpdateStatusData.ZipDownloadStatus = DownloadStatus.Failure;
+                this.UpdateStatusData.CommandButtonEnabled = true;
                 return false;
             }
 
             string dName = Path.GetFileName(this.NewPluginVersionInfo.PluginDownloadUri);
 
-            bool downloadResult = this.downloadUnit.FileDownload(this.NewPluginVersionInfo.PluginDownloadUri, this.UpdateStatusData.ZipDownloadDirectoryPath, dName, Framework.SaveType.OverRide);
-            //bool downloadResult = this.downloadUnit.FileDownload(this.NewPluginVersionInfo.CheckPluginInfoUri, this.UpdateStatusData.ZipDownloadDirectoryPath, dName, Framework.SaveType.OverRide);
+            if (!Directory.Exists(this.UpdateCheckSettingsData.SaveZipDirectory))
+            {
+                Directory.CreateDirectory(this.UpdateCheckSettingsData.SaveZipDirectory);
+            }
+
+            bool downloadResult = this.downloadUnit.FileDownload(this.NewPluginVersionInfo.PluginDownloadUri, this.UpdateCheckSettingsData.SaveZipDirectory, dName, Framework.SaveType.OverRide);
             if (!downloadResult)
             {
                 this.UpdateStatusData.ZipDownloadStatus = DownloadStatus.Failure;
+                this.UpdateStatusData.CommandButtonEnabled = true;
                 return false;
             }
 
             this.UpdateStatusData.ZipDownloadStatus = DownloadStatus.Success;
+            this.UpdateStatusData.CommandButtonEnabled = true;
             return true;
         }
 

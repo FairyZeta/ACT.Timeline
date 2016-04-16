@@ -5,13 +5,14 @@
   <DataBaseVersion>1.0.0.0</DataBaseVersion>
   <PluginDownloadUri>https://github.com/FairyZeta/ACT.Timeline/releases/0.0.1.0/FZ.Timeline-0.0.1.0.zip</PluginDownloadUri>
   <DataBaseDownloadUri />
-  <CheckPluginInfoUri>https://github.com/FairyZeta/ACT.Timeline/VersionInfo.xml</CheckPluginInfoUri>
+  <CheckPluginInfoUri>https://raw.githubusercontent.com/FairyZeta/ACT.Timeline/master/VersionInfo.xml</CheckPluginInfoUri>
   <PluginWebUri>https://github.com/FairyZeta/ACT.Timeline/releases</PluginWebUri>
   <ReleaseDay />
   <Priority />
   <SummaryList>
-    <string>身内テスト版の公開。処理パフォーマンス最低です。</string>
-    <string>一般な方は安定版「1.0.0.0」までお待ち下さい。</string>
+    <string>身内テスト版。一般な方は安定版「1.0.0.0」をお待ち下さい。</string>
+    <string>まともな動きは期待しないで下さい。</string>
+    <string>タイマー激重でガタガタ。チューニング中です。</string>
     <string>PCが爆発しても責任取りません。</string>
   </SummaryList>
   <Msg />

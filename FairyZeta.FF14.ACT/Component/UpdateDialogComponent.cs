@@ -86,12 +86,14 @@ namespace FairyZeta.FF14.ACT.Component
                     this.PluginUpdateObjectModel.UpdateStatusData.UpdateDialogResult = UpdateDialogResult.DirectoryOpen;
                     this.PluginUpdateObjectModel.DirectoryOpen();
                     this.PluginUpdateObjectModel.UpdateStatusData.DialogClosed = true;
+                    this.PluginUpdateObjectModel.UpdateClose = true;
                     break;
 
                 case "WebOpen":
                     this.PluginUpdateObjectModel.UpdateStatusData.UpdateDialogResult = UpdateDialogResult.WebOpen;
                     this.PluginUpdateObjectModel.WebOpen();
                     this.PluginUpdateObjectModel.UpdateStatusData.DialogClosed = true;
+                    this.PluginUpdateObjectModel.UpdateClose = true;
                     break;
 
                 case "ZipDownload":
@@ -104,6 +106,7 @@ namespace FairyZeta.FF14.ACT.Component
                 default:
                     this.PluginUpdateObjectModel.UpdateStatusData.UpdateDialogResult = UpdateDialogResult.Unknown;
                     this.PluginUpdateObjectModel.UpdateStatusData.DialogClosed = true;
+                    this.PluginUpdateObjectModel.UpdateClose = true;
                     break;
             }
         }

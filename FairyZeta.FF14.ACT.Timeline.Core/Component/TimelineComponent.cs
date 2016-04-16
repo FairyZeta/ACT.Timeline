@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Prism.Commands;
+using System.Threading.Tasks;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
 using Advanced_Combat_Tracker;
@@ -191,16 +192,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <param name="logInfo"></param>
         public void ActEvent_OnLogLineRead(bool isImport, LogLineEventArgs logInfo)
         {
-            //if (isImport || timeline == null) return;
+            if (isImport) return;
 
-            string line = logInfo.logLine;
+            Task.Run(() => this.LogAnalyz(logInfo.logLine));
+        }
+
+        /// <summary> ログを解析してジャンプ／シンクの処理を実行します。
+        /// </summary>
+        /// <param name="pLine"></param>
+        public void LogAnalyz(string pLine)
+        {
 
             // ジャンプとシンクの判定
-            this.TimelineLogAnalyzerModule.JumpSyncAnalayz(this.TimelineDataModel, this.TimerDataModel, line);
-            //this.TimelineLogAnalyzerModule.JumpAnalayz(this.TimelineDataModel, this.TimerDataModel, line);
-            //this.TimelineLogAnalyzerModule.SyncAnalayz(this.TimelineDataModel, this.TimerDataModel, line);
+            this.TimelineLogAnalyzerModule.JumpSyncAnalayz(this.TimelineDataModel, this.TimerDataModel, pLine);
 
-            //TimelineAnchor anchor = timeline.FindAnchorMatchingLogline(CurrentTime, logInfo.logLine);
             if (this.TimelineDataModel.SynchroAnchorData != null)
             {
                 // ジャンプ
@@ -232,9 +237,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                         this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
                     }
                 }
-            }
-            //if(this.TimelineDataModel.SyncTargetData != null)
-            {
             }
         }
 

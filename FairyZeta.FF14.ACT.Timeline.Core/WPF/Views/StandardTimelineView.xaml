@@ -28,6 +28,8 @@
             <Style x:Key="ContentSplitter" TargetType="{x:Type GridSplitter}">
             </Style>
             
+            
+            <!-- ヘッダー／番号 -->
             <ControlTemplate x:Key="BasicTimeNoHeaderTemplate" >
                 <Grid>
                     <TextBlock Text="T-No" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
@@ -195,6 +197,9 @@
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2">
                     <TextBlock Text="[Line-Time] " Foreground="{StaticResource BaseColor_Gold1}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
+                    <TextBlock Text="--:--" Foreground="{StaticResource BaseColor_Blue1}"
+                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
+                    <!--
                     <TextBlock Foreground="{StaticResource BaseColor_Blue1}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}">
                         <TextBlock.Text>
@@ -204,6 +209,7 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
+                    -->
                     <TextBlock Text=" / " Foreground="{StaticResource BaseColor_Gold1}"
                                FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
                     <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}" Foreground="{StaticResource BaseColor_Blue1}"

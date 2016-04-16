@@ -8,6 +8,7 @@ using System.Reflection;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Process;
+using FairyZeta.Framework.Process;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {
@@ -26,6 +27,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <summary> ファイル管理プロセス
         /// </summary>
         private AppDataFileManageProcess appDataFileManageProcess;
+
+        private GetAssemblyDataProcess getAssemblyDataProcess;
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -47,6 +50,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             this.appDataConstProcess = new AppDataConstProcess();
             this.appDataPathCreateProcess = new AppDataPathCreateProcess();
             this.appDataFileManageProcess = new AppDataFileManageProcess();
+            this.getAssemblyDataProcess = new GetAssemblyDataProcess();
             return true;
         }
 
@@ -64,12 +68,26 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <summary> タイムラインの各種パスを生成します。
         /// </summary>
         /// <param name="pApplicationData"> パス情報を設定するアプリケーションデータ </param>
-        public void CreateTimelinePath(ApplicationData pApplicationData)
+        public void CreateTimelinePath(CommonDataModel pCommonDM)
         {
             // Roaming
-            pApplicationData.RoamingDirectoryPath = this.appDataPathCreateProcess.CreateRoamingDirectoryPath();
+            pCommonDM.ApplicationData.RoamingDirectoryPath = this.appDataPathCreateProcess.CreateRoamingDirectoryPath();
+            // DLL
+            if(!string.IsNullOrWhiteSpace(Globals.PluginDllDirectoryPath))
+            {
+                pCommonDM.ApplicationData.PluginDllDirectory = Globals.PluginDllDirectoryPath;
+                pCommonDM.LogDataCollection.Add(
+                    Globals.SysLogger.WriteSystemLog.Success.DEBUG.Write(string.Format("DllPath-Globals {0}", Globals.PluginDllDirectoryPath)));
+            }
+            else
+            {
+                pCommonDM.ApplicationData.PluginDllDirectory = getAssemblyDataProcess.GetAssemblyDirectory();
+                pCommonDM.LogDataCollection.Add(
+                    Globals.SysLogger.WriteSystemLog.Success.DEBUG.Write(string.Format("DllPath-Assembly {0}", Globals.PluginDllDirectoryPath)));
+            }
+
             // Overlay
-            this.appDataPathCreateProcess.SetOverlayDirectoryPath(pApplicationData);
+            this.appDataPathCreateProcess.SetOverlayDirectoryPath(pCommonDM.ApplicationData);
 
             return;
         }

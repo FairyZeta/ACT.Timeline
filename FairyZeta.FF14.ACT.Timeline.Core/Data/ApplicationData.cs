@@ -27,7 +27,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// </summary>
         public string VersionInfoFileName { get; set; }
 
-        #endregion 
+        /// <summary> このプラグインDLLまでのディレクトリパス
+        /// </summary>
+        public string PluginDllDirectory { get; set; }
+
+        #endregion
 
         #region --- Path ---
 

@@ -120,14 +120,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
             // --- 初期設定 ---
             this.AppDataCreateModule.AppDataConstSetup(base.CommonDataModel.ApplicationData);
-            this.AppDataCreateModule.CreateTimelinePath(base.CommonDataModel.ApplicationData);
+            this.AppDataCreateModule.CreateTimelinePath(base.CommonDataModel);
             this.AppDataCreateModule.CreateTimelineDirectory(base.CommonDataModel.ApplicationData);
             this.AppDataCreateModule.UpdateDataList(base.CommonDataModel.ApplicationData);
-
-            // --- バージョンアップ管理 ---
-            this.AppCommonModule.CreateVersionInfo(base.CommonDataModel);
-            this.AppCommonModule.VersionInfoSave(base.CommonDataModel);
-            this.AppCommonModule.PluginUpdateCheck(base.CommonDataModel);
 
             // --- プラグイン設定 ---
             var loadSettingData = this.AppCommonModule.PluginSettingsDataLoad(this.CommonDataModel.ApplicationData.GetTimelineSettingsFullPath);
@@ -145,6 +140,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             {
                 this.AppCommonModule.SetDefaultResourceDirectory(this.CommonDataModel);
             }
+
+            // --- バージョンアップ管理 ---
+            this.AppCommonModule.CreateVersionInfo(base.CommonDataModel);
+            this.AppCommonModule.VersionInfoSave(base.CommonDataModel);
+            this.AppCommonModule.PluginUpdateCheck(base.CommonDataModel);
 
             // --- プラグイン画面情報更新 ---
             this.AppCommonModule.CheckTimelineResourceDirectory(this.CommonDataModel);
@@ -199,11 +199,21 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <param name="e"> タイマーイベント </param>
         public void NewPluginCheckEvent(object o, EventArgs e)
         {
-            if (this.AppCommonModule.PluginUpdateObjectModel.NewPlugin)
+            if (!base.CommonDataModel.PluginSettingsData.AutoUpdateChackEnabled)
+            {
+                return;
+            }
+
+            if (this.AppCommonModule.PluginUpdateObjectModel.UpdateClose)
             {
                 this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.NewPluginCheckEvent);
+            }
+            else if (this.AppCommonModule.PluginUpdateObjectModel.NewPlugin)
+            {
+                this.CommonDataModel.PluginSettingsData.LastUpdateCheckTime = DateTime.Now;
                 this.AppCommonModule.PluginUpdateObjectModel.DialogOpen();
             }
+
 
         }
 

@@ -32,10 +32,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
-        /// <summary> このプラグインDLLまでのパス
-        /// </summary>
-        public string PluginDllPath { get; set; }
-
         #region #- [Property] string.TimelineResourceDirectory - ＜タイムラインリソースディレクトリ＞ -----
         /// <summary> タイムラインリソースディレクトリ </summary>
         private string _TimelineResourceDirectory;
@@ -246,6 +242,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] DateTime.LastUpdateCheckTime - ＜最後にアップデートを確認した時間＞ -----
+        /// <summary> 最後にアップデートを確認した時間 </summary>
+        private DateTime _LastUpdateCheckTime;
+        /// <summary> 最後にアップデートを確認した時間 </summary>
+        public DateTime LastUpdateCheckTime
+        {
+            get { return this._LastUpdateCheckTime; }
+            set
+            {
+                if (this._LastUpdateCheckTime == value) return;
+
+                this._LastUpdateCheckTime = value;
+                base.OnPropertyChanged("LastUpdateCheckTime");
+            }
+        }
+        #endregion
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／プラグイン設定データ／コンストラクタ
@@ -288,7 +301,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         {
             this.AllOverlayVisibility = false;
 
-            this.PluginDllPath = string.Empty;
             this.SoundResourceDirectory = string.Empty;
             this.TimelineResourceDirectory = string.Empty;
 

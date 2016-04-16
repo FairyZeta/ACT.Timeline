@@ -5,6 +5,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.WPF.Views"
+        xmlns:act="clr-namespace:FairyZeta.FF14.ACT"
+        xmlns:behavior="clr-namespace:FairyZeta.FF14.ACT.WPF.Behavior"
+        behavior:WindowCloseAttachedBehavior.Close="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.DialogClosed}"
         mc:Ignorable="d" 
         Height="300" Width="450" 
         MinHeight="10" MinWidth="10" 
@@ -42,12 +45,91 @@
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter TargetName="BaseBorder" Property="Background" Value="#FFA9CEF3" />
                     </Trigger>
+                    <DataTrigger Binding="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}" Value="False">
+                        <Setter TargetName="BaseBorder" Property="Background" Value="#DDDDDDDD" />
+                    </DataTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
             
-            <Style x:Key="BasicTabItemStyle" TargetType="{x:Type TabItem}">
-                <Setter Property="Width" Value="100" />
-            </Style>
+            <!-- 初期状態 -->
+            <ControlTemplate x:Key="InitTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="直接ダウンロード" Template="{StaticResource DialogButtonTemplate}" 
+                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
+                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
+                        CommandParameter="ZipDownload"/>
+                    <Button Grid.Column="1" Content="WEBサイトで確認" Template="{StaticResource DialogButtonTemplate}"
+                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
+                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
+                        CommandParameter="WebOpen"/>
+                    <Button Grid.Column="2" Content="閉じる" Template="{StaticResource DialogButtonTemplate}" HorizontalAlignment="Right" Margin="10 0"
+                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
+                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
+                        CommandParameter="Close"/>
+                </Grid>
+            </ControlTemplate>
+
+            <!-- ダウンロード中 -->
+            <ControlTemplate x:Key="NowDownloadingTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="ダウンロード中..." HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="Green"/>
+                    <Button Grid.Column="2" Content="閉じる" Template="{StaticResource DialogButtonTemplate}" HorizontalAlignment="Right" Margin="10 0"
+                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
+                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
+                        CommandParameter="Close"/>
+                </Grid>
+            </ControlTemplate>
+
+            <!-- ダウンロード成功 -->
+            <ControlTemplate x:Key="DownloadSuccessTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="ダウンロード成功" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="Blue"/>
+                    <Button Grid.Column="1" Content="フォルダを開く" Template="{StaticResource DialogButtonTemplate}"
+                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
+                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
+                        CommandParameter="DirectoryOpen"/>
+                    <Button Grid.Column="2" Content="閉じる" Template="{StaticResource DialogButtonTemplate}" HorizontalAlignment="Right" Margin="10 0"
+                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
+                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
+                        CommandParameter="Close"/>
+                </Grid>
+            </ControlTemplate>
+            
+            <!-- ダウンロード失敗 -->
+            <ControlTemplate x:Key="DownloadFailureTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="ダウンロード失敗" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="Red"/>
+                    <Button Grid.Column="1" Content="WEBサイトで確認" Template="{StaticResource DialogButtonTemplate}"
+                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
+                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
+                        CommandParameter="WebOpen"/>
+                    <Button Grid.Column="2" Content="閉じる" Template="{StaticResource DialogButtonTemplate}" HorizontalAlignment="Right" Margin="10 0"
+                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
+                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
+                        CommandParameter="Close"/>
+                </Grid>
+            </ControlTemplate>
+            
         </ResourceDictionary>
         
     </Window.Resources>
@@ -94,7 +176,7 @@
                         <TextBlock Grid.Column="1" Grid.Row="1" Text="Now Version: " Style="{StaticResource VarsionTextBlockStyle}"/>
                         <TextBlock Grid.Column="1" Grid.Row="2" Text="New Version: " Style="{StaticResource VarsionTextBlockStyle}"/>
                     <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding UpdateDialogComponent.PluginUpdateObjectModel.NewPluginVersionInfo.PluginName}" Style="{StaticResource VarsionTextBlockStyle}"/>
-                    <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.NowPluginVerzion}" Style="{StaticResource VarsionTextBlockStyle}"/>
+                    <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateCheckSettingsData.PluginVersion}" Style="{StaticResource VarsionTextBlockStyle}"/>
                     <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding UpdateDialogComponent.PluginUpdateObjectModel.NewPluginVersionInfo.PluginVersion}" Style="{StaticResource VarsionTextBlockStyle}"/>
                 </Grid>
                 <Grid Grid.Row="2" Margin="10 5 10 5">
@@ -114,20 +196,24 @@
                 </Grid>
             </Grid>
             
-            <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <Button Content="直接ダウンロード" Template="{StaticResource DialogButtonTemplate}" 
-                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
-                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
-                        CommandParameter="ZipDownload"/>
-                <Button Content="WEBサイトで確認" Template="{StaticResource DialogButtonTemplate}"
-                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
-                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
-                        CommandParameter="WebOpen"/>
-                <Button Content="閉じる" Template="{StaticResource DialogButtonTemplate}" Margin="30 5 5 5"
-                        IsEnabled="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.CommandButtonEnabled}"
-                        Command="{Binding UpdateDialogComponent.DiarogResultCommand}"
-                        CommandParameter="Close"/>
-            </StackPanel>
+            <UserControl Grid.Row="3">
+                <UserControl.Style>
+                    <Style TargetType="{x:Type UserControl}">
+                        <Setter Property="Template" Value="{StaticResource InitTemplate}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.ZipDownloadStatus}" Value="{x:Static act:DownloadStatus.NowDownloading}">
+                                <Setter Property="Template" Value="{StaticResource NowDownloadingTemplate}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.ZipDownloadStatus}" Value="{x:Static act:DownloadStatus.Success}">
+                                <Setter Property="Template" Value="{StaticResource DownloadSuccessTemplate}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding UpdateDialogComponent.PluginUpdateObjectModel.UpdateStatusData.ZipDownloadStatus}" Value="{x:Static act:DownloadStatus.Failure}">
+                                <Setter Property="Template" Value="{StaticResource DownloadFailureTemplate}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </UserControl.Style>
+            </UserControl>
         </Grid>
     </Border>
     
