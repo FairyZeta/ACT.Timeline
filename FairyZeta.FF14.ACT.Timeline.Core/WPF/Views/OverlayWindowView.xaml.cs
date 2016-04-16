@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Interop;
+using FairyZeta.Framework;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {

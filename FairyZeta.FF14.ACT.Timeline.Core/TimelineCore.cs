@@ -87,24 +87,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 
                 //TimelineAutoLoader = new TimelineAutoLoader(this);
                 //TimelineAutoLoader.Start();
-
-                //Settings = new PluginSettings(this);
-                //Settings.AddStringSetting("TimelineTxtFilePath");
-                //Settings.AddStringSetting("FontString");
-                //Settings.AddIntSetting("TextWidth");
-                //Settings.AddIntSetting("BarWidth");
-                //Settings.AddIntSetting("OpacityPercentage");
-
+                
                 this.SetupTab();
-                Globals.SysLogger.SystemLog.NonState.DEBUG.Write("CreateInjectButton.");
-                this.CreateInjectButton(this.pluginApplicationViewModel.CommonComponent);
+                this.pluginApplicationViewModel = tabPageControl.PluginApplicationView.DataContext as PluginApplicationViewModel;
+                this.pluginApplicationViewModel.ApplicationSetup();
 
-                //Settings.Load();
+                this.CreateInjectButton(this.pluginApplicationViewModel.CommonComponent);
 
                 //SetupUpdateChecker();
 
                 StatusText.Text = "Plugin Started.";
-                Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Plugin Load End.", Globals.ProjectName);
+                Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write("Plugin Load End.", Globals.ProjectName);
             }
             catch (Exception e)
             {
@@ -126,6 +119,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             // ACT本体搭載のチェックボックスを削除
             if (this.pluginApplicationViewModel.CommonComponent.CommonDataModel.FormActMainControlData.ActCheckBox != null)
                 ActGlobals.oFormActMain.Controls.Remove(this.pluginApplicationViewModel.CommonComponent.CommonDataModel.FormActMainControlData.ActCheckBox);
+
+            // コンポーネントの自動処理停止
+            this.pluginApplicationViewModel.ApplicationExit();
 
             //if (TimelineAutoLoader != null)
             //    TimelineAutoLoader.Stop();
@@ -156,7 +152,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             ScreenSpace.Resize += screenSpace_Resize;
             screenSpace_Resize(this, null);
 
-            this.pluginApplicationViewModel = tabPageControl.PluginApplicationView.DataContext as PluginApplicationViewModel;
 
             tabPageControl.Show();
         }
@@ -175,10 +170,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
         /// </summary>
         private void CreateInjectButton(Component.CommonComponent pCommonComponent)
         {
-            Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Start CreateInjectButton.");
+            Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write("Start CreateInjectButton.");
             pCommonComponent.CommonDataModel.FormActMainControlData.ActCheckBox = new CheckBox();
             CheckBox pCheckBox = pCommonComponent.CommonDataModel.FormActMainControlData.ActCheckBox;
-            Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Start CheckBox Setting.");
+            Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write("Start CheckBox Setting.");
             pCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             pCheckBox.Name = "checkBoxShowView";
             pCheckBox.Size = new System.Drawing.Size(90, 24);
@@ -188,14 +183,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             pCheckBox.Checked = pCommonComponent.CommonDataModel.PluginSettingsData.ActCheckBoxValue;
             pCheckBox.CheckedChanged += pCommonComponent.ActCheckBoxCheckedChanged;
 
-            Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Start Resize Setting.");
+            Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write("Start Resize Setting.");
             var formMain = ActGlobals.oFormActMain;
             formMain.Resize += formMain_Resize;
             formMain.Controls.Add(pCheckBox);
             formMain.Controls.SetChildIndex(pCheckBox, 0);
 
             formMain_Resize(this, null);
-            Globals.SysLogger.SystemLog.NonState.DEBUG.Write("End CreateInjectButton.");
+            Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write("End CreateInjectButton.");
         }
 
         /// <summary> チェックボックスリサイズ（配置変更）イベントを登録します。

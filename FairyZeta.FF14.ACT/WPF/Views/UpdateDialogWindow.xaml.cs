@@ -12,17 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Interop;
 
-namespace FairyZeta.FF14.ACT.Timeline.Test.View
+namespace FairyZeta.FF14.ACT.WPF.Views
 {
-    /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
+    /// <summary> UpdateDialogWindow
     /// </summary>
-    public partial class TestWindowView : Window
+    public partial class UpdateDialogWindow : Window
     {
-        public TestWindowView()
+        public UpdateDialogWindow()
         {
             InitializeComponent();
+            this.MouseLeftButtonDown += (sender, e) => this.DragMove();
         }
     }
 }

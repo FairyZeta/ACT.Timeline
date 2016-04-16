@@ -25,7 +25,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         {
             this.initViewModel();
 
-            base.OverlayManageComponent = new Component.OverlayManageComponent(new TimelineComponent(model), model);
             this.createDesingData_P001();
         }
 
@@ -38,6 +37,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         {
             this.model = new DataModel.CommonDataModel();
             model.AppStatusData.AppMode = AppMode.Desing;
+            base.OverlayManageComponent = new Component.OverlayManageComponent(new TimelineComponent(model), model);
+            base.OverlayManageComponent.SetupComponent(false);
 
             return true;
         }

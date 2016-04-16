@@ -91,16 +91,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> タイムライン／共通機能コンポーネント／コンストラクタ
         /// </summary>
         /// <param name="pCommonDataModel"> 共通データモデル </param>
-        /// <param name="pSetupCommonDataFLG"> アプリケーションセットアップを実行する場合 True </param>
-        public CommonComponent(CommonDataModel pCommonDataModel, bool pAppInitSetupFLG)
+        public CommonComponent(CommonDataModel pCommonDataModel)
             : base(pCommonDataModel)
         {
             this.initComponent();
-
-            if(pAppInitSetupFLG)
-            {
-                this.SetupApplication(base.CommonDataModel);
-            }
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -117,20 +111,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             return true;
         }
 
-      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        /// <summary> アプリケーションのセットアップを実行します。
+        /// <summary> コンポーネントのセットアップを実行します。
         /// </summary>
-        /// <param name="pCommonDataModel"> セットアップに使用するアプリケーションデータ </param>
-        public void SetupApplication(CommonDataModel pCommonDataModel)
+        /// <returns> 正常終了時 True </returns>
+        public bool SetupComponent()
         {
-            if (pCommonDataModel == null) return;
+            if (base.CommonDataModel == null) return false;
 
             // --- 初期設定 ---
-            this.AppDataCreateModule.AppDataConstSetup(pCommonDataModel.ApplicationData);
-            this.AppDataCreateModule.CreateTimelinePath(pCommonDataModel.ApplicationData);
-            this.AppDataCreateModule.CreateTimelineDirectory(pCommonDataModel.ApplicationData);
-            this.AppDataCreateModule.UpdateDataList(pCommonDataModel.ApplicationData);
+            this.AppDataCreateModule.AppDataConstSetup(base.CommonDataModel.ApplicationData);
+            this.AppDataCreateModule.CreateTimelinePath(base.CommonDataModel.ApplicationData);
+            this.AppDataCreateModule.CreateTimelineDirectory(base.CommonDataModel.ApplicationData);
+            this.AppDataCreateModule.UpdateDataList(base.CommonDataModel.ApplicationData);
+
+            // --- バージョンアップ管理 ---
+            this.AppCommonModule.CreateVersionInfo(base.CommonDataModel);
+            this.AppCommonModule.VersionInfoSave(base.CommonDataModel);
+            this.AppCommonModule.PluginUpdateCheck(base.CommonDataModel);
 
             // --- プラグイン設定 ---
             var loadSettingData = this.AppCommonModule.PluginSettingsDataLoad(this.CommonDataModel.ApplicationData.GetTimelineSettingsFullPath);
@@ -152,7 +149,35 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             // --- プラグイン画面情報更新 ---
             this.AppCommonModule.CheckTimelineResourceDirectory(this.CommonDataModel);
             this.AppCommonModule.CheckSoundResourceDirectory(this.CommonDataModel);
+
+            return true;
         }
+
+        /// <summary> 自動実行系の処理を開始します。
+        /// </summary>
+        /// <returns> 正常に開始した場合 True </returns>
+        public bool AutoProcessStart()
+        {
+            // プラグイン設定自動セーブ開始
+            this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.PluginSettingAutoSaveEvent);
+            this.AppCommonTimerModule.SecTimer01.Start();
+
+            return true;
+        }
+
+        /// <summary> 自動実行系の処理を終了します。
+        /// </summary>
+        /// <returns> 正常に終了した場合 True </returns>
+        public bool AutoProcessEnd()
+        {
+            // プラグイン設定自動セーブ終了
+            this.AppCommonTimerModule.SecTimer01.Stop();
+            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.PluginSettingAutoSaveEvent);
+
+            return true;
+        }
+
+      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> [TimerEvent] プラグイン設定の自動セーブを実行します。
         /// </summary>
@@ -173,18 +198,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             var chk = sender as System.Windows.Forms.CheckBox;
             this.CommonDataModel.PluginSettingsData.ActCheckBoxValue = chk.Checked;
+            this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = chk.Checked;
 
             this.CommonDataModel.ViewRefresh();
             
             if (chk.Checked)
             {
                 this.CommonDataModel.LogDataCollection.Add(
-                    Globals.SysLogger.ActionLog.Success.INFO.Write("Overlay View Changed: All Visible", Globals.ProjectName));
+                    Globals.SysLogger.WriteActionLog.Success.INFO.Write("Overlay View Changed: All Visible", Globals.ProjectName));
             }
             else
             {
                 this.CommonDataModel.LogDataCollection.Add(
-                    Globals.SysLogger.ActionLog.Success.INFO.Write("Overlay View Changed: All Hide", Globals.ProjectName));
+                    Globals.SysLogger.WriteActionLog.Success.INFO.Write("Overlay View Changed: All Hide", Globals.ProjectName));
             }
         }
 

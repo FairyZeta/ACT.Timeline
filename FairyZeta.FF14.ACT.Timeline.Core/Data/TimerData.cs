@@ -77,9 +77,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatStartTime)); }
         }
 
+        TimeSpan s;
         public TimeSpan CurrentCombatTimeSpan
         {
-            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatTime)); }
+            get 
+            {
+                return s;//new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatTime)); 
+            }
         }
 
         public TimeSpan CurrentCombatEndTimeSpan
@@ -94,6 +98,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         public TimerData()
             : base()
         {
+            s = new TimeSpan(0, 0, 1);
             this.initData();
             this.clear();
         }
@@ -119,6 +124,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             {
                 item.ViewRefresh();
             }
+
+            //await this.CombatTimeChangedRefreshList.Select(async item =>
+            //    {
+            //        item.ViewRefresh();
+            //    }).WhenAll();
 
             Console.WriteLine(string.Format("CurrentTimeChangedRefresh End: {0}", this._CurrentCombatTime));
         }

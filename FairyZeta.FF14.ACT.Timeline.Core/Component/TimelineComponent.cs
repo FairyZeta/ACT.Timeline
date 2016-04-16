@@ -72,39 +72,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             : base(pCommonDataModel)
         {
             this.initComponent();
-
-            // タイマーセットアップ
-            this.TimelineControlModule.TimerSetup();
-            this.TimelineControlModule.CurrentCombatTimer.Tick += new EventHandler(this.TimelineTimerTickEvent);
-            this.TimelineControlModule.AutoLoadTimer.Tick += new EventHandler(this.TimelineAutoLoadEvent);
-
-            // ACTイベント登録
-            if (ActGlobals.oFormActMain != null)
-            {
-                ActGlobals.oFormActMain.OnCombatEnd += ActEvent_CombatEnd;
-                ActGlobals.oFormActMain.OnLogLineRead += ActEvent_OnLogLineRead;
-            }
-
-            // オートロードが有効かつプラグイン起動の場合、オートロード, 無効な場合、最終ロードファイルを読込
-            if (this.CommonDataModel.PluginSettingsData.TimelineAutoLoadEnabled && ActGlobals.oFormActMain != null)
-            {
-                this.TimelineAutoLoadEvent(null, null);
-            }
-            else
-            {
-                this.CommonDataModel.SelectedTimelineFileData = new Data.TimelineFileData() 
-                { 
-                    TimelineFileName = this.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName,
-                    TimelineFileFullPath = System.IO.Path.Combine(this.CommonDataModel.PluginSettingsData.LastLoadTimelineFullPath)
-                };
-                this.TimelineCreateModule.CreateTimelineDataModel(this.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
-                this.CommonDataModel.SelectedTimelineFileData = null;
-            }
-
-            // オートロードタイマースタート
-            this.TimelineControlModule.AutoLoadTimer.Start();
         }
-
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -120,6 +88,79 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.TimelineCreateModule = new TimelineCreateModule();
             this.TimelineControlModule = new TimelineControlModule();
             this.TimelineLogAnalyzerModule = new TimelineLogAnalyzerModule();
+
+            return true;
+        }
+
+        /// <summary> コンポーネントのセットアップを実行します。
+        /// </summary>
+        /// <param name="pLastTimelineLoad"> 最後に読み込んだタイムラインをロードする場合 True </param>
+        /// <returns> 正常終了時 True </returns>
+        public bool SetupComponent(bool pLastTimelineLoad)
+        {
+            if (base.CommonDataModel == null) return false;
+
+            // タイマーセットアップ
+            this.TimelineControlModule.TimerSetup();
+            this.TimelineControlModule.CurrentCombatTimer.Tick += new EventHandler(this.TimelineTimerTickEvent);
+
+            // オートロードが有効かつプラグイン起動の場合、オートロード, 無効な場合、最終ロードファイルを読込
+            if (this.CommonDataModel.PluginSettingsData.TimelineAutoLoadEnabled && ActGlobals.oFormActMain != null)
+            {
+                this.TimelineAutoLoadEvent(null, null);
+            }
+            else
+            {
+                this.CommonDataModel.SelectedTimelineFileData = new Data.TimelineFileData()
+                {
+                    TimelineFileName = this.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName,
+                    TimelineFileFullPath = System.IO.Path.Combine(this.CommonDataModel.PluginSettingsData.LastLoadTimelineFullPath)
+                };
+                this.TimelineCreateModule.CreateTimelineDataModel(this.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
+                this.CommonDataModel.SelectedTimelineFileData = null;
+            }
+
+
+            return true;
+        }
+
+        /// <summary> 自動実行系の処理を開始します。
+        /// </summary>
+        /// <returns> 正常に開始した場合 True </returns>
+        public bool AutoProcessStart()
+        {
+            // ACTイベント登録
+            if (ActGlobals.oFormActMain != null)
+            {
+                ActGlobals.oFormActMain.OnCombatEnd += ActEvent_CombatEnd;
+                ActGlobals.oFormActMain.OnLogLineRead += ActEvent_OnLogLineRead;
+            }
+
+            // タイムラインオートロードタイマー開始
+            this.TimelineControlModule.AutoLoadTimer.Tick += new EventHandler(this.TimelineAutoLoadEvent);
+            this.TimelineControlModule.AutoLoadTimer.Start();
+
+            return true;
+        }
+
+        /// <summary> 自動実行系の処理を終了します。
+        /// </summary>
+        /// <returns> 正常に終了した場合 True </returns>
+        public bool AutoProcessEnd()
+        {
+            // ACTイベント解除
+            if (ActGlobals.oFormActMain != null)
+            {
+                ActGlobals.oFormActMain.OnCombatEnd -= ActEvent_CombatEnd;
+                ActGlobals.oFormActMain.OnLogLineRead -= ActEvent_OnLogLineRead;
+            }
+
+            // タイムラインオートロードタイマー終了
+            this.TimelineControlModule.AutoLoadTimer.Tick -= new EventHandler(this.TimelineAutoLoadEvent);
+            this.TimelineControlModule.AutoLoadTimer.Stop();
+            // 戦闘タイマーの強制終了
+            this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+            this.TimelineControlModule.CurrentCombatTimer.Tick -= new EventHandler(this.TimelineTimerTickEvent);
 
             return true;
         }
@@ -228,7 +269,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                 this.AppCommonModule.CheckTimelineResourceDirectory(this.CommonDataModel);
                 this.AppCommonModule.CheckSoundResourceDirectory(this.CommonDataModel);
 
-                Globals.SysLogger.SystemLog.Success.INFO.Write(string.Format("Timeline AutoLoad Start. ( Zone = {0} )", zonename), Globals.ProjectName);
+                Globals.SysLogger.WriteSystemLog.Success.INFO.Write(string.Format("Timeline AutoLoad Start. ( Zone = {0} )", zonename), Globals.ProjectName);
                 this.CommonDataModel.AppStatusData.AutoLoadStatus = TimelineLoadStatus.NowLoading;
 
                 var file = zonename;
@@ -256,7 +297,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                         }
 
                         this.CommonDataModel.LogDataCollection.Add(
-                            Globals.SysLogger.SystemLog.Success.INFO.Write(string.Format("Timeline AutoLoad Success. ( File = {0} )", findName, Globals.ProjectName)));
+                            Globals.SysLogger.WriteSystemLog.Success.INFO.Write(string.Format("Timeline AutoLoad Success. ( File = {0} )", findName, Globals.ProjectName)));
                         this.CommonDataModel.AppStatusData.AutoLoadStatus = TimelineLoadStatus.Success;
                         this.CommonDataModel.ViewRefresh();
 
@@ -273,9 +314,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                         this.TimelineCreateModule.TimelineDataClear(this.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
 
                         this.CommonDataModel.LogDataCollection.Add(
-                            Globals.SysLogger.SystemLog.Failure.INFO.Write(string.Format("Timeline AutoLoad Failure. File Not Found. ( File = {0} )", findName), Globals.ProjectName));
+                            Globals.SysLogger.WriteSystemLog.Failure.INFO.Write(string.Format("Timeline AutoLoad Failure. File Not Found. ( File = {0} )", findName), Globals.ProjectName));
                         this.CommonDataModel.LogDataCollection.Add(
-                            Globals.SysLogger.SystemLog.Failure.INFO.Write(string.Format("Timeline Unloaded."), Globals.ProjectName));
+                            Globals.SysLogger.WriteSystemLog.Failure.INFO.Write(string.Format("Timeline Unloaded."), Globals.ProjectName));
                         this.CommonDataModel.AppStatusData.AutoLoadStatus = TimelineLoadStatus.NotFoundTimeline;
                         this.CommonDataModel.ViewRefresh();
                     }

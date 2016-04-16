@@ -4,6 +4,8 @@
     /// </summary>
     public enum AppMode
     {
+        /// <summary> 初期セットアップ未済 </summary>
+        NotInitSetup,
         /// <summary> 通常モード </summary>
         Normal,
         /// <summary> デザインモード </summary>

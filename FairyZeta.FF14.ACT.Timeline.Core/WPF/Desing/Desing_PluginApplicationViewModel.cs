@@ -18,9 +18,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
         /// <summary> [デザイン用] プラグインアプリケーションビューモデル／コンストラクタ
         /// </summary>
         public Desing_PluginApplicationViewModel()
-            : base(AppMode.Desing)
+            : base()
         {
             this.initViewModel();
+
+            base.CommonComponent.CommonDataModel.AppStatusData.AppMode = AppMode.Desing;
+            base.ApplicationSetup();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/

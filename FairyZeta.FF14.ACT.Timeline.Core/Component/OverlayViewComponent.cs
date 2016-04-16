@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Prism.Commands;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
+using FairyZeta.Framework;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 {

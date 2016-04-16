@@ -23,11 +23,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             get { return this._AllOverlayVisibility; }
             set
             {
-                if (this._AllOverlayVisibility == value) return;
+                //if (this._AllOverlayVisibility == value) return;
 
                 this._AllOverlayVisibility = value;
                 base.OnPropertyChanged("AllOverlayVisibility");
-                base.SaveChangedTarget = true;
+                //base.SaveChangedTarget = true;
             }
         }
         #endregion

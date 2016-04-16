@@ -21,7 +21,6 @@ namespace FairyZeta.FF14.ACT.Logger.Setting
         /// <summary> ログ出力レベル設定データ </summary>
         public OutputLevelSetting OutputLevelSetting { get; set; }
 
-
       /*--- コンストラクタ --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> コンストラクタ
@@ -48,7 +47,7 @@ namespace FairyZeta.FF14.ACT.Logger.Setting
         public void SetupTextLogger()
         {
             // ファイルパス
-            this.FileLogSetting.FilePath = "./";
+            this.FileLogSetting.LogDictionary = "./";
             // ファイル名
             this.FileLogSetting.FileName = "syslog";
             // ファイル拡張子
@@ -81,7 +80,7 @@ namespace FairyZeta.FF14.ACT.Logger.Setting
         {
             // ログ出力レベル＝全て
             this.OutputLevelSetting.SetOutputLevel(OutputLevelSetting.LevelPreset.All);
-
+            
             this.LogWriter = new TextLogWrite(this.FileLogSetting, this.OutputLevelSetting);
         }
 

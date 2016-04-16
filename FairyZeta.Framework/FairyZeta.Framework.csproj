@@ -61,7 +61,10 @@
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="FontInfo.cs" />
     <Compile Include="Framework.ENUM.cs" />
-    <Compile Include="Module\NetworkModule.cs" />
+    <Compile Include="Process\FileDownloadProcess.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Process\NetworkCheckProcess.cs" />
     <Compile Include="Module\SerializerModule.cs" />
     <Compile Include="Module\_Module.cs" />
     <Compile Include="ObjectModel\RelativeClock.cs" />
@@ -69,6 +72,9 @@
     <Compile Include="Process\XmlSerializerProcess.cs" />
     <Compile Include="Process\_Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unit\DownloadUnit.cs" />
+    <Compile Include="Unit\_Unit.cs" />
+    <Compile Include="WindowsServices.cs" />
     <Compile Include="WPF\Adorner\DragAdorner.cs" />
     <Compile Include="WPF\Controls\_ComboBox\NumericComboBox.cs" />
     <Compile Include="WPF\Controls\_LoadingRing\LoadingArc.cs" />
@@ -97,14 +103,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="WPF\ControlStyle\FF14TemplateButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\ControlStyle\_FF14Base.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\FF14ResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModel\" />
-    <Folder Include="WPF\ControlTemplate\" />
-    <Folder Include="WPF\Style\" />
+    <Folder Include="DataUnion\" />
+    <Folder Include="Data\" />
     <Folder Include="WPF\Trigger\" />
     <Folder Include="WPF\ViewModels\" />
     <Folder Include="WPF\Views\" />

@@ -13,19 +13,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        protected AppMode AppMode;
-
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        /// <summary> [基底] タイムライン／ビューモデル／コンストラクタ
-        /// </summary>
-        public _ViewModels(AppMode pAppMode)
-            : base()
-        {
-            this.AppMode = pAppMode;
-            this.initViewModel();
-        }
-
+        
         /// <summary> [基底] タイムライン／ビューモデル／コンストラクタ
         /// </summary>
         public _ViewModels()

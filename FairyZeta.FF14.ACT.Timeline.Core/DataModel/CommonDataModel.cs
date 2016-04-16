@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Data;
+using FairyZeta.FF14.ACT.Info;
 using FairyZeta.FF14.ACT.Logger.LogData;
 using System.Xml.Serialization;
 
@@ -96,13 +97,30 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             {
                 if (!this.PluginSettingsData.AllOverlayVisibility)
                     return false;
-                if (this.FormActMainControlData.ActCheckBox != null && !this.PluginSettingsData.ActCheckBoxValue)
+                if (!this.PluginSettingsData.ActCheckBoxValue)
                     return false;
 
                 return true;
                 
             }
         }
+
+        #region #- [Property] PluginVersionInfo.PluginVersionInfo - ＜プラグインバージョン情報＞ -----
+        /// <summary> プラグインバージョン情報 </summary>
+        private PluginVersionInfo _PluginVersionInfo;
+        /// <summary> プラグインバージョン情報 </summary>
+        public PluginVersionInfo PluginVersionInfo
+        {
+            get { return this._PluginVersionInfo; }
+            set
+            {
+                if (this._PluginVersionInfo == value) return;
+
+                this._PluginVersionInfo = value;
+                base.OnPropertyChanged("PluginVersionInfo");
+            }
+        }
+        #endregion
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -136,7 +154,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             this.LocationData = new LocationData();
 
             this.FormActMainControlData = new FormActMainControlData();
-
+            this.PluginVersionInfo = new PluginVersionInfo();
             return true;
         }
 

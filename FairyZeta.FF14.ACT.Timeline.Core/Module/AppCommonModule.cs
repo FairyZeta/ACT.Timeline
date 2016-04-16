@@ -4,10 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Reflection;
+using FairyZeta.FF14.ACT.Data;
+using FairyZeta.FF14.ACT.Info;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Process;
 using FairyZeta.Framework.Process;
+using FairyZeta.FF14.ACT.ObjectModel;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {
@@ -16,6 +21,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
     public class AppCommonModule : _Module
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> プラグイン変更履歴管理モジュール
+        /// </summary>
+        public PluginHistoryObjectModel PluginHistoryObjectModel { get; set; }
+        /// <summary> プラグインアップデートオブジェクトモデル
+        /// </summary>
+        public PluginUpdateObjectModel PluginUpdateObjectModel { get; set; }
 
         /// <summary> XMLシリアライズプロセス
         /// </summary>
@@ -42,6 +54,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <returns> 正常終了時 True </returns> 
         private bool initModule()
         {
+            this.PluginHistoryObjectModel = new PluginHistoryObjectModel();
+            this.PluginUpdateObjectModel = new PluginUpdateObjectModel();
             this.xmlSerializerProcess = new XmlSerializerProcess();
             return true;
         }
@@ -189,6 +203,63 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 pCommonDM.PluginSettingsData.TimelineResourceDirectory = path + @"\timeline";
                 pCommonDM.PluginSettingsData.SoundResourceDirectory = path + @"\wav";
             }
+        }
+
+        /// <summary> プラグインバージョン情報を生成します。
+        /// </summary>
+        /// <param name="pCommonDM"> データ格納する共通データモデル </param>
+        public void CreateVersionInfo(CommonDataModel pCommonDM)
+        {
+            var ass = Assembly.GetExecutingAssembly();
+            var name = ass.GetName();
+
+            pCommonDM.PluginVersionInfo.PluginName = "FZ.Timeline";
+            pCommonDM.PluginVersionInfo.PluginWebUri = "https://github.com/FairyZeta/ACT.Timeline/releases";
+            pCommonDM.PluginVersionInfo.CheckPluginInfoUri = "https://github.com/FairyZeta/ACT.Timeline/" + pCommonDM.ApplicationData.VersionInfoFileName;
+            pCommonDM.PluginVersionInfo.PluginVersion = name.Version.ToString();
+            pCommonDM.PluginVersionInfo.PluginDownloadUri
+                = pCommonDM.PluginVersionInfo.PluginWebUri 
+                + string.Format(@"/{0}/{1}-{0}.zip", pCommonDM.PluginVersionInfo.PluginVersion, pCommonDM.PluginVersionInfo.PluginName);
+
+            pCommonDM.PluginVersionInfo.ReleaseDay = string.Empty;
+            pCommonDM.PluginVersionInfo.Priority = string.Empty;
+            pCommonDM.PluginVersionInfo.Msg = string.Empty;
+
+            pCommonDM.PluginVersionInfo.DataBaseVersion = "1.0.0.0";
+            pCommonDM.PluginVersionInfo.DataBaseDownloadUri = string.Empty;
+
+            pCommonDM.PluginVersionInfo.SummaryList = this.PluginHistoryObjectModel.UpdateHistoryDictionary[name.Version];
+        }
+
+        /// <summary> プラグインバージョン情報を保存します。
+        /// </summary>
+        /// <param name="pCommonDM"> 保存情報を格納した共通データモデル </param>
+        public void VersionInfoSave(CommonDataModel pCommonDM)
+        {
+            string path = Path.Combine(pCommonDM.ApplicationData.RoamingDirectoryPath, pCommonDM.ApplicationData.VersionInfoFileName);
+            this.PluginUpdateObjectModel.XmlSave(pCommonDM.PluginVersionInfo, path);
+        }
+
+        /// <summary> プラグインの更新確認を実行します。
+        /// </summary>
+        /// <param name="pCommonDM"> 設定情報を参照する共通データモデル </param>
+        /// <returns> 正常にアップデート確認できた場合 True </returns>
+        public bool PluginUpdateCheck(CommonDataModel pCommonDM)
+        {
+            var ass = Assembly.GetExecutingAssembly();
+            var name = ass.GetName();
+
+            UpdateCheckSettingsData data = new UpdateCheckSettingsData();
+            
+            data.PluginVersion = name.Version;
+            data.InfoDonwloadUri = pCommonDM.PluginVersionInfo.CheckPluginInfoUri;
+            data.SaveInfoDirectory = pCommonDM.ApplicationData.RoamingDirectoryPath;
+            data.SaveInfoFileName = "New" + pCommonDM.ApplicationData.VersionInfoFileName;
+            data.SaveZipDirectory = pCommonDM.PluginSettingsData.PluginDllPath + @"\Download";
+
+            Task.Run(() => this.PluginUpdateObjectModel.UpdateCheck(data));
+
+            return true;
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

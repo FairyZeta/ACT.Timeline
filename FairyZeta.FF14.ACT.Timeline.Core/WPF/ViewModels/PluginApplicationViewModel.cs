@@ -7,6 +7,7 @@ using System.Timers;
 using System.Windows;
 using Advanced_Combat_Tracker;
 using Prism.Commands;
+using FairyZeta.Framework;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
 using FairyZeta.FF14.ACT.Timeline.Core.Component;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
@@ -57,31 +58,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
         
-        /// <summary> タイムライン／プラグインアプリケーションビューモデル／デザイン用コンストラクタ
-        /// </summary>
-        public PluginApplicationViewModel(AppMode pAppMode)
-            : base(pAppMode)
-        {
-            this.initViewModel();
-        }
-
         /// <summary> タイムライン／プラグインアプリケーションビューモデル 
         /// </summary>
         public PluginApplicationViewModel()
             : base()
         {
             this.initViewModel();
-
-            if (Application.Current != null)
-            {
-                Application.Current.Exit += this.ApplicationExitEvent;
-            }
-
-            // アプリケーションタイマー開始
-            this.CommonComponent.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayManageComponent.OverlayAutoSaveEvent);
-            this.CommonComponent.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.CommonComponent.PluginSettingAutoSaveEvent);
-            this.CommonComponent.AppCommonTimerModule.SecTimer01.Start();
-
         }
 
 
@@ -94,33 +76,55 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
         {
             this.CommonDataModel = new CommonDataModel();
 
-            if (base.AppMode == AppMode.Desing)
-                this.CommonDataModel.AppStatusData.AppMode = AppMode.Desing;
-
-            this.CommonComponent = new CommonComponent(this.CommonDataModel, true);
+            this.CommonComponent = new CommonComponent(this.CommonDataModel);
             this.TimelineComponent = new TimelineComponent(this.CommonDataModel);
             this.OverlayManageComponent = new OverlayManageComponent(this.TimelineComponent, this.CommonDataModel);
-
-            this.CommonDataModel.AppStatusData.AppStatus = AppStatus.NormalMode;
-
-            // セットアップ終了
-            this.CommonComponent.CommonDataModel.LogDataCollection.Add(
-                Globals.SysLogger.SystemLog.NonState.DEBUG.Write("Component Setup End."));
 
             return true;
         }
 
-      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        /// <summary> アプリケーション終了時のイベント
+        /// <summary> アプリケーションのセットアップを実行します。
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void ApplicationExitEvent(object sender, ExitEventArgs e)
+        public void ApplicationSetup()
         {
-            // タイマーリセット
-            this.CommonComponent.AppCommonTimerModule.SecTimer01.Stop();
-            this.TimelineComponent.TimelineControlModule.TimerStop(this.TimelineComponent.CommonDataModel, this.TimelineComponent.TimerDataModel, this.TimelineComponent.TimelineDataModel);
+            // セットアップ開始
+            this.CommonComponent.SetupComponent();
+            this.TimelineComponent.SetupComponent(true);
+
+            switch (this.CommonComponent.CommonDataModel.AppStatusData.AppMode)
+            {
+                case AppMode.Desing:
+                    this.OverlayManageComponent.SetupComponent(false);
+                    break;
+                case AppMode.Debug:
+                case AppMode.Normal:
+                case AppMode.NotInitSetup:
+                    this.OverlayManageComponent.SetupComponent(true);
+                    break;
+            }
+
+            // 自動実行系処理の開始
+            if (this.CommonComponent.CommonDataModel.AppStatusData.AppMode != AppMode.Desing)
+            {
+                this.CommonComponent.AutoProcessStart();
+                this.TimelineComponent.AutoProcessStart();
+                this.OverlayManageComponent.AutoProcessStart();
+            }
+
+            // セットアップ終了
+            this.CommonDataModel.AppStatusData.AppStatus = AppStatus.NormalMode;
+            this.CommonComponent.CommonDataModel.LogDataCollection.Add(
+                Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write("App Setup End."));
+        }
+
+        /// <summary> アプリケーションの終了処理を実行します。
+        /// </summary>
+        public void ApplicationExit()
+        {
+            // 自動実行系処理の停止
+            this.CommonComponent.AutoProcessEnd();
+            this.TimelineComponent.AutoProcessEnd();
+            this.OverlayManageComponent.AutoProcessEnd();
 
             // ビューリセット
             foreach (var data in this.OverlayManageComponent.OverlayManageDataModel.OverlayViewComponentCollection)
@@ -128,6 +132,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
                 WindowsServices.WindowCloseSendMessage(data.OverlayDataModel.OverlayWindowData.WindowIntPtr);
             }
         }
+
+      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
         

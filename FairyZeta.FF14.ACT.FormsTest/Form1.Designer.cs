@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.pluginApplicationView1 = new FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.PluginApplicationView();
+            this.pluginApplicationView2 = new FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.PluginApplicationView();
             this.SuspendLayout();
             // 
             // elementHost1
@@ -41,7 +41,7 @@
             this.elementHost1.Size = new System.Drawing.Size(1624, 1493);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.pluginApplicationView1;
+            this.elementHost1.Child = this.pluginApplicationView2;
             // 
             // Form1
             // 
@@ -59,8 +59,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Integration.ElementHost elementHost1;
         private Timeline.Core.WPF.Views.PluginApplicationView pluginApplicationView1;
+        internal System.Windows.Forms.Integration.ElementHost elementHost1;
+        internal Core.WPF.Views.PluginApplicationView pluginApplicationView2;
 
     }
 }

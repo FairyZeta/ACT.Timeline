@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using Prism.Commands;
+using FairyZeta.Framework;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
@@ -65,6 +66,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> オーバーレイ管理モジュール
         /// </summary>
         public OverlayManageModule OverlayManageModule { get; private set; }
+        /// <summary> アプリケーション汎用タイマーモジュールモジュール
+        /// </summary>
+        public AppCommonTimerModule AppCommonTimerModule { get; private set; }
 
         #region #- [Command] DelegateCommand.OverlayManageClosedCommand - ＜オーバーレイ管理終了コマンド＞ -----
         /// <summary> オーバーレイ管理終了コマンド＜コマンド＞ </summary>
@@ -142,12 +146,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             this.TimelineComponent = pComponent;
             this.initComponent();
-
-            // 保存されているオーバーレイをロード
-            this.OverlayManageModule.OverlayDataModelLoad(base.CommonDataModel, this.TimelineComponent, this.OverlayManageDataModel);
-
-            // オーバーレイが0件時に自動作成
-            
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -159,6 +157,67 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             this.OverlayManageDataModel = new OverlayManageDataModel();
             this.OverlayManageModule = new OverlayManageModule();
+            this.AppCommonTimerModule = new AppCommonTimerModule();
+
+            return true;
+        }
+
+        /// <summary> コンポーネントのセットアップを実行します。
+        /// </summary>
+        /// <param name="pAllOverlayOpen"> セットアップ後にビューを表示する場合 True </param>
+        /// <returns> 正常終了時 True </returns>
+        public bool SetupComponent(bool pAllOverlayOpen)
+        {
+            // 保存されているオーバーレイをロードしてセットアップ
+            this.OverlayManageModule.OverlayDataModelLoad(base.CommonDataModel, this.TimelineComponent, this.OverlayManageDataModel);
+
+            // オーバーレイが0件時に自動作成
+            if (this.OverlayManageDataModel.OverlayViewComponentCollection.Count == 0)
+            {
+                OverlayDataModel controlModel = new OverlayDataModel();
+                controlModel.OverlayWindowData.OverlayName = "TimelineControl";
+                controlModel.OverlayWindowData.OverlayType = OverlayType.TimelineControl;
+                this.OverlayManageModule.AddNewOverlay(this.OverlayManageDataModel, controlModel, this.TimelineComponent, base.CommonDataModel);
+
+                OverlayDataModel timelineModel = new OverlayDataModel();
+                timelineModel.OverlayWindowData.OverlayName = "StandardTimeline";
+                timelineModel.OverlayWindowData.OverlayType = OverlayType.StandardTimeline;
+                this.OverlayManageModule.AddNewOverlay(this.OverlayManageDataModel, timelineModel, this.TimelineComponent, base.CommonDataModel);
+
+            }
+
+            // 必要であれば全てオープン
+            if (pAllOverlayOpen)
+            {
+                this.OverlayManageModule.ShowOverlay(this.TimelineComponent, this.OverlayManageDataModel.OverlayViewComponentCollection);
+            }
+
+            return true;
+        }
+
+        /// <summary> 自動実行系の処理を開始します。
+        /// </summary>
+        /// <returns> 正常に開始した場合 True </returns>
+        public bool AutoProcessStart()
+        {
+            // オーバーレイ自動管理の開始
+            this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoSaveEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoHideEvent);
+            this.AppCommonTimerModule.SecTimer01.Start();
+
+            return true;
+        }
+
+        /// <summary> 自動実行系の処理を終了します。
+        /// </summary>
+        /// <returns> 正常に終了した場合 True </returns>
+        public bool AutoProcessEnd()
+        {
+            // オーバーレイ自動管理の終了
+            this.AppCommonTimerModule.SecTimer01.Stop();
+            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoSaveEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoHideEvent);
+
             return true;
         }
 
@@ -182,6 +241,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             }
 
             this.OverlayManageModule.OverlayDataModelSave(this.CommonDataModel.ApplicationData, dataModelList);
+        }
+
+        /// <summary> [TimerEvent] 一時的にオーバーレイを非表示にする必要があるかを判定します。
+        /// </summary>
+        /// <param name="o"> タイマーオブジェクト </param>
+        /// <param name="e"> タイマーイベント </param>
+        public void OverlayAutoHideEvent(object o, EventArgs e)
+        {
+            if (base.CommonDataModel.PluginSettingsData.ActCheckBoxValue)
+            {
+                this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = true;
+            }
+            else
+            {
+                this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = false;
+            }
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

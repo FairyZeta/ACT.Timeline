@@ -15,13 +15,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         #region --- File Name ---
 
-        /// <summary> タイムライン設定データの名前
+        /// <summary> タイムライン設定データのファイル名
         /// </summary>
         public string TimelineSettingsFileName { get; set; }
 
         /// <summary> オーバーレイデータである事を示す名前
         /// </summary>
         public string OverlayDataPartName { get; set; }
+
+        /// <summary> プラグインバージョン管理データのファイル名
+        /// </summary>
+        public string VersionInfoFileName { get; set; }
 
         #endregion 
 

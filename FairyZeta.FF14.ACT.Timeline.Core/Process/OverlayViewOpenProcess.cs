@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Interop;
+using FairyZeta.Framework;
 using FairyZeta.FF14.ACT.Timeline.Core.Component;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels;

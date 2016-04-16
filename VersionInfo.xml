@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<PluginVersionInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PluginName>FZ.Timeline</PluginName>
+  <PluginVersion>0.0.1.0</PluginVersion>
+  <DataBaseVersion>1.0.0.0</DataBaseVersion>
+  <PluginDownloadUri>https://github.com/FairyZeta/ACT.Timeline/releases/0.0.1.0/FZ.Timeline-0.0.1.0.zip</PluginDownloadUri>
+  <DataBaseDownloadUri />
+  <CheckPluginInfoUri>https://github.com/FairyZeta/ACT.Timeline/VersionInfo.xml</CheckPluginInfoUri>
+  <PluginWebUri>https://github.com/FairyZeta/ACT.Timeline/releases</PluginWebUri>
+  <ReleaseDay />
+  <Priority />
+  <SummaryList>
+    <string>身内テスト版の公開。処理パフォーマンス最低です。</string>
+    <string>一般な方は安定版「1.0.0.0」までお待ち下さい。</string>
+    <string>PCが爆発しても責任取りません。</string>
+  </SummaryList>
+  <Msg />
+</PluginVersionInfo>

@@ -11,16 +11,6 @@
              d:DesignHeight="24" d:DesignWidth="150"
              d:DataContext="{d:DesignInstance Type=dData:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}"
              >
-    <UserControl.Style>
-        <Style TargetType="{x:Type UserControl}">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding CommonComponent.CommonDataModel.PluginSettingsData.ActCheckBoxValue}" Value="false">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Style>
 
     <UserControl.Resources>
         <ResourceDictionary>

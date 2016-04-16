@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Prism.Mvvm;
 
 namespace FairyZeta.FF14.ACT.Data
 {
     /// <summary> [基底] ACT／データ
     /// </summary>
-    public abstract class _Data
+    public abstract class _Data : BindableBase
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -17,6 +18,7 @@ namespace FairyZeta.FF14.ACT.Data
         /// <summary> [基底] ACT／データ
         /// </summary>
         public _Data()
+            : base()
         {
             this.initData();
             this.clear();

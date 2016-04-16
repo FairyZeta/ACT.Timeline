@@ -40,13 +40,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.initComponent(pCommondDataModel);
         }
 
-        /// <summary> [基底] タイムライン／コンポーネント／コンストラクタ
-        /// </summary>
-        public _Component()
-        {
-            this.initComponent(null);
-        }
-
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> コンポーネントの初期化を実行します。

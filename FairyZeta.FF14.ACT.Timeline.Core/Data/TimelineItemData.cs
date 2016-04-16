@@ -64,6 +64,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         #endregion
 
 
+        TimeSpan s ;
         /// <summary> (get) アクティビティタイム </summary>
         public TimeSpan ActivityTimeSpan
         {
@@ -343,7 +344,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
-
+        
         /// <summary> OnPropertyChangedを発行し、画面を更新します。
         /// </summary>
         public void ViewRefresh()
@@ -351,8 +352,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             base.OnPropertyChanged("ActiveTime");
             base.OnPropertyChanged("ActiveIndicatorVisibility");
             base.OnPropertyChanged("TimelineVisibility");
-
-            return;
         }
 
         /// <summary> データの全体クリアを実行します。

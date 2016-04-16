@@ -12,11 +12,11 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.OutputSetting
     {
       /*--- プロパティ/フィールド定義 ---------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> ログファイルパス
+        /// <summary> ログ格納ディレクトリ
         /// <para> --- Default Value ---</para>
         /// <para> string = string.Empty;</para>
         /// </summary>
-        public string FilePath { get; set; }
+        public string LogDictionary { get; set; }
 
         /// <summary> ログファイル名（拡張子を除く）
         /// <para> --- Default Value ---</para>
@@ -43,12 +43,19 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.OutputSetting
         /// </summary>
         public string FileNameDateFormat { get; set; }
 
+        /// <summary> ログ保存期間
+        /// <para> デフォルトで7日間 </para>
+        /// </summary>
+        public int LogPreserveDay { get; set; }
+
       /*--- コンストラクタ --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         public FileLogSetting()
             :base()
         {
             this.InitData();
+
+            this.LogPreserveDay = 7;
         }
 
       /*--- メソッド：Public ------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -57,7 +64,7 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.OutputSetting
         /// </summary>
         public void InitData()
         {
-            this.FilePath = string.Empty;
+            this.LogDictionary = string.Empty;
             this.FileName = string.Empty;
             this.FileExtension = string.Empty;
             this.AddFileNameDate = false;

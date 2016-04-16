@@ -84,7 +84,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             }
             catch (Exception e)
             {
-                pCommonDM.LogDataCollection.Add(Globals.ErrLogger.SystemLog.Failure.ERROR.Write(e.Message));
+                pCommonDM.LogDataCollection.Add(Globals.SysLogger.WriteSystemLog.Failure.ERROR.Write(e.Message,Globals.ProjectName));
+                Globals.ErrLogger.WriteStackTrace(e);
                 pCommonDM.AppCommonData.TimelineLoadErrorMsg = "LoadError: " + e.Message;
                 pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.Failure;
                 this.TimelineFunctionEnabledChange(pCommonDM);

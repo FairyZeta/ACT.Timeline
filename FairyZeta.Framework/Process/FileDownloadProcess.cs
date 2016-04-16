@@ -7,90 +7,50 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.IO;
 
-namespace FairyZeta.Framework.Module
+namespace FairyZeta.Framework.Process
 {
-    /// <summary> FZ／ネットワークモジュール
-    /// <para> => ローカルおよびインターネットの接続確認や特定URLへ接続の可否など、総合的にネットワークを管理します。 </para>
+    /// <summary> FZ／ファイルダウンロードプロセス
     /// </summary>
-    public class NetworkModule : _Module
+    public class FileDownloadProcess : _Process
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        /// <summary> FZ／ネットワークモジュール／コンストラクタ
+        
+        /// <summary> FZ／ファイルダウンロードプロセス／コンストラクタ
         /// </summary>
-        public NetworkModule()
-            :base()
+        public FileDownloadProcess()
+            : base()
         {
-            this.initModule();
+            this.initProcess();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> モジュールの初期化を実行します。
+        /// <summary> プロセスの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
-        private bool initModule()
+        private bool initProcess()
         {
             return true;
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> ネットワークが有効であるかを確認します。
-        /// <para> -> 有効であればTrue, 無効であればFalseを返却します。 </para>
+        /// <summary> ファイルをインターネット上からダウンロードし、保存します。
+        /// <para> -> ダウンロードから保存まで成功した場合は True、失敗した場合は False を返却します。</para>
+        /// <para> #- 指定パスまでのフォルダが存在しない場合は、作成します。 </para>
+        /// <para> #- 保存の方法は SaveType の引数で指定します。 </para>
         /// </summary>
-        /// <returns> 有効:True / 無効:False </returns>
-        public bool GetIsNetworkAvailable()
-        {
-            return NetworkInterface.GetIsNetworkAvailable();
-        }
-
-        /// <summary> 指定のURIへ接続可能かを確認します。
-        /// <para> -> 接続接続可能であればTrue, 不可能であればFalseを返却します。</para>
-        /// </summary>
-        /// <param name="stringURI"> string: 接続を確認したいURIの文字列を指定します。 </param>
+        /// <param name="stringURI"> string: ダウンロード先のURIを文字列で指定します。 </param>
+        /// <param name="SavePath"> string: 保存パスを指定します。 [!]ファイル名は含めません。 </param>
+        /// <param name="SaveFileName"> string: セーブするファイル名を指定します。</param>
+        /// <param name="saveType"> SaveType: 保存の方法を指定します。</param>
         /// <returns></returns>
-        public bool CheckWebResponse(string stringURI)
+        public Task<bool> FileDownloadAsync(string stringURI, string SavePath, string SaveFileName, SaveType saveType)
         {
-            return this.CheckWebResponse(new Uri(stringURI));
+            return new Task<bool>( () => this.FileDownload(new Uri(stringURI), SavePath, SaveFileName, saveType));
         }
-
-        /// <summary> 指定のURIへ接続可能かを確認します。
-        /// <para> -> 接続接続可能であればTrue, 不可能であればFalseを返却します。</para>
-        /// </summary>
-        /// <param name="uri"> Uri: 接続を確認したいURIを指定します。 </param>
-        /// <returns></returns>
-        public bool CheckWebResponse(Uri uri)
-        {
-            HttpWebRequest webreq = null;
-            HttpWebResponse webres = null;
-            try
-            {
-                //HttpWebRequestの作成
-                webreq = (HttpWebRequest)WebRequest.Create(uri);
-                //メソッドをHEADにする
-                webreq.Method = "HEAD";
-                //受信する
-                webres = (HttpWebResponse)webreq.GetResponse();
-                //応答ステータスコードを表示
-                //Console.WriteLine(webres.StatusCode);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-            finally
-            {
-                if (webres != null)
-                {
-                    webres.Close();
-                }
-            }
-        }
-
         /// <summary> ファイルをインターネット上からダウンロードし、保存します。
         /// <para> -> ダウンロードから保存まで成功した場合は True、失敗した場合は False を返却します。</para>
         /// <para> #- 指定パスまでのフォルダが存在しない場合は、作成します。 </para>
@@ -103,9 +63,23 @@ namespace FairyZeta.Framework.Module
         /// <returns></returns>
         public bool FileDownload(string stringURI, string SavePath, string SaveFileName, SaveType saveType)
         {
-            return this.FileDownload(new Uri(stringURI), SavePath,SaveFileName, saveType);
+            return this.FileDownload(new Uri(stringURI), SavePath, SaveFileName, saveType);
         }
-
+        
+        /// <summary> ファイルをインターネット上からダウンロードし、保存します。
+        /// <para> -> ダウンロードから保存まで成功した場合は True、失敗した場合は False を返却します。</para>
+        /// <para> #- 指定パスまでのフォルダが存在しない場合は、作成します。 </para>
+        /// <para> #- 保存の方法は SaveType の引数で指定します。 </para>
+        /// </summary>
+        /// <param name="uri"> Uri: ダウンロード先のURIを指定します。 </param>
+        /// <param name="SavePath"> string: 保存パスを指定します。 [!]ファイル名は含めません。</param>
+        /// <param name="SaveFileName"> string: セーブするファイル名を指定します。</param>
+        /// <param name="saveType"> SaveType: 保存の方法を指定します。</param>
+        /// <returns></returns>
+        public Task<bool> FileDownloadAsync(Uri uri, string SavePath, string SaveFileName, SaveType saveType)
+        {
+            return new Task<bool>(() => this.FileDownload(uri, SavePath, SaveFileName, saveType));
+        }
         /// <summary> ファイルをインターネット上からダウンロードし、保存します。
         /// <para> -> ダウンロードから保存まで成功した場合は True、失敗した場合は False を返却します。</para>
         /// <para> #- 指定パスまでのフォルダが存在しない場合は、作成します。 </para>
@@ -127,14 +101,14 @@ namespace FairyZeta.Framework.Module
                     SavePath += "/";
                 }
 
-                if(!Directory.Exists(SavePath))
+                if (!Directory.Exists(SavePath))
                 {
                     Directory.CreateDirectory(SavePath);
                 }
 
                 if (File.Exists(SavePath + SaveFileName))
                 {
-                    switch(saveType)
+                    switch (saveType)
                     {
                         case SaveType.NewFile:
                             return false;
@@ -148,15 +122,16 @@ namespace FairyZeta.Framework.Module
 
                 return true;
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                throw e;
             }
             finally
             {
 
             }
         }
+
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
     }

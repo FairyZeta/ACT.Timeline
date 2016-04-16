@@ -155,7 +155,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             if (Globals._SysLogger == null)
             {
                 Globals._SysLogger = new FF14.ACT.Logger.ActLogger();
-                Globals._SysLogger.Setting.FileLogSetting.FilePath = Globals.PluginDllDirectoryPath + "/Log/System";
+                Globals._SysLogger.Setting.FileLogSetting.LogDictionary = Globals.PluginDllDirectoryPath + "/Log/System";
                 Globals._SysLogger.Setting.FileLogSetting.FileName = "SysLog";
                 Globals._SysLogger.Setting.FileLogSetting.FileExtension = ".txt";
                 Globals._SysLogger.Setting.FileLogSetting.AddFileNameDate = true;
@@ -166,7 +166,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             if (Globals._ErrLogger == null)
             {
                 Globals._ErrLogger = new FF14.ACT.Logger.ActLogger();
-                Globals._ErrLogger.Setting.FileLogSetting.FilePath = Globals.PluginDllDirectoryPath + "/Log/Error";
+                Globals._ErrLogger.Setting.FileLogSetting.LogDictionary = Globals.PluginDllDirectoryPath + "/Log/Error";
                 Globals._ErrLogger.Setting.FileLogSetting.FileName = "ErrorLog";
                 Globals._ErrLogger.Setting.FileLogSetting.FileExtension = ".txt";
                 Globals._ErrLogger.Setting.FileLogSetting.AddFileNameDate = true;

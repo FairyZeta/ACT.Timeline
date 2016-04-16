@@ -16,7 +16,7 @@
         Left="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLeft, Mode=TwoWay}"
              d:DataContext="{d:DesignInstance Type=dvm:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}"
              >
-        
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -32,6 +32,9 @@
     <Window.Style>
         <Style TargetType="{x:Type Window}" BasedOn="{StaticResource DefaultWindowStyle}">
             <Style.Triggers>
+                <DataTrigger Binding="{Binding OverlayViewComponent.CommonDataModel.PluginSettingsData.AllOverlayVisibility}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
             </Style.Triggers>
         </Style>
     </Window.Style>

@@ -20,7 +20,7 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.Writer
         /// <summary> ログファイルの出力設定データ
         /// </summary>
         public OutputLevelSetting OutputLevelSetting { get; set; }
-        /// <summary> ログ出力のレベル
+        /// <summary> ログ出力の設定
         /// </summary>
         public FileLogSetting FileLogSetting { get; set; }
         /// <summary> ログファイルのエンコード
@@ -53,12 +53,12 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.Writer
             {
                 string dateString = "_" + this.writerCreationTime.ToString(this.FileLogSetting.FileNameDateFormat);
                 this.logWritePath = Path.Combine(
-                    this.FileLogSetting.FilePath, this.FileLogSetting.FileName + dateString + this.FileLogSetting.FileExtension);
+                    this.FileLogSetting.LogDictionary, this.FileLogSetting.FileName + dateString + this.FileLogSetting.FileExtension);
             }
             else
             {
                 this.logWritePath = Path.Combine(
-                    this.FileLogSetting.FilePath, this.FileLogSetting.FileName + this.FileLogSetting.FileExtension);
+                    this.FileLogSetting.LogDictionary, this.FileLogSetting.FileName + this.FileLogSetting.FileExtension);
             }
         }
 
@@ -76,9 +76,9 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.Writer
             }
 
             // ログフォルダが存在するかどうか確認
-            if (!Directory.Exists(this.FileLogSetting.FilePath))
+            if (!Directory.Exists(this.FileLogSetting.LogDictionary))
             {
-                Directory.CreateDirectory(this.FileLogSetting.FilePath);
+                Directory.CreateDirectory(this.FileLogSetting.LogDictionary);
             }
 
             // 日付が変わっていた場合、ファイル名をリネームする
@@ -90,12 +90,12 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.Writer
                 {
                     string dateString = "_" + this.writerCreationTime.ToString(this.FileLogSetting.FileNameDateFormat);
                     this.logWritePath = Path.Combine(
-                        this.FileLogSetting.FilePath, this.FileLogSetting.FileName + dateString + this.FileLogSetting.FileExtension);
+                        this.FileLogSetting.LogDictionary, this.FileLogSetting.FileName + dateString + this.FileLogSetting.FileExtension);
                 }
                 else
                 {
                     this.logWritePath = Path.Combine(
-                        this.FileLogSetting.FilePath, this.FileLogSetting.FileName + this.FileLogSetting.FileExtension);
+                        this.FileLogSetting.LogDictionary, this.FileLogSetting.FileName + this.FileLogSetting.FileExtension);
                 }
             }
 
@@ -129,9 +129,9 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.Writer
         public void Write_StackTrace(Exception ex, int rank = 0)
         {
             // ログフォルダが存在するかどうか確認
-            if (!Directory.Exists(this.FileLogSetting.FilePath))
+            if (!Directory.Exists(this.FileLogSetting.LogDictionary))
             {
-                Directory.CreateDirectory(this.FileLogSetting.FilePath);
+                Directory.CreateDirectory(this.FileLogSetting.LogDictionary);
             }
 
             // ログの書き込みを実行

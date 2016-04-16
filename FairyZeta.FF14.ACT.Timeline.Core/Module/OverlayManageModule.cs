@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.IO;
+using FairyZeta.Framework;
 using FairyZeta.Framework.Process;
 using FairyZeta.FF14.ACT.Timeline.Core.Component;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
@@ -88,7 +89,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
 
-            this.ShowOverlay(pTimelineComponent, component);
         }
 
         /// <summary> 保存されているオーバーレイを全てロードします。
@@ -111,9 +111,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
 
                 pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
-
-                this.ShowOverlay(pTimelineComponent, component);
-
             }
         }
 
@@ -133,6 +130,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             pOverlayViewComponent = null;
         }
 
+        /// <summary> オーバーレイを全て表示します。
+        /// </summary>
+        /// <param name="pTimelineComponent"> オーバーレイに搭載するタイムラインコンポーネント </param>
+        /// <param name="pOverlayViewList"> 表示するオーバーレイのリスト(IF) </param>
+        public void ShowOverlay(TimelineComponent pTimelineComponent, IList<OverlayViewComponent> pOverlayViewList)
+        {
+            foreach (var overlay in pOverlayViewList)
+            {
+                this.ShowOverlay(pTimelineComponent, overlay);
+            }
+
+        }
         /// <summary> オーバーレイを表示します。
         /// </summary>
         /// <param name="pTimelineComponent"> タイムラインコンポーネント </param>

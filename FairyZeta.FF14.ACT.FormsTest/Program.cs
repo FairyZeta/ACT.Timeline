@@ -16,7 +16,9 @@ namespace FairyZeta.FF14.ACT.Timeline.FormsTest
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Application.Run(new Form1());
+
         }
     }
 }
