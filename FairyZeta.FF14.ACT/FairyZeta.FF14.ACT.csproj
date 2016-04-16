@@ -55,14 +55,21 @@
     <Compile Include="CachedSoundPlayer.cs" />
     <Compile Include="Component\UpdateDialogComponent.cs" />
     <Compile Include="Component\_Compoent.cs" />
-    <Compile Include="Data\UpdateCheckSettingsData.cs" />
+    <Compile Include="Data\UpdateCheckSettingsData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\UpdateStatusData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Module\UpdateCheckModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ObjectModel\PluginUpdateObjectModel.cs" />
     <Compile Include="DataModel\TimerSetDataModel.cs" />
     <Compile Include="DataModel\_DataModel.cs" />
     <Compile Include="Data\AlertSoundData.cs" />
     <Compile Include="Data\AlertTtsData.cs" />
     <Compile Include="Data\LocationData.cs" />
-    <Compile Include="Data\UpdateStatusData.cs" />
     <Compile Include="Info\PluginVersionInfo.cs" />
     <Compile Include="Data\_Data.cs" />
     <Compile Include="IAlertSoundIO.cs" />
@@ -101,7 +108,6 @@
     <Compile Include="Module\ActiveWindowCheckModule.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Module\UpdateCheckModule.cs" />
     <Compile Include="Process\LogAnalyzerProcess.cs" />
     <Compile Include="Module\_Module.cs" />
     <Compile Include="Process\ActTimerProcess.cs">
