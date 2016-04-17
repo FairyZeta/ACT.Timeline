@@ -97,14 +97,14 @@ namespace FairyZeta.Framework.Process
                 //HttpWebRequestの作成
                 webreq = (HttpWebRequest)WebRequest.Create(uri);
                 //メソッドをHEADにする
-                webreq.Method = "HEAD";
+                webreq.Method = "GET";
                 //受信する
                 webres = (HttpWebResponse)webreq.GetResponse();
                 //応答ステータスコードを表示
-                //Console.WriteLine(webres.StatusCode);
+                Console.WriteLine(webres.StatusCode);
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
