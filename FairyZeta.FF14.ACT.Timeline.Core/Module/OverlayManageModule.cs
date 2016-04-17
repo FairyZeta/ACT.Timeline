@@ -337,10 +337,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         public void SetDefaultOverlayWindowData(OverlayWindowData pWindowData)
         {
-            pWindowData.WindowTop = 10;
-            pWindowData.WindowLeft = 10;
-            pWindowData.WindowWidth = 300;
-            pWindowData.WindowHeight = 300;
+            pWindowData.WindowTop = 100;
+            pWindowData.WindowLeft = 100;
+            pWindowData.WindowWidth = 380;
+            pWindowData.WindowHeight = 150;
         }
 
         public void SetDefaultOverlaySettingData(OverlayOptionData pOptionData)

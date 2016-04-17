@@ -212,7 +212,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.JobWidth = 70;
             this.TankModeWidth = 50;
             this.ActionWidth = 150;
-            this.ActiveWidth = 120;
+            this.ActiveWidth = 170;
             this.AlertWidth = 30;
             this.JumpWidth = 30;
 

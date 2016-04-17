@@ -208,13 +208,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         private bool clear()
         {
             this.TimeNoVisibility = true;
-            this.ActionTimeVisibility = true;
-            this.TypeVisibility = true;
+            this.ActionTimeVisibility = false;
+            this.TypeVisibility = false;
             this.JobVisibility = false;
-            this.TankModeVisibility = true;
+            this.TankModeVisibility = false;
             this.ActionVisibility = true;
             this.ActiveVisibility = true;
-            this.AlertVisibility = true;
+            this.AlertVisibility = false;
             this.JumpVisibility = false;
 
             return true;

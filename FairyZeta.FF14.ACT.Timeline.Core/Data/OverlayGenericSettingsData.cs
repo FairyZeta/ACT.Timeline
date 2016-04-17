@@ -188,9 +188,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
-            this.TitleBarFontSize = 12.0;
-            this.HeaderFontSize = 12.0;
-            this.ContentFontSize = 12.0;
+            this.TitleBarFontSize = 14.0;
+            this.HeaderFontSize = 14.0;
+            this.ContentFontSize = 14.0;
             this.ContentOpacity = 0;
             this.BackgroundOpacity = 60;
 
