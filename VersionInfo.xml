@@ -3,7 +3,7 @@
   <PluginName>FZ.Timeline</PluginName>
   <PluginVersion>0.0.1.0</PluginVersion>
   <DataBaseVersion>1.0.0.0</DataBaseVersion>
-  <PluginDownloadUri>https://github.com/FairyZeta/ACT.Timeline/releases/0.0.1.0/FZ.Timeline-0.0.1.0.zip</PluginDownloadUri>
+  <PluginDownloadUri>https://github.com/FairyZeta/ACT.Timeline/releases/download/0.0.1.0/FZ.Timeline-0.0.1.0.zip</PluginDownloadUri>
   <DataBaseDownloadUri />
   <CheckPluginInfoUri>https://raw.githubusercontent.com/FairyZeta/ACT.Timeline/master/VersionInfo.xml</CheckPluginInfoUri>
   <PluginWebUri>https://github.com/FairyZeta/ACT.Timeline/releases</PluginWebUri>
