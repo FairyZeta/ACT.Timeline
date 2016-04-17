@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:custom="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Custom"
              xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
              xmlns:fControl="clr-namespace:FairyZeta.Framework.Controls;assembly=FairyZeta.Framework"
+             xmlns:fBehaviors="clr-namespace:FairyZeta.Framework.WPF.Behaviors;assembly=FairyZeta.Framework"
              xmlns:converter="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800"
@@ -17,22 +19,22 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <converter:OpacityConverter x:Key="opacityConverter"/>
             <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
-            
+
             <Style x:Key="HeaderText" TargetType="{x:Type TextBlock}"/>
             <Style x:Key="HeaderSplitter" TargetType="{x:Type GridSplitter}">
                 <Setter Property="Width" Value="1"/>
             </Style>
             <Style x:Key="ContentSplitter" TargetType="{x:Type GridSplitter}">
             </Style>
-            
-            
+
+
             <!-- ヘッダー／番号 -->
             <ControlTemplate x:Key="BasicTimeNoHeaderTemplate" >
                 <Grid>
-                    <TextBlock Text="T-No" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                    <TextBlock Text="T-No" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicActionTimeHeaderTemplate" >
@@ -41,22 +43,22 @@
                         <ColumnDefinition Width="1"/>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Time" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                    <TextBlock Text="Time" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicAlertHeaderTemplate" >
                 <Grid>
-                    <TextBlock Text="Alt" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                    <TextBlock Text="Alt" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicActionHeaderTemplate" >
-                <Grid Margin="20 0 0 0">
-                    <TextBlock Text="Action" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                <Grid>
+                    <TextBlock Text="Action" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicActiveHeaderTemplate" >
                 <Grid>
-                    <TextBlock Text="Active" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                    <TextBlock Text="Active" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicTypeHeaderTemplate" >
@@ -65,12 +67,12 @@
                         <ColumnDefinition Width="1"/>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Type" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                    <TextBlock Text="Type" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicJobHeaderTemplate" >
                 <Grid>
-                    <TextBlock Text="Job" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                    <TextBlock Text="Job" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicJumpHeaderTemplate" >
@@ -79,10 +81,91 @@
                         <ColumnDefinition Width="1"/>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Jump" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" />
+                    <TextBlock Text="Jump" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
 
+
+            <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill" EndPoint="1,0" StartPoint="0,0">
+                <GradientStop Color="#00FFFFFF" Offset="0"/>
+                <GradientStop Color="#60FFFFFF" Offset="0.4"/>
+                <GradientStop Color="#60FFFFFF" Offset="0.6"/>
+                <GradientStop Color="#00FFFFFF" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ActiveForeground" EndPoint="0.0,0.5" StartPoint="1.0,0.5">
+                <GradientStop Color="#FF8EFC21" Offset="1"/>
+                <GradientStop Color="#FFE9AF10" Offset="0.515"/>
+                <GradientStop Color="#FF770E17" Offset="0.128"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="DurationForeground" EndPoint="0.0,0.5" StartPoint="1.0,0.5">
+                <GradientStop Color="#FFE9AF10" Offset="0.515"/>
+                <GradientStop Color="#FF770E17" Offset="0.128"/>
+                <GradientStop Color="#FF6C98F5" Offset="1"/>
+            </LinearGradientBrush>
+            <Style x:Key="ActiveBasicProgressBarStyle" TargetType="{x:Type ProgressBar}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ProgressBar}">
+                            <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true">
+                                <Rectangle Fill="{TemplateBinding Background}" RadiusY="0" RadiusX="0"/>
+
+                                <Rectangle x:Name="PART_Track" Margin="1"/>
+                                <Decorator x:Name="PART_Indicator" HorizontalAlignment="Left" Margin="1">
+                                    <Grid x:Name="Foreground">
+                                        <Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}"/>
+                                        <Grid x:Name="Animation" ClipToBounds="true">
+                                            <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="0"/>
+                                        </Grid>
+
+                                    </Grid>
+                                </Decorator>
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="LayoutTransform" TargetName="TemplateRoot">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="DurationBasicProgressBarStyle" TargetType="{x:Type ProgressBar}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ProgressBar}">
+                            <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true">
+                                <Rectangle Fill="{TemplateBinding Background}" RadiusY="0" RadiusX="0"/>
+
+                                <Rectangle x:Name="PART_Track" Margin="1"/>
+                                <Decorator x:Name="PART_Indicator" HorizontalAlignment="Left" Margin="1">
+                                    <Grid x:Name="Foreground">
+                                        <Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}"/>
+                                        <Grid x:Name="Animation" ClipToBounds="true">
+                                            <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="0"/>
+                                        </Grid>
+
+                                    </Grid>
+                                </Decorator>
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="LayoutTransform" TargetName="TemplateRoot">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <!-- コンテンツ -->
             <ControlTemplate x:Key="BasicTimeNoContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
@@ -125,37 +208,29 @@
             </ControlTemplate>
             <ControlTemplate x:Key="BasicActiveContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <ProgressBar Minimum="{Binding ActiveIndicatorMinValue}" 
+                    <ProgressBar Minimum="{Binding ActiveIndicatorMinValue}" HorizontalAlignment="Stretch"
                                  Value="{Binding DataContext.TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" 
                                  Maximum="{Binding ActiveIndicatorMaxValue}" 
-                                 Margin="0 0 35 0"
-                                 Template="{StaticResource BasicProgressBar}" FlowDirection="RightToLeft" Background="Transparent" BorderBrush="Transparent" >
-                        <ProgressBar.Style>
-                            <Style TargetType="ProgressBar">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ActiveIndicatorVisibility}" Value="False">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding ActiveIndicatorValue}" Value="4">
-                                        <Setter Property="Foreground" Value="Orange"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding ActiveIndicatorValue}" Value="8">
-                                        <Setter Property="Foreground" Value="Red"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
+                                 Margin="0 0 35 0" FlowDirection="RightToLeft" Background="Transparent" BorderBrush="Transparent"
+                                 Foreground="{DynamicResource ActiveForeground}">
+                    <i:Interaction.Behaviors>
+                        <fBehaviors:LinearGradientBrushBehavior />
+                    </i:Interaction.Behaviors>
+                    <ProgressBar.Style>
+                            <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource ActiveBasicProgressBarStyle}"/>
                         </ProgressBar.Style>
                     </ProgressBar>
                     <ProgressBar Minimum="{Binding ActivityNo}" 
                                  Value="{Binding DataContext.TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}"
                                  Maximum="{Binding DurationIndicatorMaxValue}" 
                                  Margin="0 0 35 0"
-                                 Template="{StaticResource BasicProgressBar}" Background="Transparent" BorderBrush="Transparent">
+                                 Template="{StaticResource BasicProgressBar}" Background="Transparent" BorderBrush="Transparent"
+                                 Foreground="{DynamicResource DurationForeground}">
+                        <i:Interaction.Behaviors>
+                            <fBehaviors:LinearGradientBrushBehavior />
+                        </i:Interaction.Behaviors>
                         <ProgressBar.Style>
-                            <Style TargetType="ProgressBar">
-                                <Style.Triggers>
-                                </Style.Triggers>
-                            </Style>
+                            <Style TargetType="ProgressBar" BasedOn="{StaticResource DurationBasicProgressBarStyle}"/>
                         </ProgressBar.Style>
                     </ProgressBar>
                     <TextBlock Text="{Binding ActiveTime,StringFormat=N1}" Style="{StaticResource OutlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
@@ -163,25 +238,26 @@
             </ControlTemplate>
             <ControlTemplate x:Key="BasicTypeContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <TextBlock Style="{StaticResource OutlineTextBlock}" Text="{Binding TimelineType}" HorizontalAlignment="Right"/>
+                    <TextBlock Style="{StaticResource OutlineTextBlock}" Text="{Binding TimelineType}" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicJobContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
-                    <TextBlock Style="{StaticResource OutlineTextBlock}" Text="{Binding JobType}" HorizontalAlignment="Right"/>
+                    <TextBlock Style="{StaticResource OutlineTextBlock}" Text="{Binding JobType}" HorizontalAlignment="Center"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicJumpContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
+                    
                 </Grid>
             </ControlTemplate>
-            
+
         </ResourceDictionary>
-        
-        
+
+
     </UserControl.Resources>
 
-    
+
     <Grid >
         <Grid.Resources>
             <FrameworkElement x:Key="proxyElement" />
@@ -246,43 +322,43 @@
             <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}">
                 <Border BorderThickness="0 0 0 1" BorderBrush="{StaticResource BaseColor_Gold1}">
                     <StackPanel Orientation="Horizontal">
-                    <!-- T-No -->
-                    <ItemsControl Grid.Column="0" Template="{StaticResource BasicTimeNoHeaderTemplate}"
+                        <!-- T-No -->
+                        <ItemsControl Grid.Column="0" Template="{StaticResource BasicTimeNoHeaderTemplate}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
                                   Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth}" 
                                   Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Time -->
-                    <ItemsControl Grid.Column="1" Template="{StaticResource BasicActionTimeHeaderTemplate}"
+                        <!-- Time -->
+                        <ItemsControl Grid.Column="1" Template="{StaticResource BasicActionTimeHeaderTemplate}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
                                   Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth}" 
                                   Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Type -->
-                    <ItemsControl Grid.Column="2" Template="{StaticResource BasicTypeHeaderTemplate}"
+                        <!-- Type -->
+                        <ItemsControl Grid.Column="2" Template="{StaticResource BasicTypeHeaderTemplate}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
                                   Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TypeWidth}" 
                                   Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Job -->
-                    <ItemsControl Grid.Column="3" Template="{StaticResource BasicJobHeaderTemplate}"
+                        <!-- Job -->
+                        <ItemsControl Grid.Column="3" Template="{StaticResource BasicJobHeaderTemplate}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
                                   Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JobWidth}" 
                                   Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Action -->
-                    <ItemsControl Grid.Column="4" Template="{StaticResource BasicActionHeaderTemplate}"
+                        <!-- Action -->
+                        <ItemsControl Grid.Column="4" Template="{StaticResource BasicActionHeaderTemplate}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
                                   Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionWidth}" 
                                   Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Active -->
-                    <ItemsControl Grid.Column="5" Template="{StaticResource BasicActiveHeaderTemplate}"
+                        <!-- Active -->
+                        <ItemsControl Grid.Column="5" Template="{StaticResource BasicActiveHeaderTemplate}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
                                   Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActiveWidth}" 
                                   Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Alt -->
-                    <ItemsControl Grid.Column="6" Template="{StaticResource BasicAlertHeaderTemplate}"
+                        <!-- Alt -->
+                        <ItemsControl Grid.Column="6" Template="{StaticResource BasicAlertHeaderTemplate}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
                                   Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.AlertWidth}" 
                                   Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Jump -->
-                    <ItemsControl Grid.Column="7" Template="{StaticResource BasicJumpHeaderTemplate}"
+                        <!-- Jump -->
+                        <ItemsControl Grid.Column="7" Template="{StaticResource BasicJumpHeaderTemplate}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
                                   Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth}" 
                                   Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, Converter={StaticResource BoolToVisibility}}"/>

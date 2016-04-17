@@ -9,6 +9,7 @@ using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Data;
 using FairyZeta.FF14.ACT.Info;
 using FairyZeta.FF14.ACT.Logger.LogData;
+using FairyZeta.Framework.ObjectModel;
 using System.Xml.Serialization;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
@@ -95,10 +96,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         {
             get 
             {
-                if (!this.PluginSettingsData.AllOverlayVisibility)
-                    return false;
+                // ACTのShowボタン状態
                 if (!this.PluginSettingsData.ActCheckBoxValue)
                     return false;
+                // ウィンドウのアクティブ状態
+                if (!this.AppStatusData.ActRelationWindowActive)
+                    return false;
+                // タイムラインロード状況
+                if (this.PluginSettingsData.AutoTimelineVisibilityEnabled)
+                {
+                    if (this.AppStatusData.TimelineLoadStatus != TimelineLoadStatus.Success)
+                        return false;
+                }
 
                 return true;
                 
@@ -122,6 +131,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         }
         #endregion
 
+        /// <summary> OS環境オブジェクトモデル
+        /// </summary>
+        public EnvironmentObjectModel EnvironmentObjectModel { get; private set; }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／共通表示データモデル／コンストラクタ
@@ -131,6 +144,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         {
             this.initDataModel();
             this.clear();
+
+            this.EnvironmentObjectModel.CreateOsEnvironment();
+            this.LogDataCollection.Add(
+                Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write(string.Format("Process Is64Bit: {0}", this.EnvironmentObjectModel.OsEnvironmentData.IsProcess64Bit), Globals.ProjectName));
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -140,6 +157,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// <returns> 正常終了時 True </returns> 
         private bool initDataModel()
         {
+            this.EnvironmentObjectModel = new EnvironmentObjectModel();
+
             this.ApplicationData = new ApplicationData();
             this.AppCommonData = new AppCommonData();
             this.PluginSettingsData = new PluginSettingsData();

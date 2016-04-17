@@ -41,10 +41,8 @@
                     <TextBlock Text=" - Auto Operation -" Margin="5"/>
                     <CheckBox Content="Autoload after change zone" Margin="10 2"
                               IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.TimelineAutoLoadEnabled}"/>
-                    <CheckBox Content="Auto show timeline" Margin="10 2"
-                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.AutoShowTimelineEnabled}"/>
-                    <CheckBox Content="Auto hide timeline" Margin="10 2"
-                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.AutoHideTimelineEnabled}"/>
+                    <CheckBox Content="Auto show and hide timeline ( Timeline Loaded = show, Unloaded = hide)" Margin="10 2"
+                              IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.AutoTimelineVisibilityEnabled}"/>
                     <TextBlock Text=" - Update Check -" Margin="5"/>
                     <CheckBox Content="Plugin auto update check enable" Margin="10 2" VerticalAlignment="Center"
                               IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.AutoUpdateChackEnabled}"/>

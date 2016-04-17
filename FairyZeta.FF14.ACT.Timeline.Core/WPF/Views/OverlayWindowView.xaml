@@ -15,7 +15,7 @@
         Top="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowTop, Mode=TwoWay}"
         Left="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLeft, Mode=TwoWay}"
              d:DataContext="{d:DesignInstance Type=dvm:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}"
-             >
+             Style="{DynamicResource DefaultWindowStyle}">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -29,15 +29,6 @@
         <vm:OverlayWindowViewModel />
     </Window.DataContext>
     
-    <Window.Style>
-        <Style TargetType="{x:Type Window}" BasedOn="{StaticResource DefaultWindowStyle}">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding OverlayViewComponent.CommonDataModel.PluginSettingsData.AllOverlayVisibility}" Value="False">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Style>
     
     <Grid>
         <view:StandardTimelineView DataContext="{Binding}" >
@@ -47,6 +38,9 @@
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.StandardTimeline}">
                             <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding OverlayViewComponent.CommonDataModel.OverlayPassVisibility}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -59,6 +53,9 @@
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.TimelineControl}">
                             <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding OverlayViewComponent.CommonDataModel.OverlayPassVisibility}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

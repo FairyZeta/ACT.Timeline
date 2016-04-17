@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Prism.Commands;
+using FairyZeta.FF14.ACT.Module;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
 
@@ -29,6 +30,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> アプリケーション共通モジュール
         /// </summary>
         public AppCommonModule AppCommonModule { get; private set; }
+
+        /// <summary> アクティブウィンドウチェックモジュール
+        /// </summary>
+        public ActiveWindowCheckModule ActiveWindowCheckModule { get; private set; }
 
       #endregion
 
@@ -107,6 +112,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.AppDataCreateModule = new AppDataCreateModule();
             this.AppCommonTimerModule = new AppCommonTimerModule();
             this.AppCommonModule = new AppCommonModule();
+            this.ActiveWindowCheckModule = new ActiveWindowCheckModule();
 
             return true;
         }
@@ -160,6 +166,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             // プラグイン設定自動セーブ開始
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.PluginSettingAutoSaveEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.ActiveWindowCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.NewPluginCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Start();
 
@@ -173,7 +180,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             // プラグイン設定自動セーブ終了
             this.AppCommonTimerModule.SecTimer01.Stop();
-            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.NewPluginCheckEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.PluginSettingAutoSaveEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.ActiveWindowCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.NewPluginCheckEvent);
 
             return true;
@@ -191,6 +199,35 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
             this.AppCommonModule.PluginSettingsDataSave(this.CommonDataModel.ApplicationData.GetTimelineSettingsFullPath, this.CommonDataModel.PluginSettingsData);
 
+        }
+
+        /// <summary> [TimerEvent] FF14またはACTがアクティブであるかをチェックし、値を更新します。
+        /// </summary>
+        /// <param name="o"> タイマーオブジェクト </param>
+        /// <param name="e"> タイマーイベント </param>
+        public void ActiveWindowCheckEvent(object o, EventArgs e)
+        {
+            if (!base.CommonDataModel.EnvironmentObjectModel.OsEnvironmentData.IsProcess64Bit)
+                return;
+
+            bool result = this.ActiveWindowCheckModule.ActRelationWindowActiveCheck();
+
+            if (this.CommonDataModel.AppStatusData.ActRelationWindowActive != result)
+            {
+                this.CommonDataModel.AppStatusData.ActRelationWindowActive = result;
+                this.CommonDataModel.ViewRefresh();
+
+                if(result)
+                {
+                    this.CommonDataModel.LogDataCollection.Add(
+                        Globals.SysLogger.WriteSystemLog.Success.DEBUG.Write("Act RelationWindow Active.", Globals.ProjectName));
+                }
+                else
+                {
+                    this.CommonDataModel.LogDataCollection.Add(
+                        Globals.SysLogger.WriteSystemLog.Success.DEBUG.Write("Act RelationWindow NonActive.", Globals.ProjectName));
+                }
+            }
         }
 
         /// <summary> [TimerEvent] プラグインの新バージョンがあるかを確認します。
@@ -217,7 +254,41 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
         }
 
+        #region #- [Command] DelegateCommand<string>.VisiTestCommand - ＜一時非表示のテストコマンド＞ -----
+        /// <summary> 一時非表示のテストコマンド＜コマンド＞ </summary>
+        private DelegateCommand<bool?> _VisiTestCommand;
+        /// <summary> 一時非表示のテストコマンド＜コマンド＞ </summary>
+        public DelegateCommand<bool?> VisiTestCommand
+        {
+            get { return _VisiTestCommand = _VisiTestCommand ?? new DelegateCommand<bool?>(this._VisiTestExecute); }
+        }
+        #endregion 
 
+        #region #- [Method] CanExecute,Execute @ VisiTestCommand - ＜一時非表示のテストコマンド＞ -----
+
+        /// <summary> コマンド実行＜一時非表示のテストコマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _VisiTestExecute(bool? para)
+        {
+            if (!para.HasValue)
+                return;
+
+            this.CommonDataModel.PluginSettingsData.ActCheckBoxValue = para.Value;
+
+            this.CommonDataModel.ViewRefresh();
+
+            if (para.Value)
+            {
+                this.CommonDataModel.LogDataCollection.Add(
+                    Globals.SysLogger.WriteActionLog.Success.INFO.Write("Overlay View Changed: All Visible", Globals.ProjectName));
+            }
+            else
+            {
+                this.CommonDataModel.LogDataCollection.Add(
+                    Globals.SysLogger.WriteActionLog.Success.INFO.Write("Overlay View Changed: All Hide", Globals.ProjectName));
+            }
+        }
+        #endregion 
 
         /// <summary> ACT本体に表示されるチェックボックスの値変更コマンド
         /// </summary>
@@ -225,7 +296,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             var chk = sender as System.Windows.Forms.CheckBox;
             this.CommonDataModel.PluginSettingsData.ActCheckBoxValue = chk.Checked;
-            this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = chk.Checked;
 
             this.CommonDataModel.ViewRefresh();
             

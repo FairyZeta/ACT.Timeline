@@ -228,8 +228,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     // 自動開始判定
                     if (this.CommonDataModel.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run)
                     {
+                        this.TimerDataModel.TimerDeta.CurrentCombatTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
                         this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
-                        this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
                     }
                     // 通常シンク
                     else
@@ -292,11 +292,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                         this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
                         this.TimelineCreateModule.CreateTimelineDataModel(base.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
 
-                        if (this.CommonDataModel.PluginSettingsData.AutoShowTimelineEnabled)
-                        {
-                            this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = true;
-                            this.CommonDataModel.ViewRefresh();
-                        }
+                        //if (this.CommonDataModel.PluginSettingsData.AutoShowTimelineEnabled)
+                        //{
+                        //    this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = true;
+                        //    this.CommonDataModel.ViewRefresh();
+                        //}
 
                         this.CommonDataModel.LogDataCollection.Add(
                             Globals.SysLogger.WriteSystemLog.Success.INFO.Write(string.Format("Timeline AutoLoad Success. ( File = {0} )", findName, Globals.ProjectName)));
@@ -307,11 +307,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     }
                     else
                     {
-                        if (this.CommonDataModel.PluginSettingsData.AutoHideTimelineEnabled)
-                        {
-                            this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = false;
-                            this.CommonDataModel.ViewRefresh();
-                        }
+                        //if (this.CommonDataModel.PluginSettingsData.AutoHideTimelineEnabled)
+                        //{
+                        //    this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = false;
+                        //    this.CommonDataModel.ViewRefresh();
+                        //}
 
                         this.TimelineCreateModule.TimelineDataClear(this.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
 

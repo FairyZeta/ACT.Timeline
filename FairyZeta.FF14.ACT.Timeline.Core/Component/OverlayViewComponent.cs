@@ -133,7 +133,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             return true;
         }
 
+        /// <summary> コンポーネントのセットアップを実行します。
+        /// </summary>
+        /// <returns> 正常終了時 True </returns> 
+        public bool ComponenSetupt()
+        {
+            this.OverlayControlModule.SetAllFilter(this.OverlayDataModel);
+
+            return true;
+        }
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 

@@ -85,13 +85,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                     return;
             }
 
-            this.CurrentCombatRelativeClock.CurrentTime = pTimerDM.TimerDeta.CurrentCombatTime;
-
             var artList = pTimelineDM.TimelineAlertCollection.Where(a => a.TimeFromStart >= pTimerDM.TimerDeta.CurrentCombatTime);
             foreach (var art in artList)
             {
                 art.Processed = false;
             }
+
+            this.CurrentCombatRelativeClock.CurrentTime = pTimerDM.TimerDeta.CurrentCombatTime;
 
             this.CurrentCombatTimer.Start();
             pCommonDM.AppStatusData.CurrentCombatTimerStatus = TimerStatus.Run;

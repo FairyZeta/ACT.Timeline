@@ -130,6 +130,25 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] bool.ActRelationWindowActive - ＜ACTに関連するウィンドウのアクティブ状態＞ -----
+        /// <summary> ACTに関連するウィンドウのアクティブ状態 </summary>
+        private bool _ActRelationWindowActive;
+        /// <summary> ACTに関連するウィンドウのアクティブ状態 </summary>
+        public bool ActRelationWindowActive
+        {
+            get { return this._ActRelationWindowActive; }
+            set
+            {
+                if (this._ActRelationWindowActive == value) return;
+                
+                this._ActRelationWindowActive = value;
+                base.OnPropertyChanged("ActRelationWindowActive");
+            }
+        }
+        #endregion 
+
+
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
         
         /// <summary> タイムライン／アプリケーションステータスデータ／コンストラクタ

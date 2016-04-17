@@ -14,23 +14,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        #region #- [Property] bool.AllOverlayVisibility - ＜全オーバーレイの表示状態＞ -----
-        /// <summary> 全オーバーレイの表示状態 </summary>
-        private bool _AllOverlayVisibility;
-        /// <summary> 全オーバーレイの表示状態 </summary>
-        public bool AllOverlayVisibility
-        {
-            get { return this._AllOverlayVisibility; }
-            set
-            {
-                //if (this._AllOverlayVisibility == value) return;
-
-                this._AllOverlayVisibility = value;
-                base.OnPropertyChanged("AllOverlayVisibility");
-                //base.SaveChangedTarget = true;
-            }
-        }
-        #endregion
 
         #region #- [Property] string.TimelineResourceDirectory - ＜タイムラインリソースディレクトリ＞ -----
         /// <summary> タイムラインリソースディレクトリ </summary>
@@ -137,40 +120,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             }
         }
         #endregion
-        #region #- [Property] bool.AutoShowTimelineEnabled - ＜タイムラインがあるコンテンツ自動表示の有効状態＞ -----
-        /// <summary> タイムラインがあるコンテンツ自動表示の有効状態 </summary>
-        private bool _AutoShowTimelineEnabled;
-        /// <summary> タイムラインがあるコンテンツ自動表示の有効状態 </summary>
-        public bool AutoShowTimelineEnabled
+
+        #region #- [Property] bool.AutoTimelineVisibilityEnabled - ＜タイムラインの有無による自動表示切替＞ -----
+        /// <summary> タイムラインの有無による自動表示切替 </summary>
+        private bool _AutoTimelineVisibilityEnabled;
+        /// <summary> タイムラインの有無による自動表示切替 </summary>
+        public bool AutoTimelineVisibilityEnabled
         {
-            get { return this._AutoShowTimelineEnabled; }
+            get { return this._AutoTimelineVisibilityEnabled; }
             set
             {
-                if (this._AutoShowTimelineEnabled == value) return;
+                if (this._AutoTimelineVisibilityEnabled == value) return;
 
-                this._AutoShowTimelineEnabled = value;
-                base.OnPropertyChanged("AutoShowTimelineEnabled");
-                base.SaveChangedTarget = true;
+                this._AutoTimelineVisibilityEnabled = value;
+                base.OnPropertyChanged("AutoTimelineVisibilityEnabled");
             }
         }
         #endregion
-        #region #- [Property] bool.AutoHideTimelineEnabled - ＜タイムラインがないコンテンツ自動非表示の有効状態＞ -----
-        /// <summary> タイムラインがないコンテンツ自動非表示の有効状態 </summary>
-        private bool _AutoHideTimelineEnabled;
-        /// <summary> タイムラインがないコンテンツ自動非表示の有効状態 </summary>
-        public bool AutoHideTimelineEnabled
-        {
-            get { return this._AutoHideTimelineEnabled; }
-            set
-            {
-                if (this._AutoHideTimelineEnabled == value) return;
 
-                this._AutoHideTimelineEnabled = value;
-                base.OnPropertyChanged("AutoHideTimelineEnabled");
-                base.SaveChangedTarget = true;
-            }
-        }
-        #endregion
         #region #- [Property] bool.ResetTimelineCombatEndEnabled - ＜戦闘終了時の自動リセット有効状態＞ -----
         /// <summary> 戦闘終了時の自動リセット有効状態 </summary>
         private bool _ResetTimelineCombatEndEnabled;
@@ -299,8 +266,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
-            this.AllOverlayVisibility = false;
-
             this.SoundResourceDirectory = string.Empty;
             this.TimelineResourceDirectory = string.Empty;
 
@@ -309,9 +274,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
             this.PlaySoundByACT = true;
 
+            this.AutoTimelineVisibilityEnabled = true;
             this.TimelineAutoLoadEnabled = true;
-            this.AutoShowTimelineEnabled = true;
-            this.AutoHideTimelineEnabled = true;
             this.ResetTimelineCombatEndEnabled = true;
 
             this.AutoUpdateChackEnabled = true;

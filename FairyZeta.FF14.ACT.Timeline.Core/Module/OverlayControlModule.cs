@@ -41,6 +41,45 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> データモデルの値を参照し、全てのフィルター設定を実行します。
+        /// </summary>
+        /// <param name="pOverlayDM"> 設定するデータモデル </param>
+        public void SetAllFilter(OverlayDataModel pOverlayDM)
+        {
+            this.SetTimelineTypeFilter(pOverlayDM, TimelineType.UNKNOWN);
+            this.SetTimelineTypeFilter(pOverlayDM, TimelineType.ENEMY  );
+            this.SetTimelineTypeFilter(pOverlayDM, TimelineType.TANK   );
+            this.SetTimelineTypeFilter(pOverlayDM, TimelineType.DPS    );
+            this.SetTimelineTypeFilter(pOverlayDM, TimelineType.HEALER );
+            this.SetTimelineTypeFilter(pOverlayDM, TimelineType.PET    );
+            this.SetTimelineTypeFilter(pOverlayDM, TimelineType.GIMMICK);
+
+            this.SetJobFilter(pOverlayDM, Job.UNKNOWN);
+            this.SetJobFilter(pOverlayDM, Job.NON    );
+            this.SetJobFilter(pOverlayDM, Job.PLD    );
+            this.SetJobFilter(pOverlayDM, Job.MNK    );
+            this.SetJobFilter(pOverlayDM, Job.WAR    );
+            this.SetJobFilter(pOverlayDM, Job.DRG    );
+            this.SetJobFilter(pOverlayDM, Job.BRD    );
+            this.SetJobFilter(pOverlayDM, Job.NIN    );
+            this.SetJobFilter(pOverlayDM, Job.WHM    );
+            this.SetJobFilter(pOverlayDM, Job.BLM    );
+            this.SetJobFilter(pOverlayDM, Job.SMN    );
+            this.SetJobFilter(pOverlayDM, Job.SCH    );
+            this.SetJobFilter(pOverlayDM, Job.DKN    );
+            this.SetJobFilter(pOverlayDM, Job.AST    );
+            this.SetJobFilter(pOverlayDM, Job.MCN    );
+            this.SetJobFilter(pOverlayDM, Job.EGI    );
+            this.SetJobFilter(pOverlayDM, Job.FAIRY  );
+            this.SetJobFilter(pOverlayDM, Job.TURRET );
+
+            //this.SetJobFilter(pOverlayDM, TankModeNON = true;
+            //this.SetJobFilter(pOverlayDM, TankModeMT = true;
+            //this.SetJobFilter(pOverlayDM, TankModeST = true;
+            //this.SetJobFilter(pOverlayDM, TankModeOT = true;
+
+        }
+
         /// <summary> タイムラインタイプのフィルタを設定します。
         /// </summary>
         /// <param name="pOverlayDataModel"> フィルタ設定するデータモデル </param>

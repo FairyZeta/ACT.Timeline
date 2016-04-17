@@ -186,6 +186,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
             }
 
+            // オーバーレイセットアップを実行
+            foreach (var overlay in this.OverlayManageDataModel.OverlayViewComponentCollection)
+            {
+                overlay.ComponenSetupt();
+            }
+
             // 必要であれば全てオープン
             if (pAllOverlayOpen)
             {
@@ -202,7 +208,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             // オーバーレイ自動管理の開始
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoSaveEvent);
-            this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoHideEvent);
+            //this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoHideEvent);
             this.AppCommonTimerModule.SecTimer01.Start();
 
             return true;
@@ -216,7 +222,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             // オーバーレイ自動管理の終了
             this.AppCommonTimerModule.SecTimer01.Stop();
             this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoSaveEvent);
-            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoHideEvent);
+            //this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoHideEvent);
 
             return true;
         }
@@ -249,14 +255,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <param name="e"> タイマーイベント </param>
         public void OverlayAutoHideEvent(object o, EventArgs e)
         {
-            if (base.CommonDataModel.PluginSettingsData.ActCheckBoxValue)
-            {
-                this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = true;
-            }
-            else
-            {
-                this.CommonDataModel.PluginSettingsData.AllOverlayVisibility = false;
-            }
+
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

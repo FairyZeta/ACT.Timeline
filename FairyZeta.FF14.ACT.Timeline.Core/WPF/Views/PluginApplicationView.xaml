@@ -75,7 +75,9 @@
                     <view:OverlayManageView />
                 </TabItem>
                 <TabItem Header="Timeline Edit" Style="{StaticResource BasicTabItemStyle}">
-                    <Label Content="Timeline Edit, Coming soon... Probably it is about May, 2016"/>
+                    <StackPanel>
+                        <Label Content="Timeline Edit, Coming soon... "/>
+                    </StackPanel>
                 </TabItem>
                 <TabItem Header="About" Style="{StaticResource BasicTabItemStyle}">
                     <view:TimelineAboutView />

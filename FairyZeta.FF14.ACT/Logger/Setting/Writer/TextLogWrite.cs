@@ -112,14 +112,22 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.Writer
                 , in_LogData.StackTrace.GetFrame(1).GetFileLineNumber().ToString()
                 );
 
-            // ログの書き込みを実行
-            if (File.Exists(this.logWritePath))
+            // ログの書き込みを実行(ファイルロックによる書き込み失敗は無視する)
+            try
             {
-                File.AppendAllText(this.logWritePath, msg + "\r\n", this.LogEncoding);
+                if (File.Exists(this.logWritePath))
+                {
+                    File.AppendAllText(this.logWritePath, msg + "\r\n", this.LogEncoding);
+                }
+                else
+                {
+                    File.WriteAllText(this.logWritePath, msg + "\r\n", this.LogEncoding);
+                }
             }
-            else
+            catch
             {
-                File.WriteAllText(this.logWritePath, msg + "\r\n", this.LogEncoding);
+                Console.WriteLine("Log Write ERROR.");
+                return;
             }
         }
 
@@ -134,26 +142,34 @@ namespace FairyZeta.FF14.ACT.Logger.Setting.Writer
                 Directory.CreateDirectory(this.FileLogSetting.LogDictionary);
             }
 
-            // ログの書き込みを実行
-            if (File.Exists(this.logWritePath))
+            // ログの書き込みを実行(ファイルロックによる書き込み失敗は無視する)
+            try
             {
-                File.AppendAllText(this.logWritePath, "***** # " + ex.GetType().Name + " *****" + "\r\n", this.LogEncoding);
-            }
-            else
-            {
-                File.WriteAllText(this.logWritePath, "***** # " + ex.GetType().Name + " *****" + "\r\n", this.LogEncoding);
-            }
+                if (File.Exists(this.logWritePath))
+                {
+                    File.AppendAllText(this.logWritePath, "***** # " + ex.GetType().Name + " *****" + "\r\n", this.LogEncoding);
+                }
+                else
+                {
+                    File.WriteAllText(this.logWritePath, "***** # " + ex.GetType().Name + " *****" + "\r\n", this.LogEncoding);
+                }
 
-            File.AppendAllText(this.logWritePath, "Exception Time: " + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff") + "\r\n", this.LogEncoding);
-            File.AppendAllText(this.logWritePath, "Rank: " + rank + "\r\n", this.LogEncoding);
-            File.AppendAllText(this.logWritePath, "Message: " + ex.Message + "\r\n", this.LogEncoding);
-            File.AppendAllText(this.logWritePath, "Stack Trace: " + "\r\n", this.LogEncoding);
-            File.AppendAllText(this.logWritePath, ex.StackTrace + "\r\n\r\n", this.LogEncoding);
+                File.AppendAllText(this.logWritePath, "Exception Time: " + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff") + "\r\n", this.LogEncoding);
+                File.AppendAllText(this.logWritePath, "Rank: " + rank + "\r\n", this.LogEncoding);
+                File.AppendAllText(this.logWritePath, "Message: " + ex.Message + "\r\n", this.LogEncoding);
+                File.AppendAllText(this.logWritePath, "Stack Trace: " + "\r\n", this.LogEncoding);
+                File.AppendAllText(this.logWritePath, ex.StackTrace + "\r\n\r\n", this.LogEncoding);
 
-            if (ex.InnerException != null)
+                if (ex.InnerException != null)
+                {
+                    File.AppendAllText(this.logWritePath, " --- InnerException --- " + "\r\n", this.LogEncoding);
+                    Write_StackTrace(ex.InnerException, rank + 1);
+                }
+            }
+            catch
             {
-                File.AppendAllText(this.logWritePath, " --- InnerException --- " + "\r\n", this.LogEncoding);
-                Write_StackTrace(ex.InnerException, rank + 1);
+                Console.WriteLine("Log Write ERROR.");
+                return;
             }
         }
 

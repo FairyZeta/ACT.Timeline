@@ -157,6 +157,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             pCommonDM.PluginSettingsData.LastLoadTimelineFileName = pCommonDM.SelectedTimelineFileData.TimelineFileName;
             pCommonDM.PluginSettingsData.LastLoadTimelineFullPath = pCommonDM.SelectedTimelineFileData.TimelineFileFullPath;
 
+            pCommonDM.ViewRefresh();
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.Success;
             this.TimelineFunctionEnabledChange(pCommonDM);
         }
@@ -173,6 +174,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NonLoad;
             this.TimelineFunctionEnabledChange(pCommonDM);
 
+            pCommonDM.ViewRefresh();
 
             return;
         }
@@ -230,6 +232,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
                     break;
             }
+
+            pCommonDM.ViewRefresh();
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

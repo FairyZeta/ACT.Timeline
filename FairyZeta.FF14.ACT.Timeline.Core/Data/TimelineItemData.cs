@@ -126,23 +126,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
                 return true;
             }
         }
-
-
-        /// <summary> (get) アクティブインジケータ表示フラグ 
-        /// </summary>
-        public bool ActiveIndicatorVisibility
-        {
-            get
-            {
-                if (this.Duration > 0 && this.ActiveTime - this.Duration <= 0 )
-                {
-                    return false;
-                }
-
-                return true;
-            }
-        }
-
+        
         #region #- [Property] double.ActiveIndicatorStartTime - ＜アクティブインジケータ開始時間＞ -----
         /// <summary> アクティブインジケータ開始時間 </summary>
         private double _ActiveIndicatorStartTime;
@@ -350,7 +334,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         public void ViewRefresh()
         {
             base.OnPropertyChanged("ActiveTime");
-            base.OnPropertyChanged("ActiveIndicatorVisibility");
             base.OnPropertyChanged("TimelineVisibility");
         }
 

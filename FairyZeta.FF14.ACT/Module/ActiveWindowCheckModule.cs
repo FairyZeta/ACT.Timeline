@@ -37,6 +37,7 @@ namespace FairyZeta.FF14.ACT.Module
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> ACT本体またはFF14のウィンドウがアクティブかを確認し、bool値を返します。
+        /// <para> ※64Bitじゃないと落ちる可能性有、注意 </para>
         /// </summary>
         /// <returns></returns>
         public bool ActRelationWindowActiveCheck()
@@ -48,6 +49,7 @@ namespace FairyZeta.FF14.ACT.Module
                 // アクティブウィンドウ無し
                 return false;
             }
+            
             WindowsServices.GetWindowThreadProcessId(hWndFg, out pid);
             var exePath =　System.Diagnostics.Process.GetProcessById((int)pid).MainModule.FileName;
 
