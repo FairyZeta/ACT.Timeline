@@ -219,7 +219,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     else
                     {
                         // 通常ジャンプ
-                        this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
+                        this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.Jump;
                     }
                 }
                 // シンク
