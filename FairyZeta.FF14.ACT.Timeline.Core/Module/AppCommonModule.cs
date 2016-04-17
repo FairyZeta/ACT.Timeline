@@ -189,13 +189,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             if (!string.IsNullOrWhiteSpace(Globals.PluginDllDirectoryPath))
             {
-                pCommonDM.PluginSettingsData.TimelineResourceDirectory = Globals.PluginDllDirectoryPath + @"\timeline";
-                pCommonDM.PluginSettingsData.SoundResourceDirectory = Globals.PluginDllDirectoryPath + @"\wav";
+                pCommonDM.PluginSettingsData.TimelineResourceDirectory = Globals.PluginDllDirectoryPath + @"\resources\timeline";
+                pCommonDM.PluginSettingsData.SoundResourceDirectory = Globals.PluginDllDirectoryPath + @"\resources\wav";
             }
             else if (!string.IsNullOrWhiteSpace(pCommonDM.ApplicationData.PluginDllDirectory))
             {
-                pCommonDM.PluginSettingsData.TimelineResourceDirectory = pCommonDM.ApplicationData.PluginDllDirectory + @"\timeline";
-                pCommonDM.PluginSettingsData.SoundResourceDirectory = pCommonDM.ApplicationData.PluginDllDirectory + @"\wav";
+                pCommonDM.PluginSettingsData.TimelineResourceDirectory = pCommonDM.ApplicationData.PluginDllDirectory + @"\resources\timeline";
+                pCommonDM.PluginSettingsData.SoundResourceDirectory = pCommonDM.ApplicationData.PluginDllDirectory + @"\resources\wav";
             }
             else
             {
