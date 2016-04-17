@@ -201,8 +201,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             {
                 string path = this.getAssemblyDataProcess.GetAssemblyDirectory();
 
-                pCommonDM.PluginSettingsData.TimelineResourceDirectory = path + @"\timeline";
-                pCommonDM.PluginSettingsData.SoundResourceDirectory = path + @"\wav";
+                pCommonDM.PluginSettingsData.TimelineResourceDirectory = path + @"\resources\timeline";
+                pCommonDM.PluginSettingsData.SoundResourceDirectory = path + @"\resources\wav";
             }
         }
 
