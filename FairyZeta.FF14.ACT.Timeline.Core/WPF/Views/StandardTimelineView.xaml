@@ -172,12 +172,12 @@
             <LinearGradientBrush x:Key="ActiveForeground" EndPoint="0.0,0.5" StartPoint="1.0,0.5">
                 <GradientStop Color="#AA8EFC21" Offset="1"/>
                 <GradientStop Color="#AAE9AF10" Offset="0.515"/>
-                <GradientStop Color="#AA770E17" Offset="0.128"/>
+                <GradientStop Color="#AAFF0011" Offset="0.128"/>
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="DurationForeground" EndPoint="0.0,0.5" StartPoint="1.0,0.5">
                 <GradientStop Color="#AA4110E9" Offset="0.515"/>
                 <GradientStop Color="#AA770E17" Offset="0.128"/>
-                <GradientStop Color="#AA990E17" Offset="1"/>
+                <GradientStop Color="#AAFF0011" Offset="1"/>
             </LinearGradientBrush>
             <Style x:Key="ActiveBasicProgressBarStyle" TargetType="{x:Type ProgressBar}">
                 <Setter Property="Template">
@@ -361,9 +361,9 @@
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2">
                     <TextBlock Text="[Line-Time] " Foreground="{StaticResource BaseColor_Gold1}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
-                    <TextBlock Text="--:--" Foreground="{StaticResource BaseColor_Blue1}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
-                    <!--
+                    <!--TextBlock Text="" Foreground="{StaticResource BaseColor_Blue1}"
+                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/-->
+                    
                     <TextBlock Foreground="{StaticResource BaseColor_Blue1}"
                                   FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}">
                         <TextBlock.Text>
@@ -373,7 +373,7 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-                    -->
+                    
                     <TextBlock Text=" / " Foreground="{StaticResource BaseColor_Gold1}"
                                FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
                     <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}" Foreground="{StaticResource BaseColor_Blue1}"

@@ -253,7 +253,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             UpdateCheckSettingsData data = new UpdateCheckSettingsData();
             
             data.PluginVersion = name.Version;
-            data.PluginVersion = new Version(0,0,0,1);
             pCommonDM.LogDataCollection.Add(
                 Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write(string.Format("PluginVersion: {0}", name.Version)));
             data.InfoDonwloadUri = pCommonDM.PluginVersionInfo.CheckPluginInfoUri;

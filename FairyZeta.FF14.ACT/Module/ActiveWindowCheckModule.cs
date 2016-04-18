@@ -66,7 +66,7 @@ namespace FairyZeta.FF14.ACT.Module
                     return false;
                 }
             }
-            catch (ExecutionEngineException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return false;

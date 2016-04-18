@@ -67,7 +67,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         public void TimerSetup()
         {
-            this.CurrentCombatTimer.Interval = TimeSpan.FromMilliseconds(50);
+            this.CurrentCombatTimer.Interval = TimeSpan.FromMilliseconds(33);
             this.AutoLoadTimer.Interval = TimeSpan.FromMilliseconds(3000);
         }
         
