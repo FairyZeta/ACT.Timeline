@@ -210,9 +210,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             // 32Bitは強制表示で制御しない
             if (!base.CommonDataModel.EnvironmentObjectModel.OsEnvironmentData.IsProcess64Bit)
             {
-                this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.ActiveWindowCheckEvent);
                 this.CommonDataModel.AppStatusData.ActRelationWindowActive = true;
-                return;
             }
 
             bool result = this.ActiveWindowCheckModule.ActRelationWindowActiveCheck();

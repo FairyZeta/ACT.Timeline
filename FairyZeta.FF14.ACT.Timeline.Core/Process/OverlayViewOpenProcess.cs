@@ -121,8 +121,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 
             window.Topmost = true;
             window.ResizeMode = System.Windows.ResizeMode.NoResize;
-            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowHeight = 24;
-            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowWidth = 150;
+            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowHeight = 30;
+            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowWidth = 170;
 
             var vm = window.DataContext as OverlayWindowViewModel;
             if (vm != null)
