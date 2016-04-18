@@ -123,9 +123,6 @@
     <Compile Include="Logger\Setting\Writer\_WriterBase.cs" />
     <Compile Include="Logger\Setting\_SettingBase.cs" />
     <Compile Include="Logger\_LoggerBase.cs" />
-    <Compile Include="Module\ActiveWindowCheckModule.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Process\LogAnalyzerProcess.cs" />
     <Compile Include="Module\_Module.cs" />
     <Compile Include="Process\ActTimerProcess.cs">

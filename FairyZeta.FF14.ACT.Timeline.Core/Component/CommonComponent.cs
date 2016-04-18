@@ -30,11 +30,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> アプリケーション共通モジュール
         /// </summary>
         public AppCommonModule AppCommonModule { get; private set; }
-
-        /// <summary> アクティブウィンドウチェックモジュール
-        /// </summary>
-        public ActiveWindowCheckModule ActiveWindowCheckModule { get; private set; }
-
+        
       #endregion
 
       #region - [REGION] - Commands -
@@ -112,7 +108,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.AppDataCreateModule = new AppDataCreateModule();
             this.AppCommonTimerModule = new AppCommonTimerModule();
             this.AppCommonModule = new AppCommonModule();
-            this.ActiveWindowCheckModule = new ActiveWindowCheckModule();
 
             return true;
         }
@@ -166,7 +161,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             // プラグイン設定自動セーブ開始
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.PluginSettingAutoSaveEvent);
-            //this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.ActiveWindowCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.NewPluginCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Start();
 
@@ -181,7 +175,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             // プラグイン設定自動セーブ終了
             this.AppCommonTimerModule.SecTimer01.Stop();
             this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.PluginSettingAutoSaveEvent);
-            //this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.ActiveWindowCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.NewPluginCheckEvent);
 
             return true;
@@ -201,37 +194,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
         }
 
-        /// <summary> [TimerEvent] FF14またはACTがアクティブであるかをチェックし、値を更新します。
-        /// </summary>
-        /// <param name="o"> タイマーオブジェクト </param>
-        /// <param name="e"> タイマーイベント </param>
-        public void ActiveWindowCheckEvent(object o, EventArgs e)
-        {
-            // 32Bitは強制表示で制御しない
-            if (!base.CommonDataModel.EnvironmentObjectModel.OsEnvironmentData.IsProcess64Bit)
-            {
-                this.CommonDataModel.AppStatusData.ActRelationWindowActive = true;
-            }
-
-            bool result = this.ActiveWindowCheckModule.ActRelationWindowActiveCheck();
-
-            if (this.CommonDataModel.AppStatusData.ActRelationWindowActive != result)
-            {
-                this.CommonDataModel.AppStatusData.ActRelationWindowActive = result;
-                this.CommonDataModel.ViewRefresh();
-
-                if(result)
-                {
-                    this.CommonDataModel.LogDataCollection.Add(
-                        Globals.SysLogger.WriteSystemLog.Success.DEBUG.Write("Act RelationWindow Active.", Globals.ProjectName));
-                }
-                else
-                {
-                    this.CommonDataModel.LogDataCollection.Add(
-                        Globals.SysLogger.WriteSystemLog.Success.DEBUG.Write("Act RelationWindow NonActive.", Globals.ProjectName));
-                }
-            }
-        }
 
         /// <summary> [TimerEvent] プラグインの新バージョンがあるかを確認します。
         /// </summary>
