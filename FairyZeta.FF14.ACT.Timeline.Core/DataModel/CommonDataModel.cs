@@ -100,8 +100,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
                 if (!this.PluginSettingsData.ActCheckBoxValue)
                     return false;
                 // ウィンドウのアクティブ状態
-                if (!this.AppStatusData.ActRelationWindowActive)
-                    return false;
+                //if (!this.AppStatusData.ActRelationWindowActive)
+                //    return false;
                 // タイムラインロード状況
                 if (this.PluginSettingsData.AutoTimelineVisibilityEnabled)
                 {

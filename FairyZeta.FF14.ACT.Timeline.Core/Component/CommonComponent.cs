@@ -166,7 +166,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             // プラグイン設定自動セーブ開始
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.PluginSettingAutoSaveEvent);
-            this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.ActiveWindowCheckEvent);
+            //this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.ActiveWindowCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.NewPluginCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Start();
 
@@ -181,7 +181,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             // プラグイン設定自動セーブ終了
             this.AppCommonTimerModule.SecTimer01.Stop();
             this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.PluginSettingAutoSaveEvent);
-            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.ActiveWindowCheckEvent);
+            //this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.ActiveWindowCheckEvent);
             this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.NewPluginCheckEvent);
 
             return true;

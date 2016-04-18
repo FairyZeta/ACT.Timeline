@@ -229,7 +229,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             pCommonDM.PluginVersionInfo.DataBaseVersion = "1.0.0.0";
             pCommonDM.PluginVersionInfo.DataBaseDownloadUri = string.Empty;
 
-            pCommonDM.PluginVersionInfo.SummaryList = this.PluginHistoryObjectModel.UpdateHistoryDictionary[name.Version];
+            if (this.PluginHistoryObjectModel.UpdateHistoryDictionary.ContainsKey(name.Version))
+            {
+                pCommonDM.PluginVersionInfo.SummaryList = this.PluginHistoryObjectModel.UpdateHistoryDictionary[name.Version];
+            }
         }
 
         /// <summary> プラグインバージョン情報を保存します。
@@ -253,6 +256,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             UpdateCheckSettingsData data = new UpdateCheckSettingsData();
             
             data.PluginVersion = name.Version;
+            //data.PluginVersion = new Version(0, 0, 0, 1);
             pCommonDM.LogDataCollection.Add(
                 Globals.SysLogger.WriteSystemLog.NonState.DEBUG.Write(string.Format("PluginVersion: {0}", name.Version)));
             data.InfoDonwloadUri = pCommonDM.PluginVersionInfo.CheckPluginInfoUri;
