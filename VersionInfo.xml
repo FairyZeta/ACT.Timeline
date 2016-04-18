@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <PluginVersionInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <PluginName>FZ.Timeline</PluginName>
-  <PluginVersion>0.0.2.0</PluginVersion>
+  <PluginVersion>0.0.1.0</PluginVersion>
   <DataBaseVersion>1.0.0.0</DataBaseVersion>
   <PluginDownloadUri>https://github.com/FairyZeta/ACT.Timeline/releases/download/0.0.2.0/FZ.Timeline-0.0.2.0.zip</PluginDownloadUri>
   <DataBaseDownloadUri />
