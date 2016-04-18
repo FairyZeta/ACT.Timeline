@@ -6,7 +6,7 @@
   <PluginDownloadUri>https://github.com/FairyZeta/ACT.Timeline/releases/download/0.0.2.0/FZ.Timeline-0.0.2.0.zip</PluginDownloadUri>
   <DataBaseDownloadUri />
   <CheckPluginInfoUri>https://raw.githubusercontent.com/FairyZeta/ACT.Timeline/master/VersionInfo.xml</CheckPluginInfoUri>
-  <PluginWebUri>https://github.com/FairyZeta/ACT.Timeline/releases/download</PluginWebUri>
+  <PluginWebUri>https://github.com/FairyZeta/ACT.Timeline/releases</PluginWebUri>
   <ReleaseDay />
   <Priority />
   <SummaryList>
