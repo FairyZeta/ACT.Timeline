@@ -1,19 +1,31 @@
 <?xml version="1.0"?>
-<PluginVersionInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<PluginVersionInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <PluginName>FZ.Timeline</PluginName>
-  <PluginVersion>0.0.1.0</PluginVersion>
+  <PluginVersion>0.0.2.0</PluginVersion>
   <DataBaseVersion>1.0.0.0</DataBaseVersion>
-  <PluginDownloadUri>https://github.com/FairyZeta/ACT.Timeline/releases/download/0.0.1.0/FZ.Timeline-0.0.1.0.zip</PluginDownloadUri>
+  <PluginDownloadUri>https://github.com/FairyZeta/ACT.Timeline/releases/download/0.0.2.0/FZ.Timeline-0.0.2.0.zip</PluginDownloadUri>
   <DataBaseDownloadUri />
   <CheckPluginInfoUri>https://raw.githubusercontent.com/FairyZeta/ACT.Timeline/master/VersionInfo.xml</CheckPluginInfoUri>
-  <PluginWebUri>https://github.com/FairyZeta/ACT.Timeline/releases</PluginWebUri>
+  <PluginWebUri>https://github.com/FairyZeta/ACT.Timeline/releases/download</PluginWebUri>
   <ReleaseDay />
   <Priority />
   <SummaryList>
-    <string>身内テスト版。一般な方は安定版「1.0.0.0」をお待ち下さい。</string>
-    <string>まともな動きは期待しないで下さい。</string>
-    <string>タイマー激重でガタガタ。チューニング中です。</string>
-    <string>PCが爆発しても責任取りません。</string>
+   <string> 【連絡】大変申し訳ございませんが </string>
+   <string> コードミスで直接ダウンロードが100%失敗するので </string>
+   <string> 今回だけWEBからダウンロードして下さい </string>
+   <string> --- 0.0.2.0 修正項目 --- </string>
+   <string> Bug：【重要】アクティブウインドウチェックでＡＣＴが落ちる可能性があるため修正</string>
+   <string>　※ほんとごめん…</string>
+   <string> Bug：デフォルトリソースフォルダが間違っていたのを修正</string>
+   <string> Bug：オートアップデート直接ダウンロードの仕様修正(0.0.1 =>2は100%失敗します、お手数かけます)</string>
+   <string> Bug：オーバーレイがAlt+Tabで表示されないように修正</string>
+   <string> Bug：バーの最大値が間違っていたので修正</string>
+   <string> 調整：新規オーバーレイの初期サイズと項目の変更</string>
+   <string> 調整：シャドウかけた文字のメモリ使用率がヤバイため一時的にOFF</string>
+   <string> 調整：軽度のデザイン修正</string>
+   <string> 調整：戦闘時間表示の復帰（重いかも）</string>
+   <string> 調整：タイムライン自動非表示ステータスの調整（ちょっとまだ怪しい）</string>
+   <string> 調整:内部メモリリソースの最適化</string>
   </SummaryList>
   <Msg />
 </PluginVersionInfo>
