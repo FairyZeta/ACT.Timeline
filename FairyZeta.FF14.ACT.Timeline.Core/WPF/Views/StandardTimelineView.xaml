@@ -6,13 +6,15 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:custom="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Custom"
              xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
-             xmlns:fControl="clr-namespace:FairyZeta.Framework.Controls;assembly=FairyZeta.Framework"
+             xmlns:fControl="clr-namespace:FairyZeta.Framework.WPF.Converters;assembly=FairyZeta.Framework"
              xmlns:fBehaviors="clr-namespace:FairyZeta.Framework.WPF.Behaviors;assembly=FairyZeta.Framework"
+             xmlns:fConverter="clr-namespace:FairyZeta.Framework.WPF.Converters;assembly=FairyZeta.Framework"
+             xmlns:behaviors="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
              xmlns:converter="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=dvm:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}"
-             >
+             xmlns:timelineCore="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -20,7 +22,9 @@
                 <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <fConverter:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
             <converter:OpacityConverter x:Key="opacityConverter"/>
+            <converter:ColorToShadowColorConverter x:Key="ShadowColorConverter"/>
             <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
 
             <Style x:Key="HeaderText" TargetType="{x:Type TextBlock}"/>
@@ -31,10 +35,83 @@
             </Style>
 
 
+            <SolidColorBrush x:Key="Enemy1" Color="#BFE2EBF5"/>
+
+            <SolidColorBrush x:Key="TANK1" Color="#BF344396"/>
+            <SolidColorBrush x:Key="TANK2" Color="#E24054BF"/>
+            <SolidColorBrush x:Key="HEALER1" Color="#BF396527"/>
+            <SolidColorBrush x:Key="HEALER2" Color="#E24C8D32"/>
+            <SolidColorBrush x:Key="DPS1" Color="#BF653232"/>
+            <SolidColorBrush x:Key="DPS2" Color="#E2A04242"/>
+
+            <SolidColorBrush x:Key="Pet1" Color="#BF969334"/>
+            <SolidColorBrush x:Key="UNKNOWN1" Color="#BFD3D3D3"/>
+            <SolidColorBrush x:Key="Me1" Color="#BFFFF700"/>
+
+            <SolidColorBrush x:Key="RoleColor_Enemy1" Color="#E2EBF5"/>
+
+            <SolidColorBrush x:Key="RoleColor_GIMMICK" Color="#BFD64E00"/>
+
+            <SolidColorBrush x:Key="BaseColor_Blue1" Color="#FFC6D3DE"/>
+            <SolidColorBrush x:Key="BaseColor_Blue1_Shadow" Color="#FF035B8D"/>
+            <SolidColorBrush x:Key="BaseColor_Gold1" Color="#DED7BE"/>
+            <SolidColorBrush x:Key="BaseColor_Gold1_Shadow" Color="#795516"/>
+
+            <Style x:Key="OutlineTextBlock" TargetType="{x:Type TextBlock}">
+                
+                <Style.Resources>
+                    <!--
+                    <DropShadowEffect x:Key="TestEffect1" BlurRadius="1" Direction="315" ShadowDepth="0"
+                                  Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TextColor_Shadow, 
+                                  RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                    <DropShadowEffect x:Key="EffectENEMY_01"  BlurRadius="2" Direction="315" ShadowDepth="1"
+                                  Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColor_ENEMY_Shadow, 
+                                  RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                    -->
+                    <DropShadowEffect x:Key="EffectUNKNOWN_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectTANK_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectHEALER_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectDPS_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectPET_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectGIMMICK_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                </Style.Resources>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.ENEMY}">
+
+                        <Setter Property="Foreground" Value="{StaticResource Enemy1}"/>
+                        <!--
+                        <Setter Property="Foreground" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColor_ENEMY_Base, 
+                                  RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type UserControl}}, 
+                                  Converter={StaticResource ColorToSolidColorBrushConverter}, Mode=OneWay}"/>
+                        -->
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.UNKNOWN}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_UNKNOWN1}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.TANK}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_TANK2}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.HEALER}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_HEALER2}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.DPS}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_DPS2}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.PET}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_Pet1}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.GIMMICK}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_GIMMICK}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
             <!-- ヘッダー／番号 -->
             <ControlTemplate x:Key="BasicTimeNoHeaderTemplate" >
                 <Grid>
-                    <TextBlock Text="T-No" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="T-No" Grid.Column="1" Foreground="{StaticResource BaseColor_Gold1}" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                    </TextBlock>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicActionTimeHeaderTemplate" >
@@ -93,28 +170,31 @@
                 <GradientStop Color="#00FFFFFF" Offset="1"/>
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ActiveForeground" EndPoint="0.0,0.5" StartPoint="1.0,0.5">
-                <GradientStop Color="#FF8EFC21" Offset="1"/>
-                <GradientStop Color="#FFE9AF10" Offset="0.515"/>
-                <GradientStop Color="#FF770E17" Offset="0.128"/>
+                <GradientStop Color="#AA8EFC21" Offset="1"/>
+                <GradientStop Color="#AAE9AF10" Offset="0.515"/>
+                <GradientStop Color="#AA770E17" Offset="0.128"/>
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="DurationForeground" EndPoint="0.0,0.5" StartPoint="1.0,0.5">
-                <GradientStop Color="#FFE9AF10" Offset="0.515"/>
-                <GradientStop Color="#FF770E17" Offset="0.128"/>
-                <GradientStop Color="#FF6C98F5" Offset="1"/>
+                <GradientStop Color="#AA4110E9" Offset="0.515"/>
+                <GradientStop Color="#AA770E17" Offset="0.128"/>
+                <GradientStop Color="#AA990E17" Offset="1"/>
             </LinearGradientBrush>
             <Style x:Key="ActiveBasicProgressBarStyle" TargetType="{x:Type ProgressBar}">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ProgressBar}">
                             <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true">
-                                <Rectangle Fill="{TemplateBinding Background}" RadiusY="0" RadiusX="0"/>
-
-                                <Rectangle x:Name="PART_Track" Margin="1"/>
+                                <!--<Rectangle Fill="{TemplateBinding Background}" RadiusY="0" RadiusX="0"/>-->
+                                <!--<Rectangle x:Name="PART_Track" Margin="1" />-->
+                                <Border Background="{TemplateBinding Background}" CornerRadius="5"/>
+                                <Border x:Name="PART_Track" Margin="1" CornerRadius="10"/>
                                 <Decorator x:Name="PART_Indicator" HorizontalAlignment="Left" Margin="1">
                                     <Grid x:Name="Foreground">
-                                        <Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}"/>
+                                        <!--<Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}"/>-->
+                                        <Border x:Name="Indicator" Background="{TemplateBinding Foreground}" CornerRadius="2 0 0 2"/>
                                         <Grid x:Name="Animation" ClipToBounds="true">
-                                            <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="0"/>
+                                            <!--<Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="0"/>-->
+                                            <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="0" />
                                         </Grid>
 
                                     </Grid>
@@ -139,14 +219,17 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ProgressBar}">
                             <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true">
-                                <Rectangle Fill="{TemplateBinding Background}" RadiusY="0" RadiusX="0"/>
-
-                                <Rectangle x:Name="PART_Track" Margin="1"/>
+                                <!--<Rectangle Fill="{TemplateBinding Background}" RadiusY="0" RadiusX="0"/>-->
+                                <!--<Rectangle x:Name="PART_Track" Margin="1" />-->
+                                <Border Background="{TemplateBinding Background}" CornerRadius="5"/>
+                                <Border x:Name="PART_Track" Margin="1" CornerRadius="10"/>
                                 <Decorator x:Name="PART_Indicator" HorizontalAlignment="Left" Margin="1">
                                     <Grid x:Name="Foreground">
-                                        <Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}"/>
+                                        <!--<Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}"/>-->
+                                        <Border x:Name="Indicator" Background="{TemplateBinding Foreground}" CornerRadius="2 0 0 2"/>
                                         <Grid x:Name="Animation" ClipToBounds="true">
-                                            <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="0"/>
+                                            <!--<Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="0"/>-->
+                                            <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="20" />
                                         </Grid>
 
                                     </Grid>
@@ -166,6 +249,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            
             <!-- コンテンツ -->
             <ControlTemplate x:Key="BasicTimeNoContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}">
@@ -211,23 +295,23 @@
                     <ProgressBar Minimum="{Binding ActiveIndicatorMinValue}" HorizontalAlignment="Stretch"
                                  Value="{Binding DataContext.TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" 
                                  Maximum="{Binding ActiveIndicatorMaxValue}" 
-                                 Margin="0 0 35 0" FlowDirection="RightToLeft" Background="Transparent" BorderBrush="Transparent"
+                                 Margin="0 5 35 5" FlowDirection="RightToLeft" Background="Transparent" BorderBrush="Transparent"
                                  Foreground="{DynamicResource ActiveForeground}">
                     <i:Interaction.Behaviors>
-                        <fBehaviors:LinearGradientBrushBehavior />
+                        <behaviors:ActiveGradientBehavior />
                     </i:Interaction.Behaviors>
                     <ProgressBar.Style>
-                            <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource ActiveBasicProgressBarStyle}"/>
-                        </ProgressBar.Style>
-                    </ProgressBar>
+                        <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource ActiveBasicProgressBarStyle}"/>
+                    </ProgressBar.Style>
+                </ProgressBar>
                     <ProgressBar Minimum="{Binding ActivityNo}" 
                                  Value="{Binding DataContext.TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}"
                                  Maximum="{Binding DurationIndicatorMaxValue}" 
-                                 Margin="0 0 35 0"
+                                 Margin="0 5 35 5"
                                  Template="{StaticResource BasicProgressBar}" Background="Transparent" BorderBrush="Transparent"
                                  Foreground="{DynamicResource DurationForeground}">
                         <i:Interaction.Behaviors>
-                            <fBehaviors:LinearGradientBrushBehavior />
+                            <behaviors:CastGradientBehavior />
                         </i:Interaction.Behaviors>
                         <ProgressBar.Style>
                             <Style TargetType="ProgressBar" BasedOn="{StaticResource DurationBasicProgressBarStyle}"/>
@@ -262,8 +346,12 @@
         <Grid.Resources>
             <FrameworkElement x:Key="proxyElement" />
         </Grid.Resources>
-        <Border Background="Black" CornerRadius="5" Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}"/>
-        <StackPanel Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Converter={StaticResource opacityConverter}}">
+        <Border Background="Black" CornerRadius="10" Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}" Margin="10">
+            <Border.Effect>
+                <BlurEffect Radius="10" KernelType="Box"/>
+            </Border.Effect>
+        </Border>
+        <StackPanel Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Converter={StaticResource opacityConverter}}" Margin="10">
             <!-- ウィンドウヘッダー -->
             <Grid Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarVisibility, Converter={StaticResource BoolToVisibility}}">
                 <Grid.ColumnDefinitions>
@@ -378,8 +466,7 @@
           ScrollViewer.IsDeferredScrollingEnabled="True"
           ScrollViewer.PanningMode="VerticalOnly"
           ScrollViewer.VerticalScrollBarVisibility="Hidden"
-          VirtualizingPanel.IsVirtualizing="True"
-          VirtualizingPanel.VirtualizationMode="Recycling">
+          VirtualizingPanel.IsVirtualizing="True">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel Orientation="Vertical"

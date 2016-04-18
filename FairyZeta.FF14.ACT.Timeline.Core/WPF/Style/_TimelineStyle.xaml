@@ -1,11 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:converter="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Converter"
+             xmlns:timelineCore="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="__ColorBaseStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <converter:ColorToShadowColorConverter x:Key="ShadowColorConverter"/>
+    
     <System:Double x:Key="CaptionHeight">0</System:Double>
     <Style TargetType="{x:Type Window}" x:Key="DefaultWindowStyle">
         <Setter Property="WindowChrome.WindowChrome">
@@ -21,62 +25,6 @@
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
-    <!-- アウトラインテキスト(旧LABEL, 未使用) -->
-    <Style x:Key="OutlineTextStyle" TargetType="{x:Type Label}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Label}">
-                    <Grid>
-                        <TextBlock Text="{TemplateBinding Content}" Foreground="#88217AA2" FontSize="{TemplateBinding FontSize}">
-                            <TextBlock.Effect>
-                                <BlurEffect Radius="2"/>
-                            </TextBlock.Effect>
-                            <TextBlock.RenderTransform>
-                                <TranslateTransform X="0" Y="1" />
-                            </TextBlock.RenderTransform>
-                        </TextBlock>
-                        <TextBlock Text="{TemplateBinding Content}" Foreground="#88217AA2" FontSize="{TemplateBinding FontSize}">
-                            <TextBlock.Effect>
-                                <BlurEffect Radius="2"/>
-                            </TextBlock.Effect>
-                            <TextBlock.RenderTransform>
-                                <TranslateTransform X="0" Y="-1" />
-                            </TextBlock.RenderTransform>
-                        </TextBlock>
-                        <TextBlock Text="{TemplateBinding Content}" Foreground="#88217AA2" FontSize="{TemplateBinding FontSize}">
-                            <TextBlock.Effect>
-                                <BlurEffect Radius="2"/>
-                            </TextBlock.Effect>
-                            <TextBlock.RenderTransform>
-                                <TranslateTransform X="1" Y="0" />
-                            </TextBlock.RenderTransform>
-                        </TextBlock>
-                        <TextBlock Text="{TemplateBinding Content}" Foreground="#88217AA2" FontSize="{TemplateBinding FontSize}">
-                            <TextBlock.Effect>
-                                <BlurEffect Radius="2"/>
-                            </TextBlock.Effect>
-                            <TextBlock.RenderTransform>
-                                <TranslateTransform X="-1" Y="0" />
-                            </TextBlock.RenderTransform>
-                        </TextBlock>
-                        <TextBlock Text="{TemplateBinding Content}" Foreground="#BFE2EBF5" FontSize="{TemplateBinding FontSize}">
-                            <TextBlock.Effect>
-                                <BlurEffect Radius="0"/>
-                            </TextBlock.Effect>
-                        </TextBlock>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="OutlineTextBlock" TargetType="{x:Type TextBlock}">
-        <Style.Resources>
-            <DropShadowEffect x:Key="TestEffect1" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
-        </Style.Resources>
-        <Setter Property="Effect" Value="{StaticResource TestEffect1}"/>
-        <Setter Property="Foreground" Value="#BFE2EBF5"/>
-    </Style>
     
     <Style x:Key="CaptionButtonStyleKey" TargetType="{x:Type Button}">
         <Setter Property="OverridesDefaultStyle" Value="True" />

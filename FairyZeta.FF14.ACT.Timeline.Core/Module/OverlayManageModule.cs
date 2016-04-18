@@ -36,6 +36,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <summary> セーブ対象状態リセットプロセス
         /// </summary>
         private SaveChangedResetProcess saveChangedResetProcess;
+        /// <summary> オーバーレイデフォルトカラーセットプロセス
+        /// </summary>
+        private OvarlayDefaultSetProcess ovarlayDefaultSetProcess;
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -59,6 +62,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             this.setFilterProcess = new SetFilterProcess();
             this.appDataFileManageProcess = new AppDataFileManageProcess();
             this.saveChangedResetProcess = new SaveChangedResetProcess();
+            this.ovarlayDefaultSetProcess = new OvarlayDefaultSetProcess();
 
             return true;
         }
@@ -78,11 +82,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             {
                 pAddOverlayDataModel.OverlayWindowData.ID = 1;
             }
-
+            
             OverlayViewComponent component = new OverlayViewComponent(pCommonDataModel);
             component.OverlayDataModel = pAddOverlayDataModel;
             this.SetDefaultOverlayWindowData(component.OverlayDataModel.OverlayWindowData);
             this.SetDefaultOverlaySettingData(component.OverlayDataModel.OverlayOptionData);
+
+            // 配色設定
+            component.OverlayDataModel.OverlayColorSettingsData = new OverlayColorSettingsData();
+            this.ovarlayDefaultSetProcess.SetDefaultColorSettings(component.OverlayDataModel.OverlayColorSettingsData, pCommonDataModel.DefaultColorData);
 
             component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineDataModel.TimelineItemCollection };
             this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
@@ -105,6 +113,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             foreach (var data in dataList)
             {
                 OverlayViewComponent component = new OverlayViewComponent(pCommonDataModel);
+
+                // 配色情報がNullの場合、新規作成する
+                if(data.OverlayColorSettingsData == null)
+                {
+                    data.OverlayColorSettingsData = new OverlayColorSettingsData();
+                    this.ovarlayDefaultSetProcess.SetDefaultColorSettings(data.OverlayColorSettingsData, pCommonDataModel.DefaultColorData);
+                }
+
                 component.OverlayDataModel = data;
 
                 component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineDataModel.TimelineItemCollection };

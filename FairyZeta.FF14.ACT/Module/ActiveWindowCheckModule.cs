@@ -42,28 +42,35 @@ namespace FairyZeta.FF14.ACT.Module
         /// <returns></returns>
         public bool ActRelationWindowActiveCheck()
         {
-            uint pid;
-            var hWndFg = WindowsServices.GetForegroundWindow();
-            if (hWndFg == IntPtr.Zero)
+            try
             {
-                // アクティブウィンドウ無し
+                uint pid;
+                var hWndFg = WindowsServices.GetForegroundWindow();
+                if (hWndFg == IntPtr.Zero)
+                {
+                    // アクティブウィンドウ無し
+                    return false;
+                }
+
+                WindowsServices.GetWindowThreadProcessId(hWndFg, out pid);
+                var exePath = System.Diagnostics.Process.GetProcessById((int)pid).MainModule.FileName;
+
+                if (Path.GetFileName(exePath.ToString()) == "ffxiv.exe" ||
+                    Path.GetFileName(exePath.ToString()) == "ffxiv_dx11.exe" ||
+                    exePath.ToString() == System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (ExecutionEngineException e)
+            {
+                Console.WriteLine(e.Message);
                 return false;
             }
-            
-            WindowsServices.GetWindowThreadProcessId(hWndFg, out pid);
-            var exePath =　System.Diagnostics.Process.GetProcessById((int)pid).MainModule.FileName;
-
-            if (Path.GetFileName(exePath.ToString()) == "ffxiv.exe" ||
-                Path.GetFileName(exePath.ToString()) == "ffxiv_dx11.exe" ||
-                exePath.ToString() == System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
         }
 
         /// <summary> ACT本体のウィンドウがアクティブかを確認し、Bool値を返します。

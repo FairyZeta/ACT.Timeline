@@ -134,6 +134,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// <summary> OS環境オブジェクトモデル
         /// </summary>
         public EnvironmentObjectModel EnvironmentObjectModel { get; private set; }
+        /// <summary> デフォルトカラーデータ
+        /// </summary>
+        public DefaultColorData DefaultColorData { get; private set; }
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -174,6 +177,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 
             this.FormActMainControlData = new FormActMainControlData();
             this.PluginVersionInfo = new PluginVersionInfo();
+
+            this.DefaultColorData = new DefaultColorData();
+
             return true;
         }
 

@@ -132,6 +132,7 @@
     <Compile Include="Data\OverlayBarSettingsData.cs" />
     <Compile Include="Data\OverlayColorSettingsData.cs" />
     <Compile Include="Data\OverlayContentSettingsData.cs" />
+    <Compile Include="Data\DefaultColorData.cs" />
     <Compile Include="Data\OverlayFilterSettingsData.cs" />
     <Compile Include="Data\OverlayManageData.cs" />
     <Compile Include="Data\OverlayItemVisibilitySettingsData.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="Process\AppDataPathCreateProcess.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Process\OvarlayDefaultSetProcess.cs" />
     <Compile Include="Process\SaveChangedResetProcess.cs" />
     <Compile Include="Process\SetFilterProcess.cs" />
     <Compile Include="Module\TimelineControlModule.cs" />
@@ -207,9 +209,12 @@
     <Compile Include="TimelineLoader.cs" />
     <Compile Include="UpdateChecker.cs" />
     <Compile Include="Win32APIUtils.cs" />
+    <Compile Include="WPF\Behavior\CastGradientBehavior.cs" />
+    <Compile Include="WPF\Behavior\ActiveGradientBehavior.cs" />
     <Compile Include="WPF\Behavior\PropertyChangedCommandBehavior.cs" />
     <Compile Include="WPF\Behavior\WindowCloseAttachedBehavior.cs" />
     <Compile Include="WPF\Behavior\WindowStateChangeAttachedBehavior.cs" />
+    <Compile Include="WPF\Converter\ColorToShadowColorConverter.cs" />
     <Compile Include="WPF\Converter\OpacityConverter.cs" />
     <Compile Include="WPF\Custom\OutlinedTextBlock.cs" />
     <Compile Include="WPF\Desing\Desing_BaseWindowViewModel.cs">

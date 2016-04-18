@@ -7,6 +7,8 @@
              xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
              xmlns:fControl="clr-namespace:FairyZeta.Framework.Controls;assembly=FairyZeta.Framework"
              xmlns:converter="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Converter"
+             xmlns:timelineCore="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
+             
              mc:Ignorable="d" 
              d:DesignHeight="24" d:DesignWidth="150"
              d:DataContext="{d:DesignInstance Type=dData:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}"
@@ -18,9 +20,55 @@
                 <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <converter:ColorToShadowColorConverter x:Key="ShadowColorConverter"/>
             <converter:OpacityConverter x:Key="opacityConverter"/>
             <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
 
+            <Style x:Key="OutlineTextBlock" TargetType="{x:Type TextBlock}">
+                <Style.Resources>
+                    <DropShadowEffect x:Key="TestEffect1" BlurRadius="2" Direction="315" ShadowDepth="0"
+                                  Color="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TextColor_Base, 
+                                  RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type UserControl}}, 
+                                  Converter={StaticResource ShadowColorConverter}}"/>
+                    <DropShadowEffect x:Key="EffectENEMY_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectUNKNOWN_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectTANK_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectHEALER_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectDPS_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectPET_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                    <DropShadowEffect x:Key="EffectGIMMICK_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
+                </Style.Resources>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.ENEMY}">
+                        <Setter Property="Foreground" Value="{StaticResource Enemy}"/>
+                        <Setter Property="Effect" Value="{StaticResource TestEffect1}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.UNKNOWN}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_UNKNOWN1}"/>
+                        <Setter Property="Effect" Value="{StaticResource EffectUNKNOWN_01}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.TANK}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_TANK2}"/>
+                        <Setter Property="Effect" Value="{StaticResource EffectTANK_01}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.HEALER}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_HEALER2}"/>
+                        <Setter Property="Effect" Value="{StaticResource EffectHEALER_01}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.DPS}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_DPS2}"/>
+                        <Setter Property="Effect" Value="{StaticResource EffectDPS_01}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.PET}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_Pet1}"/>
+                        <Setter Property="Effect" Value="{StaticResource EffectPET_01}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.GIMMICK}">
+                        <Setter Property="Foreground" Value="{StaticResource RoleColor_GIMMICK}"/>
+                        <Setter Property="Effect" Value="{StaticResource EffectENEMY_01}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
             <ControlTemplate x:Key="TimelineRewindButton" TargetType="{x:Type Button}">
                 <Border x:Name="BaseBorder" BorderBrush="{StaticResource BaseColor_Gold1}" BorderThickness="1" CornerRadius="3">
                     <Border.Background>

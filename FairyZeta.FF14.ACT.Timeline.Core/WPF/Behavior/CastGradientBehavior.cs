@@ -3,9 +3,11 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Interactivity;
 using System.Windows.Media;
 
-namespace FairyZeta.Framework.WPF.Behaviors
+namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior
 {
-    public class LinearGradientBrushBehavior : Behavior<RangeBase>
+    /// <summary> オーバーレイ／キャストゲージビヘイビア
+    /// </summary>
+    public class CastGradientBehavior : Behavior<RangeBase>
     {
         protected override void OnAttached()
         {
@@ -41,7 +43,6 @@ namespace FairyZeta.Framework.WPF.Behaviors
 
         private double Progress
         {
-            //get { return AssociatedObject.Value / (AssociatedObject.Maximum - AssociatedObject.Minimum); }
             get { return AssociatedObject.Maximum - AssociatedObject.Value; }
         }
 
@@ -55,29 +56,12 @@ namespace FairyZeta.Framework.WPF.Behaviors
 
         public static readonly DependencyProperty SourceBrushProperty =
             DependencyProperty.Register(
-                "SourceBrush", typeof(LinearGradientBrush), typeof(LinearGradientBrushBehavior), new UIPropertyMetadata(null));
+                "SourceBrush", typeof(LinearGradientBrush), typeof(CastGradientBehavior), new UIPropertyMetadata(null));
 
         #endregion
-
-        //private void CalculateNewGradient(double progress)
-        //{
-        //    var brush = new LinearGradientBrush();
-        //    brush.StartPoint = SourceBrush.StartPoint;
-        //    brush.EndPoint = SourceBrush.EndPoint;
-        //
-        //    foreach (var gradientStop in SourceBrush.GradientStops)
-        //    {
-        //        var offset = (1 - gradientStop.Offset) / progress;
-        //        var newGradientStop = new GradientStop(gradientStop.Color, 1 - offset);
-        //        brush.GradientStops.Add(newGradientStop);
-        //    }
-        //
-        //    ApplyNewGradient(brush);
-        //}
-
-
+            
         private void CalculateNewGradient(double progress)
-        { 
+        {
             var brush = new LinearGradientBrush();
             brush.StartPoint = SourceBrush.StartPoint;
             brush.EndPoint = SourceBrush.EndPoint;
@@ -88,30 +72,26 @@ namespace FairyZeta.Framework.WPF.Behaviors
             }
             else if (progress < 2)
             {
-                var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[2].Color, 1 - progress);
-                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[1].Color, 2 - progress);
-                brush.GradientStops.Add(newGradientStop2);
-                brush.GradientStops.Add(newGradientStop1);
-            }
-            else if(progress < 3)
-            {
+                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[0].Color, 1 - progress);
                 var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[1].Color, 2 - progress);
-                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[0].Color, 3 - progress);
-                brush.GradientStops.Add(newGradientStop2);
                 brush.GradientStops.Add(newGradientStop1);
+                brush.GradientStops.Add(newGradientStop2);
             }
-            else
+            else if (progress < 3)
             {
-                var newGradientStop = new GradientStop(SourceBrush.GradientStops[0].Color, 0);
-                brush.GradientStops.Add(newGradientStop);
+                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[1].Color, 2 - progress);
+                var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[2].Color, 3 - progress);
+                brush.GradientStops.Add(newGradientStop1);
+                brush.GradientStops.Add(newGradientStop2);
             }
 
             ApplyNewGradient(brush);
         }
-        
+
         private void ApplyNewGradient(LinearGradientBrush brush)
         {
             AssociatedObject.Foreground = brush;
         }
     }
+    
 }

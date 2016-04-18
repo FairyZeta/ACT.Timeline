@@ -8,9 +8,9 @@ using System.Xml.Serialization;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 {
-    /// <summary> タイムライン／オーバーレイカラー設定データ
+    /// <summary> オーバーレイ／デフォルトカラーデータ
     /// </summary>
-    public class OverlayColorSettingsData : _Data
+    public class DefaultColorData : _Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -22,8 +22,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         public Color TextColor_Base
         {
             get { return (Color)ColorConverter.ConvertFromString(this.TextColor_Base_String); }
-            set 
-            { 
+            set
+            {
                 this.SetProperty(ref this.TextColor_Base_String, base.ColorToStringFormat(value));
                 base.SaveChangedTarget = true;
             }
@@ -33,7 +33,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <summary> テキストカラー.シャドウ </summary>
         public string TextColor_Shadow_String;
         /// <summary> テキストカラー.シャドウ </summary>  
-        [XmlIgnore]  
+        [XmlIgnore]
         public Color TextColor_Shadow
         {
             get { return (Color)ColorConverter.ConvertFromString(this.TextColor_Shadow_String); }
@@ -44,12 +44,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             }
         }
         #endregion
-        
+
         #region #- [Property] Color.HeaderColor_Base - ＜ヘッダーカラー.ベース＞ -----
         /// <summary> ヘッダーカラー.ベース </summary>
         public string HeaderColor_Base_String;
         /// <summary> ヘッダーカラー.ベース </summary> 
-        [XmlIgnore]     
+        [XmlIgnore]
         public Color HeaderColor_Base
         {
             get { return (Color)ColorConverter.ConvertFromString(this.HeaderColor_Base_String); }
@@ -274,35 +274,38 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
-      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
-        
-        /// <summary> タイムライン／オーバーレイカラー設定データ／コンストラクタ
+        /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> オーバーレイ／デフォルトカラーデータ
         /// </summary>
-        public OverlayColorSettingsData()
+        public DefaultColorData()
             : base()
         {
             this.initData();
         }
 
-      /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
+
+        /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> データの初期化を実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
         private bool initData()
         {
+            //this.TextColor_Base = Color.FromArgb(0x88, 0x21, 0x7A, 0xA2);
+            //this.TextColor_Shadow = Color.FromArgb(0xBF, 0xE2, 0xEB, 0xF5);
             this.TextColor_Base = Color.FromArgb(0x88, 0xFF, 0x00, 0x00);
             this.TextColor_Shadow = Color.FromArgb(0xBF, 0x00, 0xFF, 0x00);
             this.HeaderColor_Base = Color.FromArgb(0xBF, 0xDE, 0xD7, 0xBE);
             this.HeaderColor_Shadow = Color.FromArgb(0xE2, 0x79, 0x55, 0x16);
 
-            this.TypeColor_ENEMY_Base = Color.FromArgb(0x88, 0xE2, 0xEB, 0xF5);
+            this.TypeColor_ENEMY_Base = Color.FromArgb(0x88, 0x21, 0x7A, 0xA2);
             this.TypeColor_ENEMY_Shadow = Color.FromArgb(0xBF, 0xE2, 0xEB, 0xF5);
             this.TypeColor_UNKNOWN_Base = Color.FromArgb(0xBF, 0xAA, 0xAA, 0xAA);
             this.TypeColor_UNKNOWN_Shadow = Color.FromArgb(0xE2, 0xAA, 0xAA, 0xAA);
 
-            this.TypeColor_TANK_Base = Color.FromArgb(0xBF, 0x34, 0x43, 0x96);
-            this.TypeColor_TANK_Shadow = Color.FromArgb(0xE2, 0x40, 0x54, 0xBF);
+            this.TypeColor_TANK_Base = Color.FromArgb(0xBF,0x34,0x43,0x96);
+            this.TypeColor_TANK_Shadow = Color.FromArgb(0xE2,0x40,0x54,0xBF);
             this.TypeColor_DPS_Base = Color.FromArgb(0xBF, 0x65, 0x32, 0x32);
             this.TypeColor_DPS_Shadow = Color.FromArgb(0xE2, 0xA0, 0x42, 0x42);
             this.TypeColor_HEALER_Base = Color.FromArgb(0xBF, 0x39, 0x65, 0x27);
@@ -316,21 +319,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             return true;
         }
 
-      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+        /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> データの全体クリアを実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 
         public override bool Clear()
         {
-            base.Clear();
             this.clear();
 
             return true;
         }
 
-      /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
-        
+        /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
+
         /// <summary> データの単体クリアを実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 

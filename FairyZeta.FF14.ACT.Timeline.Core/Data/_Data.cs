@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.Windows.Media;
 using Prism.Mvvm;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
@@ -40,6 +41,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        public string ColorToStringFormat(Color pColor)
+        {
+            return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", pColor.A, pColor.R, pColor.G, pColor.B);
+        }
+
+        public Color StringToColorFormat(string pStr)
+        {
+            return (Color)ColorConverter.ConvertFromString(pStr);
+        }
 
         /// <summary> データの全体クリアを実行します。
         /// </summary>

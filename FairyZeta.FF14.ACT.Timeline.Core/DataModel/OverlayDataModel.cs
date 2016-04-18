@@ -30,7 +30,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
                     || this.OverlayContentSettingsData.SaveChangedTarget
                     )
                 {
-                    return true;
+                    if (this.OverlayColorSettingsData != null && this.OverlayColorSettingsData.SaveChangedTarget)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
@@ -139,6 +146,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
                 this._OverlayContentSettingsData = value;
                 base.OnPropertyChanged("OverlayContentSettingsData");
             }
+        }
+        #endregion
+        #region #- [Property] OverlayColorSettingsData.OverlayColorSettingsData - ＜オーバーレイカラー設定データ＞ -----
+        /// <summary> オーバーレイカラー設定データ </summary>
+        private OverlayColorSettingsData _OverlayColorSettingsData;
+        /// <summary> オーバーレイカラー設定データ </summary>    
+        public OverlayColorSettingsData OverlayColorSettingsData
+        {
+            get { return _OverlayColorSettingsData; }
+            set { this.SetProperty(ref this._OverlayColorSettingsData, value); }
         }
         #endregion
 

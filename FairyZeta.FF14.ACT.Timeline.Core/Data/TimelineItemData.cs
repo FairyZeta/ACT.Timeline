@@ -270,7 +270,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         {
             get
             {
-                return this.ActivityNo + 2.0;
+                return this.EndTime;
             }
         }
 

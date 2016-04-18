@@ -49,7 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
-      <HintPath>D:\Advanced Combat Tracker.exe</HintPath>
+      <HintPath>..\..\..\Advanced Combat Tracker\Advanced Combat Tracker.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

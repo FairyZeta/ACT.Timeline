@@ -100,6 +100,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WPF\Adorner\DragAdorner.cs" />
+    <Compile Include="WPF\Converters\ColorToSolidColorBrushConverter .cs" />
     <Compile Include="WPF\Behavior\LinearGradientBrushBehavior.cs" />
     <Compile Include="WPF\Controls\_ComboBox\NumericComboBox.cs" />
     <Compile Include="WPF\Controls\_LoadingRing\LoadingArc.cs" />
