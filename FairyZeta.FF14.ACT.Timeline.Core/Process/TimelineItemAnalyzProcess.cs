@@ -40,17 +40,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// <summary> タイムラインアイテムを解析し、データにタイムラインタイプを設定します。
         /// </summary>
         /// <param name="pTimelineItemD"> 解析と設定を実行するデータ </param>
-        public void SetTimelineType(TimelineItemData pTimelineItemD)
+        public void SetTimelineType(TimelineActivityData pTimelineActivityD)
         {
-            pTimelineItemD.TimelineType = this.TimelineTypeAnalyz(pTimelineItemD.ActivityName);
+            pTimelineActivityD.TimelineType = this.TimelineTypeAnalyz(pTimelineActivityD.Name);
         }
 
         /// <summary> タイムラインアイテムを解析し、データにタイムラインジョブを設定します。
         /// </summary>
         /// <param name="pTimelineItemD"> 解析と設定を実行するデータ </param>
-        public void SetTimelineJob(TimelineItemData pTimelineItemD)
+        public void SetTimelineJob(TimelineActivityData pTimelineActivityD)
         {
-            pTimelineItemD.JobType = this.JobAnalyz(pTimelineItemD.ActivityName);
+            pTimelineActivityD.JobType = this.JobAnalyz(pTimelineActivityD.Name);
         }
 
         #endregion

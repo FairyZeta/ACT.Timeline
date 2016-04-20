@@ -75,7 +75,7 @@
                 <RowDefinition Height="55*"/>
                 <RowDefinition Height="12*"/>
             </Grid.RowDefinitions>
-            <TabControl Grid.RowSpan="100">
+            <TabControl Grid.RowSpan="100" BorderThickness="0 1 0 0" Margin="0 0 10 0">
                 <TabItem Header="Common">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -307,7 +307,87 @@
                         </Grid>
                     </Border>
                 </TabItem>
+                <TabItem Header="Color">
+                    <TabItem.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="50" />
+                            <Setter Property="Margin" Value="2 2"/>
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Width" Value="180"/>
+                            <Setter Property="Margin" Value="5 0 0 0"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </TabItem.Resources>
+                    <Grid>
+                        <StackPanel>
+                            <Label Content=" - Base Color - "/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Main Color "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Content Color "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Background Color "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <Label Content=" - Timeline Color - "/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Header Text Color "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Header Bar  Color "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Type Color [UNKNOWN] "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Type Color [ENEMY] "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Type Color [TANK] "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Type Color [DPS] "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Type Color [HEALER]  "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Type Color [PET] "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="SET"/>
+                                <TextBlock Text=" Type Color [GIMMICK] "/>
+                                <TextBlock Text="aabbccdd"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
             </TabControl>
+            <GridSplitter Grid.RowSpan="100" Width="3" Margin="0 15"/>
             <view:StandardTimelineView Grid.Column="1" Grid.RowSpan="100" Margin="10 50 10 50"/>
         </Grid>
     </Border>

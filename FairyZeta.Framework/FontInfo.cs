@@ -12,6 +12,8 @@ namespace FairyZeta.Framework
     [Serializable]
     public class FontInfo
     {
+      /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
         [XmlIgnore]
         private static FontStyleConverter styleConverter = new FontStyleConverter();
 
@@ -24,18 +26,15 @@ namespace FairyZeta.Framework
         [XmlIgnore]
         private static Dictionary<string, FontFamily> fontFamilyDictionary = new Dictionary<string, FontFamily>();
 
+      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
+
         public FontInfo()
         {
             this.Family = GetFontFamily(string.Empty);
             this.Size = 11.25;
         }
 
-        public FontInfo(
-            string family,
-            double size,
-            string style,
-            string weight,
-            string stretch)
+        public FontInfo(string family, double size, string style, string weight, string stretch)
         {
             this.Family = GetFontFamily(family);
             this.Size = size;
@@ -44,12 +43,7 @@ namespace FairyZeta.Framework
             this.StretchString = stretch;
         }
 
-        public FontInfo(
-            FontFamily family,
-            double size,
-            FontStyle style,
-            FontWeight weight,
-            FontStretch stretch)
+        public FontInfo(FontFamily family, double size, FontStyle style, FontWeight weight, FontStretch stretch)
         {
             this.Family = family;
             this.Size = size;
@@ -58,6 +52,12 @@ namespace FairyZeta.Framework
             this.Stretch = stretch;
         }
 
+      /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
+
+      /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+      /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
+        
         [XmlIgnore]
         public FontFamily Family { get; set; }
 

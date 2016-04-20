@@ -5,7 +5,7 @@ using System.Threading;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace FairyZeta.Framework.Converters
+namespace FairyZeta.Framework.WPF.Converters
 {
     public class FontFamilyToNameConverter : IValueConverter
     {

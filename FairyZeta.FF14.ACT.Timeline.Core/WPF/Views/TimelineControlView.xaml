@@ -127,8 +127,8 @@
                                FontSize="14">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0:00}:{1:00;00}">
-                                <Binding Path="TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTimeSpan.Minutes" />
-                                <Binding Path="TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTimeSpan.Seconds" />
+                                <Binding Path="TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTimeSpan.Minutes" />
+                                <Binding Path="TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTimeSpan.Seconds" />
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>

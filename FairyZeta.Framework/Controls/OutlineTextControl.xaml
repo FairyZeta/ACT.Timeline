@@ -6,7 +6,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
   xmlns:local="clr-namespace:FairyZeta.Framework.Controls"
-  xmlns:conv="clr-namespace:FairyZeta.Framework.Converters"
+  xmlns:conv="clr-namespace:FairyZeta.Framework.WPF.Converters"
   mc:Ignorable="d" 
   FontFamily="Arial, メイリオ"
   SnapsToDevicePixels="True"

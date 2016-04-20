@@ -96,6 +96,20 @@
         GIMMICK
     }
 
+    /// <summary> シンク処理タイプ
+    /// </summary>
+    public enum SyncType
+    {
+        /// <summary> シンク無し </summary>
+        Non,
+        /// <summary> 自動終了アンカー </summary>
+        AutoEnd,
+        /// <summary> ジャンプアンカー </summary>
+        Jump,
+        /// <summary> シンクアンカー </summary>
+        Sync
+    }
+
     /// <summary> ENUM: ジョブ
     /// </summary>
     public enum Job

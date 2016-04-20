@@ -18,7 +18,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 
         /// <summary> 現在のタイムラインアイテム
         /// </summary>
-        public TimelineBaseData Timeline { get; set; }
+        public TimelineObjectModel Timeline { get; set; }
 
         /// <summary> タイムラインアイテムコレクション
         /// </summary>

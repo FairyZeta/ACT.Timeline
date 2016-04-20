@@ -213,7 +213,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataFilter
         {
             if (e.Accepted == false) return;
 
-            var data = e.Item as TimelineItemData;
+            var data = e.Item as TimelineActivityData;
             if (data == null || data.JobType != pJob) return;
 
             e.Accepted = false;

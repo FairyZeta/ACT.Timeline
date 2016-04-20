@@ -14,7 +14,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     /// </summary>
     public class TimelineAnchorData : _Data
     {
-      /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+        /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> シンク処理タイプ
+        /// </summary>
+        public SyncType SyncType { get; set; }
 
         /// <summary> デフォルトのアンカー有効範囲
         /// </summary>

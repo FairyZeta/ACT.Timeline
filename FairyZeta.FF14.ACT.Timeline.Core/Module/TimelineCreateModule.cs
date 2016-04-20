@@ -7,6 +7,7 @@ using FairyZeta.Core.Process;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Process;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {
@@ -57,7 +58,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <param name="pCommonDM"> 共通データモデル </param>
         /// <param name="pTimelineDM"> 作成データを格納するタイムラインデータモデル </param>
         /// <param name="pTimerDM"> タイマーデータモデル </param>
-        public void CreateTimelineDataModel(CommonDataModel pCommonDM, TimelineDataModel pTimelineDM, TimerDataModel pTimerDM)
+        //public void CreateTimelineDataModel(CommonDataModel pCommonDM, TimelineDataModel pTimelineDM, TimerDataModel pTimerDM)
+        public void CreateTimelineDataModel(CommonDataModel pCommonDM, TimelineObjectModel pTimelineOM)
         {
             switch(pCommonDM.AppStatusData.TimelineLoadStatus)
             {
@@ -65,7 +67,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                     return;
             }
 
-            this.TimelineDataClear(pCommonDM, pTimelineDM, pTimerDM);
+            this.TimelineDataClear(pCommonDM, pTimelineOM);
+
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NowLoading;
             this.TimelineFunctionEnabledChange(pCommonDM);
 
@@ -80,7 +83,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             try
             {
-                pTimelineDM.Timeline = TimelineLoader.LoadFromFile(pCommonDM.SelectedTimelineFileData.TimelineFileFullPath);
+                TimelineLoader.LoadFromFile(pTimelineOM, pCommonDM.SelectedTimelineFileData.TimelineFileFullPath);
             }
             catch (Exception e)
             {
@@ -98,59 +101,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             finally
             {
             }
-
-            var baseData = pTimelineDM.Timeline;
-
-            if (baseData.Items.Count() == 0) return;
-
-            // アンカーコレクション
-            foreach (var anc in pTimelineDM.Timeline.Anchors)
-            {
-                pTimelineDM.TimelineAnchorDataCollection.Add(anc);
-            }
-
+            
             // タイムラインアイテムコレクションの生成
-            foreach (var data in baseData.Items)
+            foreach (var data in pTimelineOM.ActivityCollection)
             {
-                TimelineItemData target = new TimelineItemData(pTimerDM.TimerDeta);
-
-                target.ActivityNo = this.doubleToAdjustProcess.ToHalfAdjust(data.TimeFromStart, 1);
-                target.ActivityIndex = Convert.ToInt32(target.ActivityNo * 10);
-                target.Duration = data.Duration;
-                target.ActivityName = data.Name;
-
-                target.ActiveIndicatorStartTime = target.ActiveTime - target.ActiveIndicatorMaxValue;
-                if(target.DurationIndicatorMaxValue > 0)
-                {
-                    target.DurationIndicatorVisibility = true;
-                }
-
                 // タイムラインタイプとジョブを設定
-                this.timelineItemAnalyzProcess.SetTimelineType(target);
-                this.timelineItemAnalyzProcess.SetTimelineJob(target);
-
-                // ジャンプとシンクの設定
-                target.JumpItemData = pTimelineDM.TimelineAnchorDataCollection
-                    .FirstOrDefault(s => s.Jump >= 0 && s.TimeFromStart == target.ActivityNo);
-                target.SyncItemData = pTimelineDM.TimelineAnchorDataCollection
-                    .FirstOrDefault(s => s.Jump == -1.0 && s.TimeFromStart == target.ActivityNo);
-
-                // add
-                pTimelineDM.TimelineItemCollection.Add(target);
-                
-            }
-
-            // アラートコレクションの生成
-            foreach (var data in baseData.Alerts)
-            {
-                pTimelineDM.AlertStartTimeList.Add(data.TimeFromStart);
-                pTimelineDM.TimelineAlertCollection.Add(data);
-            }
-
-            // タイマー情報セット
-            if (pTimelineDM.TimelineItemCollection.Count > 0)
-            {
-                pTimerDM.TimerDeta.CurrentCombatEndTime = pTimelineDM.TimelineItemCollection.Max(i => i.EndTime);
+                this.timelineItemAnalyzProcess.SetTimelineType(data);
+                this.timelineItemAnalyzProcess.SetTimelineJob(data);
             }
 
             // 最終ロードファイルの変更
@@ -166,10 +123,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         /// <param name="pCommonDM"></param>
         /// <param name="pTimelineDM"></param>
-        public void TimelineDataClear(CommonDataModel pCommonDM, TimelineDataModel pTimelineDM, TimerDataModel pTimerDM)
+        public void TimelineDataClear(CommonDataModel pCommonDM, TimelineObjectModel pTimelineOM)
         {
-            pTimerDM.TimerDeta.Clear();
-            pTimelineDM.Clear();
+            pTimelineOM.TimerData.Clear();
+            pTimelineOM.Clear();
 
             pCommonDM.AppStatusData.TimelineLoadStatus = TimelineLoadStatus.NonLoad;
             this.TimelineFunctionEnabledChange(pCommonDM);

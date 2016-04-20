@@ -14,19 +14,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     {
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> (参照専用) タイマーデータ
-        /// </summary>
-        private TimerData timerData;
 
         /// <summary> タイムラインアイテムのジョブタイプ
         /// </summary>
         public Job JobType { get; set; }
-
+        
         /// <summary> タイムラインアイテムタイプ
         /// </summary>
         public TimelineType TimelineType { get; set; }
 
-        public TimelineAlertObjectModel ActivityAlert { get; set; }
 
         #region #- [Property] int.ActivityIndex - ＜アクティビティ管理番号＞ -----
         /// <summary> アクティビティ管理番号 </summary>
@@ -63,8 +59,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
-
-        TimeSpan s ;
         /// <summary> (get) アクティビティタイム </summary>
         public TimeSpan ActivityTimeSpan
         {
@@ -113,19 +107,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// </summary>
         public TimelineAnchorData SyncItemData { get; set; }
 
-        /// <summary> (get) タイムラインリスト表示判定フラグ 
-        /// </summary>
-        public bool TimelineVisibility
-        {
-            get
-            {
-                if (this.ActiveTime <= 0)
-                {
-                    return false;
-                }
-                return true;
-            }
-        }
         
         #region #- [Property] double.ActiveIndicatorStartTime - ＜アクティブインジケータ開始時間＞ -----
         /// <summary> アクティブインジケータ開始時間 </summary>
@@ -160,8 +141,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
         #region #- [Property] double.ActiveIndicatorMinValue - ＜アクティブインジケータ最小値＞ -----
-        /// <summary> アクティブインジケータ最小値 </summary>
-        private double _ActiveIndicatorMinValue;
+
         /// <summary> アクティブインジケータ最小値 </summary>
         public double ActiveIndicatorMinValue
         {
@@ -169,18 +149,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             {
                 return this.ActivityNo - 12.0;
             }
-            set
-            {
-                if (this._ActiveIndicatorMinValue == value) return;
-
-                this._ActiveIndicatorMinValue = value;
-                base.OnPropertyChanged("ActiveIndicatorMinValue");
-            }
         }
         #endregion
         #region #- [Property] double.ActiveIndicatorMaxValue - ＜アクティブインジケータ最大値＞ -----
-        /// <summary> アクティブインジケータ最大値 </summary>
-        private double _ActiveIndicatorMaxValue;
+
         /// <summary> アクティブインジケータ最大値 </summary>
         public double ActiveIndicatorMaxValue
         {
@@ -216,19 +188,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         #endregion
 
         #region #- [Property] bool.DurationIndicatorVisibility - ＜アクションインジケータ表示フラグ＞ -----
-        /// <summary> アクションインジケータ表示フラグ </summary>
-        private bool _DurationIndicatorVisibility;
-        /// <summary> アクションインジケータ表示フラグ </summary>
+
+        /// <summary> (get) アクションインジケータ表示フラグ </summary>
         public bool DurationIndicatorVisibility
         {
-            get { return this._DurationIndicatorVisibility; }
-            set
+            get
             {
-                if (this._DurationIndicatorVisibility == value) return;
+                if (this.ActivityNo - this.timerData.CurrentCombatTime <= 0) return true;
 
-                this._DurationIndicatorVisibility = value;
-                base.OnPropertyChanged("DurationIndicatorVisibility");
+                return false;
             }
+
         }
         #endregion
         #region #- [Property] double.DurationIndicatorValue - ＜アクションインジケータ値＞ -----
@@ -264,34 +234,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
-
-        /// <summary> アクションインジケータ最大値 </summary>
-        public double DurationIndicatorMaxValue
-        {
-            get
-            {
-                return this.EndTime;
-            }
-        }
-
-        #region #- [Property] double.DurationIndicatorDefaultValue - ＜アクションインジケータ初期値＞ -----
-        /// <summary> アクションインジケータ初期値 </summary>
-        private double _DurationIndicatorDefaultValue;
-        /// <summary> アクションインジケータ初期値 </summary>
-        public double DurationIndicatorDefaultValue
-        {
-            get { return this._DurationIndicatorDefaultValue; }
-            set
-            {
-                if (this._DurationIndicatorDefaultValue == value) return;
-
-                this._DurationIndicatorDefaultValue = value;
-                base.OnPropertyChanged("DurationIndicatorDefaultValue");
-            }
-        }
-        #endregion
-
-
+        
         public double EndTime
         {
             get
@@ -334,6 +277,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         public void ViewRefresh()
         {
             base.OnPropertyChanged("ActiveTime");
+            base.OnPropertyChanged("DurationIndicatorVisibility");
             base.OnPropertyChanged("TimelineVisibility");
         }
 
@@ -364,11 +308,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.ActiveIndicatorMinValue = 0;
             this.ActiveIndicatorMaxValue = 12;
             this.ActiveIndicatorDefaultValue = 0;
-
-            this.DurationIndicatorVisibility = false;
+            
             this.DurationIndicatorValue = 0;
             this.DurationIndicatorMinValue = 0;
-            this.DurationIndicatorDefaultValue = 0;
 
             return true;
         }

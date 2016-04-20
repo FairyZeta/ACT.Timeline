@@ -35,14 +35,14 @@
                 <Border Grid.Row="0" Margin="0 5" VerticalAlignment="Center">
                     <Slider Margin="5 0"
                             IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.TimelineTrackerEnabled}"
-                            Minimum="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatStartTime}"
-                            Value="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTime}"
-                            Maximum="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatEndTime}"/>
+                            Minimum="{Binding TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatStartTime}"
+                            Value="{Binding TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTime}"
+                            Maximum="{Binding TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatEndTime}"/>
                 </Border>
                 <StackPanel Grid.Row="0" Grid.Column="1" Margin="0 5" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatTimeSpan}"/>
+                    <TextBlock Text="{Binding TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTimeSpan}"/>
                     <TextBlock Text=" / "/>
-                    <TextBlock Text="{Binding TimelineComponent.TimerDataModel.TimerDeta.CurrentCombatEndTimeSpan}"/>
+                    <TextBlock Text="{Binding TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatEndTimeSpan}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.ColumnSpan="100" Margin="0 5" Orientation="Horizontal">
                     <Button Width="120" Height="24" Margin="20 5" Content="Rewind"

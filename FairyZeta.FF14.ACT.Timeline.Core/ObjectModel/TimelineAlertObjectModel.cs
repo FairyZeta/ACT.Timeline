@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FairyZeta.FF14.ACT.Data;
+using FairyZeta.FF14.ACT.ObjectModel;
+using FairyZeta.FF14.ACT.Timeline.Core.Data;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
 {
@@ -54,9 +56,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
         public double ReminderTimeOffset { get; set; }
-        public TimelineActivity Activity { get; set; }
-
-
+        public TimelineActivityData Activity { get; set; }
 
         public int CompareTo(TimelineAlertObjectModel other)
         {

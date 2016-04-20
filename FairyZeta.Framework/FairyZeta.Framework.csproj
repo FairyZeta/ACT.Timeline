@@ -52,9 +52,11 @@
       <HintPath>..\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Windows.Design.Interaction, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Prism">
+      <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -67,18 +69,24 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ColorDialog.cs" />
-    <Compile Include="Controls\ColorDialogContent.xaml.cs" />
-    <Compile Include="Controls\ColorDialogViewModel.cs" />
-    <Compile Include="Controls\FontDialog.cs" />
-    <Compile Include="Controls\FontDialogContent.xaml.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="WPF\ViewModels\ColorDialogViewModel.cs" />
+    <Compile Include="WPF\Views\FontDialogView.xaml.cs">
+      <DependentUpon>FontDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OutlineTextBlock.cs" />
     <Compile Include="Controls\OutlineTextControl.xaml.cs">
       <DependentUpon>OutlineTextControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\StringToDoubleConverter.cs" />
-    <Compile Include="Converters\FontFamilyToNameConverter.cs" />
-    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="ObjectModel\DialogManageObjectModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Converters\StringToDoubleConverter.cs" />
+    <Compile Include="WPF\Converters\FontFamilyToNameConverter.cs" />
+    <Compile Include="WPF\Converters\InverseBooleanConverter.cs" />
     <Compile Include="Data\OsEnvironmentData.cs" />
     <Compile Include="FontInfo.cs" />
     <Compile Include="Framework.ENUM.cs" />
@@ -111,17 +119,17 @@
     <Compile Include="WPF\Controls\_LoadingRing\LoadingSegments.cs" />
     <Compile Include="WPF\Controls\_LoadingRing\LoadingSolidRing.cs" />
     <Compile Include="WPF\Controls\_TextBox\NumericTextBox.cs" />
+    <Compile Include="WPF\ViewModels\_ViewModel.cs" />
+    <Compile Include="WPF\Views\ColorDialogView.xaml.cs">
+      <DependentUpon>ColorDialogView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\OutlineTextControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\ColorDialogContent.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FontDialogContent.xaml">
+    <Page Include="WPF\Views\FontDialogView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -129,15 +137,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WPF\ControlStyle\FF14TemplateButton.xaml">
+    <Page Include="WPF\TemplateStyle\FF14TemplateButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WPF\ControlStyle\_FF14Base.xaml">
+    <Page Include="WPF\TemplateStyle\_FF14Base.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WPF\FF14ResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\ColorDialogView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -148,9 +160,14 @@
   <ItemGroup>
     <Folder Include="DataModel\" />
     <Folder Include="DataUnion\" />
-    <Folder Include="WPF\Trigger\" />
-    <Folder Include="WPF\ViewModels\" />
-    <Folder Include="WPF\Views\" />
+    <Folder Include="WPF\Triggers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.ja-JP.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

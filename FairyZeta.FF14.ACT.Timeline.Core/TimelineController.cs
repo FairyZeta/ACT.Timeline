@@ -6,38 +6,15 @@ using System.Text;
 using System.Windows.Forms;
 using FairyZeta.Framework.ObjectModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
 {
     public class TimelineController
     {
 
-        private string timelineTxtFilePath;
-        public string TimelineTxtFilePath
-        {
-            get { return timelineTxtFilePath; }
-            set
-            {
-                if (value == null || value == "")
-                    return;
-
-                try
-                {
-                    if (!System.IO.File.Exists(value))
-                        throw new ResourceNotFoundException(value);
-
-                    timelineTxtFilePath = value;
-                    Timeline = TimelineLoader.LoadFromFile(timelineTxtFilePath);
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(String.Format("Failed to load timeline. Error: {0}", e.Message), "ACT Timeline Plugin");
-                }
-            }
-        }
-
-        private TimelineBaseData timeline;
-        public TimelineBaseData Timeline
+        private TimelineObjectModel timeline;
+        public TimelineObjectModel Timeline
         {
             get { return timeline; }
             set

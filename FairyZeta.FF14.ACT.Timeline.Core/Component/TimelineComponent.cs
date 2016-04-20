@@ -6,6 +6,8 @@ using Prism.Commands;
 using System.Threading.Tasks;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
+using FairyZeta.FF14.ACT.Timeline.Core.Data;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 using Advanced_Combat_Tracker;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Component
@@ -16,15 +18,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-      #region --- DataModels ---
+      #region --- Models ---
+                
+        /// <summary> タイムラインオブジェクトモデル
+        /// </summary>
+        public TimelineObjectModel TimelineObjectModel{get; private set;}
         
-        /// <summary> タイムラインデータモデル
-        /// </summary>
-        public TimelineDataModel TimelineDataModel { get; private set; }
-        /// <summary> タイマーデータモデル
-        /// </summary>
-        public TimerDataModel TimerDataModel { get; private set; }
-
       #endregion
 
       #region --- Modules ---
@@ -34,11 +33,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         public TimelineCreateModule TimelineCreateModule { get; private set; }
 
         public TimelineControlModule TimelineControlModule { get; private set; }
-
-        /// <summary> タイムラインログ解析モジュール
-        /// </summary>
-        public TimelineLogAnalyzerModule TimelineLogAnalyzerModule { get; private set; }
-
+        
       #endregion
 
       #region --- Commands ---
@@ -82,13 +77,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <returns> 正常終了時 True </returns> 
         private bool initComponent()
         {
+            this.TimelineObjectModel = new TimelineObjectModel();
+
             this.AppCommonModule = new AppCommonModule();
-            this.TimelineDataModel = new TimelineDataModel();
-            this.TimerDataModel = new TimerDataModel();
 
             this.TimelineCreateModule = new TimelineCreateModule();
             this.TimelineControlModule = new TimelineControlModule();
-            this.TimelineLogAnalyzerModule = new TimelineLogAnalyzerModule();
 
             return true;
         }
@@ -117,7 +111,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     TimelineFileName = this.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName,
                     TimelineFileFullPath = System.IO.Path.Combine(this.CommonDataModel.PluginSettingsData.LastLoadTimelineFullPath)
                 };
-                this.TimelineCreateModule.CreateTimelineDataModel(this.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
+                this.TimelineCreateModule.CreateTimelineDataModel(this.CommonDataModel, this.TimelineObjectModel);
                 this.CommonDataModel.SelectedTimelineFileData = null;
             }
 
@@ -160,7 +154,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.TimelineControlModule.AutoLoadTimer.Tick -= new EventHandler(this.TimelineAutoLoadEvent);
             this.TimelineControlModule.AutoLoadTimer.Stop();
             // 戦闘タイマーの強制終了
-            this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+            this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimelineObjectModel);
             this.TimelineControlModule.CurrentCombatTimer.Tick -= new EventHandler(this.TimelineTimerTickEvent);
 
             return true;
@@ -173,7 +167,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         public void TimelineLoad()
         {
             if (this.CommonDataModel == null || this.CommonDataModel.SelectedTimelineFileData == null) return;
-            this.TimelineCreateModule.CreateTimelineDataModel(base.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
+            this.TimelineCreateModule.CreateTimelineDataModel(base.CommonDataModel, this.TimelineObjectModel);
 
             return;
         }
@@ -183,7 +177,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// </summary>
         public void TimelineTimerTickEvent(object sender, EventArgs e)
         {
-            this.TimelineControlModule.CombatTimeTick(base.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+            this.TimelineControlModule.CombatTimeTick(base.CommonDataModel, this.TimelineObjectModel);
         }
 
         /// <summary> ACTログが発生した時の処理を定義します。
@@ -194,7 +188,21 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             if (isImport) return;
 
-            Task.Run(() => this.LogAnalyz(logInfo.logLine));
+            //Task.Run(() => this.LogAnalyz(logInfo.logLine));
+
+            TimelineAnchorData anchor = this.TimelineObjectModel.FindAnchorMatchingLogline(logInfo.logLine);
+            if (anchor != null)
+            {
+                if (anchor.Jump == 0)
+                {
+                    this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimelineObjectModel);
+                }
+                else
+                {
+                    this.TimelineObjectModel.TimerData.CurrentCombatTime = anchor.Jump > 0 ? anchor.Jump : anchor.TimeFromStart;
+                    this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimelineObjectModel);
+                }
+            }
         }
 
         /// <summary> ログを解析してジャンプ／シンクの処理を実行します。
@@ -203,41 +211,70 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         public void LogAnalyz(string pLine)
         {
 
-            // ジャンプとシンクの判定
-            this.TimelineLogAnalyzerModule.JumpSyncAnalayz(this.TimelineDataModel, this.TimerDataModel, pLine);
 
-            if (this.TimelineDataModel.SynchroAnchorData != null)
+            // ジャンプとシンクの判定
+            //this.TimelineLogAnalyzerModule.JumpSyncAnalayz(this.TimelineDataModel, this.TimerDataModel, pLine);
+
+            //if (this.TimelineDataModel.SynchroAnchorData == null)
+            //    return;
+
+
+
+            // switch (this.TimelineDataModel.SynchroAnchorData.SyncType)
+            // {
+            //  case SyncType.AutoEnd:
+            //       this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+            //      break;
+            //  case SyncType.Jump:
+            //       this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.Jump;
+            //       break;
+            //   case SyncType.Sync:
+            //this.TimerDataModel.TimerDeta.CurrentCombatTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
+            //        this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+            //       break;
+            //}
+            /*
+            // ジャンプ
+            if (this.TimelineDataModel.SynchroAnchorData.Jump >= 0)
             {
-                // ジャンプ
-                if (this.TimelineDataModel.SynchroAnchorData.Jump >= 0)
+                if (this.TimelineDataModel.SynchroAnchorData.Jump == 0)
                 {
-                    if (this.TimelineDataModel.SynchroAnchorData.Jump == 0)
-                    {
-                        // 自動終了
-                        this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
-                    }
-                    else
-                    {
-                        // 通常ジャンプ
-                        this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.Jump;
-                    }
+                    // 自動終了
+                    base.CommonDataModel.TimelineLogCollection.Add(
+                        Globals.TimelineLogger.WriteActionLog.Success.NOTICE.Write("Timeline Auto End."));
+                    this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
                 }
-                // シンク
                 else
                 {
-                    // 自動開始判定
-                    if (this.CommonDataModel.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run)
-                    {
-                        this.TimerDataModel.TimerDeta.CurrentCombatTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
-                        this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
-                    }
-                    // 通常シンク
-                    else
-                    {
-                        this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
-                    }
+                    // 通常ジャンプ
+                    base.CommonDataModel.TimelineLogCollection.Add(
+                        Globals.TimelineLogger.WriteActionLog.Success.NOTICE.Write(
+                            string.Format("Timeline Jump => CurrentTime {0} / Time {1}", this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime, this.TimelineDataModel.SynchroAnchorData.Jump), Globals.ProjectName));
+                    this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.Jump;
                 }
             }
+            // シンク
+            else
+            {
+                // 自動開始判定
+                if (this.CommonDataModel.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run)
+                {
+                    this.TimerDataModel.TimerDeta.CurrentCombatTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
+                    this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+                    base.CommonDataModel.TimelineLogCollection.Add(
+                        Globals.TimelineLogger.WriteActionLog.Success.NOTICE.Write(string.Format("Timeline Auto Start. Time => {0}", this.TimelineDataModel.SynchroAnchorData.TimeFromStart)));
+                }
+                // 通常シンク
+                else
+                {
+                    base.CommonDataModel.TimelineLogCollection.Add(
+                        Globals.TimelineLogger.WriteActionLog.Success.NOTICE.Write(
+                            string.Format("Timeline Sync => CurrentTime {0} / Time {1}", this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime, this.TimelineDataModel.SynchroAnchorData.TimeFromStart), Globals.ProjectName));
+                    this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
+                }
+            }
+            */
+
         }
 
         /// <summary> 戦闘終了時に実行される処理を定義します。
@@ -248,8 +285,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             if (!isImport && this.CommonDataModel.PluginSettingsData.ResetTimelineCombatEndEnabled)
             {
-                  this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
-                  this.TimelineControlModule.CurrentCombatRelativeClock.StopClock(0);
+                this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimelineObjectModel);
+                this.TimelineControlModule.CurrentCombatRelativeClock.StopClock(0);
             }
         }
 
@@ -289,8 +326,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     if (target != null)
                     {
                         this.CommonDataModel.SelectedTimelineFileData = target;
-                        this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
-                        this.TimelineCreateModule.CreateTimelineDataModel(base.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
+                        this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimelineObjectModel);
+                        this.TimelineCreateModule.CreateTimelineDataModel(base.CommonDataModel, this.TimelineObjectModel);
 
                         //if (this.CommonDataModel.PluginSettingsData.AutoShowTimelineEnabled)
                         //{
@@ -313,7 +350,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                         //    this.CommonDataModel.ViewRefresh();
                         //}
 
-                        this.TimelineCreateModule.TimelineDataClear(this.CommonDataModel, this.TimelineDataModel, this.TimerDataModel);
+                        this.TimelineCreateModule.TimelineDataClear(this.CommonDataModel, this.TimelineObjectModel);
 
                         this.CommonDataModel.LogDataCollection.Add(
                             Globals.SysLogger.WriteSystemLog.Failure.INFO.Write(string.Format("Timeline AutoLoad Failure. File Not Found. ( File = {0} )", findName), Globals.ProjectName));
@@ -348,25 +385,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             switch (para)
             {
                 case "Start":
-                    this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+                    this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimelineObjectModel);
                     break;
                 case "Stop":
-                    this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+                    this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimelineObjectModel);
                     break;
                 case "Pause":
                     this.TimelineControlModule.TimerPause(this.CommonDataModel);
                     break;
                 case "ReBoot":
-                    this.TimelineControlModule.TimerReboot(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+                    this.TimelineControlModule.TimerReboot(this.CommonDataModel, this.TimelineObjectModel);
                     break;
                 case "Rewind":
-                    this.TimelineControlModule.TimerRewind(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
+                    this.TimelineControlModule.TimerRewind(this.CommonDataModel, this.TimelineObjectModel);
                     break;
             }
         }
         #endregion 
 
-        
         #region #- [Method] CanExecute,Execute @ TimelineLoadCommand - ＜タイムラインロードコマンド＞ -----
         /// <summary> 実行可能確認＜タイムラインロードコマンド＞ </summary>
         /// <returns> 実行可能: ture / 実行不可能: false </returns>

@@ -5,7 +5,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source=".\ControlStyle\FF14TemplateButton.xaml"/>
+        <ResourceDictionary Source=".\TemplateStyle\FF14TemplateButton.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>

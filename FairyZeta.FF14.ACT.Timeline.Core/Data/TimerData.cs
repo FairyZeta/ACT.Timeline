@@ -15,7 +15,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         /// <summary> 戦闘時間変更時にOnPropertyChangedを発行させたいアイテムリスト
         /// </summary>
-        public List<TimelineItemData> CombatTimeChangedRefreshList { get; private set; }
+        public List<TimelineActivityData> CombatTimeChangedRefreshList { get; private set; }
 
         #region #- [Property] double.CurrentCombatTime - ＜現在の戦闘時間＞ -----
         /// <summary> 現在の時間 </summary>
@@ -108,7 +108,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool initData()
         {
-            this.CombatTimeChangedRefreshList = new List<TimelineItemData>();
+            this.CombatTimeChangedRefreshList = new List<TimelineActivityData>();
             return true;
         }
 
@@ -157,19 +157,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
             return true;
         }
-    }
 
-
-    public static class TaskEnumerableExtensions
-    {
-        public static Task WhenAll(this IEnumerable<Task> tasks)
-        {
-            return Task.WhenAll(tasks);
-        }
-
-        public static Task<T[]> WhenAll<T>(this IEnumerable<Task<T>> tasks)
-        {
-            return Task.WhenAll(tasks);
-        }
     }
 }

@@ -4,21 +4,20 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 
-namespace FairyZeta.Framework.Controls
+namespace FairyZeta.Framework.WPF.ViewModels
 {
-    public class ColorDialogViewModel : INotifyPropertyChanged
+    public class ColorDialogViewModel : _ViewModel
     {
-        private PredefinedColor[] predefinedColors;
-
+        #region #- [Property] PredefinedColor[].PredefinedColors - ＜カラーリスト一覧＞ -----
+        /// <summary> カラーリスト一覧 </summary>
+        private PredefinedColor[] _PredefinedColors;
+        /// <summary> カラーリスト一覧 </summary>    
         public PredefinedColor[] PredefinedColors
         {
-            get { return this.predefinedColors ?? (this.predefinedColors = this.EnumlatePredefinedColors()); }
-            set
-            {
-                this.predefinedColors = value;
-                this.RaisePropertyChanged();
-            }
+            get { return this._PredefinedColors ?? (this._PredefinedColors = this.EnumlatePredefinedColors()); }
+            set { this.SetProperty(ref this._PredefinedColors, value); }
         }
+        #endregion
 
         private PredefinedColor[] EnumlatePredefinedColors()
         {
@@ -42,20 +41,6 @@ namespace FairyZeta.Framework.Controls
 
             return list.OrderBy(x => x.Color.ToString()).ToArray();
         }
-
-        #region Implementation of INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged([CallerMemberName] string caller = "")
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(caller));
-            }
-        }
-
-        #endregion
     }
 
     public class PredefinedColor

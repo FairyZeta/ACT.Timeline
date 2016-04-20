@@ -7,7 +7,6 @@ using FairyZeta.FF14.ACT.Data;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core
 {
-    using TimelineInterval = IntervalTree.Interval<double>;
 
     public class ModelException : Exception
     {
@@ -86,60 +85,5 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             get { return allAlertSounds; }
         }
     };
-
-
-
-
-    public class TimelineActivity
-    {
-        public int Index { get; set; }
-        const int IndexNotYetSet = -1;
-
-        public string Name { get; set; }
-        public double TimeFromStart { get; set; }
-
-        const double Instant = 0.1;
-        public double Duration { get; set; }
-        public double Jump { get; set; }
-
-        public bool Hidden { get; set; }
-
-        public double EndTime
-        {
-            get
-            {
-                return TimeFromStart + Duration;
-            }
-        }
-
-        private class CompareByEndTimeKlass : IComparer<TimelineActivity>
-        {
-            int IComparer<TimelineActivity>.Compare(TimelineActivity x, TimelineActivity y)
-            {
-                return x.EndTime.CompareTo(y.EndTime);
-            }
-        }
-        static public readonly IComparer<TimelineActivity> CompareByEndTime = new CompareByEndTimeKlass();
-
-        public TimelineInterval Interval
-        {
-            get
-            {
-                return new TimelineInterval(TimeFromStart, TimeFromStart + Duration);
-            }
-        }
-
-        // for TimeLeft{Column,Cell}
-        public TimelineActivity Self { get { return this; } }
-
-        public TimelineActivity()
-        {
-            Index = IndexNotYetSet;
-            Name = "何かすごい攻撃";
-            TimeFromStart = 5;
-            Duration = Instant;
-            Hidden = false;
-        }
-    }
 
 }

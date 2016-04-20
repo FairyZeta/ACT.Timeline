@@ -92,7 +92,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             component.OverlayDataModel.OverlayColorSettingsData = new OverlayColorSettingsData();
             this.ovarlayDefaultSetProcess.SetDefaultColorSettings(component.OverlayDataModel.OverlayColorSettingsData, pCommonDataModel.DefaultColorData);
 
-            component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineDataModel.TimelineItemCollection };
+            component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineObjectModel.ActivityCollection };
             this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
 
             pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
@@ -123,7 +123,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
                 component.OverlayDataModel = data;
 
-                component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineDataModel.TimelineItemCollection };
+                component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineObjectModel.ActivityCollection };
                 this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
 
                 pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);

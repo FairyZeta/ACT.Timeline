@@ -18,9 +18,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// <summary> 汎用フィルタ
         /// </summary>
         private CommonFilter commonFilter;
-        /// <summary> アクティビティ名データフィルタ
-        /// </summary>
-        private ActivityNameFilter activityNameFilter;
         /// <summary> タイプデータフィルタ
         /// </summary>
         private TypeFilter typeFilter;
@@ -46,7 +43,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         private bool initProcess()
         {
             this.commonFilter = new CommonFilter();
-            this.activityNameFilter = new ActivityNameFilter();
             this.typeFilter = new TypeFilter();
             this.jobFilter = new JobFilter();
 

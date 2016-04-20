@@ -18,7 +18,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 
     public class TimelineConfig
     {
-        public List<TimelineActivity> Items;
+        public List<TimelineActivityData> Items;
         public List<TimelineAnchorData> Anchors;
         public List<AlertAll> AlertAlls;
         public List<string> HideAlls;
@@ -27,7 +27,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 
         public TimelineConfig()
         {
-            Items = new List<TimelineActivity>();
+            Items = new List<TimelineActivityData>();
             Anchors = new List<TimelineAnchorData>();
             AlertAlls = new List<AlertAll>();
             HideAlls = new List<string>();
@@ -111,14 +111,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             from regex in Regex
             from window in Parse.Optional(SyncWindow)
             select new Tuple<string, SyncWindowSettings>(regex, window.GetOrElse(DefaultWindow));
-        static readonly Parser<Tuple<TimelineActivity, Tuple<string, SyncWindowSettings>>> TimelineActivity =
+        static readonly Parser<Tuple<TimelineActivityData, Tuple<string, SyncWindowSettings>>> TimelineActivity =
             from timeFromStart in Parse.Decimal
             from spaces in Spaces
             from name in MaybeQuotedString
             from duration in Parse.Optional(Duration)
             from sync in Parse.Optional(Sync)
             from jump in Parse.Optional(Jump)
-            select new Tuple<TimelineActivity, Tuple<string, SyncWindowSettings>>(new TimelineActivity
+            select new Tuple<TimelineActivityData, Tuple<string, SyncWindowSettings>>(new TimelineActivityData
             {
                 Jump = jump.GetOrElse(-1),
                 TimeFromStart = double.Parse(timeFromStart, CultureInfo.InvariantCulture),
@@ -127,7 +127,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             }, sync.GetOrElse(null));
 
         static readonly Parser<ConfigOp> TimelineActivityStatement =
-            TimelineActivity.Select<Tuple<TimelineActivity, Tuple<string, SyncWindowSettings>>, ConfigOp>(t => ((TimelineConfig config) =>
+            TimelineActivity.Select<Tuple<TimelineActivityData, Tuple<string, SyncWindowSettings>>, ConfigOp>(t => ((TimelineConfig config) =>
             {
                 config.Items.Add(t.Item1);
                 if (t.Item2 != null)
@@ -219,18 +219,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
 
     public class TimelineLoader
     {
-        static public TimelineBaseData LoadFromFile(string path)
+        static public void LoadFromFile(TimelineObjectModel pTimelineOM, string path)
         {
             string text = File.ReadAllText(path, System.Text.Encoding.UTF8);
-            return LoadFromText(Path.GetFileName(path), text);
+            LoadFromText(pTimelineOM, Path.GetFileName(path), text);
         }
 
-        static public TimelineBaseData LoadFromText(string name, string text)
+        static public void LoadFromText(TimelineObjectModel pTimelineOM, string name, string text)
         {
             TimelineConfig config = TimelineConfigParser.TimelineConfig.Parse(text);
             foreach (AlertAll alertAll in config.AlertAlls)
             {
-                foreach (TimelineActivity matchingActivity in config.Items.FindAll(activity => activity.Name == alertAll.ActivityName))
+                foreach (TimelineActivityData matchingActivity in config.Items.FindAll(activity => activity.Name == alertAll.ActivityName))
                 {
                     var alert = new TimelineAlertObjectModel { Activity = matchingActivity, ReminderTimeOffset = alertAll.ReminderTime, AlertSoundData = alertAll.AlertSound };
                     config.Alerts.Add(alert);
@@ -238,12 +238,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             }
             foreach (string activityName in config.HideAlls)
             {
-                foreach (TimelineActivity matchingActivity in config.Items.FindAll(activity => activity.Name == activityName))
-                {
-                    matchingActivity.Hidden = true;
-                }
+                //foreach (TimelineActivityData matchingActivity in config.Items.FindAll(activity => activity.Name == activityName))
+                //{
+                //    matchingActivity.Hidden = true;
+                //}
             }
-            return new TimelineBaseData(name, config.Items, config.Anchors, config.Alerts, config.AlertSoundAssets);
+            pTimelineOM.CreateTimelineData(name, config.Items, config.Anchors, config.Alerts, config.AlertSoundAssets);
+
         }
     }
 }

@@ -36,9 +36,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// </summary>
         public AppEnableManageData AppEnableManageData { get; set; }
 
-        /// <summary> ログデータコレクション
+        /// <summary> システムログコレクション
         /// </summary>
         public ObservableCollection<BasicLogData> LogDataCollection { get; set; }
+        /// <summary> タイムラインログコレクション
+        /// </summary>
+        public ObservableCollection<BasicLogData> TimelineLogCollection { get; set; }
 
         #region #- [Property] PluginSettingsData.PluginSettingsData - ＜プラグイン設定データ＞ -----
         /// <summary> プラグイン設定データ </summary>
@@ -172,6 +175,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             this.TimelineFileViewSource = new CollectionViewSource() { Source = this.TimelineFileCollection };
 
             this.LogDataCollection = new ObservableCollection<BasicLogData>();
+            this.TimelineLogCollection = new ObservableCollection<BasicLogData>();
 
             this.LocationData = new LocationData();
 

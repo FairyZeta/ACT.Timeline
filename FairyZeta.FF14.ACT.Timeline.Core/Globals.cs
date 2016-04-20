@@ -36,10 +36,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             get
             {
                 if (_ErrLogger == null) Globals.CreateLogger();
-
                 return _ErrLogger;
             }
             set { _ErrLogger = value; }
+        }
+        #endregion
+
+        #region #- [Property] ActLogger.TimelineLogger - ＜タイムラインログ出力＞ -----
+        /// <summary> タイムラインログ出力 </summary>
+        private static ActLogger _TimelineLogger;
+        /// <summary> タイムラインログ出力 </summary>
+        public static ActLogger TimelineLogger
+        {
+            get
+            {
+                if (_TimelineLogger == null) Globals.CreateLogger();
+                return _TimelineLogger;
+            }
+            set { _TimelineLogger = value; }
         }
         #endregion 
 
@@ -172,6 +186,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
                 Globals._ErrLogger.Setting.FileLogSetting.AddFileNameDate = true;
                 Globals._ErrLogger.Setting.FileLogSetting.FileNameDateFormat = "yyyyMMdd_HHmmss";
                 Globals._ErrLogger.Setting.SetupTextLogger(Globals.ErrLogger.Setting.FileLogSetting);
+            }
+            // タイムライン用ロガー生成
+            if (Globals._TimelineLogger == null)
+            {
+                Globals._TimelineLogger = new FF14.ACT.Logger.ActLogger();
+                Globals._TimelineLogger.Setting.FileLogSetting.LogDictionary = Globals.PluginDllDirectoryPath + "/Log/Timeline";
+                Globals._TimelineLogger.Setting.FileLogSetting.FileName = "TimelineLog";
+                Globals._TimelineLogger.Setting.FileLogSetting.FileExtension = ".txt";
+                Globals._TimelineLogger.Setting.FileLogSetting.AddFileNameDate = true;
+                Globals._TimelineLogger.Setting.FileLogSetting.FileNameDateFormat = "yyyyMMdd";
+                Globals._TimelineLogger.Setting.SetupTextLogger(Globals.ErrLogger.Setting.FileLogSetting);
             }
         }
     }

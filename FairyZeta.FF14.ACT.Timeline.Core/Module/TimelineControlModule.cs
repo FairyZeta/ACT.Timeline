@@ -9,6 +9,7 @@ using System.Diagnostics;
 using FairyZeta.Framework.ObjectModel;
 using FairyZeta.FF14.ACT.DataModel;
 using FairyZeta.FF14.ACT.Process;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Process;
 
@@ -73,7 +74,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         
         /// <summary> タイマー処理を開始します。
         /// </summary>
-        public void TimerStart(CommonDataModel pCommonDM, TimerDataModel pTimerDM, TimelineDataModel pTimelineDM)
+        public void TimerStart(CommonDataModel pCommonDM, TimelineObjectModel pTimelineOM)
         {
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
@@ -85,13 +86,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                     return;
             }
 
-            var artList = pTimelineDM.TimelineAlertCollection.Where(a => a.TimeFromStart >= pTimerDM.TimerDeta.CurrentCombatTime);
+            var artList = pTimelineOM.AlertList.Where(a => a.TimeFromStart >= pTimelineOM.TimerData.CurrentCombatTime);
             foreach (var art in artList)
             {
                 art.Processed = false;
             }
 
-            this.CurrentCombatRelativeClock.CurrentTime = pTimerDM.TimerDeta.CurrentCombatTime;
+            this.CurrentCombatRelativeClock.CurrentTime = pTimelineOM.TimerData.CurrentCombatTime;
 
             this.CurrentCombatTimer.Start();
             pCommonDM.AppStatusData.CurrentCombatTimerStatus = TimerStatus.Run;
@@ -100,7 +101,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> タイマー処理を停止します。
         /// </summary>
-        public void TimerStop(CommonDataModel pCommonDM, TimerDataModel pTimerDM, TimelineDataModel pTimelineDM)
+        public void TimerStop(CommonDataModel pCommonDM, TimelineObjectModel pTimelineOM)
         {
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
@@ -116,9 +117,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             this.CurrentCombatTimer.Stop();
             this.CurrentCombatRelativeClock.CurrentTime = 0;
 
-            pTimerDM.TimerDeta.CurrentCombatTime = pTimerDM.TimerDeta.CurrentCombatStartTime;
+            pTimelineOM.TimerData.CurrentCombatTime = pTimelineOM.TimerData.CurrentCombatStartTime;
 
-            foreach (var item in pTimelineDM.TimelineItemCollection)
+            foreach (var item in pTimelineOM.ActivityCollection)
             {
                 item.ViewRefresh();
             }
@@ -145,7 +146,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> タイマーをリブートします。
         /// </summary>
-        public void TimerReboot(CommonDataModel pCommonDM, TimerDataModel pTimerDM, TimelineDataModel pTimelineDM)
+        public void TimerReboot(CommonDataModel pCommonDM, TimelineObjectModel pTimelineOM)
         {
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
@@ -156,14 +157,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                     break;
             }
 
-            this.TimerStop(pCommonDM, pTimerDM, pTimelineDM);
+            this.TimerStop(pCommonDM, pTimelineOM);
 
-            this.TimerStart(pCommonDM, pTimerDM, pTimelineDM);
+            this.TimerStart(pCommonDM, pTimelineOM);
         }
 
         /// <summary> タイマーを0に巻き戻し、ステータスがRunの場合は再スタートさせます。
         /// </summary>
-        public void TimerRewind(CommonDataModel pCommonDM, TimerDataModel pTimerDM, TimelineDataModel pTimelineDM)
+        public void TimerRewind(CommonDataModel pCommonDM, TimelineObjectModel pTimelineOM)
         {
             switch (pCommonDM.AppStatusData.CurrentCombatTimerStatus)
             {
@@ -176,11 +177,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             var status = pCommonDM.AppStatusData.CurrentCombatTimerStatus;
 
-            this.TimerStop(pCommonDM, pTimerDM, pTimelineDM);
+            this.TimerStop(pCommonDM, pTimelineOM);
 
             if (status == TimerStatus.Run)
             {
-                this.TimerStart(pCommonDM, pTimerDM, pTimelineDM);
+                this.TimerStart(pCommonDM, pTimelineOM);
             }
         }
 
@@ -188,14 +189,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         /// <param name="pTimerDataModel"></param>
         /// <param name="pTimelineDataModel"></param>
-        public void CombatTimeTick(CommonDataModel pCommonDM, TimerDataModel pTimerDataModel, TimelineDataModel pTimelineDataModel)
+        public void CombatTimeTick(CommonDataModel pCommonDM, TimelineObjectModel pTimelineOM)
         {
             if (pCommonDM.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run) return;
 
-            pTimerDataModel.TimerDeta.CurrentCombatTime = this.CurrentCombatRelativeClock.CurrentTime;
+            pTimelineOM.TimerData.CurrentCombatTime = this.CurrentCombatRelativeClock.CurrentTime;
 
             // アラート再生
-            var pendingAlerts = pTimelineDataModel.PendingAlertsAt(pTimerDataModel.TimerDeta.CurrentCombatTime, AppConst.TooOldThreshold);
+            var pendingAlerts = pTimelineOM.PendingAlertsAt(pTimelineOM.TimerData.CurrentCombatTime, AppConst.TooOldThreshold);
             foreach (var pendingAlert in pendingAlerts)
             {
                 pendingAlert.Processed = soundPlayProcess.PlayAlert(pendingAlert, pCommonDM.PluginSettingsData.PlaySoundByACT);

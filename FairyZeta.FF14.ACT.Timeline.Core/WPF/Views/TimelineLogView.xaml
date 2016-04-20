@@ -33,14 +33,28 @@
                 </Grid.ColumnDefinitions>
                 <Label Content=" Plugin Logs " Width="100" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                <DataGrid ItemsSource="{Binding CommonComponent.CommonDataModel.LogDataCollection}" AutoGenerateColumns="False" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Time" Binding="{Binding OutputTime}"/>
-                        <DataGridTextColumn Header="Level" Binding="{Binding LogStatus.LogLevelEnum}"/>
-                        <DataGridTextColumn Header="Result" Binding="{Binding LogStatus.LogResultEnum}"/>
-                        <DataGridTextColumn Header="Msg" Binding="{Binding LogMessage}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <TabControl>
+                     <TabItem Header="SYSTEM">
+                        <DataGrid ItemsSource="{Binding CommonComponent.CommonDataModel.LogDataCollection}" AutoGenerateColumns="False" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Time" Binding="{Binding OutputTime}"/>
+                                <DataGridTextColumn Header="Level" Binding="{Binding LogStatus.LogLevelEnum}"/>
+                                <DataGridTextColumn Header="Result" Binding="{Binding LogStatus.LogResultEnum}"/>
+                                <DataGridTextColumn Header="Msg" Binding="{Binding LogMessage}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="TIMELINE">
+                        <DataGrid ItemsSource="{Binding CommonComponent.CommonDataModel.TimelineLogCollection}" AutoGenerateColumns="False" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Time" Binding="{Binding OutputTime}"/>
+                                <DataGridTextColumn Header="Level" Binding="{Binding LogStatus.LogLevelEnum}"/>
+                                <DataGridTextColumn Header="Result" Binding="{Binding LogStatus.LogResultEnum}"/>
+                                <DataGridTextColumn Header="Msg" Binding="{Binding LogMessage}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                </TabControl>
             </Grid>
         </Border>
     </Border>

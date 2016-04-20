@@ -53,46 +53,46 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
             model.PluginSettingsData.ActCheckBoxValue = false;
             for (double d = 0; d < (double)60.0; d += (double)1.0)
             {
-                TimelineItemData item = new TimelineItemData(new TimerData());
-                item.ActivityIndex = Convert.ToInt32(d * 10);
-                item.ActivityNo = d;
+                TimelineActivityData item = new TimelineActivityData();
+                item.Index = Convert.ToInt32(d * 10);
+                item.TimeFromStart = d;
 
-                switch (item.ActivityIndex)
+                switch (item.Index)
                 {
-                    case 10:
-                        item.ActivityName = "デザイン＠" + TimelineType.UNKNOWN.ToString();
+                    case 1:
+                        item.Name = "デザイン＠" + TimelineType.UNKNOWN.ToString();
                         item.TimelineType = TimelineType.UNKNOWN;
                         break;
-                    case 20:
-                        item.ActivityName = "デザイン＠" + TimelineType.TANK.ToString();
+                    case 2:
+                        item.Name = "デザイン＠" + TimelineType.TANK.ToString();
                         item.TimelineType = TimelineType.TANK;
                         break;
-                    case 30:
-                        item.ActivityName = "デザイン＠" + TimelineType.DPS.ToString();
+                    case 3:
+                        item.Name = "デザイン＠" + TimelineType.DPS.ToString();
                         item.TimelineType = TimelineType.DPS;
                         break;
-                    case 40:
-                        item.ActivityName = "デザイン＠" + TimelineType.HEALER.ToString();
+                    case 4:
+                        item.Name = "デザイン＠" + TimelineType.HEALER.ToString();
                         item.TimelineType = TimelineType.HEALER;
                         break;
-                    case 50:
-                        item.ActivityName = "デザイン＠" + TimelineType.PET.ToString();
+                    case 5:
+                        item.Name = "デザイン＠" + TimelineType.PET.ToString();
                         item.TimelineType = TimelineType.PET;
                         break;
-                    case 60:
-                        item.ActivityName = "デザイン＠" + TimelineType.GIMMICK.ToString();
+                    case 6:
+                        item.Name = "デザイン＠" + TimelineType.GIMMICK.ToString();
                         item.TimelineType = TimelineType.GIMMICK;
                         break;
                     default:
-                        item.ActivityName = "デザイン＠" + item.ActivityNo.ToString();
+                        item.Name = "デザイン＠" + item.TimeFromStart.ToString();
                         item.TimelineType = TimelineType.ENEMY;
                         break;
 
                 }
 
 
-                base.TimelineComponent.TimelineDataModel.TimelineItemCollection.Add(item);
-                base.OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource = new System.Windows.Data.CollectionViewSource() { Source = base.TimelineComponent.TimelineDataModel.TimelineItemCollection };
+                base.TimelineComponent.TimelineObjectModel.ActivityCollection.Add(item);
+                base.OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource = new System.Windows.Data.CollectionViewSource() { Source = base.TimelineComponent.TimelineObjectModel.ActivityCollection };
             }
 
         }

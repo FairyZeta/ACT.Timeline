@@ -106,7 +106,6 @@
     </Compile>
     <Compile Include="Component\OverlayManageComponent.cs" />
     <Compile Include="Component\_Component.cs" />
-    <Compile Include="DataFilter\ActivityNameFilter.cs" />
     <Compile Include="DataFilter\CommonFilter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,10 +115,6 @@
     <Compile Include="DataModel\CommonDataModel.cs" />
     <Compile Include="DataModel\OverlayDataModel.cs" />
     <Compile Include="DataModel\OverlayManageDataModel.cs" />
-    <Compile Include="DataModel\TimelineDataModel.cs" />
-    <Compile Include="DataModel\TimerDataModel.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataModel\_DataModel.cs" />
     <Compile Include="Data\AppEnableManageData.cs" />
     <Compile Include="Data\ApplicationData.cs">
@@ -139,16 +134,15 @@
     <Compile Include="Data\OverlayGenericSettingsData.cs" />
     <Compile Include="Data\OverlayOptionData.cs" />
     <Compile Include="Data\PluginSettingsData.cs" />
-    <Compile Include="Module\AutoUpdateCheckModule.cs" />
-    <Compile Include="Module\TimelineLogAnalyzerModule.cs">
+    <Compile Include="Data\TimelineActivityData.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Module\AutoUpdateCheckModule.cs" />
     <Compile Include="ObjectModel\PluginHistoryObjectModel.cs" />
     <Compile Include="ObjectModel\TimelineAlertObjectModel.cs" />
     <Compile Include="Data\TimelineAnchorData.cs" />
-    <Compile Include="Data\TimelineBaseData.cs" />
+    <Compile Include="ObjectModel\TimelineObjectModel.cs" />
     <Compile Include="Data\TimelineFileData.cs" />
-    <Compile Include="Data\TimelineItemData.cs" />
     <Compile Include="Data\OverlayViewData.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -174,6 +168,7 @@
     <Compile Include="Module\OverlayCustomModule.cs" />
     <Compile Include="Module\OverlayManageModule.cs" />
     <Compile Include="Module\AppCommonTimerModule.cs" />
+    <Compile Include="ObjectModel\_ObjectModel.cs" />
     <Compile Include="Process\AppDataFileManageProcess.cs" />
     <Compile Include="Process\AppDataConstProcess.cs" />
     <Compile Include="Process\AppDataPathCreateProcess.cs">

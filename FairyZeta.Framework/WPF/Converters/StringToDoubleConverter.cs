@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace FairyZeta.Framework.Converters
+namespace FairyZeta.Framework.WPF.Converters
 {
     public class StringToDoubleConverter : IValueConverter
     {
