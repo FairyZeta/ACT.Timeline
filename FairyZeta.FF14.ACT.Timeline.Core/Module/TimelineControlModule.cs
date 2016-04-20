@@ -54,7 +54,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <returns> 正常終了時 True </returns> 
         private bool initModule()
         {
-            this.CurrentCombatTimer = new DispatcherTimer();
+            this.CurrentCombatTimer = new DispatcherTimer(DispatcherPriority.Render);
             this.AutoLoadTimer = new DispatcherTimer();
             this.CurrentCombatRelativeClock = new RelativeClock(false);
             this.soundPlayProcess = new SoundPlayProcess();

@@ -7,7 +7,7 @@
              xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
              xmlns:enum="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800"
+             d:DesignHeight="720" d:DesignWidth="900"
              d:DataContext="{d:DesignInstance Type=dData:Desing_OverlayCustomWindowViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
@@ -67,7 +67,7 @@
     <Border Background="White">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition MinWidth="540" Width="540"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -307,6 +307,7 @@
                         </Grid>
                     </Border>
                 </TabItem>
+                <!--
                 <TabItem Header="Color">
                     <TabItem.Resources>
                         <Style TargetType="Button">
@@ -323,69 +324,73 @@
                         <StackPanel>
                             <Label Content=" - Base Color - "/>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="MainColor"/>
                                 <TextBlock Text=" Main Color "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Content Color "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Background Color "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <Label Content=" - Timeline Color - "/>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Header Text Color "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Header Bar  Color "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Type Color [UNKNOWN] "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Type Color [ENEMY] "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Type Color [TANK] "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Type Color [DPS] "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Type Color [HEALER]  "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Type Color [PET] "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="SET"/>
+                                <Button Content="EDIT"/>
                                 <TextBlock Text=" Type Color [GIMMICK] "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                         </StackPanel>
+                        <view:ColorEditView DataContext="{Binding}"/>
                     </Grid>
                 </TabItem>
+                -->
             </TabControl>
             <GridSplitter Grid.RowSpan="100" Width="3" Margin="0 15"/>
             <view:StandardTimelineView Grid.Column="1" Grid.RowSpan="100" Margin="10 50 10 50"/>

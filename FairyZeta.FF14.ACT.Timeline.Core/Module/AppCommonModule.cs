@@ -215,12 +215,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             var name = ass.GetName();
 
             pCommonDM.PluginVersionInfo.PluginName = "FZ.Timeline";
-            pCommonDM.PluginVersionInfo.PluginWebUri = "https://github.com/FairyZeta/ACT.Timeline/releases/download";
+            pCommonDM.PluginVersionInfo.PluginWebUri = "https://github.com/FairyZeta/ACT.Timeline/releases";
             pCommonDM.PluginVersionInfo.CheckPluginInfoUri = "https://raw.githubusercontent.com/FairyZeta/ACT.Timeline/master/" + pCommonDM.ApplicationData.VersionInfoFileName;
             pCommonDM.PluginVersionInfo.PluginVersion = name.Version.ToString();
             pCommonDM.PluginVersionInfo.PluginDownloadUri
                 = pCommonDM.PluginVersionInfo.PluginWebUri 
-                + string.Format(@"/{0}/{1}-{0}.zip", pCommonDM.PluginVersionInfo.PluginVersion, pCommonDM.PluginVersionInfo.PluginName);
+                + string.Format(@"/download/{0}/{1}-{0}.zip", pCommonDM.PluginVersionInfo.PluginVersion, pCommonDM.PluginVersionInfo.PluginName);
 
             pCommonDM.PluginVersionInfo.ReleaseDay = string.Empty;
             pCommonDM.PluginVersionInfo.Priority = string.Empty;

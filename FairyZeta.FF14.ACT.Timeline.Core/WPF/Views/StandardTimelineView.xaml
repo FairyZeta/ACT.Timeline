@@ -199,7 +199,7 @@
 
                                     </Grid>
                                 </Decorator>
-                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0"/>
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2"/>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Orientation" Value="Vertical">
@@ -234,7 +234,7 @@
 
                                     </Grid>
                                 </Decorator>
-                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0"/>
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2"/>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Orientation" Value="Vertical">
@@ -278,7 +278,7 @@
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource OutlineTextBlock}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsAlert}" Value="False">
+                                    <DataTrigger Binding="{Binding TimelineAlert}" Value="{x:Null}">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
                                 </Style.Triggers>

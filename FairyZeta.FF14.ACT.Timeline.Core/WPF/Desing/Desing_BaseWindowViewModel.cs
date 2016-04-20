@@ -56,7 +56,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing
                 TimelineActivityData item = new TimelineActivityData();
                 item.Index = Convert.ToInt32(d * 10);
                 item.TimeFromStart = d;
-
+                
                 switch (item.Index)
                 {
                     case 1:

@@ -18,6 +18,7 @@ namespace FairyZeta.Framework.Test.Pages
         {
             this.InitializeComponent();
 
+            
             this.OpenFontDialogButton.Click += this.OpenFontDialogButton_Click;
             this.OpenColorDialogButton.Click += this.OpenColorDialogButton_Click;
 

@@ -228,7 +228,13 @@
     <Compile Include="WPF\ViewModels\PluginApplicationViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WPF\ViewModels\_ViewModels.cs" />
+    <Compile Include="WPF\ViewModels\_ViewModel.cs" />
+    <Compile Include="WPF\Views\ColorEditView.xaml.cs">
+      <DependentUpon>ColorEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Views\FontEditView.xaml.cs">
+      <DependentUpon>FontEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\Views\OverlayCustomWindow.xaml.cs">
       <DependentUpon>OverlayCustomWindow.xaml</DependentUpon>
     </Compile>
@@ -247,8 +253,8 @@
     <Compile Include="WPF\Views\OverlayStandardTimelineCustomView.xaml.cs">
       <DependentUpon>OverlayStandardTimelineCustomView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WPF\Views\OverlayWindowView.xaml.cs">
-      <DependentUpon>OverlayWindowView.xaml</DependentUpon>
+    <Compile Include="WPF\Views\OverlayWindow.xaml.cs">
+      <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Views\PluginApplicationView.xaml.cs">
       <DependentUpon>PluginApplicationView.xaml</DependentUpon>
@@ -321,6 +327,7 @@
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
       <HintPath>D:\Advanced Combat Tracker.exe</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -369,6 +376,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WPF\Views\ColorEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\FontEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WPF\Views\OverlayCustomWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -393,7 +408,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WPF\Views\OverlayWindowView.xaml">
+    <Page Include="WPF\Views\OverlayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -459,6 +474,9 @@
       <Project>{99f2ed28-b5fd-4c8f-855a-18ffc34a447b}</Project>
       <Name>FairyZeta.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

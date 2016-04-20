@@ -26,9 +26,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// </summary>
         public int Index { get; set; }
 
-        /// <summary> アラートがある場合はTrue
+        /// <summary> アラート
         /// </summary>
-        public bool IsAlert { get; set; }
+        public TimelineAlertObjectModel TimelineAlert { get; set; }
 
         /// <summary> タイムラインアイテム名
         /// </summary>

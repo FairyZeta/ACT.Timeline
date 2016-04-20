@@ -9,7 +9,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
 {
     /// <summary> [基底] タイムライン／ビューモデル
     /// </summary>
-    public abstract class _ViewModels : BindableBase
+    public abstract class _ViewModel : BindableBase
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -17,7 +17,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
         
         /// <summary> [基底] タイムライン／ビューモデル／コンストラクタ
         /// </summary>
-        public _ViewModels()
+        public _ViewModel()
             : base()
         {
             this.initViewModel();

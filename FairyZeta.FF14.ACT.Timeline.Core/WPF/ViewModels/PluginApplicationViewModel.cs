@@ -16,7 +16,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
 {
     /// <summary> タイムライン／プラグインアプリケーションビューモデル 
     /// </summary>
-    public class PluginApplicationViewModel : _ViewModels  
+    public class PluginApplicationViewModel : _ViewModel  
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 

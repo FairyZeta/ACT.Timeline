@@ -89,8 +89,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             this.SetDefaultOverlaySettingData(component.OverlayDataModel.OverlayOptionData);
 
             // 配色設定
-            component.OverlayDataModel.OverlayColorSettingsData = new OverlayColorSettingsData();
-            this.ovarlayDefaultSetProcess.SetDefaultColorSettings(component.OverlayDataModel.OverlayColorSettingsData, pCommonDataModel.DefaultColorData);
+            //component.OverlayDataModel.OverlayColorSettingsData = new OverlayColorSettingsData();
+            //this.ovarlayDefaultSetProcess.SetDefaultColorSettings(component.OverlayDataModel.OverlayColorSettingsData, pCommonDataModel.DefaultColorData);
 
             component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineObjectModel.ActivityCollection };
             this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
@@ -115,11 +115,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 OverlayViewComponent component = new OverlayViewComponent(pCommonDataModel);
 
                 // 配色情報がNullの場合、新規作成する
-                if(data.OverlayColorSettingsData == null)
-                {
-                    data.OverlayColorSettingsData = new OverlayColorSettingsData();
-                    this.ovarlayDefaultSetProcess.SetDefaultColorSettings(data.OverlayColorSettingsData, pCommonDataModel.DefaultColorData);
-                }
+                //if(data.OverlayColorSettingsData == null)
+                //{
+                //    data.OverlayColorSettingsData = new OverlayColorSettingsData();
+               //     this.ovarlayDefaultSetProcess.SetDefaultColorSettings(data.OverlayColorSettingsData, pCommonDataModel.DefaultColorData);
+                //}
 
                 component.OverlayDataModel = data;
 

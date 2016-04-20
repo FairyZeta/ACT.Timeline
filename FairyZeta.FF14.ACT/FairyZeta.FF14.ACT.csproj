@@ -51,6 +51,7 @@
     <Reference Include="Advanced Combat Tracker, Version=3.2.2.252, Culture=neutral, PublicKeyToken=a946b61e93d97868, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Advanced Combat Tracker.exe</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

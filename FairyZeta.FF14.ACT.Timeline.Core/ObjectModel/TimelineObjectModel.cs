@@ -78,10 +78,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
         /// <param name="pAnchorList"> アンカーリスト </param>
         /// <param name="pAlertList"> アラートリスト </param>
         /// <param name="pSoundAssets"> サウンドアセット </param>
-        public void CreateTimelineData(string pName, List<TimelineActivityData> pActivityList, List<TimelineAnchorData> pAnchorList, List<TimelineAlertObjectModel> pAlertList, AlertSoundAssets pSoundAssets)
+        public void SetTimelineData(string pName, List<TimelineActivityData> pActivityList, List<TimelineAnchorData> pAnchorList, List<TimelineAlertObjectModel> pAlertList, AlertSoundAssets pSoundAssets)
         {
             this.Name = pName;
             this.AlertSoundAssets = pSoundAssets;
+
+            pAlertList.Sort();
+            this.AlertList = pAlertList;
 
             int i = 0;
             pActivityList.Sort(TimelineActivityData.CompareByEndTime);
@@ -89,6 +92,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
             {
                 a.Index = i++;
                 a.TimerData = this.TimerData;
+                a.TimelineAlert = this.AlertList.FirstOrDefault(s => s.TimeFromStart == a.TimeFromStart);
                 this.ActivityCollection.Add(a);
                 this.TimerData.CombatTimeChangedRefreshList.Add(a);
             }
@@ -100,8 +104,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
             foreach (TimelineAnchorData a in this.AnchorList)
                 anchorsTree.Add(a.Interval, a);
 
-            pAlertList.Sort();
-            AlertList = pAlertList;
 
             alertsTimeFromStart = AlertList.Select(a => a.TimeFromStart).ToList();
 
@@ -116,6 +118,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
         /// <returns> 正常終了時 True </returns> 
         public bool Clear()
         {
+            this.ActivityCollection.Clear();
             return true;
         }
 
@@ -196,7 +199,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
         /// </summary>
         public void ResetAllAlerts()
         {
-            foreach (TimelineAlertObjectModel alert in AlertList)
+            foreach (TimelineAlertObjectModel alert in this.AlertList)
                 alert.Processed = false;
         }
 

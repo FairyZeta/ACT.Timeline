@@ -20,9 +20,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
     /// <summary> オーバーレイ表示ウィンドウ
     /// </summary>
-    public partial class OverlayWindowView : Window
+    public partial class OverlayWindow : Window
     {
-        public OverlayWindowView()
+        public OverlayWindow()
         {
             InitializeComponent();
             this.MouseLeftButtonDown += (sender, e) => this.DragMove();

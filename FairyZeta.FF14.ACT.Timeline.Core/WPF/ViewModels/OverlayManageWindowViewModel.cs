@@ -9,7 +9,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
 {
     /// <summary> タイムライン／オーバーレイ管理ウィンドウビューモデル
     /// </summary>
-    public class OverlayManageWindowViewModel : _ViewModels
+    public class OverlayManageWindowViewModel : _ViewModel
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 

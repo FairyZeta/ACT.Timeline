@@ -188,9 +188,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             if (isImport) return;
 
-            //Task.Run(() => this.LogAnalyz(logInfo.logLine));
+            Task.Run(() => this.LogAnalyz(logInfo.logLine));
 
-            TimelineAnchorData anchor = this.TimelineObjectModel.FindAnchorMatchingLogline(logInfo.logLine);
+        }
+
+        /// <summary> ログを解析してジャンプ／シンクの処理を実行します。
+        /// </summary>
+        /// <param name="pLine"></param>
+        public void LogAnalyz(string pLine)
+        {
+            TimelineAnchorData anchor = this.TimelineObjectModel.FindAnchorMatchingLogline(pLine);
             if (anchor != null)
             {
                 if (anchor.Jump == 0)
@@ -199,82 +206,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                 }
                 else
                 {
-                    this.TimelineObjectModel.TimerData.CurrentCombatTime = anchor.Jump > 0 ? anchor.Jump : anchor.TimeFromStart;
+                    double time = anchor.Jump > 0 ? anchor.Jump : anchor.TimeFromStart;
+                    this.TimelineObjectModel.TimerData.CurrentCombatTime = time;
+                    this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = time;
                     this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimelineObjectModel);
                 }
             }
-        }
-
-        /// <summary> ログを解析してジャンプ／シンクの処理を実行します。
-        /// </summary>
-        /// <param name="pLine"></param>
-        public void LogAnalyz(string pLine)
-        {
-
-
-            // ジャンプとシンクの判定
-            //this.TimelineLogAnalyzerModule.JumpSyncAnalayz(this.TimelineDataModel, this.TimerDataModel, pLine);
-
-            //if (this.TimelineDataModel.SynchroAnchorData == null)
-            //    return;
-
-
-
-            // switch (this.TimelineDataModel.SynchroAnchorData.SyncType)
-            // {
-            //  case SyncType.AutoEnd:
-            //       this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
-            //      break;
-            //  case SyncType.Jump:
-            //       this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.Jump;
-            //       break;
-            //   case SyncType.Sync:
-            //this.TimerDataModel.TimerDeta.CurrentCombatTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
-            //        this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
-            //       break;
-            //}
-            /*
-            // ジャンプ
-            if (this.TimelineDataModel.SynchroAnchorData.Jump >= 0)
-            {
-                if (this.TimelineDataModel.SynchroAnchorData.Jump == 0)
-                {
-                    // 自動終了
-                    base.CommonDataModel.TimelineLogCollection.Add(
-                        Globals.TimelineLogger.WriteActionLog.Success.NOTICE.Write("Timeline Auto End."));
-                    this.TimelineControlModule.TimerStop(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
-                }
-                else
-                {
-                    // 通常ジャンプ
-                    base.CommonDataModel.TimelineLogCollection.Add(
-                        Globals.TimelineLogger.WriteActionLog.Success.NOTICE.Write(
-                            string.Format("Timeline Jump => CurrentTime {0} / Time {1}", this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime, this.TimelineDataModel.SynchroAnchorData.Jump), Globals.ProjectName));
-                    this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.Jump;
-                }
-            }
-            // シンク
-            else
-            {
-                // 自動開始判定
-                if (this.CommonDataModel.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run)
-                {
-                    this.TimerDataModel.TimerDeta.CurrentCombatTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
-                    this.TimelineControlModule.TimerStart(this.CommonDataModel, this.TimerDataModel, this.TimelineDataModel);
-                    base.CommonDataModel.TimelineLogCollection.Add(
-                        Globals.TimelineLogger.WriteActionLog.Success.NOTICE.Write(string.Format("Timeline Auto Start. Time => {0}", this.TimelineDataModel.SynchroAnchorData.TimeFromStart)));
-                }
-                // 通常シンク
-                else
-                {
-                    base.CommonDataModel.TimelineLogCollection.Add(
-                        Globals.TimelineLogger.WriteActionLog.Success.NOTICE.Write(
-                            string.Format("Timeline Sync => CurrentTime {0} / Time {1}", this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime, this.TimelineDataModel.SynchroAnchorData.TimeFromStart), Globals.ProjectName));
-                    this.TimelineControlModule.CurrentCombatRelativeClock.CurrentTime = this.TimelineDataModel.SynchroAnchorData.TimeFromStart;
-                }
-            }
-            */
-
         }
 
         /// <summary> 戦闘終了時に実行される処理を定義します。

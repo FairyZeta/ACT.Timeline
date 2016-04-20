@@ -62,6 +62,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
             v0020.Add("調整：軽度のデザイン修正");
             this.UpdateHistoryDictionary.Add(new Version(0, 0, 2, 0), v0020);
 
+            List<string> v0021 = new List<string>();
+            v0020.Add("Bug：ACTが停止、最悪ブルースクリーンもありえる為、アクティブ画面チェックを停止");
+            this.UpdateHistoryDictionary.Add(new Version(0, 0, 2, 1), v0021);
+
+            List<string> v0030 = new List<string>();
+            v0020.Add("Bug：タイムラインがsyncでズレる問題の修正");
+            v0020.Add("調整：タイムラインの測定コア関連を一度ぶっ壊して作り直し");
+            v0020.Add("調整：バーをデザイン重視から視認性重視に一時的変更（時間ズレ確認の為）");
+            v0020.Add("その他：ベースライブラリ整理、配色カスタム準備（未実装）");
+            this.UpdateHistoryDictionary.Add(new Version(0, 0, 3, 0), v0030);
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

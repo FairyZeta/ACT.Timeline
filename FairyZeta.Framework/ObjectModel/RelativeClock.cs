@@ -55,7 +55,8 @@ namespace FairyZeta.Framework.ObjectModel
         {
             this.initObjectModel();
 
-            if (pInitStart) this.stopwatch.Start();
+            if (pInitStart)
+                this.stopwatch.Start();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -77,7 +78,7 @@ namespace FairyZeta.Framework.ObjectModel
         public void StopClock(double pCurrentTime)
         {
             this.stopwatch.Stop();
-            this.offset = 0;
+            this.offset = pCurrentTime;
         }
 
         /// <summary> 時間計測を停止します。
@@ -85,14 +86,6 @@ namespace FairyZeta.Framework.ObjectModel
         public void StopClock()
         {
             this.stopwatch.Stop();
-        }
-
-        /// <summary> データのクリアを実行します。
-        /// </summary>
-        /// <returns> 正常終了時 True </returns> 
-        public bool Clear()
-        {
-            return true;
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

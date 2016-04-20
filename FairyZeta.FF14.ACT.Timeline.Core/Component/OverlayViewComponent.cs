@@ -7,6 +7,7 @@ using Prism.Commands;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
 using FairyZeta.Framework;
+using FairyZeta.Framework.ObjectModel;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 {
@@ -25,7 +26,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         public OverlayControlModule OverlayControlModule { get; set; }
         /// <summary> オーバーレイ管理モジュール
         /// </summary>
-        public OverlayManageModule OverlayManageModule { get; set; } 
+        public OverlayManageModule OverlayManageModule { get; set; }
+
+        /// <summary> ダイアログ管理モデル
+        /// </summary>
+        public DialogManageObjectModel DialogManage { get; private set; }
 
         #region #- [Command] DelegateCommand.OverlayClosedCommand - ＜オーバーレイ終了コマンド＞ -----
         /// <summary> オーバーレイ終了コマンド＜コマンド＞ </summary>
@@ -97,7 +102,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
-
         #region #- [Command] DelegateCommand.OverlayCustomClosedCommand - ＜オーバーレイカスタム終了コマンド＞ -----
         /// <summary> オーバーレイカスタム終了コマンド＜コマンド＞ </summary>
         private DelegateCommand _OverlayCustomClosedCommand;
@@ -108,6 +112,25 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
+        #region #- [Command] DelegateCommand<string>.FontEditCommand - ＜フォント変更コマンド＞ -----
+        /// <summary> フォント変更コマンド＜コマンド＞ </summary>
+        private DelegateCommand<string> _FontEditCommand;
+        /// <summary> フォント変更コマンド＜コマンド＞ </summary>
+        public DelegateCommand<string> FontEditCommand
+        {
+            get { return _FontEditCommand = _FontEditCommand ?? new DelegateCommand<string>(this._FontEditExecute, this._CanFontEditExecute); }
+        }
+        #endregion 
+
+        #region #- [Command] DelegateCommand<string>.ColorEditCommand - ＜カラー変更コマンド＞ -----
+        /// <summary> カラー変更コマンド＜コマンド＞ </summary>
+        private DelegateCommand<string> _ColorEditCommand;
+        /// <summary> カラー変更コマンド＜コマンド＞ </summary>
+        public DelegateCommand<string> ColorEditCommand
+        {
+            get { return _ColorEditCommand = _ColorEditCommand ?? new DelegateCommand<string>(this._ColorEditExecute, this._CanColorEditExecute); }
+        }
+        #endregion 
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -129,7 +152,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayDataModel = new OverlayDataModel();
             this.OverlayControlModule = new OverlayControlModule();
             this.OverlayManageModule = new OverlayManageModule();
-
+            this.DialogManage = new DialogManageObjectModel();
             return true;
         }
 
@@ -344,6 +367,50 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayDataModel.OverlayViewData.OverlayCustomClosed = true;
         }
 
+        #endregion 
+
+        #region #- [Method] CanExecute,Execute @ FontEditCommand - ＜フォント変更コマンド＞ -----
+        /// <summary> 実行可能確認＜フォント変更コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        /// <returns> 実行可能: ture / 実行不可能: false </returns>
+        private bool _CanFontEditExecute(string para)
+        {
+            return true;
+        }
+
+        /// <summary> コマンド実行＜フォント変更コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _FontEditExecute(string para)
+        {
+
+        }
+        #endregion 
+        #region #- [Method] CanExecute,Execute @ ColorEditCommand - ＜カラー変更コマンド＞ -----
+        /// <summary> 実行可能確認＜カラー変更コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        /// <returns> 実行可能: ture / 実行不可能: false </returns>
+        private bool _CanColorEditExecute(string para)
+        {
+            return true;
+        }
+
+        /// <summary> コマンド実行＜カラー変更コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _ColorEditExecute(string para)
+        {
+            if(!this.DialogManage.ShowColorDialog().Value)
+            {
+                return;
+            }
+
+
+            switch (para)
+            {
+
+                default:
+                    return;
+            }
+        }
         #endregion 
     }
 }

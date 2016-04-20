@@ -88,7 +88,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// <param name="pOverlayViewComponent"> オーバーレイ表示コンポーネント </param>
         private void openStandardTimelineView(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
         {
-            OverlayWindowView window = new OverlayWindowView();
+            OverlayWindow window = new OverlayWindow();
 
             window.Topmost = true;
             var vm = window.DataContext as OverlayWindowViewModel;
@@ -117,7 +117,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// <param name="pOverlayViewComponent"> オーバーレイ表示コンポーネント </param>
         private void openOverlayControlView(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
         {
-            OverlayWindowView window = new OverlayWindowView();
+            OverlayWindow window = new OverlayWindow();
 
             window.Topmost = true;
             window.ResizeMode = System.Windows.ResizeMode.NoResize;
