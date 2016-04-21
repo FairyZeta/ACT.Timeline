@@ -160,6 +160,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         }
         #endregion
 
+        #region #- [Property] OverlayColorSettingsData.OverlayColorSettingsData - ＜オーバーレイ配色設定データ＞ -----
+        /// <summary> オーバーレイ配色設定データ </summary>
+        private OverlayColorSettingsData _OverlayColorSettingsData;
+        /// <summary> オーバーレイ配色設定データ </summary>    
+        public OverlayColorSettingsData OverlayColorSettingsData
+        {
+            get { return _OverlayColorSettingsData; }
+            set { this.SetProperty(ref this._OverlayColorSettingsData, value); }
+        }
+        #endregion
+
+        /// <summary> オーバーレイカスタム一時的データ
+        /// </summary>
+        [XmlIgnore]
+        public OverlayCustomTempData OverlayCustomTempData { get; set; }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイ追加用データモデル／コンストラクタ
@@ -186,6 +202,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             this.OverlayItemVisibilitySettingsData = new OverlayItemVisibilitySettingsData();
             this.OverlayGenericSettingsData = new OverlayGenericSettingsData();
             this.OverlayContentSettingsData = new OverlayContentSettingsData();
+            this.OverlayCustomTempData = new OverlayCustomTempData();
+            this.OverlayColorSettingsData = new OverlayColorSettingsData();
 
             return true;
         }

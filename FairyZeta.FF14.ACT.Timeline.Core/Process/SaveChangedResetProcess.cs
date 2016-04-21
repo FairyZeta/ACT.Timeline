@@ -40,13 +40,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// <param name="pDataModel"> リセット対象のデータモデル </param>
         public void OverlayDataSaveChangedReset(OverlayDataModel pDataModel)
         {
-            pDataModel.OverlayContentSettingsData.SaveChangedTarget = false;
-            pDataModel.OverlayFilterSettingsData.SaveChangedTarget = false;
-            pDataModel.OverlayGenericSettingsData.SaveChangedTarget = false;
-            pDataModel.OverlayItemVisibilitySettingsData.SaveChangedTarget = false;
-            pDataModel.OverlayOptionData.SaveChangedTarget = false;
-            pDataModel.OverlayViewData.SaveChangedTarget = false;
             pDataModel.OverlayWindowData.SaveChangedTarget = false;
+            pDataModel.OverlayGenericSettingsData.SaveChangedTarget = false;
+            pDataModel.OverlayOptionData.SaveChangedTarget = false;
+            pDataModel.OverlayFilterSettingsData.SaveChangedTarget = false;
+            pDataModel.OverlayItemVisibilitySettingsData.SaveChangedTarget = false;
+            pDataModel.OverlayContentSettingsData.SaveChangedTarget = false;
+            pDataModel.OverlayViewData.SaveChangedTarget = false;
 
         }
 

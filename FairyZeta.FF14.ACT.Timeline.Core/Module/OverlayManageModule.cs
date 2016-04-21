@@ -132,18 +132,26 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> 既存のオーバーレイを削除します。
         /// </summary>
-        public void DeleteOverlay(OverlayViewComponent pOverlayViewComponent, CommonDataModel pCommonDataModel, OverlayManageDataModel pOverlayManageDataModel)
+        /// <param name="pOverlayViewC"> 削除するオーバーレイデータ </param>
+        /// <param name="pCommonDM"> 値参照用の共通データモデル </param>
+        /// <param name="pOverlayManageDM"> 削除データのコレクションを持つオーバーレイ管理モデル </param>
+        public void DeleteOverlay(OverlayViewComponent pOverlayViewC, CommonDataModel pCommonDM, OverlayManageDataModel pOverlayManageDM)
         {
-            if (pCommonDataModel == null || pCommonDataModel.ApplicationData == null) return;
+            if (pCommonDM == null || pCommonDM.ApplicationData == null) return;
 
-            string fileName = pCommonDataModel.ApplicationData.OverlayDataPartName + String.Format("{0:0000}", pOverlayViewComponent.OverlayDataModel.OverlayWindowData.ID) + ".xml"; 
+            string fileName = pCommonDM.ApplicationData.OverlayDataPartName + String.Format("{0:0000}", pOverlayViewC.OverlayDataModel.OverlayWindowData.ID) + ".xml";
+            string path = Path.Combine(pCommonDM.ApplicationData.RoamingDirectoryPath,"OverlayData", fileName);
+
+            pOverlayManageDM.OverlayViewComponentCollection.Remove(pOverlayViewC);
+
+            WindowsServices.WindowCloseSendMessage(pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+            pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowIntPtr = IntPtr.Zero;
+
+            pOverlayViewC = null;
+
+            if (File.Exists(path))
+                File.Delete(path);
             
-            pOverlayManageDataModel.OverlayViewComponentCollection.Remove(pOverlayViewComponent);
-
-            WindowsServices.WindowCloseSendMessage(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr);
-            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr = IntPtr.Zero;
-
-            pOverlayViewComponent = null;
         }
 
         /// <summary> オーバーレイを全て表示します。

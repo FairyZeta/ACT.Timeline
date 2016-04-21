@@ -24,7 +24,7 @@
         <vm:ColorEditViewModel />
     </UserControl.DataContext>-->
 
-    <Grid Background="White">
+    <Grid x:Name="RootGrid" Background="White">
         <Grid.Resources>
 
             <DataTemplate x:Key="ColorDataTemplate" DataType="{x:Type vm:PredefinedColor}">
@@ -46,11 +46,12 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition />
             <RowDefinition Height="140"/>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.ColumnSpan="100" x:Name="PredefinedColorsListBox" BorderThickness="1"
+        <ListBox Grid.Row="1" Grid.ColumnSpan="100" x:Name="PredefinedColorsListBox" BorderThickness="1"
                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                  ItemsSource="{Binding Path=PredefinedColors}" ItemTemplate="{StaticResource ColorDataTemplate}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -60,7 +61,7 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
-        <Grid x:Name="RGB" Grid.Row="1" Grid.Column="0" Height="140">
+        <Grid x:Name="RGB" Grid.Row="2" Grid.Column="0" Height="140">
             <StackPanel Grid.Row="0" Margin="0,0,0,20">
                 <Label Content="RGB" FontWeight="ExtraBold" Margin="0,0,0,4" />
 
@@ -83,7 +84,7 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid x:Name="AlphaAndHex" Grid.Row="1" Grid.Column="1" Height="140">
+        <Grid x:Name="AlphaAndHex" Grid.Row="2" Grid.Column="1" Height="140">
             <StackPanel>
             
             <StackPanel Grid.Row="1" Margin="0,0,0,20">
@@ -102,7 +103,7 @@
             </StackPanel>
 
         </Grid>
-        <Grid x:Name="Preview" Grid.Row="1" Grid.Column="2" Height="130" Visibility="Collapsed">
+        <Grid x:Name="Preview" Grid.Row="2" Grid.Column="2" Height="130" Visibility="Collapsed">
                 <StackPanel Grid.Row="3" Margin="0,40,0,20">
                     <Label Content="Preview" FontWeight="ExtraBold" />
                     <Rectangle x:Name="PreviewRectangle" Width="200" Height="80" Margin="100,12,0,0" HorizontalAlignment="Left" />

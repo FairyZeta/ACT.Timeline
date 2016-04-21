@@ -21,11 +21,27 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
     /// </summary>
     public partial class ColorEditView : UserControl
     {
+        /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        public static readonly DependencyProperty EditColorProperty =
+                    DependencyProperty.Register("EditColor", typeof(Color), typeof(ColorEditView), new FrameworkPropertyMetadata(default(Color), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public Color EditColor
+        {
+            get { return (Color)GetValue(EditColorProperty); }
+            set { SetValue(EditColorProperty, value); }
+        }
+
+        /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
+
         public ColorEditView()
-        {            
+        {
             this.InitializeComponent();
 
-            this.Color = Colors.White;
+            RootGrid.DataContext = this;
+
+            this.PredefinedColors = EnumlatePredefinedColors();
+            this.EditColor = Colors.White;
 
             this.Loaded += this.ColorDialogContent_Loaded;
             this.PredefinedColorsListBox.SelectionChanged += this.PredefinedColorsListBox_SelectionChanged;
@@ -53,12 +69,29 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
                 this.ToPreview();
             };
         }
+        /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
+
+        /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        private static Color OnColorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            // オブジェクトを取得して処理する
+            //DependencyPropertyTestControl ctrl = obj as DependencyPropertyTestControl;
+            //if (ctrl != null)
+            //{
+            //    ctrl.TitleTextBlock.Text = ctrl.Title;
+            //}
+
+            return (Color)e.NewValue;
+        }
 
         private void ColorDialogContent_Loaded(object sender, RoutedEventArgs e)
         {
             foreach (PredefinedColor predefinedColor in this.PredefinedColorsListBox.Items)
             {
-                if (predefinedColor.Color == this.Color)
+                if (predefinedColor.Color == this.EditColor)
                 {
                     this.PredefinedColorsListBox.SelectedItem = predefinedColor;
 
@@ -74,7 +107,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             }
         }
 
-        public Color Color { get; set; }
 
         public void Apply()
         {
@@ -88,9 +120,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             {
             }
 
-            this.Color = color;
+            this.EditColor = color;
         }
 
+        /// <summary> リストボックスアイテム変更時のイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PredefinedColorsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (this.PredefinedColorsListBox.SelectedItem != null)
@@ -101,6 +137,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
                 this.GTextBox.Text = color.G.ToString();
                 this.BTextBox.Text = color.B.ToString();
                 this.ATextBox.Text = color.A.ToString();
+
+                SetValue(EditColorProperty, color);
             }
         }
 
@@ -132,6 +170,36 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             }
 
             this.PreviewRectangle.Fill = new SolidColorBrush(color);
+        }
+
+
+        #region #- [Property] PredefinedColor[].PredefinedColors - ＜カラーリスト一覧＞ -----
+        
+        /// <summary> カラーリスト一覧 </summary>    
+        public PredefinedColor[] PredefinedColors { get; set; }
+        #endregion
+
+        private PredefinedColor[] EnumlatePredefinedColors()
+        {
+            var colors = typeof(Colors).GetProperties();
+
+            var list = new List<PredefinedColor>();
+            foreach (var color in colors)
+            {
+                try
+                {
+                    list.Add(new PredefinedColor()
+                    {
+                        Name = color.Name,
+                        Color = (Color)ColorConverter.ConvertFromString(color.Name)
+                    });
+                }
+                catch
+                {
+                }
+            }
+
+            return list.OrderBy(x => x.Color.ToString()).ToArray();
         }
     }
 }

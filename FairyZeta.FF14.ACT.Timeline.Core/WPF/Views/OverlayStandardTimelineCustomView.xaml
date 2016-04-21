@@ -307,7 +307,6 @@
                         </Grid>
                     </Border>
                 </TabItem>
-                <!--
                 <TabItem Header="Color">
                     <TabItem.Resources>
                         <Style TargetType="Button">
@@ -372,7 +371,9 @@
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="TypeColorHEALER"/>
                                 <TextBlock Text=" Type Color [HEALER]  "/>
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
@@ -387,10 +388,27 @@
                                 <TextBlock Text="aabbccdd"/>
                             </StackPanel>
                         </StackPanel>
-                        <view:ColorEditView DataContext="{Binding}"/>
+                        <Border >
+
+                            <Grid Margin="10 0" HorizontalAlignment="Left">
+                                <view:ColorEditView EditColor="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.EditBindColor, Mode=TwoWay}">
+                                    <view:ColorEditView.Style>
+                                        <Style TargetType="{x:Type view:ColorEditView}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </view:ColorEditView.Style>
+                                </view:ColorEditView>
+                                <Button Width="80" Height="24" Content="Close" VerticalAlignment="Top"
+                    Command="{Binding OverlayViewComponent.EditCloseCommand}"
+                    CommandParameter="StringColor"/>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </TabItem>
-                -->
             </TabControl>
             <GridSplitter Grid.RowSpan="100" Width="3" Margin="0 15"/>
             <view:StandardTimelineView Grid.Column="1" Grid.RowSpan="100" Margin="10 50 10 50"/>

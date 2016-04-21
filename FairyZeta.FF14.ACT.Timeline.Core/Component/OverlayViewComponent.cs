@@ -132,6 +132,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
+        #region #- [Command] DelegateCommand<string>.EditCloseCommand - ＜変更終了コマンド＞ -----
+        /// <summary> 変更終了コマンド＜コマンド＞ </summary>
+        private DelegateCommand<string> _EditCloseCommand;
+        /// <summary> 変更終了コマンド＜コマンド＞ </summary>
+        public DelegateCommand<string> EditCloseCommand
+        {
+            get { return _EditCloseCommand = _EditCloseCommand ?? new DelegateCommand<string>(this._EditCloseExecute, this._CanEditCloseExecute); }
+        }
+        #endregion 
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイ表示コンポーネント／コンストラクタ
@@ -398,17 +408,44 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <param name="para"> コマンドパラメーター </param>
         private void _ColorEditExecute(string para)
         {
-            if(!this.DialogManage.ShowColorDialog().Value)
-            {
-                return;
-            }
-
+            this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = true;
 
             switch (para)
             {
 
+                case "MainColor":
+                    this.OverlayDataModel.OverlayCustomTempData.ChangeTargetStringColor = this.OverlayDataModel.OverlayColorSettingsData.HeaderColor_Base;
+                    break;
+
+                case "TypeColorHEALER":
+                    this.OverlayDataModel.OverlayCustomTempData.ChangeTargetStringColor = this.OverlayDataModel.OverlayColorSettingsData.TypeColor_HEALER_Base;
+                    break;
+
                 default:
                     return;
+            }
+        }
+        #endregion 
+
+        
+        #region #- [Method] CanExecute,Execute @ EditCloseCommand - ＜変更終了コマンド＞ -----
+        /// <summary> 実行可能確認＜変更終了コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        /// <returns> 実行可能: ture / 実行不可能: false </returns>
+        private bool _CanEditCloseExecute(string para)
+        {
+            return true;
+        }
+
+        /// <summary> コマンド実行＜変更終了コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _EditCloseExecute(string para)
+        {
+            switch (para)
+            {
+                case "StringColor":
+                    this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = false;
+                    break;
             }
         }
         #endregion 

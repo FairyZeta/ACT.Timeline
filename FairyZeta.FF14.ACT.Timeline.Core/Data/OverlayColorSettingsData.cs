@@ -12,7 +12,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     /// </summary>
     public class OverlayColorSettingsData : _Data
     {
-      /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+        /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+        
+        /// <summary> (バインド用)カスタム配色プロパティ </summary>    
+        [XmlIgnore]
+        public Color EditBindColor
+        {
+            get { return this.getEditTargetColor(); }
+            set { this.setEditTargetColor(value); }
+        }
+
 
         #region #- [Property] Color.TextColor_Base - ＜テキストカラー.ベース＞ -----
         /// <summary> テキストカラー.ベース </summary>
@@ -198,6 +207,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             set
             {
                 this.SetProperty(ref this.TypeColor_HEALER_Base_String, base.ColorToStringFormat(value));
+                base.OnPropertyChanged("TypeColor_HEALER_Base");
                 base.SaveChangedTarget = true;
             }
         }
@@ -331,6 +341,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
         
+        private void setEditTargetColor(Color pColor)
+        {
+            this.TypeColor_HEALER_Base = pColor;
+        }
+
+
+        private Color getEditTargetColor()
+        {
+            return this.TypeColor_HEALER_Base;
+        }
+
+
         /// <summary> データの単体クリアを実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 

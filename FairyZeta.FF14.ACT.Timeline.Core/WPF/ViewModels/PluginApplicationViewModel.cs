@@ -90,7 +90,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
             // セットアップ開始
             this.CommonComponent.SetupComponent();
             this.TimelineComponent.SetupComponent(true);
-
+            
             switch (this.CommonComponent.CommonDataModel.AppStatusData.AppMode)
             {
                 case AppMode.Desing:

@@ -58,7 +58,7 @@
             <SolidColorBrush x:Key="BaseColor_Gold1_Shadow" Color="#795516"/>
 
             <Style x:Key="OutlineTextBlock" TargetType="{x:Type TextBlock}">
-                
+
                 <Style.Resources>
                     <!--
                     <DropShadowEffect x:Key="TestEffect1" BlurRadius="1" Direction="315" ShadowDepth="0"
@@ -92,7 +92,7 @@
                         <Setter Property="Foreground" Value="{StaticResource RoleColor_TANK2}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.HEALER}">
-                        <Setter Property="Foreground" Value="{StaticResource RoleColor_HEALER2}"/>
+                        <Setter Property="Foreground" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColor_HEALER_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource ColorToSolidColorBrushConverter}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.DPS}">
                         <Setter Property="Foreground" Value="{StaticResource RoleColor_DPS2}"/>

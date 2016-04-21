@@ -123,11 +123,13 @@
     <Compile Include="Data\AppStatusData.cs" />
     <Compile Include="Data\AppCommonData.cs" />
     <Compile Include="Data\FormActMainControlData.cs" />
-    <Compile Include="Data\ITimelineAnchor.cs" />
     <Compile Include="Data\OverlayBarSettingsData.cs" />
     <Compile Include="Data\OverlayColorSettingsData.cs" />
     <Compile Include="Data\OverlayContentSettingsData.cs" />
     <Compile Include="Data\DefaultColorData.cs" />
+    <Compile Include="Data\OverlayCustomTempData.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Data\OverlayFilterSettingsData.cs" />
     <Compile Include="Data\OverlayManageData.cs" />
     <Compile Include="Data\OverlayItemVisibilitySettingsData.cs" />
@@ -327,7 +329,6 @@
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
       <HintPath>D:\Advanced Combat Tracker.exe</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -474,9 +475,6 @@
       <Project>{99f2ed28-b5fd-4c8f-855a-18ffc34a447b}</Project>
       <Name>FairyZeta.Framework</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
