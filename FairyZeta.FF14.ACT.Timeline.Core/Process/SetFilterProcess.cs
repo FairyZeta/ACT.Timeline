@@ -75,7 +75,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
             switch (pTimelineType)
             {
                 case TimelineType.UNKNOWN:
-                    filter = new FilterEventHandler(this.typeFilter.Filter_TypeENEMY);
+                    filter = new FilterEventHandler(this.typeFilter.Filter_TypeUNKNOWN);
                     break;
                 case TimelineType.ENEMY:
                     filter = new FilterEventHandler(this.typeFilter.Filter_TypeENEMY);

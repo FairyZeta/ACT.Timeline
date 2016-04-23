@@ -85,6 +85,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
+        #region #- [Command] DelegateCommand.OpenTimelineResourceDirectoryCommand - ＜タイムラインリソースディレクトリオープンコマンド＞ -----
+        /// <summary> タイムラインリソースディレクトリオープンコマンド＜コマンド＞ </summary>
+        private DelegateCommand _OpenTimelineResourceDirectoryCommand;
+        /// <summary> タイムラインリソースディレクトリオープンコマンド＜コマンド＞ </summary>
+        public DelegateCommand OpenTimelineResourceDirectoryCommand
+        {
+            get { return _OpenTimelineResourceDirectoryCommand = _OpenTimelineResourceDirectoryCommand ?? new DelegateCommand(this._OpenTimelineResourceDirectoryExecute); }
+        }
+        #endregion 
+
       #endregion
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -368,6 +378,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.AppCommonModule.SetDefaultResourceDirectory(this.CommonDataModel);
         }
 
+        #endregion 
+
+        
+        #region #- [Method] CanExecute,Execute @ OpenTimelineResourceDirectoryCommand - ＜タイムラインリソースディレクトリオープンコマンド＞ -----
+
+        /// <summary> コマンド実行＜タイムラインリソースディレクトリオープンコマンド＞ </summary>
+        private void _OpenTimelineResourceDirectoryExecute()
+        {
+            System.Diagnostics.Process.Start(
+                "EXPLORER.EXE", base.CommonDataModel.PluginSettingsData.TimelineResourceDirectory);
+        }
         #endregion 
     }
 }

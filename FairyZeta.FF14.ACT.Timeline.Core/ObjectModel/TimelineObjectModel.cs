@@ -86,23 +86,25 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
             pAlertList.Sort();
             this.AlertList = pAlertList;
 
+            this.AnchorList = pAnchorList.OrderBy(anchor => anchor.TimeFromStart).ToList();
+            anchorsTree = new IntervalTree.IntervalTree<double, TimelineAnchorData>();
+            foreach (TimelineAnchorData a in this.AnchorList)
+                anchorsTree.Add(a.Interval, a);
+
             int i = 0;
             pActivityList.Sort(TimelineActivityData.CompareByEndTime);
             foreach (TimelineActivityData a in pActivityList)
             {
                 a.Index = i++;
                 a.TimerData = this.TimerData;
-                a.TimelineAlert = this.AlertList.FirstOrDefault(s => s.TimeFromStart == a.TimeFromStart);
+                a.TimelineAlert = this.AlertList.FirstOrDefault(s => s.Activity == a);
+                a.TimelineAnchorData = this.AnchorList.FirstOrDefault(anc => anc.TimeFromStart == a.TimeFromStart);
                 this.ActivityCollection.Add(a);
                 this.TimerData.CombatTimeChangedRefreshList.Add(a);
             }
 
             this.activityEndTimeList = this.ActivityCollection.Select(a => a.EndTime).ToList();
 
-            this.AnchorList = pAnchorList.OrderBy(anchor => anchor.TimeFromStart).ToList();
-            anchorsTree = new IntervalTree.IntervalTree<double, TimelineAnchorData>();
-            foreach (TimelineAnchorData a in this.AnchorList)
-                anchorsTree.Add(a.Interval, a);
 
 
             alertsTimeFromStart = AlertList.Select(a => a.TimeFromStart).ToList();

@@ -88,15 +88,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             this.SetDefaultOverlayWindowData(component.OverlayDataModel.OverlayWindowData);
             this.SetDefaultOverlaySettingData(component.OverlayDataModel.OverlayOptionData);
 
-            // 配色設定
-            //component.OverlayDataModel.OverlayColorSettingsData = new OverlayColorSettingsData();
-            //this.ovarlayDefaultSetProcess.SetDefaultColorSettings(component.OverlayDataModel.OverlayColorSettingsData, pCommonDataModel.DefaultColorData);
-
             component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineObjectModel.ActivityCollection };
             this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
 
             pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
-
+            pCommonDataModel.ViewCollection.Add(component);
         }
 
         /// <summary> 保存されているオーバーレイを全てロードします。
@@ -113,20 +109,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             foreach (var data in dataList)
             {
                 OverlayViewComponent component = new OverlayViewComponent(pCommonDataModel);
-
-                // 配色情報がNullの場合、新規作成する
-                //if(data.OverlayColorSettingsData == null)
-                //{
-                //    data.OverlayColorSettingsData = new OverlayColorSettingsData();
-               //     this.ovarlayDefaultSetProcess.SetDefaultColorSettings(data.OverlayColorSettingsData, pCommonDataModel.DefaultColorData);
-                //}
-
+                
                 component.OverlayDataModel = data;
 
                 component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineObjectModel.ActivityCollection };
+
                 this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
 
                 pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
+                pCommonDataModel.ViewCollection.Add(component);
             }
         }
 
@@ -143,6 +134,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             string path = Path.Combine(pCommonDM.ApplicationData.RoamingDirectoryPath,"OverlayData", fileName);
 
             pOverlayManageDM.OverlayViewComponentCollection.Remove(pOverlayViewC);
+            pCommonDM.ViewCollection.Remove(pOverlayViewC);
 
             WindowsServices.WindowCloseSendMessage(pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowIntPtr);
             pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowIntPtr = IntPtr.Zero;
@@ -363,7 +355,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             pWindowData.WindowTop = 100;
             pWindowData.WindowLeft = 100;
-            pWindowData.WindowWidth = 380;
+            pWindowData.WindowWidth = 390;
             pWindowData.WindowHeight = 150;
         }
 

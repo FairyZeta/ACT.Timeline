@@ -42,8 +42,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// <param name="pDefaultColorData"> 設定値を参照するデータ </param>
         public void SetDefaultColorSettings(OverlayColorSettingsData pColorSettingsData, DefaultColorData pDefaultColorData)
         {
-            pColorSettingsData.TextColor_Base           = pDefaultColorData.TextColor_Base;
-            pColorSettingsData.TextColor_Shadow         = pDefaultColorData.TextColor_Shadow;
+            //pColorSettingsData.TextColor_Base           = pDefaultColorData.TextColor_Base;
+            //pColorSettingsData.TextColor_Shadow         = pDefaultColorData.TextColor_Shadow;
             /*
             pColorSettingsData.HeaderColor_Base         = pDefaultColorData.HeaderColor_Base;
             pColorSettingsData.HeaderColor_Shadow       = pDefaultColorData.HeaderColor_Shadow;

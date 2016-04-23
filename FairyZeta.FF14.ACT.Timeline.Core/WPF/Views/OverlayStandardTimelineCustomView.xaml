@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
+             xmlns:fConv="clr-namespace:FairyZeta.Framework.WPF.Converters;assembly=FairyZeta.Framework"
              xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
              xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
              xmlns:enum="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
@@ -16,6 +18,8 @@
                 <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <fConv:ColorToSolidColorBrushConverter x:Key="Color2SBrush"/>
+            
             <Style x:Key="DataGridWidthTextBox" TargetType="{x:Type TextBox}">
                 <Setter Property="Width" Value="50"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -90,40 +94,19 @@
                                     <StackPanel Margin="0 5" >
                                         <StackPanel Style="{StaticResource ItemStackPanel}">
                                             <Label Content="TitleBar FontSize" Padding="0" Width="120"/>
-                                            <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <StackPanel>
-                                                <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="TitleBarFontSize"/>
-                                                <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="TitleBarFontSize"/>
-                                            </StackPanel>
+                                            <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </StackPanel>
                                     <StackPanel Margin="0 5" >
                                         <StackPanel Style="{StaticResource ItemStackPanel}">
                                             <Label Content="Header FontSize" Padding="0" Width="120"/>
-                                            <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <StackPanel>
-                                                <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="HeaderFontSize"/>
-                                                <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="HeaderFontSize"/>
-                                            </StackPanel>
+                                            <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </StackPanel>
                                     <StackPanel Margin="0 5" >
                                         <StackPanel Style="{StaticResource ItemStackPanel}">
                                             <Label Content="Content FontSize" Padding="0" Width="120" />
-                                            <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayGenericSettingsData.ContentFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <StackPanel>
-                                                <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="ContentFontSize"/>
-                                                <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="ContentFontSize"/>
-                                            </StackPanel>
+                                            <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.ContentFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
@@ -197,110 +180,48 @@
                                 <StackPanel Style="{StaticResource ItemStackPanel}">
                                     <CheckBox Content="T-No" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility}"/>
-                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel>
-                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="TimeNoWidth"/>
-                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="TimeNoWidth"/>
-                                    </StackPanel>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource ItemStackPanel}">
                                     <CheckBox Content="Time" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility}"/>
-                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel>
-                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="ActionTimeWidth"/>
-                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="ActionTimeWidth"/>
-                                    </StackPanel>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource ItemStackPanel}">
                                     <CheckBox Content="Type" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility}"/>
-                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel>
-                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="TypeWidth"/>
-                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="TypeWidth"/>
-                                    </StackPanel>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource ItemStackPanel}">
                                     <CheckBox Content="Job" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility}"/>
-                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel>
-                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="JobWidth"/>
-                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="JobWidth"/>
-                                    </StackPanel>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource ItemStackPanel}">
                                     <CheckBox Content="TankMode" Style="{StaticResource DataGridCheckBoxStyle}" IsEnabled="False"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TankModeVisibility}"/>
-                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" IsEnabled="False"
-                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.TankModeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel>
-                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}" IsEnabled="False"
-                                                CommandParameter="TankModeWidth"/>
-                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}" IsEnabled="False"
-                                                CommandParameter="TankModeWidth"/>
-                                    </StackPanel>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TankModeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               IsEnabled="False"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource ItemStackPanel}">
                                     <CheckBox Content="Action" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility}"/>
-                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel>
-                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="ActionWidth"/>
-                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="ActionWidth"/>
-                                    </StackPanel>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource ItemStackPanel}">
                                     <CheckBox Content="Active" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility}"/>
-                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel>
-                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="ActiveWidth"/>
-                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="ActiveWidth"/>
-                                    </StackPanel>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource ItemStackPanel}">
                                     <CheckBox Content="Alert" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility}"/>
-                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel>
-                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="AlertWidth"/>
-                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="AlertWidth"/>
-                                    </StackPanel>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource ItemStackPanel}">
-                                    <CheckBox Content="Jump" Style="{StaticResource DataGridCheckBoxStyle}"
+                                    <CheckBox Content="Anc" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility}"/>
-                                    <TextBox Style="{StaticResource DataGridWidthTextBox}" 
-                                             Text="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel>
-                                        <RepeatButton Style="{StaticResource DoubleValueUpRepeatButton}" Command="{Binding WidthValueUpCommand}"
-                                                CommandParameter="JumpWidth"/>
-                                        <RepeatButton Style="{StaticResource DoubleValueDownRepeatButton}" Command="{Binding WidthValueDownCommand}"
-                                                CommandParameter="JumpWidth"/>
-                                    </StackPanel>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 
                             </StackPanel>
@@ -325,89 +246,507 @@
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="EDIT"
                                         Command="{Binding OverlayViewComponent.ColorEditCommand}"
-                                        CommandParameter="MainColor"/>
-                                <TextBlock Text=" Main Color "/>
-                                <TextBlock Text="aabbccdd"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
-                                <TextBlock Text=" Content Color "/>
-                                <TextBlock Text="aabbccdd"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
-                                <TextBlock Text=" Background Color "/>
-                                <TextBlock Text="aabbccdd"/>
-                            </StackPanel>
-                            <Label Content=" - Timeline Color - "/>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
-                                <TextBlock Text=" Header Text Color "/>
-                                <TextBlock Text="aabbccdd"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
-                                <TextBlock Text=" Header Bar  Color "/>
-                                <TextBlock Text="aabbccdd"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
-                                <TextBlock Text=" Type Color [UNKNOWN] "/>
-                                <TextBlock Text="aabbccdd"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
-                                <TextBlock Text=" Type Color [ENEMY] "/>
-                                <TextBlock Text="aabbccdd"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
-                                <TextBlock Text=" Type Color [TANK] "/>
-                                <TextBlock Text="aabbccdd"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
-                                <TextBlock Text=" Type Color [DPS] "/>
-                                <TextBlock Text="aabbccdd"/>
+                                        CommandParameter="{x:Static enum:ColorEditTarget.MenuMain_Base}"/>
+                                <TextBlock Text=" Menu Main Color "/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuMain_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuMain_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="EDIT"
                                         Command="{Binding OverlayViewComponent.ColorEditCommand}"
-                                        CommandParameter="TypeColorHEALER"/>
+                                        CommandParameter="{x:Static enum:ColorEditTarget.MenuSub_Base}"/>
+                                <TextBlock Text=" Menu Sub  Color "/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.Background_Base}"/>
+                                <TextBlock Text=" Background Color "/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.Background_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.Background_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <Label Content=" - Timeline Color - "/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.HeaderText_Base}"/>
+                                <TextBlock Text=" Header Text Color "/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderText_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderText_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.HeaderBar_Base}"/>
+                                <TextBlock Text=" Header Bar  Color "/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderBar_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderBar_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.TypeColorUNKNOWN_Base}"/>
+                                <TextBlock Text=" Type Color [UNKNOWN] "/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorUNKNOWN_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorUNKNOWN_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.TypeColorENEMY_Base}"/>
+                                <TextBlock Text=" Type Color [ENEMY] "/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorENEMY_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorENEMY_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.TypeColorTANK_Base}"/>
+                                <TextBlock Text=" Type Color [TANK] "/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorTANK_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorTANK_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.TypeColorDPS_Base}"/>
+                                <TextBlock Text=" Type Color [DPS] "/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorDPS_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorDPS_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.TypeColorHEALER_Base}"/>
                                 <TextBlock Text=" Type Color [HEALER]  "/>
-                                <TextBlock Text="aabbccdd"/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorHEALER_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorHEALER_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.TypeColorPET_Base}"/>
                                 <TextBlock Text=" Type Color [PET] "/>
-                                <TextBlock Text="aabbccdd"/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorPET_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorPET_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="EDIT"/>
+                                <Button Content="EDIT"
+                                        Command="{Binding OverlayViewComponent.ColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.TypeColorGIMMICK_Base}"/>
                                 <TextBlock Text=" Type Color [GIMMICK] "/>
-                                <TextBlock Text="aabbccdd"/>
+                                <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorGIMMICK_Base}"
+                                           Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.TypeColorGIMMICK_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                         </StackPanel>
-                        <Border >
-
-                            <Grid Margin="10 0" HorizontalAlignment="Left">
-                                <view:ColorEditView EditColor="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.EditBindColor, Mode=TwoWay}">
-                                    <view:ColorEditView.Style>
-                                        <Style TargetType="{x:Type view:ColorEditView}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility}" Value="False">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </view:ColorEditView.Style>
-                                </view:ColorEditView>
-                                <Button Width="80" Height="24" Content="Close" VerticalAlignment="Top"
-                    Command="{Binding OverlayViewComponent.EditCloseCommand}"
-                    CommandParameter="StringColor"/>
+                        <Border  HorizontalAlignment="Stretch">
+                            <Grid >
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                <view:ColorEditView EditColor="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.EditBindColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Border Grid.Row="1" HorizontalAlignment="Left">
+                                    <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Top" Command="{Binding OverlayViewComponent.EditCloseCommand}" CommandParameter="StringColor"/>    
+                                </Border>
+                                
                             </Grid>
                         </Border>
                     </Grid>
+                </TabItem>
+                <TabItem Header="ActiveBar">
+                    <TabItem.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="50" />
+                            <Setter Property="Margin" Value="2 2"/>
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Width" Value="180"/>
+                            <Setter Property="Margin" Value="5 0 0 0"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </TabItem.Resources>
+                    <Grid>
+                        <StackPanel DataContext="{Binding OverlayViewComponent}">
+                            <Label Content=" - ActiveBar Base Settings - "/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content=" Bar Type " Width="180"/>
+                                <ComboBox Height="24" Width="240" VerticalContentAlignment="Center"
+                                      ItemsSource="{Binding OverlayDataModel.ActiveBarSettingsData.BarFormTypeCollection}"
+                                      SelectedItem="{Binding OverlayDataModel.ActiveBarSettingsData.BarFormType}"/>
+                            </StackPanel>
+                            
+                            <Label Content=" Bar Margin " />
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BarMargin_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Top" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BarMargin_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BarMargin_Right, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Bottom" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BarMargin_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+
+                            <Label Content=" Bar Inner Margin "/>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BarInnerMargin_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Top" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BarInnerMargin_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BarInnerMargin_Right, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Bottom" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BarInnerMargin_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!--
+                            <Label Content=" Corner Radius "/>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.CornerRadius_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Top" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.CornerRadius_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.CornerRadius_Right, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Bottom" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.CornerRadius_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            -->
+
+                            <Label Content=" Border Thickness "/>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BorderThickness_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Top" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BorderThickness_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BorderThickness_Right, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Bottom" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BorderThickness_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content=" Inner HorizontalAlignment " Width="180" Margin="0 2"/>
+                                <ComboBox Height="24" Width="240" VerticalContentAlignment="Center"
+                                      ItemsSource="{Binding OverlayDataModel.ActiveBarSettingsData.BarHorizontalAlignmentCollection}"
+                                      SelectedItem="{Binding OverlayDataModel.ActiveBarSettingsData.BarHorizontalAlignment}"/>
+                            </StackPanel>
+
+
+                            <Label Content=" - Text Settings (Common) - "/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content=" Text HorizontalAlignment " Width="180" Margin="0 2"/>
+                                <ComboBox Height="24" Width="240" VerticalContentAlignment="Center"
+                                      ItemsSource="{Binding OverlayDataModel.ActiveBarSettingsData.TextHorizontalAlignmentCollection}"
+                                      SelectedItem="{Binding OverlayDataModel.ActiveBarSettingsData.TextHorizontalAlignment}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content=" Text VerticalAlignment " Width="180" Margin="0 2"/>
+                                <ComboBox Height="24" Width="240" VerticalContentAlignment="Center"
+                                      ItemsSource="{Binding OverlayDataModel.ActiveBarSettingsData.TextVerticalAlignmentCollection}"
+                                      SelectedItem="{Binding OverlayDataModel.ActiveBarSettingsData.TextVerticalAlignment}"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content=" Text Double Style " Width="180" Margin="0 2"/>
+                                <ComboBox Height="24" Width="120" VerticalContentAlignment="Center"
+                                      ItemsSource="{Binding OverlayDataModel.ActiveBarSettingsData.DoubleStyleCollection}"
+                                      SelectedItem="{Binding OverlayDataModel.ActiveBarSettingsData.DoubleVisibilityStyle}"/>
+                                <Label Content=" (N0 =軽い, N2=かなり重い) " Margin="0 2"/>
+                            </StackPanel>
+
+                            <Label Content=" - Color Settings - "/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding ActiveColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarBorder_Base}"/>
+                                <TextBlock Text=" Border Color "/>
+                                <TextBlock Text="{Binding OverlayDataModel.ActiveBarSettingsData.BorderColor}"
+                                           Foreground="{Binding OverlayDataModel.ActiveBarSettingsData.BorderColor, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding ActiveColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarBackgroung_Base}"/>
+                                <TextBlock Text=" Background Color "/>
+                                <TextBlock Text="{Binding OverlayDataModel.ActiveBarSettingsData.BackgroundColor}"
+                                           Foreground="{Binding OverlayDataModel.ActiveBarSettingsData.BackgroundColor, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding ActiveColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarColor1_Base}"/>
+                                <TextBlock Text=" Bar Color (1) "/>
+                                <TextBlock Text="{Binding OverlayDataModel.ActiveBarSettingsData.BarColor1_Base}"
+                                           Foreground="{Binding OverlayDataModel.ActiveBarSettingsData.BarColor1_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding ActiveColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarColor2_Base}"/>
+                                <TextBlock Text=" Bar Color (2) "/>
+                                <TextBlock Text="{Binding OverlayDataModel.ActiveBarSettingsData.BarColor2_Base}"
+                                           Foreground="{Binding OverlayDataModel.ActiveBarSettingsData.BarColor2_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding ActiveColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarColor3_Base}"/>
+                                <TextBlock Text=" Bar Color (3) "/>
+                                <TextBlock Text="{Binding OverlayDataModel.ActiveBarSettingsData.BarColor3_Base}"
+                                           Foreground="{Binding OverlayDataModel.ActiveBarSettingsData.BarColor3_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <Label Content="※Bar Color は動かした時点で変更されます。"/>
+                        </StackPanel>
+                        <Border  HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayCustomTempData.ActiveColorCustomVisibility}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                <view:ColorEditView EditColor="{Binding OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.EditBindColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Border Grid.Row="1" HorizontalAlignment="Left">
+                                    <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Top" Command="{Binding OverlayViewComponent.ActiveColorEditEndCommand}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="CastBar">
+                    <TabItem.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="50" />
+                            <Setter Property="Margin" Value="2 2"/>
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Width" Value="180"/>
+                            <Setter Property="Margin" Value="5 0 0 0"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </TabItem.Resources>
+                    <Grid>
+                        <StackPanel DataContext="{Binding OverlayViewComponent}">
+                            <Label Content=" - ActiveBar Base Settings - "/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content=" Bar Type " Width="180"/>
+                                <ComboBox Height="24" Width="240" VerticalContentAlignment="Center"
+                                      ItemsSource="{Binding OverlayDataModel.CastBarSettingsData.BarFormTypeCollection}"
+                                      SelectedItem="{Binding OverlayDataModel.CastBarSettingsData.BarFormType}"/>
+                            </StackPanel>
+
+                            <Label Content=" Bar Margin " />
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BarMargin_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Top" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BarMargin_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BarMargin_Right, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Bottom" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BarMargin_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+
+                            <Label Content=" Bar Inner Margin "/>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BarInnerMargin_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Top" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BarInnerMargin_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BarInnerMargin_Right, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Bottom" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BarInnerMargin_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!--
+                            <Label Content=" Corner Radius "/>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.CornerRadius_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Top" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.CornerRadius_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.CornerRadius_Right, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Bottom" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.CornerRadius_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            -->
+
+                            <Label Content=" Border Thickness "/>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BorderThickness_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Top" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BorderThickness_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BorderThickness_Right, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                    <Label Content="Bottom" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.CastBarSettingsData.BorderThickness_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content=" Inner HorizontalAlignment " Width="180" Margin="0 2"/>
+                                <ComboBox Height="24" Width="240" VerticalContentAlignment="Center"
+                                      ItemsSource="{Binding OverlayDataModel.CastBarSettingsData.BarHorizontalAlignmentCollection}"
+                                      SelectedItem="{Binding OverlayDataModel.CastBarSettingsData.BarHorizontalAlignment}"/>
+                            </StackPanel>
+
+
+                            <Label Content=" - Color Settings - "/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding CastColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarBorder_Base}"/>
+                                <TextBlock Text=" Border Color "/>
+                                <TextBlock Text="{Binding OverlayDataModel.CastBarSettingsData.BorderColor}"
+                                           Foreground="{Binding OverlayDataModel.CastBarSettingsData.BorderColor, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding CastColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarBackgroung_Base}"/>
+                                <TextBlock Text=" Background Color "/>
+                                <TextBlock Text="{Binding OverlayDataModel.CastBarSettingsData.BackgroundColor}"
+                                           Foreground="{Binding OverlayDataModel.CastBarSettingsData.BackgroundColor, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding CastColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarColor1_Base}"/>
+                                <TextBlock Text=" Bar Color (1) "/>
+                                <TextBlock Text="{Binding OverlayDataModel.CastBarSettingsData.BarColor1_Base}"
+                                           Foreground="{Binding OverlayDataModel.CastBarSettingsData.BarColor1_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding CastColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarColor2_Base}"/>
+                                <TextBlock Text=" Bar Color (2) "/>
+                                <TextBlock Text="{Binding OverlayDataModel.CastBarSettingsData.BarColor2_Base}"
+                                           Foreground="{Binding OverlayDataModel.CastBarSettingsData.BarColor2_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="EDIT"
+                                        Command="{Binding CastColorEditCommand}"
+                                        CommandParameter="{x:Static enum:ColorEditTarget.BarColor3_Base}"/>
+                                <TextBlock Text=" Bar Color (3) "/>
+                                <TextBlock Text="{Binding OverlayDataModel.CastBarSettingsData.BarColor3_Base}"
+                                           Foreground="{Binding OverlayDataModel.CastBarSettingsData.BarColor3_Base, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <Label Content="※Bar Color は動かした時点で変更されます。"/>
+                        </StackPanel>
+                        <Border  HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayCustomTempData.CastColorCustomVisibility}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                <view:ColorEditView EditColor="{Binding OverlayViewComponent.OverlayDataModel.CastBarSettingsData.EditBindColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Border Grid.Row="1" HorizontalAlignment="Left">
+                                    <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Top" Command="{Binding OverlayViewComponent.CastColorEditEndCommand}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
                 </TabItem>
             </TabControl>
             <GridSplitter Grid.RowSpan="100" Width="3" Margin="0 15"/>

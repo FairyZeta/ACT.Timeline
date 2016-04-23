@@ -24,16 +24,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
         public static readonly DependencyProperty EditColorProperty =
-                    DependencyProperty.Register("EditColor", typeof(Color), typeof(ColorEditView), new FrameworkPropertyMetadata(default(Color), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                    DependencyProperty.Register("EditColor", typeof(Color), typeof(ColorEditView), new FrameworkPropertyMetadata(default(Color), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnColorChanged));
 
+        /// <summary> (Dependency) 変更対象カラー </summary>
         public Color EditColor
         {
             get { return (Color)GetValue(EditColorProperty); }
             set { SetValue(EditColorProperty, value); }
         }
 
+        /// <summary> カラーリスト一覧 </summary>    
+        public PredefinedColor[] PredefinedColors { get; set; }
+
         /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> カラーエディットビュー／コンストラクタ
+        /// </summary>
         public ColorEditView()
         {
             this.InitializeComponent();
@@ -43,7 +49,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             this.PredefinedColors = EnumlatePredefinedColors();
             this.EditColor = Colors.White;
 
-            this.Loaded += this.ColorDialogContent_Loaded;
             this.PredefinedColorsListBox.SelectionChanged += this.PredefinedColorsListBox_SelectionChanged;
             this.RTextBox.TextChanged += (s, e) => this.ToHex();
             this.GTextBox.TextChanged += (s, e) => this.ToHex();
@@ -66,7 +71,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
                 this.BTextBox.Text = color.B.ToString();
                 this.ATextBox.Text = color.A.ToString();
 
-                this.ToPreview();
+                this.trySetColor();
+                //this.ToPreview();
             };
         }
         /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -75,52 +81,39 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 
         /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
-        private static Color OnColorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        /// <summary> EditColor変更時のコールバック
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
+        private static void OnColorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            // オブジェクトを取得して処理する
-            //DependencyPropertyTestControl ctrl = obj as DependencyPropertyTestControl;
-            //if (ctrl != null)
-            //{
-            //    ctrl.TitleTextBlock.Text = ctrl.Title;
-            //}
-
-            return (Color)e.NewValue;
+            ColorEditView ctrl = obj as ColorEditView;
+            if (ctrl != null)
+            {
+                ctrl.ToHex((Color)e.NewValue);
+                ctrl.setPredefinedColorsListBox((Color)e.NewValue);
+            }
         }
 
-        private void ColorDialogContent_Loaded(object sender, RoutedEventArgs e)
+        /// <summary> カラーリストボックスから色を選択
+        /// </summary>
+        /// <param name="pNewColor"> 対象の色 </param>
+        private void setPredefinedColorsListBox(Color pNewColor)
         {
             foreach (PredefinedColor predefinedColor in this.PredefinedColorsListBox.Items)
             {
-                if (predefinedColor.Color == this.EditColor)
+                if (predefinedColor.Color == pNewColor)
                 {
                     this.PredefinedColorsListBox.SelectedItem = predefinedColor;
 
-                    var item =
-                        this.PredefinedColorsListBox.ItemContainerGenerator.ContainerFromItem(predefinedColor)
-                        as ListBoxItem;
+                    var item = this.PredefinedColorsListBox.ItemContainerGenerator.ContainerFromItem(predefinedColor) as ListBoxItem;
 
                     if (item != null)
-                    {
                         item.Focus();
-                    }
+                    
                 }
             }
-        }
 
-
-        public void Apply()
-        {
-            var color = Colors.White;
-
-            try
-            {
-                color = (Color)ColorConverter.ConvertFromString(this.HexTextBox.Text);
-            }
-            catch
-            {
-            }
-
-            this.EditColor = color;
         }
 
         /// <summary> リストボックスアイテム変更時のイベント
@@ -154,8 +147,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 
             this.HexTextBox.Text = color.ToString();
 
-            this.ToPreview();
+            this.trySetColor();
+            //this.ToPreview();
         }
+
+        private void ToHex(Color pColor)
+        {
+            this.RTextBox.Text = pColor.R.ToString();
+            this.GTextBox.Text = pColor.G.ToString();
+            this.BTextBox.Text = pColor.B.ToString();
+            this.ATextBox.Text = pColor.A.ToString();
+
+            this.HexTextBox.Text = pColor.ToString();
+
+            this.trySetColor();
+        }
+
 
         private void ToPreview()
         {
@@ -173,12 +180,25 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
         }
 
 
-        #region #- [Property] PredefinedColor[].PredefinedColors - ＜カラーリスト一覧＞ -----
-        
-        /// <summary> カラーリスト一覧 </summary>    
-        public PredefinedColor[] PredefinedColors { get; set; }
-        #endregion
+        private void trySetColor()
+        {
+            var color = Colors.White;
 
+            try
+            {
+                color = (Color)ColorConverter.ConvertFromString(this.HexTextBox.Text);
+            }
+            catch
+            {
+            }
+
+            this.EditColor = color;
+
+        }
+
+        /// <summary> リストボックスの配色一覧を生成します。
+        /// </summary>
+        /// <returns> 生成した配色一覧 </returns>
         private PredefinedColor[] EnumlatePredefinedColors()
         {
             var colors = typeof(Colors).GetProperties();

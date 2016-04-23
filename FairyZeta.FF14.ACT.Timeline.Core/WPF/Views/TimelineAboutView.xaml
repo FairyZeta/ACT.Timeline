@@ -82,7 +82,7 @@
                         <TextBlock Text="・Timelineソースコードを利用させて頂きました。"/>
                         <TextBlock Text="anoyetta様:"/>
                         <TextBlock Text="・カラー／フォントの変更ダイアログを提供して頂きました。"/>
-                        <TextBlock Text="　※現在まだ組み込めてません…。"/>
+                        <TextBlock Text="　※現在まだフォントは組み込めてません…。"/>
                         <TextBlock Text=""/>
                         <TextBlock Text="魔王魂様:"/>
                         <TextBlock Text="・同梱タイムラインのサウンドを利用しています。ほんといつもお世話になってます。"/>
@@ -108,16 +108,12 @@
                         </StackPanel.Resources>
                         <Label Content="【機能更新の予定】"  HorizontalAlignment="Left"/>
 
-                        <TextBlock Text="処理速度チューニング　（v0.1 現在、重すぎる。とにかく何より最優先。）" />
-                        <TextBlock Text="全体デザインの修正 　(十分な処理速度が出てからの話)" />
+                        <TextBlock Text="処理速度チューニング" />
+                        <TextBlock Text="全体デザインの修正 " />
                         <TextBlock Text="プラグインステータス表示" />
                         <TextBlock Text="多言語対応、特に日本語" />
-                        <TextBlock Text="戦闘時間の表示 （v1.0現在、処理が重いので切ってます）" />
                         <TextBlock Text="オーバーレイフォントのカスタム変更" />
                         <TextBlock Text="オーバーレイヘッダー表示項目の順番カスタム変更" />
-                        <TextBlock Text="タイトルバーアイテムカラー変更" />
-                        <TextBlock Text="ヘッダーアイテムカラー変更" />
-                        <TextBlock Text="コンテンツアイテムカラー変更" />
                         <TextBlock Text="プレビュー編集の背景変更" />
                         <TextBlock Text="オーバーレイのインポート、エクスポート" />
                         <TextBlock Text="URL入力によるオーバーレイの直接インポート" />
@@ -125,7 +121,6 @@
                         <TextBlock Text="オーバーレイのコピー作成" />
                         <TextBlock Text="ソースフォルダの複数持ち" />
                         <TextBlock Text="カラーのプロファイル化" />
-                        <TextBlock Text="オーバーレイのアクションバーカスタム" />
                         <TextBlock Text="(x,y指定による)自由配置型オーバーレイカスタム" />
                         <TextBlock Text="上記他、新型オーバーレイ表示" />
                         <TextBlock Text="タイマー処理間隔の設定変更" />
@@ -133,7 +128,6 @@
                         <TextBlock Text="タンクモードの変更システム（MTとSTのフィルタ切り替え）"/>
                         <TextBlock Text="タイムラインのマージ機能"/>
                         <TextBlock Text="タイムラインエディタ"/>
-                        <TextBlock Text="ログからタイムラインの自動作成"/>
                         <TextBlock Text="アップデートの周期的な自動確認、通知（上部に。メールみたいな感じ）"/>
                         <TextBlock Text="アップデートの手動確認ボタン"/>
                         <TextBlock Text="通知音の設定（オートロード時に音を鳴らすとか）"/>

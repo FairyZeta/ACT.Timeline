@@ -96,20 +96,6 @@
         GIMMICK
     }
 
-    /// <summary> シンク処理タイプ
-    /// </summary>
-    public enum SyncType
-    {
-        /// <summary> シンク無し </summary>
-        Non,
-        /// <summary> 自動終了アンカー </summary>
-        AutoEnd,
-        /// <summary> ジャンプアンカー </summary>
-        Jump,
-        /// <summary> シンクアンカー </summary>
-        Sync
-    }
-
     /// <summary> ENUM: ジョブ
     /// </summary>
     public enum Job
@@ -157,6 +143,65 @@
 
     }
 
+    /// <summary> カラー変更ターゲット
+    /// </summary>
+    public enum ColorEditTarget
+    {
+        /// <summary> 編集無し </summary>
+        Non,
+
+        /// <summary> メニューメイン／ベース </summary>
+        MenuMain_Base,
+        /// <summary> メニューサブ／ベース </summary>
+        MenuSub_Base,
+        /// <summary> 背景／ベース </summary>
+        Background_Base,
+
+        /// <summary> タイムライン／ヘッダーテキスト／ベース </summary>
+        HeaderText_Base,
+        /// <summary> タイムライン／ヘッダーバー／ベース </summary>
+        HeaderBar_Base,
+        /// <summary> タイムライン／不明／ベース </summary>
+        TypeColorUNKNOWN_Base,
+        /// <summary> タイムライン／敵／ベース </summary>
+        TypeColorENEMY_Base,
+        /// <summary> タイムライン／タンク／ベース </summary>
+        TypeColorTANK_Base,
+        /// <summary> タイムライン／DPS／ベース </summary>
+        TypeColorDPS_Base,
+        /// <summary> タイムライン／ヒーラー／ベース </summary>
+        TypeColorHEALER_Base,
+        /// <summary> タイムライン／ペット／ベース </summary>
+        TypeColorPET_Base,
+        /// <summary> タイムライン／ギミック／ベース </summary>
+        TypeColorGIMMICK_Base,
+
+        BarBorder_Base,
+        BarBackgroung_Base,
+        BarColor1_Base,
+        BarColor2_Base,
+        BarColor3_Base,
+    }
+
+    /// <summary> バータイプ
+    /// </summary>
+    public enum BarFormType
+    {
+        /// <summary> シンプル型 </summary>
+        SimpleType
+    }
+
+    /// <summary> Doubleの小数点
+    /// </summary>
+    public enum DoubleVisibilityStyle
+    {
+        /// <summary> 0 </summary>
+        N0,
+        /// <summary> 0.0 </summary>
+        N1,
+        /// <summary> 0.00 </summary>
+        N2
+    }
 
     public enum TankMode
     {

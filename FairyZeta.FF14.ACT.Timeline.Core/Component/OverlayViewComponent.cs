@@ -81,7 +81,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             get { return _WidthValueUpCommand = _WidthValueUpCommand ?? new DelegateCommand<string>(this._WidthValueUpExecute); }
         }
         #endregion 
-
         #region #- [Command] DelegateCommand<double?>.WidthValueDownCommand - ＜横幅マイナスコマンド＞ -----
         /// <summary> 横幅マイナスコマンド＜コマンド＞ </summary>
         private DelegateCommand<string> _WidthValueDownCommand;
@@ -101,7 +100,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             get { return _OverlayCustomOpenCommand = _OverlayCustomOpenCommand ?? new DelegateCommand(this._OverlayCustomOpenExecute, this._CanOverlayCustomOpenExecute); }
         }
         #endregion 
-
         #region #- [Command] DelegateCommand.OverlayCustomClosedCommand - ＜オーバーレイカスタム終了コマンド＞ -----
         /// <summary> オーバーレイカスタム終了コマンド＜コマンド＞ </summary>
         private DelegateCommand _OverlayCustomClosedCommand;
@@ -124,11 +122,30 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
         #region #- [Command] DelegateCommand<string>.ColorEditCommand - ＜カラー変更コマンド＞ -----
         /// <summary> カラー変更コマンド＜コマンド＞ </summary>
-        private DelegateCommand<string> _ColorEditCommand;
+        private DelegateCommand<ColorEditTarget?> _ColorEditCommand;
         /// <summary> カラー変更コマンド＜コマンド＞ </summary>
-        public DelegateCommand<string> ColorEditCommand
+        public DelegateCommand<ColorEditTarget?> ColorEditCommand
         {
-            get { return _ColorEditCommand = _ColorEditCommand ?? new DelegateCommand<string>(this._ColorEditExecute, this._CanColorEditExecute); }
+            get { return _ColorEditCommand = _ColorEditCommand ?? new DelegateCommand<ColorEditTarget?>(this._ColorEditExecute); }
+        }
+        #endregion 
+        
+        #region #- [Command] DelegateCommand<ColorEditTarget?>.ActiveColorEditCommand - ＜アクティブカラー変更コマンド＞ -----
+        /// <summary> アクティブカラー変更コマンド＜コマンド＞ </summary>
+        private DelegateCommand<ColorEditTarget?> _ActiveColorEditCommand;
+        /// <summary> アクティブカラー変更コマンド＜コマンド＞ </summary>
+        public DelegateCommand<ColorEditTarget?> ActiveColorEditCommand
+        {
+            get { return _ActiveColorEditCommand = _ActiveColorEditCommand ?? new DelegateCommand<ColorEditTarget?>(this._ActiveColorEditExecute); }
+        }
+        #endregion
+        #region #- [Command] DelegateCommand<ColorEditTarget?>.CastColorEditCommand - ＜キャストカラー変更コマンド＞ -----
+        /// <summary> キャストカラー変更コマンド＜コマンド＞ </summary>
+        private DelegateCommand<ColorEditTarget?> _CastColorEditCommand;
+        /// <summary> キャストカラー変更コマンド＜コマンド＞ </summary>
+        public DelegateCommand<ColorEditTarget?> CastColorEditCommand
+        {
+            get { return _CastColorEditCommand = _CastColorEditCommand ?? new DelegateCommand<ColorEditTarget?>(this._CastColorEditExecute); }
         }
         #endregion 
 
@@ -138,9 +155,29 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> 変更終了コマンド＜コマンド＞ </summary>
         public DelegateCommand<string> EditCloseCommand
         {
-            get { return _EditCloseCommand = _EditCloseCommand ?? new DelegateCommand<string>(this._EditCloseExecute, this._CanEditCloseExecute); }
+            get { return _EditCloseCommand = _EditCloseCommand ?? new DelegateCommand<string>(this._EditCloseExecute); }
         }
         #endregion 
+
+        #region #- [Command] DelegateCommand<ColorEditTarget?>.ActiveColorEditEndCommand - ＜アクティブカラー変更終了コマンド＞ -----
+        /// <summary> アクティブカラー変更終了コマンド＜コマンド＞ </summary>
+        private DelegateCommand<ColorEditTarget?> _ActiveColorEditEndCommand;
+        /// <summary> アクティブカラー変更終了コマンド＜コマンド＞ </summary>
+        public DelegateCommand<ColorEditTarget?> ActiveColorEditEndCommand
+        {
+            get { return _ActiveColorEditEndCommand = _ActiveColorEditEndCommand ?? new DelegateCommand<ColorEditTarget?>(this._ActiveColorEditEndExecute); }
+        }
+        #endregion 
+        #region #- [Command] DelegateCommand<ColorEditTarget?>.CastColorEditEndCommand - ＜キャストカラー変更終了コマンド＞ -----
+        /// <summary> キャストカラー変更終了コマンド＜コマンド＞ </summary>
+        private DelegateCommand<ColorEditTarget?> _CastColorEditEndCommand;
+        /// <summary> キャストカラー変更終了コマンド＜コマンド＞ </summary>
+        public DelegateCommand<ColorEditTarget?> CastColorEditEndCommand
+        {
+            get { return _CastColorEditEndCommand = _CastColorEditEndCommand ?? new DelegateCommand<ColorEditTarget?>(this._CastColorEditEndExecute); }
+        }
+        #endregion 
+
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -395,59 +432,81 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
         }
         #endregion 
-        #region #- [Method] CanExecute,Execute @ ColorEditCommand - ＜カラー変更コマンド＞ -----
-        /// <summary> 実行可能確認＜カラー変更コマンド＞ </summary>
-        /// <param name="para"> コマンドパラメーター </param>
-        /// <returns> 実行可能: ture / 実行不可能: false </returns>
-        private bool _CanColorEditExecute(string para)
-        {
-            return true;
-        }
+        #region #- [Method] Execute @ ColorEditCommand - ＜カラー変更コマンド＞ -----
 
         /// <summary> コマンド実行＜カラー変更コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
-        private void _ColorEditExecute(string para)
+        private void _ColorEditExecute(ColorEditTarget? para)
         {
+            if (!para.HasValue) return;
+
+            this.OverlayDataModel.OverlayColorSettingsData.ColorEditTarget = para.Value;
             this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = true;
 
-            switch (para)
-            {
-
-                case "MainColor":
-                    this.OverlayDataModel.OverlayCustomTempData.ChangeTargetStringColor = this.OverlayDataModel.OverlayColorSettingsData.HeaderColor_Base;
-                    break;
-
-                case "TypeColorHEALER":
-                    this.OverlayDataModel.OverlayCustomTempData.ChangeTargetStringColor = this.OverlayDataModel.OverlayColorSettingsData.TypeColor_HEALER_Base;
-                    break;
-
-                default:
-                    return;
-            }
+           
         }
         #endregion 
 
-        
-        #region #- [Method] CanExecute,Execute @ EditCloseCommand - ＜変更終了コマンド＞ -----
-        /// <summary> 実行可能確認＜変更終了コマンド＞ </summary>
-        /// <param name="para"> コマンドパラメーター </param>
-        /// <returns> 実行可能: ture / 実行不可能: false </returns>
-        private bool _CanEditCloseExecute(string para)
-        {
-            return true;
-        }
+        #region #- [Method] Execute @ EditCloseCommand - ＜変更終了コマンド＞ -----
 
         /// <summary> コマンド実行＜変更終了コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
         private void _EditCloseExecute(string para)
         {
-            switch (para)
-            {
-                case "StringColor":
-                    this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = false;
-                    break;
-            }
+            this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = false;
+            this.OverlayDataModel.OverlayColorSettingsData.ColorEditTarget = ColorEditTarget.Non;
         }
         #endregion 
+        
+
+        #region #- [Method] Execute @ ActiveColorEditCommand - ＜アクティブカラー変更コマンド＞ -----
+
+        /// <summary> コマンド実行＜アクティブカラー変更コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _ActiveColorEditExecute(ColorEditTarget? para)
+        {
+            if (!para.HasValue) return;
+
+            this.OverlayDataModel.ActiveBarSettingsData.ColorEditTarget = para.Value;
+            this.OverlayDataModel.OverlayCustomTempData.ActiveColorCustomVisibility = true;
+        }
+
+        #endregion
+        #region #- [Method] Execute @ CastColorEditCommand - ＜キャストカラー変更コマンド＞ -----
+
+        /// <summary> コマンド実行＜キャストカラー変更コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _CastColorEditExecute(ColorEditTarget? para)
+        {
+            if (!para.HasValue) return;
+
+            this.OverlayDataModel.CastBarSettingsData.ColorEditTarget = para.Value;
+            this.OverlayDataModel.OverlayCustomTempData.CastColorCustomVisibility = true;
+        }
+        #endregion 
+
+        
+        #region #- [Method] Execute @ ActiveColorEditEndCommand - ＜アクティブカラー変更終了コマンド＞ -----
+
+        /// <summary> コマンド実行＜アクティブカラー変更終了コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _ActiveColorEditEndExecute(ColorEditTarget? para)
+        {
+            this.OverlayDataModel.OverlayCustomTempData.ActiveColorCustomVisibility = false;
+            this.OverlayDataModel.ActiveBarSettingsData.ColorEditTarget = ColorEditTarget.Non;
+        }
+        #endregion 
+
+        #region #- [Method] Execute @ CastColorEditEndCommand - ＜キャストカラー変更終了コマンド＞ -----
+
+        /// <summary> コマンド実行＜キャストカラー変更終了コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _CastColorEditEndExecute(ColorEditTarget? para)
+        {
+            this.OverlayDataModel.OverlayCustomTempData.CastColorCustomVisibility = false;
+            this.OverlayDataModel.CastBarSettingsData.ColorEditTarget = ColorEditTarget.Non;
+        }
+        #endregion 
+
     }
 }

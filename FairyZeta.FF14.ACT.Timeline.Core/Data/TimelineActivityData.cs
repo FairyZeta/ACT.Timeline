@@ -100,6 +100,31 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// </summary>
         public TimerData TimerData { get; set; }
 
+        /// <summary> このアクティビティのアンカーデータ
+        /// </summary>
+        public TimelineAnchorData TimelineAnchorData { get; set; } 
+
+        /// <summary> (get) アンカータイプをstring1文字で返却
+        /// </summary>
+        public string AncType
+        {
+            get
+            {
+                if(this.TimelineAnchorData == null)
+                {
+                    return string.Empty;
+                }
+                else if(this.TimelineAnchorData.Jump == -1)
+                {
+                    return "S";
+                }
+                else
+                {
+                    return "J";
+                }
+            }
+        }
+
         /// <summary> アクティブインジケータ最小値 </summary>
         public double ActiveIndicatorMinValue
         {

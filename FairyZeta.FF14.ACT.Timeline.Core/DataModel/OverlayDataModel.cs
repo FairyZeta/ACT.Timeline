@@ -28,6 +28,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
                     || this.OverlayFilterSettingsData.SaveChangedTarget
                     || this.OverlayItemVisibilitySettingsData.SaveChangedTarget
                     || this.OverlayContentSettingsData.SaveChangedTarget
+                    || this.OverlayColorSettingsData.SaveChangedTarget
+                    || this.ActiveBarSettingsData.SaveChangedTarget
+                    || this.CastBarSettingsData.SaveChangedTarget
                     )
                 {
                     return true;
@@ -171,6 +174,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         }
         #endregion
 
+        /// <summary> アクティブバー設定データ
+        /// </summary>
+        public OverlayBarSettingsData ActiveBarSettingsData { get; set; }
+        /// <summary> キャストバー設定データ
+        /// </summary>
+        public OverlayBarSettingsData CastBarSettingsData { get; set; }
+
         /// <summary> オーバーレイカスタム一時的データ
         /// </summary>
         [XmlIgnore]
@@ -204,6 +214,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             this.OverlayContentSettingsData = new OverlayContentSettingsData();
             this.OverlayCustomTempData = new OverlayCustomTempData();
             this.OverlayColorSettingsData = new OverlayColorSettingsData();
+
+            this.ActiveBarSettingsData = new OverlayBarSettingsData();
+            this.ActiveBarSettingsData.DefaultSetup_ActiveBar();
+            this.CastBarSettingsData = new OverlayBarSettingsData();
+            this.CastBarSettingsData.DefaultSetup_CastBar();
 
             return true;
         }

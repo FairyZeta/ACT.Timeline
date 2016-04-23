@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="FairyZeta.Framework.WPF.Controls.DoubleUpDownControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FairyZeta.Framework.WPF.Controls">
+    <UserControl.Resources>
+
+        <Style x:Key="ItemStackPanel" TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="Margin" Value="0 2 0 2"/>
+        </Style>
+        
+        <Style x:Key="DoubleValueUpDownRepeatButton" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="10"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style x:Key="DoubleValueUpRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
+            <Setter Property="Content" Value="+"/>
+            <Setter Property="BorderThickness" Value="0 1 1 1"/>
+            <Setter Property="Padding" Value="0 -5 0 0"/>
+        </Style>
+        <Style x:Key="DoubleValueDownRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
+            <Setter Property="Content" Value="-"/>
+            <Setter Property="BorderThickness" Value="0 0 1 1"/>
+            <Setter Property="Padding" Value="1 -5 0 0"/>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid x:Name="RootGrid">
+        <StackPanel Style="{StaticResource ItemStackPanel}">
+            <local:NumericTextBox x:Name="ValueBox" Width="40" HorizontalContentAlignment="Right" 
+                     Text="{Binding ChangedValue, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
+            <StackPanel>
+                <RepeatButton x:Name="ValueUpButton" Style="{StaticResource DoubleValueUpRepeatButton}" />
+                <RepeatButton x:Name="ValueDownButton" Style="{StaticResource DoubleValueDownRepeatButton}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -41,12 +41,15 @@
                     </ListView>
                 </Border>
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 5" HorizontalAlignment="Left">
-                    <Button Width="120" Height="24" Margin="5 10" Content="Load" 
+                    <Button Width="130" Height="24" Margin="5 10" Content="Load" 
                             IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.TimelineFileLoadEnabled}"
                             Command="{Binding TimelineComponent.TimelineLoadCommand}"/>
-                    <Button Width="120" Height="24" Margin="5 10" Content="Refresh List" 
+                    <Button Width="130" Height="24" Margin="5 10" Content="Refresh List" 
                             IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.RefreshTimelineListEnabled}"
                             Command="{Binding CommonComponent.TimelineFileListRefreshCommand}"/>
+                    <Button Width="130" Height="24" Margin="5 10" Content="Open TL Folder" 
+                            IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.RefreshTimelineListEnabled}"
+                            Command="{Binding CommonComponent.OpenTimelineResourceDirectoryCommand}"/>
                 </StackPanel>
             </Grid>
         </Border>

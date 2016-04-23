@@ -9,6 +9,7 @@ using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Data;
 using FairyZeta.FF14.ACT.Info;
 using FairyZeta.FF14.ACT.Logger.LogData;
+using FairyZeta.FF14.ACT.Timeline.Core.Component;
 using FairyZeta.Framework.ObjectModel;
 using System.Xml.Serialization;
 
@@ -84,6 +85,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 
                 this._SelectedTimelineFileData = value;
                 base.OnPropertyChanged("SelectedTimelineFileData");
+
+                if(value != null && this.AppStatusData.CurrentCombatTimerStatus != TimerStatus.Run)
+                {
+                    this.AppEnableManageData.TimelineFileLoadEnabled = true;
+                }
             }
         }
         #endregion
@@ -141,6 +147,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// </summary>
         public DefaultColorData DefaultColorData { get; private set; }
 
+        /// <summary> (バグ回避用)オーバーレイコンポーネントコレクション　=> できるだけ早く消すこと
+        /// </summary>
+        public ObservableCollection<OverlayViewComponent> ViewCollection { get; private set; }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／共通表示データモデル／コンストラクタ
@@ -184,6 +194,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 
             this.DefaultColorData = new DefaultColorData();
 
+            this.ViewCollection = new ObservableCollection<OverlayViewComponent>();
+
             return true;
         }
 
@@ -195,6 +207,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         {
             base.OnPropertyChanged("OverlayPassVisibility");
             this.TimelineFileViewSource.View.Refresh();
+        }
+
+        public void FilterRefresh()
+        {
+            foreach(var view in this.ViewCollection)
+            {
+                view.OverlayDataModel.OverlayViewData.TimelineViewSource.View.Refresh();
+            }
         }
 
         /// <summary> データの全体クリアを実行します。

@@ -70,6 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
+    <Compile Include="WPF\Controls\DoubleUpDownControl.xaml.cs">
+      <DependentUpon>DoubleUpDownControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Converters\StringToThicknessConverter.cs" />
     <Compile Include="WPF\ViewModels\ColorDialogViewModel.cs" />
     <Compile Include="WPF\Views\FontDialogView.xaml.cs">
       <DependentUpon>FontDialogView.xaml</DependentUpon>
@@ -124,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="WPF\Controls\DoubleUpDownControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WPF\Views\FontDialogView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -156,6 +164,12 @@
     <Folder Include="DataModel\" />
     <Folder Include="DataUnion\" />
     <Folder Include="WPF\Triggers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FairyZeta.Core\FairyZeta.Core.csproj">
+      <Project>{22d040db-58a3-4e1d-9bcf-130d9504b9ab}</Project>
+      <Name>FairyZeta.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

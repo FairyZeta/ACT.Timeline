@@ -72,15 +72,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior
             }
             else if (progress < 2)
             {
-                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[0].Color, 1 - progress);
+                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[2].Color, 1 - progress);
                 var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[1].Color, 2 - progress);
                 brush.GradientStops.Add(newGradientStop1);
                 brush.GradientStops.Add(newGradientStop2);
             }
-            else if (progress < 3)
+            else
             {
                 var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[1].Color, 2 - progress);
-                var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[2].Color, 3 - progress);
+                var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[0].Color, 3 - progress);
                 brush.GradientStops.Add(newGradientStop1);
                 brush.GradientStops.Add(newGradientStop2);
             }

@@ -71,7 +71,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
             if (pStr.IndexOf("[WAR]") > -1) return TimelineType.TANK;
             // 暗黒の呼び名が安定しないので両方ひっかける
             if (pStr.IndexOf("[DKN]") > -1) return TimelineType.TANK;
-            //if (pStr.IndexOf("[DRK]") > -1) return TimelineType.TANK;
+            if (pStr.IndexOf("[DRK]") > -1) return TimelineType.TANK;
 
             if (pStr.IndexOf("[MNK]") > -1) return TimelineType.DPS;
             if (pStr.IndexOf("[DRG]") > -1) return TimelineType.DPS;
@@ -106,7 +106,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
             if (pStr.IndexOf("[WAR]") > -1) return Job.WAR;
             // 暗黒の呼び名が安定しないので両方ひっかける
             if (pStr.IndexOf("[DKN]") > -1) return Job.DKN;
-            //if (pStr.IndexOf("[DRK]") > -1) return Job.DKN;
+            if (pStr.IndexOf("[DRK]") > -1) return Job.DKN;
             
             if (pStr.IndexOf("[MNK]") > -1) return Job.MNK;
             if (pStr.IndexOf("[DRG]") > -1) return Job.DRG;

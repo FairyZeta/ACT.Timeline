@@ -16,10 +16,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     {
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> シンク処理タイプ
-        /// </summary>
-        public SyncType SyncType { get; set; }
-
         /// <summary> デフォルトのアンカー有効範囲
         /// </summary>
         public const double DefaultWindow = 5.0;

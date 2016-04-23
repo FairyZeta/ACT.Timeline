@@ -106,6 +106,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             }
             else
             {
+                if (string.IsNullOrWhiteSpace(this.CommonDataModel.PluginSettingsData.LastLoadTimelineFullPath))
+                    return false;
+
                 this.CommonDataModel.SelectedTimelineFileData = new Data.TimelineFileData()
                 {
                     TimelineFileName = this.CommonDataModel.PluginSettingsData.LastLoadTimelineFileName,
@@ -113,6 +116,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                 };
                 this.TimelineCreateModule.CreateTimelineDataModel(this.CommonDataModel, this.TimelineObjectModel);
                 this.CommonDataModel.SelectedTimelineFileData = null;
+
             }
 
 
@@ -168,6 +172,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             if (this.CommonDataModel == null || this.CommonDataModel.SelectedTimelineFileData == null) return;
             this.TimelineCreateModule.CreateTimelineDataModel(base.CommonDataModel, this.TimelineObjectModel);
+
+            if (base.CommonDataModel.AppStatusData.TimelineLoadStatus != TimelineLoadStatus.Success)
+                this.AppCommonModule.CheckTimelineResourceDirectory(this.CommonDataModel);
+
+
+            base.CommonDataModel.FilterRefresh();
 
             return;
         }
@@ -298,6 +308,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     }
                 }
 
+                base.CommonDataModel.FilterRefresh();
                 this.CommonDataModel.LocationData.CurrentZoneName = zonename;
             }
 
