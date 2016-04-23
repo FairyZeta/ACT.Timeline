@@ -83,7 +83,6 @@ namespace FairyZeta.Framework.WPF.Controls
             this.RootGrid.DataContext = this;
             this.ChangedValue = 0.0;
 
-            this.ValueBox.TextChanged += this.textChanged;
             this.ValueBox.PreviewKeyDown += this.keyDown;
 
             this.ValueUpButton.Click += (s, e) => this.valueUp();
