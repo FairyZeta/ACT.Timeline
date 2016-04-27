@@ -195,7 +195,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             // 必要であれば全てオープン
             if (pAllOverlayOpen)
             {
-                this.OverlayManageModule.ShowOverlay(this.TimelineComponent, this.OverlayManageDataModel.OverlayViewComponentCollection);
+                this.OverlayManageModule.ShowOverlay(base.CommonDataModel, this.TimelineComponent, this.OverlayManageDataModel.OverlayViewComponentCollection);
             }
 
             return true;
@@ -209,6 +209,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             // オーバーレイ自動管理の開始
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoSaveEvent);
             //this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoHideEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoTopMostEvent);
             this.AppCommonTimerModule.SecTimer01.Start();
 
             return true;
@@ -223,6 +224,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.AppCommonTimerModule.SecTimer01.Stop();
             this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoSaveEvent);
             //this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoHideEvent);
+            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoTopMostEvent);
 
             return true;
         }
@@ -247,6 +249,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             }
 
             this.OverlayManageModule.OverlayDataModelSave(this.CommonDataModel.ApplicationData, dataModelList);
+        }
+
+        /// <summary> [TimerEvent] オーバーレイを自動的に最前面に移動します。
+        /// </summary>
+        /// <param name="o"> タイマーオブジェクト </param>
+        /// <param name="e"> タイマーイベント </param>
+        public void OverlayAutoTopMostEvent(object o, EventArgs e)
+        {
+            foreach(var comp in this.OverlayManageDataModel.OverlayViewComponentCollection)
+            {
+                comp.OverlayDataModel.OverlayWindowData.TopMost = true;
+            }
         }
 
         /// <summary> [TimerEvent] 一時的にオーバーレイを非表示にする必要があるかを判定します。
@@ -339,7 +353,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
             if (para.OverlayDataModel.OverlayWindowData.WindowVisibility)
             {
-                this.OverlayManageModule.ShowOverlay(this.TimelineComponent, para);
+                this.OverlayManageModule.ShowOverlay(base.CommonDataModel, this.TimelineComponent, para);
             }
             else
             {
@@ -389,7 +403,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <param name="para"> コマンドパラメーター </param>
         private void _OverlayCustomWindoOpenExecute(OverlayViewComponent para)
         {
-            this.OverlayManageModule.ShowCustomWindow(para);
+            this.OverlayManageModule.ShowCustomWindow(base.CommonDataModel, para);
         }
         #endregion 
         

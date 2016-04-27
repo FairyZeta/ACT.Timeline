@@ -131,6 +131,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\OverlayFilterSettingsData.cs" />
+    <Compile Include="Data\OverlayFontData.cs" />
     <Compile Include="Data\OverlayManageData.cs" />
     <Compile Include="Data\OverlayItemVisibilitySettingsData.cs" />
     <Compile Include="Data\OverlayGenericSettingsData.cs" />
@@ -205,7 +206,6 @@
     <Compile Include="TimelineController.cs" />
     <Compile Include="TimelineLoader.cs" />
     <Compile Include="UpdateChecker.cs" />
-    <Compile Include="Win32APIUtils.cs" />
     <Compile Include="WPF\Behavior\CastGradientBehavior.cs" />
     <Compile Include="WPF\Behavior\ActiveGradientBehavior.cs" />
     <Compile Include="WPF\Behavior\PropertyChangedCommandBehavior.cs" />

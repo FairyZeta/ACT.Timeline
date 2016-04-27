@@ -72,25 +72,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
-        #region #- [Command] DelegateCommand<double?>.WidthValueUpCommand - ＜横幅プラスコマンド＞ -----
-        /// <summary> 横幅プラスコマンド＜コマンド＞ </summary>
-        private DelegateCommand<string> _WidthValueUpCommand;
-        /// <summary> 横幅プラスコマンド＜コマンド＞ </summary>
-        public DelegateCommand<string> WidthValueUpCommand
-        {
-            get { return _WidthValueUpCommand = _WidthValueUpCommand ?? new DelegateCommand<string>(this._WidthValueUpExecute); }
-        }
-        #endregion 
-        #region #- [Command] DelegateCommand<double?>.WidthValueDownCommand - ＜横幅マイナスコマンド＞ -----
-        /// <summary> 横幅マイナスコマンド＜コマンド＞ </summary>
-        private DelegateCommand<string> _WidthValueDownCommand;
-        /// <summary> 横幅マイナスコマンド＜コマンド＞ </summary>
-        public DelegateCommand<string> WidthValueDownCommand
-        {
-            get { return _WidthValueDownCommand = _WidthValueDownCommand ?? new DelegateCommand<string>(this._WidthValueDownExecute); }
-        }
-        #endregion 
-
         #region #- [Command] DelegateCommand.OverlayCustomOpenCommand - ＜オーバーレイカスタムオープンコマンド＞ -----
         /// <summary> オーバーレイカスタムオープンコマンド＜コマンド＞ </summary>
         private DelegateCommand _OverlayCustomOpenCommand;
@@ -112,11 +93,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
         #region #- [Command] DelegateCommand<string>.FontEditCommand - ＜フォント変更コマンド＞ -----
         /// <summary> フォント変更コマンド＜コマンド＞ </summary>
-        private DelegateCommand<string> _FontEditCommand;
+        private DelegateCommand<FontEditTarget?> _FontEditCommand;
         /// <summary> フォント変更コマンド＜コマンド＞ </summary>
-        public DelegateCommand<string> FontEditCommand
+        public DelegateCommand<FontEditTarget?> FontEditCommand
         {
-            get { return _FontEditCommand = _FontEditCommand ?? new DelegateCommand<string>(this._FontEditExecute, this._CanFontEditExecute); }
+            get { return _FontEditCommand = _FontEditCommand ?? new DelegateCommand<FontEditTarget?>(this._FontEditExecute, this._CanFontEditExecute); }
+        }
+        #endregion 
+        #region #- [Command] DelegateCommand.FontEditEndCommand - ＜フォント変更終了コマンド＞ -----
+        /// <summary> フォント変更終了コマンド＜コマンド＞ </summary>
+        private DelegateCommand _FontEditEndCommand;
+        /// <summary> フォント変更終了コマンド＜コマンド＞ </summary>
+        public DelegateCommand FontEditEndCommand
+        {
+            get { return _FontEditEndCommand = _FontEditEndCommand ?? new DelegateCommand(this._FontEditEndExecute, this._CanFontEditEndExecute); }
         }
         #endregion 
 
@@ -128,8 +118,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             get { return _ColorEditCommand = _ColorEditCommand ?? new DelegateCommand<ColorEditTarget?>(this._ColorEditExecute); }
         }
+        #endregion
+        #region #- [Command] DelegateCommand<string>.EditCloseCommand - ＜変更終了コマンド＞ -----
+        /// <summary> 変更終了コマンド＜コマンド＞ </summary>
+        private DelegateCommand<string> _EditCloseCommand;
+        /// <summary> 変更終了コマンド＜コマンド＞ </summary>
+        public DelegateCommand<string> EditCloseCommand
+        {
+            get { return _EditCloseCommand = _EditCloseCommand ?? new DelegateCommand<string>(this._EditCloseExecute); }
+        }
         #endregion 
-        
+
         #region #- [Command] DelegateCommand<ColorEditTarget?>.ActiveColorEditCommand - ＜アクティブカラー変更コマンド＞ -----
         /// <summary> アクティブカラー変更コマンド＜コマンド＞ </summary>
         private DelegateCommand<ColorEditTarget?> _ActiveColorEditCommand;
@@ -146,16 +145,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         public DelegateCommand<ColorEditTarget?> CastColorEditCommand
         {
             get { return _CastColorEditCommand = _CastColorEditCommand ?? new DelegateCommand<ColorEditTarget?>(this._CastColorEditExecute); }
-        }
-        #endregion 
-
-        #region #- [Command] DelegateCommand<string>.EditCloseCommand - ＜変更終了コマンド＞ -----
-        /// <summary> 変更終了コマンド＜コマンド＞ </summary>
-        private DelegateCommand<string> _EditCloseCommand;
-        /// <summary> 変更終了コマンド＜コマンド＞ </summary>
-        public DelegateCommand<string> EditCloseCommand
-        {
-            get { return _EditCloseCommand = _EditCloseCommand ?? new DelegateCommand<string>(this._EditCloseExecute); }
         }
         #endregion 
 
@@ -176,10 +165,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             get { return _CastColorEditEndCommand = _CastColorEditEndCommand ?? new DelegateCommand<ColorEditTarget?>(this._CastColorEditEndExecute); }
         }
-        #endregion 
+        #endregion
+        
+        #region #- [Command] DelegateCommand<OverlayViewComponent>.OverlayViewLockCommand - ＜オーバーレイロック切替コマンド＞ -----
+        /// <summary> オーバーレイロック切替コマンド＜コマンド＞ </summary>
+        private DelegateCommand _OverlayViewLockCommand;
+        /// <summary> オーバーレイロック切替コマンド＜コマンド＞ </summary>
+        public DelegateCommand OverlayViewLockCommand
+        {
+            get { return _OverlayViewLockCommand = _OverlayViewLockCommand ?? new DelegateCommand(this._OverlayViewLockExecute); }
+        }
+        #endregion
 
-
-      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
+        /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイ表示コンポーネント／コンストラクタ
         /// </summary>
@@ -209,11 +207,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         public bool ComponenSetupt()
         {
             this.OverlayControlModule.SetAllFilter(this.OverlayDataModel);
-
             return true;
         }
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
-
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -286,111 +282,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
-        #region #- [Method] CanExecute,Execute @ WidthValueUpCommand - ＜横幅プラスコマンド＞ -----
-        /// <summary> コマンド実行＜横幅プラスコマンド＞ </summary>
-        /// <param name="para"> コマンドパラメーター </param>
-        private void _WidthValueUpExecute(string para)
-        {
-            if (string.IsNullOrWhiteSpace(para)) return;
-            
-            double d = 1;
-
-            switch(para)
-            {
-                case "TitleBarFontSize":
-                    this.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize += d;
-                    break;
-                case "HeaderFontSize":
-                    this.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize += d;
-                    break;
-                case "ContentFontSize":
-                    this.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize += d;
-                    break;
-
-                case "TimeNoWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth += d;
-                    break;
-                case "ActionTimeWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth += d;
-                    break;
-                case "TypeWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.TypeWidth += d;
-                    break;
-                case "JobWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.JobWidth += d;
-                    break;
-                case "TankModeWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.TankModeWidth += d;
-                    break;
-                case "ActionWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.ActionWidth += d;
-                    break;
-                case "ActiveWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.ActiveWidth += d;
-                    break;
-                case "AlertWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.AlertWidth += d;
-                    break;
-                case "JumpWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.JumpWidth += d;
-                    break;
-            }
-
-        }
-        #endregion
-        #region #- [Method] CanExecute,Execute @ WidthValueDownCommand - ＜横幅マイナスコマンド＞ -----
-        /// <summary> コマンド実行＜横幅マイナスコマンド＞ </summary>
-        /// <param name="para"> コマンドパラメーター </param>
-        private void _WidthValueDownExecute(string para)
-        {
-            if (string.IsNullOrWhiteSpace(para)) return;
-            
-            double d = -1;
-
-            switch (para)
-            {
-                case "TitleBarFontSize":
-                    this.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize += d;
-                    break;
-                case "HeaderFontSize":
-                    this.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize += d;
-                    break;
-                case "ContentFontSize":
-                    this.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize += d;
-                    break;
-
-                case "TimeNoWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth += d;
-                    break;
-                case "ActionTimeWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth += d;
-                    break;
-                case "TypeWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.TypeWidth += d;
-                    break;
-                case "JobWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.JobWidth += d;
-                    break;
-                case "TankModeWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.TankModeWidth += d;
-                    break;
-                case "ActionWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.ActionWidth += d;
-                    break;
-                case "ActiveWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.ActiveWidth += d;
-                    break;
-                case "AlertWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.AlertWidth += d;
-                    break;
-                case "JumpWidth":
-                    this.OverlayDataModel.OverlayContentSettingsData.JumpWidth += d;
-                    break;
-            }
-
-        }
-        #endregion 
-
         #region #- [Method] CanExecute,Execute @ OverlayCustomOpenCommand - ＜オーバーレイカスタムオープンコマンド＞ -----
         /// <summary> 実行可能確認＜オーバーレイカスタムオープンコマンド＞ </summary>
         /// <returns> 実行可能: ture / 実行不可能: false </returns>
@@ -402,7 +293,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> コマンド実行＜オーバーレイカスタムオープンコマンド＞ </summary>
         private void _OverlayCustomOpenExecute()
         {
-            this.OverlayManageModule.ShowCustomWindow(this);
+            this.OverlayManageModule.ShowCustomWindow(base.CommonDataModel, this);
         }
         #endregion 
 
@@ -420,18 +311,63 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> 実行可能確認＜フォント変更コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
         /// <returns> 実行可能: ture / 実行不可能: false </returns>
-        private bool _CanFontEditExecute(string para)
+        private bool _CanFontEditExecute(FontEditTarget? para)
         {
             return true;
         }
 
         /// <summary> コマンド実行＜フォント変更コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
-        private void _FontEditExecute(string para)
+        private void _FontEditExecute(FontEditTarget? para)
         {
+            if (!para.HasValue)
+                return;
 
+            switch (para.Value)
+            {
+                case FontEditTarget.TitleBar:
+                    this.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo
+                        = this.OverlayDataModel.FontData.TitleBar_BaseFontInfo;
+                    break;
+
+                case FontEditTarget.Header:
+                    this.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo
+                        = this.OverlayDataModel.FontData.Header_BaseFontInfo;
+                    break;
+
+                case FontEditTarget.Content:
+                    this.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo
+                        = this.OverlayDataModel.FontData.Content_BaseFontInfo;
+                    break;
+
+                case FontEditTarget.Active:
+                    this.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo
+                        = this.OverlayDataModel.FontData.Content_ActiveFontInfo;
+                    break;
+
+                default:
+                    return;
+            }
+
+            this.OverlayDataModel.OverlayCustomTempData.BaseFontCustomVisibility = true;
+        }
+        #endregion
+        #region #- [Method] CanExecute,Execute @ FontEditEndCommand - ＜フォント変更終了コマンド＞ -----
+        /// <summary> 実行可能確認＜フォント変更終了コマンド＞ </summary>
+        /// <returns> 実行可能: ture / 実行不可能: false </returns>
+        private bool _CanFontEditEndExecute()
+        {
+            return true;
+        }
+
+        /// <summary> コマンド実行＜フォント変更終了コマンド＞ </summary>
+        private void _FontEditEndExecute()
+        {
+            this.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo = null;
+            this.OverlayDataModel.OverlayCustomTempData.BaseFontCustomVisibility = false;
         }
         #endregion 
+
         #region #- [Method] Execute @ ColorEditCommand - ＜カラー変更コマンド＞ -----
 
         /// <summary> コマンド実行＜カラー変更コマンド＞ </summary>
@@ -446,7 +382,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
            
         }
         #endregion 
-
         #region #- [Method] Execute @ EditCloseCommand - ＜変更終了コマンド＞ -----
 
         /// <summary> コマンド実行＜変更終了コマンド＞ </summary>
@@ -457,8 +392,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayDataModel.OverlayColorSettingsData.ColorEditTarget = ColorEditTarget.Non;
         }
         #endregion 
-        
-
         #region #- [Method] Execute @ ActiveColorEditCommand - ＜アクティブカラー変更コマンド＞ -----
 
         /// <summary> コマンド実行＜アクティブカラー変更コマンド＞ </summary>
@@ -484,8 +417,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayDataModel.OverlayCustomTempData.CastColorCustomVisibility = true;
         }
         #endregion 
-
-        
         #region #- [Method] Execute @ ActiveColorEditEndCommand - ＜アクティブカラー変更終了コマンド＞ -----
 
         /// <summary> コマンド実行＜アクティブカラー変更終了コマンド＞ </summary>
@@ -496,7 +427,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayDataModel.ActiveBarSettingsData.ColorEditTarget = ColorEditTarget.Non;
         }
         #endregion 
-
         #region #- [Method] Execute @ CastColorEditEndCommand - ＜キャストカラー変更終了コマンド＞ -----
 
         /// <summary> コマンド実行＜キャストカラー変更終了コマンド＞ </summary>
@@ -506,7 +436,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayDataModel.OverlayCustomTempData.CastColorCustomVisibility = false;
             this.OverlayDataModel.CastBarSettingsData.ColorEditTarget = ColorEditTarget.Non;
         }
-        #endregion 
+        #endregion
 
+        #region #- [Method] CanExecute,Execute @ OverlayViewLockCommand - ＜オーバーレイロック切替コマンド＞ -----
+
+        /// <summary> コマンド実行＜オーバーレイロック切替コマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _OverlayViewLockExecute()
+        {
+            if (this.OverlayDataModel.OverlayWindowData.WindowLock)
+            {
+                WindowsServices.SetWindowExTransparent(this.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+            }
+            else
+            {
+                WindowsServices.InitWindowExTransparent(this.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+            }
+        }
+
+        #endregion 
     }
 }

@@ -203,6 +203,16 @@
         N2
     }
 
+    /// <summary> フォント編集対象
+    /// </summary>
+    public enum FontEditTarget
+    {
+        TitleBar,
+        Header,
+        Content,
+        Active
+    }
+
     public enum TankMode
     {
         NON,

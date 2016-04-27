@@ -22,9 +22,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
             this.ShowInTaskbar = false;
 
             // Force set small window size below OS minimum.
-            Win32APIUtils.SetWindowSize(Handle, 55, 20);
-
-            Win32APIUtils.SetWS_EX_NOACTIVATE(Handle, true);
 
             controller.PausedUpdate += controller_PausedUpdate;
             controller_PausedUpdate(null, EventArgs.Empty);

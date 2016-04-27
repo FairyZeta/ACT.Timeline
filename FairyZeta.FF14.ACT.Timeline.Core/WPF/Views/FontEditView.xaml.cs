@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Windows.Interop;
 using FairyZeta.Framework.WPF.ViewModels;
 using FairyZeta.Framework;
+using FairyZeta.Framework.Data;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
@@ -22,12 +23,26 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
     /// </summary>
     public partial class FontEditView : UserControl
     {
-        private FontInfo fontInfo = new FontInfo();
+        /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> (Dependency) 変更対象フォントデータ </summary>
+        public static readonly DependencyProperty EditFontInfoProperty =
+                    DependencyProperty.Register("EditFontInfo", typeof(FontInfo), typeof(FontEditView), new FrameworkPropertyMetadata(new FontInfo(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnEditFontChanged));
+
+        /// <summary> (Dependency) 変更対象フォントデータ </summary>
+        public FontInfo EditFontInfo
+        {
+            get { return (FontInfo)GetValue(EditFontInfoProperty); }
+            set { SetValue(EditFontInfoProperty, value); }
+        }
+        
+        /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         public FontEditView()
         {
             this.InitializeComponent();
-
+            this.RootGrid.DataContext = this;
+            
             this.Loaded += (s, e) =>
             {
                 this.ShowFontInfo();
@@ -38,10 +53,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
                 box = this.FontStyleListBox;
                 if (box.SelectedItem != null)
                 {
-                    var item =
-                        box.ItemContainerGenerator.ContainerFromItem(box.SelectedItem)
-                        as ListBoxItem;
-
+                    var item = box.ItemContainerGenerator.ContainerFromItem(box.SelectedItem) as ListBoxItem;
                     if (item != null)
                     {
                         item.Focus();
@@ -51,10 +63,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
                 box = this.FontFamilyListBox;
                 if (box.SelectedItem != null)
                 {
-                    var item =
-                        box.ItemContainerGenerator.ContainerFromItem(box.SelectedItem)
-                        as ListBoxItem;
-
+                    var item = box.ItemContainerGenerator.ContainerFromItem(box.SelectedItem) as ListBoxItem;
                     if (item != null)
                     {
                         item.Focus();
@@ -62,92 +71,56 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
                 }
             };
 
-            this.FontSizeTextBox.PreviewKeyDown += this.FontSizeTextBox_PreviewKeyDown;
-            this.FontSizeTextBox.LostFocus += (s, e) =>
-            {
-                const double MinSize = 5.0;
-
-                var t = (s as TextBox).Text;
-
-                double d;
-                if (double.TryParse(t, out d))
-                {
-                    if (d < MinSize)
-                    {
-                        d = MinSize;
-                    }
-
-                    (s as TextBox).Text = d.ToString("N1");
-                }
-                else
-                {
-                    (s as TextBox).Text = MinSize.ToString("N0");
-                }
-            };
 
             this.FontFamilyListBox.SelectionChanged += this.FontFamilyListBox_SelectionChanged;
+            this.FontStyleListBox.SelectionChanged += this.FontStyleListBox_SelectionChanged;
         }
 
-        public FontInfo FontInfo
+        /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
+
+        /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> EditFontInfo変更時のコールバック
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
+        private static void OnEditFontChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            get
+            FontEditView v = obj as FontEditView;
+            FontInfo f = e.NewValue as FontInfo;
+            if(v != null && f != null)
             {
-                return this.fontInfo;
-            }
-            set
-            {
-                this.fontInfo = value;
-                this.ShowFontInfo();
+                v.ShowFontInfo();
             }
         }
+
 
         private void FontFamilyListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.FontStyleListBox.SelectedIndex = 0;
+            this.editFontChanged();
         }
-
-        private void FontSizeTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void FontStyleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var t = sender as TextBox;
-
-            decimal d;
-
-            if (e.Key == Key.Up)
-            {
-                if (decimal.TryParse(t.Text, out d))
-                {
-                    t.Text = (d + 0.5m).ToString("N1");
-                }
-            }
-
-            if (e.Key == Key.Down)
-            {
-                if (decimal.TryParse(t.Text, out d))
-                {
-                    if ((d - 0.5m) >= 1.0m)
-                    {
-                        t.Text = (d - 0.5m).ToString("N1");
-                    }
-                }
-            }
+            this.editFontChanged();
         }
-
-        internal void OKBUtton_Click(object sender, RoutedEventArgs e)
-        {
-            this.fontInfo = this.PreviewTextBlock.GetFontInfo();
-        }
-
+                
         private void ShowFontInfo()
         {
-            this.FontSizeTextBox.Text = this.fontInfo.Size.ToString("N1");
+            if (EditFontInfo == null)
+                return;
+
+            //this.FontSizeTextBox.Text = this.EditFontInfo.Size.ToString("N1");
 
             int i = 0;
             foreach (FontFamily item in this.FontFamilyListBox.Items)
             {
-                if (this.fontInfo.Family != null)
+                if (this.EditFontInfo.Family != null)
                 {
-                    if (item.Source == this.fontInfo.Family.Source ||
-                        item.FamilyNames.Any(x => x.Value == this.fontInfo.Family.Source))
+                    if (item.Source == this.EditFontInfo.Family.Source ||
+                        item.FamilyNames.Any(x => x.Value == this.EditFontInfo.Family.Source))
                     {
                         break;
                     }
@@ -162,7 +135,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
                 this.FontFamilyListBox.ScrollIntoView(this.FontFamilyListBox.Items[i]);
             }
 
-            this.FontStyleListBox.SelectedItem = this.fontInfo.Typeface;
+            this.FontStyleListBox.SelectedItem = this.EditFontInfo.Typeface;
+        }
+
+        private void editFontChanged()
+        {
+            FontInfo fi = this.PreviewTextBlock.GetFontInfo();
+
+            this.EditFontInfo.FamilyName = fi.FamilyName;
+            this.EditFontInfo.Size = fi.Size;
+            this.EditFontInfo.StyleString = fi.StyleString;
+            this.EditFontInfo.WeightString = fi.WeightString;
+            this.EditFontInfo.StretchString = fi.StretchString;
+            
         }
     }
 }

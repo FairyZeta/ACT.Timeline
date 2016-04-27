@@ -211,13 +211,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <param name="pCommonDM"> データ格納する共通データモデル </param>
         public void CreateVersionInfo(CommonDataModel pCommonDM)
         {
-            var ass = Assembly.GetExecutingAssembly();
-            var name = ass.GetName();
-
             pCommonDM.PluginVersionInfo.PluginName = "FZ.Timeline";
             pCommonDM.PluginVersionInfo.PluginWebUri = "https://github.com/FairyZeta/ACT.Timeline/releases";
             pCommonDM.PluginVersionInfo.CheckPluginInfoUri = "https://raw.githubusercontent.com/FairyZeta/ACT.Timeline/master/" + pCommonDM.ApplicationData.VersionInfoFileName;
-            pCommonDM.PluginVersionInfo.PluginVersion = name.Version.ToString();
+            pCommonDM.PluginVersionInfo.PluginVersion = pCommonDM.ApplicationData.ApplicationVersion.ToString();
             pCommonDM.PluginVersionInfo.PluginDownloadUri
                 = pCommonDM.PluginVersionInfo.PluginWebUri 
                 + string.Format(@"/download/{0}/{1}-{0}.zip", pCommonDM.PluginVersionInfo.PluginVersion, pCommonDM.PluginVersionInfo.PluginName);
@@ -229,9 +226,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             pCommonDM.PluginVersionInfo.DataBaseVersion = "1.0.0.0";
             pCommonDM.PluginVersionInfo.DataBaseDownloadUri = string.Empty;
 
-            if (this.PluginHistoryObjectModel.UpdateHistoryDictionary.ContainsKey(name.Version))
+            if (this.PluginHistoryObjectModel.UpdateHistoryDictionary.ContainsKey(pCommonDM.ApplicationData.ApplicationVersion))
             {
-                pCommonDM.PluginVersionInfo.SummaryList = this.PluginHistoryObjectModel.UpdateHistoryDictionary[name.Version];
+                pCommonDM.PluginVersionInfo.SummaryList = this.PluginHistoryObjectModel.UpdateHistoryDictionary[pCommonDM.ApplicationData.ApplicationVersion];
             }
         }
 

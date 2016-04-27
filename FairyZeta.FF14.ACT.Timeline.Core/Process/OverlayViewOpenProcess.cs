@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Interop;
 using FairyZeta.Framework;
+using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Component;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels;
+using System.Windows.Forms.Integration;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 {
@@ -43,15 +45,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// </summary>
         /// <param name="pTimelineComponent"></param>
         /// <param name="pViewControlComponent"></param>
-        public void NewOverlayOpen(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
+        public void NewOverlayOpen(CommonDataModel pCommonDM, TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
         {
             switch(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayType)
             {
                 case OverlayType.StandardTimeline:
-                    this.openStandardTimelineView(pTimelineComponent, pOverlayViewComponent);
+                    this.openStandardTimelineView(pCommonDM, pTimelineComponent, pOverlayViewComponent);
                     break;
                 case OverlayType.TimelineControl:
-                    this.openOverlayControlView(pTimelineComponent, pOverlayViewComponent);
+                    this.openOverlayControlView(pCommonDM, pTimelineComponent, pOverlayViewComponent);
                     break;
                 default:
                     return;
@@ -63,12 +65,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
         /// <summary> 新しいオーバーレイカスタムウィンドウを作成し、表示します。
         /// </summary>
         /// <param name="pOverlayViewComponent"> カスタム対象のオーバーレイコンポーネント </param>
-        public void NewOverlayCustomWindowOpen(OverlayViewComponent pOverlayViewComponent)
+        public void NewOverlayCustomWindowOpen(CommonDataModel pCommonDM, OverlayViewComponent pOverlayViewComponent)
         {
             pOverlayViewComponent.OverlayDataModel.OverlayViewData.OverlayCustomClosed = false;
 
             OverlayCustomWindow window = new OverlayCustomWindow();
-
+            ElementHost.EnableModelessKeyboardInterop(window);
             var vm = window.DataContext as OverlayCustomWindowViewModel;
             if (vm == null) return;
 
@@ -78,15 +80,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
             {
                 window.Show();
             }
+
+            // ViewのIntPtrを採取
+            IntPtr intPtr = new WindowInteropHelper(window).Handle;
+            if (!pCommonDM.AppCommonData.ViewIntPtrList.Contains(intPtr))
+            {
+                pCommonDM.AppCommonData.ViewIntPtrList.Add(intPtr);
+            }
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> 標準型タイムラインビューを開きます。
         /// </summary>
-        /// <param name="pTimelineComponent"> タイムラインコンポーネント </param>
-        /// <param name="pOverlayViewComponent"> オーバーレイ表示コンポーネント </param>
-        private void openStandardTimelineView(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
+        /// <param name="pTimelineC"> タイムラインコンポーネント </param>
+        /// <param name="pOverlayViewC"> オーバーレイ表示コンポーネント </param>
+        private void openStandardTimelineView(CommonDataModel pCommonDM, TimelineComponent pTimelineC, OverlayViewComponent pOverlayViewC)
         {
             OverlayWindow window = new OverlayWindow();
 
@@ -94,53 +103,65 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
             var vm = window.DataContext as OverlayWindowViewModel;
             if (vm != null)
             {
-                vm.TimelineComponent = pTimelineComponent;
-                vm.OverlayViewComponent = pOverlayViewComponent;
+                vm.TimelineComponent = pTimelineC;
+                vm.OverlayViewComponent = pOverlayViewC;
             }
 
-            if (pOverlayViewComponent.CommonDataModel.AppStatusData.AppMode != AppMode.Desing)
+            if (pOverlayViewC.CommonDataModel.AppStatusData.AppMode != AppMode.Desing)
             {
                 window.Show();
             }
 
-            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr = new WindowInteropHelper(window).Handle;
-
-            if(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock)
+            // ViewのIntPtrを採取
+            IntPtr intPtr = new WindowInteropHelper(window).Handle;
+            pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowIntPtr = intPtr;
+            if (!pCommonDM.AppCommonData.ViewIntPtrList.Contains(intPtr))
             {
-                WindowsServices.SetWindowExTransparent(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+                pCommonDM.AppCommonData.ViewIntPtrList.Add(intPtr);
+            }
+
+            if(pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowLock)
+            {
+                WindowsServices.SetWindowExTransparent(pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowIntPtr);
             }
         }
 
         /// <summary> タイムラインコントロールビューを開きます。
         /// </summary>
-        /// <param name="pTimelineComponent"> タイムラインコンポーネント </param>
-        /// <param name="pOverlayViewComponent"> オーバーレイ表示コンポーネント </param>
-        private void openOverlayControlView(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
+        /// <param name="pTimelineC"> タイムラインコンポーネント </param>
+        /// <param name="pOverlayViewC"> オーバーレイ表示コンポーネント </param>
+        private void openOverlayControlView(CommonDataModel pCommonDM, TimelineComponent pTimelineC, OverlayViewComponent pOverlayViewC)
         {
             OverlayWindow window = new OverlayWindow();
 
             window.Topmost = true;
             window.ResizeMode = System.Windows.ResizeMode.NoResize;
-            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowHeight = 30;
-            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowWidth = 170;
+            pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowHeight = 30;
+            pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowWidth = 170;
 
             var vm = window.DataContext as OverlayWindowViewModel;
             if (vm != null)
             {
-                vm.TimelineComponent = pTimelineComponent;
-                vm.OverlayViewComponent = pOverlayViewComponent;
+                vm.TimelineComponent = pTimelineC;
+                vm.OverlayViewComponent = pOverlayViewC;
             }
 
-            if (pOverlayViewComponent.CommonDataModel.AppStatusData.AppMode != AppMode.Desing)
+            if (pOverlayViewC.CommonDataModel.AppStatusData.AppMode != AppMode.Desing)
             {
                 window.Show();
             }
 
-            pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr = new WindowInteropHelper(window).Handle;
-
-            if (pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock)
+            // ViewのIntPtrを採取
+            IntPtr intPtr = new WindowInteropHelper(window).Handle;
+            pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowIntPtr = intPtr;
+            if (!pCommonDM.AppCommonData.ViewIntPtrList.Contains(intPtr))
             {
-                WindowsServices.SetWindowExTransparent(pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowIntPtr);
+                pCommonDM.AppCommonData.ViewIntPtrList.Add(intPtr);
+            }
+
+            if (pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowLock)
+            {
+                WindowsServices.SetWindowExTransparent(pOverlayViewC.OverlayDataModel.OverlayWindowData.WindowIntPtr);
             }
         }
     }

@@ -171,6 +171,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] bool.TopMost - ＜ウィンドウの最前面状態＞ -----
+        /// <summary> ウィンドウの最前面状態 </summary>
+        private bool _TopMost;
+        /// <summary> ウィンドウの最前面状態 </summary>    
+        public bool TopMost
+        {
+            get { return _TopMost; }
+            set { base.SetProperty(ref this._TopMost, value); }
+        }
+        #endregion
+
         /// <summary> 画面のIntPtr
         /// </summary>
         [XmlIgnore]
@@ -220,6 +231,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.ID = 0;
             this.WindowVisibility = false;
             this.WindowLock = false;
+            this.TopMost = true;
             return true;
         }
     }

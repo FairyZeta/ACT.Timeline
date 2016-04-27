@@ -189,7 +189,10 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            <view:StandardTimelineView Grid.Column="1" Grid.RowSpan="100" Margin="10 50 10 50"/>
+            <StackPanel Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label  Content="* Not Preview *" />
+                <Label  Content="プレビュー専用表示作成中..." />
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

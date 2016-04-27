@@ -126,11 +126,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
             this.TimelineComponent.AutoProcessEnd();
             this.OverlayManageComponent.AutoProcessEnd();
 
-            // ビューリセット
-            foreach (var data in this.OverlayManageComponent.OverlayManageDataModel.OverlayViewComponentCollection)
-            {
-                WindowsServices.WindowCloseSendMessage(data.OverlayDataModel.OverlayWindowData.WindowIntPtr);
-            }
+            this.CommonComponent.ComponentShutdown();
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/

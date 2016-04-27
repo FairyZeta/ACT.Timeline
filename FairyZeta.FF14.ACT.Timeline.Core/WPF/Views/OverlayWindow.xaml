@@ -16,6 +16,7 @@
         Left="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLeft, Mode=TwoWay}"
              d:DataContext="{d:DesignInstance Type=dvm:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}"
              Style="{DynamicResource DefaultWindowStyle}"
+        Topmost="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.TopMost}"
         Loaded="Window_Loaded" >
 
     <Window.Resources>

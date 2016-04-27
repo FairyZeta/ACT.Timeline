@@ -112,7 +112,6 @@
                         <TextBlock Text="全体デザインの修正 " />
                         <TextBlock Text="プラグインステータス表示" />
                         <TextBlock Text="多言語対応、特に日本語" />
-                        <TextBlock Text="オーバーレイフォントのカスタム変更" />
                         <TextBlock Text="オーバーレイヘッダー表示項目の順番カスタム変更" />
                         <TextBlock Text="プレビュー編集の背景変更" />
                         <TextBlock Text="オーバーレイのインポート、エクスポート" />

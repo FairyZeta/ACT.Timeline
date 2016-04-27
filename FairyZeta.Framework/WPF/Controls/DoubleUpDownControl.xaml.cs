@@ -42,10 +42,7 @@ namespace FairyZeta.Framework.WPF.Controls
         public double ChangedValue
         {
             get { return (double)GetValue(ChangedValueProperty); }
-            set 
-            {
-                SetValue(ChangedValueProperty, value); 
-            }
+            set { SetValue(ChangedValueProperty, value); }
         }
         /// <summary> (Dependency) upによる上昇double(規定値: 1.0) </summary>
         public double UpValue
@@ -74,7 +71,7 @@ namespace FairyZeta.Framework.WPF.Controls
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        /// <summary> ValueUpDownControl／コンストラクタ
+        /// <summary> DoubleUpDownControl／コンストラクタ
         /// </summary>
         public DoubleUpDownControl()
         {
@@ -83,8 +80,8 @@ namespace FairyZeta.Framework.WPF.Controls
             this.RootGrid.DataContext = this;
             this.ChangedValue = 0.0;
 
-            this.ValueBox.PreviewKeyDown += this.keyDown;
-
+            this.ValueBox.PreviewKeyDown += this.ValueBox_PreviewKeyDown;
+            
             this.ValueUpButton.Click += (s, e) => this.valueUp();
             this.ValueDownButton.Click += (s, e) => this.valueDown();
         }
@@ -142,7 +139,7 @@ namespace FairyZeta.Framework.WPF.Controls
 
         }
 
-        private void keyDown(object sender, KeyEventArgs e)
+        private void ValueBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.IsDown && e.Key == Key.Up)
             {
@@ -152,8 +149,7 @@ namespace FairyZeta.Framework.WPF.Controls
             {
                 this.valueDown();
             }
-        } 
-
+        }
         /// <summary> 値の上昇を実行します。
         /// </summary>
         private void valueUp()

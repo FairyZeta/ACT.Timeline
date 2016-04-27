@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using FairyZeta.FF14.ACT.Timeline.Core.Component;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
+using Prism.Commands;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
 {
     /// <summary> タイムライン／オーバーレイカスタムウィンドウビューモデル
     /// </summary>
-    public class OverlayCustomWindowViewModel : _ViewModel
+    public class OverlayCustomWindowViewModel : _ViewModel, IDisposable
     {
-      /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+        /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
         #region #- [Property] OverlayViewComponent.OverlayViewComponent - ＜オーバーレイ表示コンポーネント＞ -----
         /// <summary> オーバーレイ表示コンポーネント </summary>
@@ -32,7 +33,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
         }
         #endregion
 
-      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
+        #region #- [Command] DelegateCommand.CloseEventCommand - ＜ウィンドウ終了イベントコマンド＞ -----
+        /// <summary> ウィンドウ終了イベントコマンド＜コマンド＞ </summary>
+        private DelegateCommand _CloseEventCommand;
+        /// <summary> ウィンドウ終了イベントコマンド＜コマンド＞ </summary>
+        public DelegateCommand CloseEventCommand
+        {
+            get { return _CloseEventCommand = _CloseEventCommand ?? new DelegateCommand(this._CloseEventExecute); }
+        }
+        #endregion 
+
+
+
+        /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイカスタムウィンドウビューモデル／コンストラクタ
         /// </summary>
@@ -42,7 +55,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
             this.initViewModel();
         }
 
-      /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
+        /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> ビューモデルの初期化を実行します。
         /// </summary>
@@ -54,42 +67,21 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
 
         /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        public void Dispose()
+        {
+            this.OverlayViewComponent = null;
+        }
+
         /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
+        
+        #region #- [Method] CanExecute,Execute @ CloseEventCommand - ＜ウィンドウ終了イベントコマンド＞ -----
 
-        #region #- [Property] PredefinedColor[].PredefinedColors - ＜カラーリスト一覧＞ -----
-
-        /// <summary> カラーリスト一覧 </summary>
-        private PredefinedColor[] _PredefinedColors;
-        /// <summary> カラーリスト一覧 </summary>    
-        public PredefinedColor[] PredefinedColors
+        /// <summary> コマンド実行＜ウィンドウ終了イベントコマンド＞ </summary>
+        private void _CloseEventExecute()
         {
-            get { return this._PredefinedColors ?? (this._PredefinedColors = this.EnumlatePredefinedColors()); }
-            set { this.SetProperty(ref this._PredefinedColors, value); }
         }
-        #endregion
 
-        private PredefinedColor[] EnumlatePredefinedColors()
-        {
-            var colors = typeof(Colors).GetProperties();
-
-            var list = new List<PredefinedColor>();
-            foreach (var color in colors)
-            {
-                try
-                {
-                    list.Add(new PredefinedColor()
-                    {
-                        Name = color.Name,
-                        Color = (Color)ColorConverter.ConvertFromString(color.Name)
-                    });
-                }
-                catch
-                {
-                }
-            }
-
-            return list.OrderBy(x => x.Color.ToString()).ToArray();
-        }
+        #endregion 
     }
 
     public class PredefinedColor

@@ -6,6 +6,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
   xmlns:fConv="clr-namespace:FairyZeta.Framework.WPF.Converters;assembly=FairyZeta.Framework"
+  xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
   xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
   mc:Ignorable="d" 
   d:DesignHeight="600" d:DesignWidth="800"

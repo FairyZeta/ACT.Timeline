@@ -61,6 +61,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <param name="pApplicationData"></param>
         public void AppDataConstSetup(ApplicationData pApplicationData)
         {
+            var ass = Assembly.GetExecutingAssembly();
+            var name = ass.GetName();
+
+            pApplicationData.ApplicationVersion = name.Version;
+
             // Name Set
             this.appDataConstProcess.SetFileName(pApplicationData);
         }

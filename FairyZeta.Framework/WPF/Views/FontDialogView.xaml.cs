@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Interop;
 using FairyZeta.Framework.WPF.ViewModels;
+using FairyZeta.Framework.Data;
 
 namespace FairyZeta.Framework.WPF.Views
 {

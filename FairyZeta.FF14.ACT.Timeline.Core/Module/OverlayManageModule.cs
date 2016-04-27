@@ -91,6 +91,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineObjectModel.ActivityCollection };
             this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
 
+            // バージョン設定
+            component.OverlayDataModel.DataVersion = pCommonDataModel.ApplicationData.ApplicationVersion;
+
             pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
             pCommonDataModel.ViewCollection.Add(component);
         }
@@ -117,6 +120,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
 
                 pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
+
+                // データ補正の実行
+                if (component.OverlayDataModel.DataVersion < new Version(0, 0, 5, 0))
+                {
+                    component.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Size
+                        = component.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize;
+                    component.OverlayDataModel.FontData.Header_BaseFontInfo.Size
+                        = component.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize;
+                    component.OverlayDataModel.FontData.Content_BaseFontInfo.Size
+                        = component.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize;
+                    component.OverlayDataModel.FontData.Content_ActiveFontInfo.Size
+                        = component.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize;
+                }
+
+                // バージョン設定
+                component.OverlayDataModel.DataVersion = pCommonDataModel.ApplicationData.ApplicationVersion;
+
                 pCommonDataModel.ViewCollection.Add(component);
             }
         }
@@ -150,11 +170,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         /// <param name="pTimelineComponent"> オーバーレイに搭載するタイムラインコンポーネント </param>
         /// <param name="pOverlayViewList"> 表示するオーバーレイのリスト(IF) </param>
-        public void ShowOverlay(TimelineComponent pTimelineComponent, IList<OverlayViewComponent> pOverlayViewList)
+        public void ShowOverlay(CommonDataModel pCommonDM, TimelineComponent pTimelineComponent, IList<OverlayViewComponent> pOverlayViewList)
         {
             foreach (var overlay in pOverlayViewList)
             {
-                this.ShowOverlay(pTimelineComponent, overlay);
+                this.ShowOverlay(pCommonDM, pTimelineComponent, overlay);
             }
 
         }
@@ -162,19 +182,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         /// <param name="pTimelineComponent"> タイムラインコンポーネント </param>
         /// <param name="pOverlayViewComponent">  </param>
-        public void ShowOverlay(TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
+        public void ShowOverlay(CommonDataModel pCommonDM, TimelineComponent pTimelineComponent, OverlayViewComponent pOverlayViewComponent)
         {
             if (!pOverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowVisibility) return;
 
-            this.overlayViewOpenProcess.NewOverlayOpen(pTimelineComponent, pOverlayViewComponent);
+            this.overlayViewOpenProcess.NewOverlayOpen(pCommonDM, pTimelineComponent, pOverlayViewComponent);
         }
 
         /// <summary> オーバーレイカスタムを表示します。
         /// </summary>
         /// <param name="pOverlayViewComponent"> カスタム対象のオーバーレイコンポーネント </param>
-        public void ShowCustomWindow(OverlayViewComponent pOverlayViewComponent)
+        public void ShowCustomWindow(CommonDataModel pCommonDM, OverlayViewComponent pOverlayViewComponent)
         {
-            this.overlayViewOpenProcess.NewOverlayCustomWindowOpen(pOverlayViewComponent);
+            this.overlayViewOpenProcess.NewOverlayCustomWindowOpen(pCommonDM, pOverlayViewComponent);
         }
 
       #region  - [REGINO] - Overlay IO

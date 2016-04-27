@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Prism.Commands;
+using FairyZeta.Framework;
 using FairyZeta.FF14.ACT.Module;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
@@ -188,6 +189,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.NewPluginCheckEvent);
 
             return true;
+        }
+
+        /// <summary> コンポーネント終了の処理を実行します。
+        /// </summary>
+        public void ComponentShutdown()
+        {
+            foreach (var ip in base.CommonDataModel.AppCommonData.ViewIntPtrList)
+            {
+                try
+                {
+                    WindowsServices.WindowCloseSendMessage(ip);
+                }
+                catch
+                {
+                }
+            }
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/

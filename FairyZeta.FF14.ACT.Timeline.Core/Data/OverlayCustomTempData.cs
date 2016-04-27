@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using FairyZeta.Framework.Data;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 {
@@ -12,6 +13,27 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     public class OverlayCustomTempData : _Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region #- [Property] bool.BaseFontCustomVisibility - ＜フォント変更の展開状態＞ -----
+        /// <summary> フォント変更の展開状態 </summary>
+        private bool _BaseFontCustomVisibility;
+        /// <summary> フォント変更の展開状態 </summary>    
+        public bool BaseFontCustomVisibility
+        {
+            get { return this._BaseFontCustomVisibility; }
+            set { base.SetProperty(ref this._BaseFontCustomVisibility, value); }
+        }
+        #endregion
+        #region #- [Property] FontInfo.ChangeTargetFontInfo - ＜変更対象のフォント情報＞ -----
+        /// <summary> 変更対象のフォント情報 </summary>
+        private FontInfo _ChangeTargetFontInfo;
+        /// <summary> 変更対象のフォント情報 </summary>    
+        public FontInfo ChangeTargetFontInfo
+        {
+            get { return this._ChangeTargetFontInfo; }
+            set { base.SetProperty(ref this._ChangeTargetFontInfo, value); }
+        }
+        #endregion
 
         #region #- [Property] bool.StringColorCustomVisibility - ＜文字カラー変更の展開状態＞ -----
         /// <summary> 文字カラー変更の展開状態 </summary>
@@ -23,8 +45,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             set { this.SetProperty(ref this._StringColorCustomVisibility, value); }
         }
         #endregion
-
-
         #region #- [Property] bool.ActiveColorCustomVisibility - ＜文字カラー変更の展開状態＞ -----
         /// <summary> 文字カラー変更の展開状態 </summary>
         private bool _ActiveColorCustomVisibility;
@@ -35,7 +55,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             set { this.SetProperty(ref this._ActiveColorCustomVisibility, value); }
         }
         #endregion
-
         #region #- [Property] bool.CastColorCustomVisibility - ＜文字カラー変更の展開状態＞ -----
         /// <summary> 文字カラー変更の展開状態 </summary>
         private bool _CastColorCustomVisibility;
@@ -44,17 +63,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         {
             get { return _CastColorCustomVisibility; }
             set { this.SetProperty(ref this._CastColorCustomVisibility, value); }
-        }
-        #endregion
-
-        #region #- [Property] Color.ChangeTargetStringColor - ＜文字配色変更用のカラー＞ -----
-        /// <summary> 文字配色変更用のカラー </summary>
-        private Color _ChangeTargetStringColor;
-        /// <summary> 文字配色変更用のカラー </summary>    
-        public Color ChangeTargetStringColor
-        {
-            get { return _ChangeTargetStringColor; }
-            set { this.SetProperty(ref this._ChangeTargetStringColor, value); }
         }
         #endregion
 
@@ -99,6 +107,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool clear()
         {
+            this.BaseFontCustomVisibility = false;
             this.StringColorCustomVisibility = false;
             this.ActiveColorCustomVisibility = false;
             this.CastColorCustomVisibility = false;

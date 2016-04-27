@@ -47,6 +47,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         [XmlIgnore]
         public ObservableCollection<OverlayType> OverlayTypeCollection { get; private set; }
 
+        #region #- [Property] Version.DataVersion - ＜データバージョン＞ -----
+        /// <summary> データバージョン </summary>
+        private Version _DataVersion;
+        /// <summary> データバージョン </summary>    
+        public Version DataVersion
+        {
+            get { return _DataVersion; }
+            set { this.SetProperty(ref this._DataVersion, value); }
+        }
+        #endregion
+
         #region #- [Property] OverlayWindowData.OverlayWindowData - ＜新オーバーレイ画面データ＞ -----
         /// <summary> 新オーバーレイ画面データ </summary>
         private OverlayWindowData _OverlayWindowData;
@@ -181,6 +192,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// </summary>
         public OverlayBarSettingsData CastBarSettingsData { get; set; }
 
+        /// <summary> フォントデータ
+        /// </summary>
+        public OverlayFontData FontData { get; set; }
+
         /// <summary> オーバーレイカスタム一時的データ
         /// </summary>
         [XmlIgnore]
@@ -204,6 +219,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// <returns> 正常終了時 True </returns> 
         private bool initDataModel()
         {
+            this.DataVersion = new Version(0, 0, 0, 0);
+
             this.OverlayWindowData = new OverlayWindowData();
             this.OverlayOptionData = new OverlayOptionData();
             this.OverlayTypeCollection = new ObservableCollection<OverlayType>();
@@ -219,6 +236,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             this.ActiveBarSettingsData.DefaultSetup_ActiveBar();
             this.CastBarSettingsData = new OverlayBarSettingsData();
             this.CastBarSettingsData.DefaultSetup_CastBar();
+
+            this.FontData = new OverlayFontData();
+            this.FontData.SetupDefaultFontSetting();
 
             return true;
         }

@@ -10,31 +10,56 @@
         </Style>
         
         <Style x:Key="DoubleValueUpDownRepeatButton" TargetType="{x:Type RepeatButton}">
-            <Setter Property="Width" Value="20"/>
-            <Setter Property="Height" Value="10"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
-            <Setter Property="Background" Value="Transparent"/>
+
         </Style>
         <Style x:Key="DoubleValueUpRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
-            <Setter Property="Content" Value="+"/>
-            <Setter Property="BorderThickness" Value="0 1 1 1"/>
-            <Setter Property="Padding" Value="0 -5 0 0"/>
+
         </Style>
         <Style x:Key="DoubleValueDownRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
-            <Setter Property="Content" Value="-"/>
-            <Setter Property="BorderThickness" Value="0 0 1 1"/>
-            <Setter Property="Padding" Value="1 -5 0 0"/>
+
         </Style>
 
+        <ControlTemplate x:Key="UpDownButton" TargetType="{x:Type RepeatButton}">
+            <Border x:Name="RootBorder" BorderThickness="1" BorderBrush="LightGray" Margin="0 0 0 0" >
+                <Grid>
+                    <ContentPresenter Content="{TemplateBinding Content}" Margin="0 -4 0 -4"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsFocused" Value="true">
+                    <Setter TargetName="RootBorder" Property="Background" Value="#AA66AAFF"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="RootBorder" Property="Background" Value="#AA66AAFF"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="RootBorder" Property="Background" Value="#AA1155FF"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="RootBorder" Property="Background" Value="#AA888888"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        
     </UserControl.Resources>
     <Grid x:Name="RootGrid">
-        <StackPanel Style="{StaticResource ItemStackPanel}">
-            <local:NumericTextBox x:Name="ValueBox" Width="40" HorizontalContentAlignment="Right" 
-                     Text="{Binding ChangedValue, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-            <StackPanel>
-                <RepeatButton x:Name="ValueUpButton" Style="{StaticResource DoubleValueUpRepeatButton}" />
-                <RepeatButton x:Name="ValueDownButton" Style="{StaticResource DoubleValueDownRepeatButton}" />
-            </StackPanel>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <local:NumericTextBox x:Name="ValueBox" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                              Text="{Binding ChangedValue,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
+
+        <RepeatButton x:Name="ValueUpButton" Grid.Row="0" Grid.Column="1" Content="+"
+                      Template="{StaticResource UpDownButton}" Style="{StaticResource DoubleValueUpRepeatButton}" />
+        <RepeatButton x:Name="ValueDownButton" Grid.Row="1" Grid.Column="1"  Content="-"
+                      Template="{StaticResource UpDownButton}" Style="{StaticResource DoubleValueDownRepeatButton}" />
+
     </Grid>
 </UserControl>

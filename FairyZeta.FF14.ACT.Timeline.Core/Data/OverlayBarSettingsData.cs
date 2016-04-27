@@ -491,7 +491,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
                 this.DoubleStyleCollection.Add(value);
             }
 
-            this.DoubleVisibilityStyle = Core.DoubleVisibilityStyle.N1;
+            this.DoubleVisibilityStyle = Core.DoubleVisibilityStyle.N0;
             this.TextHorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             this.TextVerticalAlignment = System.Windows.VerticalAlignment.Center;
 

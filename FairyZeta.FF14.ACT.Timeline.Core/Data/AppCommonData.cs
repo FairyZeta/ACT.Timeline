@@ -63,6 +63,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        /// <summary> 現在オープンしている画面のIntPtrList
+        /// </summary>
+        public List<IntPtr> ViewIntPtrList { get; private set; }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／共通データ／コンストラクタ
@@ -81,6 +85,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool initData()
         {
+            this.ViewIntPtrList = new List<IntPtr>();
+
             return true;
         }
 

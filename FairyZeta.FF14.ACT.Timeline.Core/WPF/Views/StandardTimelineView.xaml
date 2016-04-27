@@ -27,12 +27,36 @@
             <converter:ColorToShadowColorConverter x:Key="ShadowColorConverter"/>
             <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
 
-
-            <Style x:Key="HeaderOutlineText" TargetType="{x:Type TextBlock}">
-                <Setter Property="Foreground" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderText_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
+            <Style x:Key="OutlineTextBase" TargetType="{x:Type TextBlock}">
+                <Setter Property="UseLayoutRounding" Value="True" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="TextOptions.TextHintingMode" Value="Fixed" />
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
             </Style>
 
-            <Style x:Key="ContentOutlineText" TargetType="{x:Type TextBlock}">
+            <Style x:Key="TitleOutlineText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource OutlineTextBase}">
+                <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontStyle" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Style, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontStretch" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Stretch, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" /> 
+            </Style>
+            <Style x:Key="HeaderOutlineText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource OutlineTextBase}">
+                
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                
+                <Setter Property="Foreground" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderText_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
+
+                <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontStyle" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Style, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontStretch" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Stretch, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+            </Style>
+
+            <Style x:Key="ContentOutlineTextBase" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource OutlineTextBase}">
                 <Style.Resources>
                     <DropShadowEffect x:Key="EffectUNKNOWN_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
                     <DropShadowEffect x:Key="EffectTANK_01" Color="#88217AA2" BlurRadius="2" Direction="315" ShadowDepth="1"/>
@@ -66,64 +90,62 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="ContentOutlineText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ContentOutlineTextBase}">
+                <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontStyle" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Style, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontStretch" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Stretch, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+            </Style>
+            <Style x:Key="Content_ActiveOutlineText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ContentOutlineTextBase}">
+                <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontStyle" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Style, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontStretch" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Stretch, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+            </Style>
+
             <!-- ヘッダー／番号 -->
             <ControlTemplate x:Key="BasicTimeNoHeaderTemplate" >
-                <Grid>
-                    <TextBlock Text="T-No" Grid.Column="1" Style="{StaticResource HeaderOutlineText}"
-                               VerticalAlignment="Center" HorizontalAlignment="Center">
-                    </TextBlock>
-                </Grid>
+                <TextBlock Text="T-No" Style="{StaticResource HeaderOutlineText}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
             </ControlTemplate>
             <!-- ヘッダー／アクションタイム -->
             <ControlTemplate x:Key="BasicActionTimeHeaderTemplate" >
-                <Grid>
-                    <TextBlock Text="Time" Style="{StaticResource HeaderOutlineText}"
-                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
+                <TextBlock Text="Time" Style="{StaticResource HeaderOutlineText}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ControlTemplate>
             <!-- ヘッダー／アラート -->
             <ControlTemplate x:Key="BasicAlertHeaderTemplate" >
-                <Grid>
-                    <TextBlock Text="Alt" Style="{StaticResource HeaderOutlineText}"
-                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
+                <TextBlock Text="Alt" Style="{StaticResource HeaderOutlineText}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ControlTemplate>
             <!-- ヘッダー／アクション -->
             <ControlTemplate x:Key="BasicActionHeaderTemplate" >
-                <Grid>
-                    <TextBlock Text="Action" Style="{StaticResource HeaderOutlineText}"
-                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
+                <TextBlock Text="Action" Style="{StaticResource HeaderOutlineText}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ControlTemplate>
             <!-- ヘッダー／アクティブ -->
             <ControlTemplate x:Key="BasicActiveHeaderTemplate" >
-                <Grid>
-                    <TextBlock Text="Active" Style="{StaticResource HeaderOutlineText}"
-                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
+                <TextBlock Text="Active" Style="{StaticResource HeaderOutlineText}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ControlTemplate>
             <!-- ヘッダー／タイプ -->
             <ControlTemplate x:Key="BasicTypeHeaderTemplate" >
-                <Grid>
-                    <TextBlock Text="Type" Style="{StaticResource HeaderOutlineText}"
-                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
+                <TextBlock Text="Type" Style="{StaticResource HeaderOutlineText}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ControlTemplate>
             <!-- ヘッダー／ジョブ -->
             <ControlTemplate x:Key="BasicJobHeaderTemplate" >
-                <Grid>
-                    <TextBlock Text="Job" Style="{StaticResource HeaderOutlineText}"
+                <TextBlock Text="Job" Style="{StaticResource HeaderOutlineText}"
                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
             </ControlTemplate>
             <!-- ヘッダー／アンカー -->
             <ControlTemplate x:Key="BasicAncHeaderTemplate" >
-                <Grid>
-                    <TextBlock Text="Anc" Style="{StaticResource HeaderOutlineText}"
-                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
+                <TextBlock Text="Anc" Style="{StaticResource HeaderOutlineText}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ControlTemplate>
-
 
             <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill" EndPoint="1,0" StartPoint="0,0">
                 <GradientStop Color="#00FFFFFF" Offset="0"/>
@@ -149,9 +171,10 @@
                     <Decorator x:Name="PART_Indicator" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}">
                         <Grid x:Name="Foreground">
                             <Border x:Name="Indicator" Background="{TemplateBinding Foreground}" CornerRadius="{TemplateBinding Tag}"/>
+                            <!--
                             <Grid x:Name="Animation" ClipToBounds="true">
                                 <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-200,0,0,0" Width="0" />
-                            </Grid>
+                            </Grid>-->
                         </Grid>
                     </Decorator>
                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Tag}"/>
@@ -174,9 +197,10 @@
                     <Decorator x:Name="PART_Indicator" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}">
                         <Grid x:Name="Foreground">
                             <Border x:Name="Indicator" Background="{TemplateBinding Foreground}" CornerRadius="{TemplateBinding Tag}"/>
+                            <!--
                             <Grid x:Name="Animation" ClipToBounds="true">
                                 <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-200,0,0,0" Width="0" />
-                            </Grid>
+                            </Grid> -->
                         </Grid>
                     </Decorator>
                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Tag}"/>
@@ -194,46 +218,38 @@
             
             <!-- コンテンツ／番号 -->
             <ControlTemplate x:Key="BasicTimeNoContentTemplate" >
-                <Grid Style="{StaticResource BasicCellGrid}">
-                    <TextBlock Text="{Binding Index}" Style="{StaticResource ContentOutlineText}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
+                <TextBlock Text="{Binding Index}" Style="{StaticResource ContentOutlineText}" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </ControlTemplate>
-            
+            <!-- コンテンツ／時間 -->
             <ControlTemplate x:Key="BasicActionTimeContentTemplate" >
-                <Grid Style="{StaticResource BasicCellGrid}">
-                    <TextBlock Style="{StaticResource ContentOutlineText}" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0:00}:{1:00;00}">
-                                <Binding Path="EndTimeSpan.Minutes" />
-                                <Binding Path="EndTimeSpan.Seconds" />
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </Grid>
+                <TextBlock Style="{StaticResource ContentOutlineText}" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0:00}:{1:00;00}">
+                            <Binding Path="EndTimeSpan.Minutes" />
+                            <Binding Path="EndTimeSpan.Seconds" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
             </ControlTemplate>
-            
+            <!-- コンテンツ／アラート -->
             <ControlTemplate x:Key="BasicAlertContentTemplate" >
-                <Grid Style="{StaticResource BasicCellGrid}">
-                    <TextBlock Text="♪" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ContentOutlineText}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding TimelineAlert}" Value="{x:Null}">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
+                <TextBlock Text="♪" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ContentOutlineText}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding TimelineAlert}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </ControlTemplate>
-            
+            <!-- コンテンツ／アクション -->
             <ControlTemplate x:Key="BasicActionContentTemplate" >
-                <Grid Style="{StaticResource BasicCellGrid}" Margin="10 0 0 0">
-                    <TextBlock Text="{Binding Name}" Style="{StaticResource ContentOutlineText}"  VerticalAlignment="Center" />
-                </Grid>
+                <TextBlock Text="{Binding Name}" Style="{StaticResource ContentOutlineText}" Margin="10 0 0 0" VerticalAlignment="Center" />
             </ControlTemplate>
-
+            <!-- コンテンツ／アクティブ -->
             <ControlTemplate x:Key="BasicActiveContentTemplate" >
                 <Grid Style="{StaticResource BasicCellGrid}" >
                     <ProgressBar x:Name="ActiveBar" 
@@ -284,9 +300,10 @@
                         </ProgressBar.Style>
                     </ProgressBar>
                     <TextBlock VerticalAlignment="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.TextVerticalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                               HorizontalAlignment="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.TextHorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                               HorizontalAlignment="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.TextHorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                               TextWrapping="NoWrap" >
                         <TextBlock.Style>
-                            <Style BasedOn="{StaticResource ContentOutlineText}" TargetType="{x:Type TextBlock}">
+                            <Style BasedOn="{StaticResource Content_ActiveOutlineText}" TargetType="{x:Type TextBlock}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.DoubleVisibilityStyle, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                  Value="{x:Static timelineCore:DoubleVisibilityStyle.N0}">
@@ -299,7 +316,6 @@
                                     <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.DoubleVisibilityStyle, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                  Value="{x:Static timelineCore:DoubleVisibilityStyle.N2}">
                                         <Setter Property="Text" Value="{Binding ActiveTime,StringFormat=N2}" />
-
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -308,28 +324,18 @@
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="BasicTypeContentTemplate" >
-                <Grid Style="{StaticResource BasicCellGrid}">
-                    <TextBlock Style="{StaticResource ContentOutlineText}" Text="{Binding TimelineType}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
+                <TextBlock Style="{StaticResource ContentOutlineText}" Text="{Binding TimelineType}" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </ControlTemplate>
             <ControlTemplate x:Key="BasicJobContentTemplate" >
-                <Grid Style="{StaticResource BasicCellGrid}">
-                    <TextBlock Style="{StaticResource ContentOutlineText}" Text="{Binding JobType}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
+                <TextBlock Style="{StaticResource ContentOutlineText}" Text="{Binding JobType}" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </ControlTemplate>
             <ControlTemplate x:Key="BasicAncContentTemplate" >
-                <Grid Style="{StaticResource BasicCellGrid}">
-                    <TextBlock Style="{StaticResource ContentOutlineText}" Text="{Binding AncType}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    </TextBlock>
-                </Grid>
+                <TextBlock Style="{StaticResource ContentOutlineText}" Text="{Binding AncType}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </ControlTemplate>
-
         </ResourceDictionary>
-
-
     </UserControl.Resources>
 
-    <Grid>
+    <Grid >
         <Border CornerRadius="10" Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}" Margin="10"
                 Background="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.Background_Base, Converter={StaticResource Color2SBrush}}">
             <Border.Effect>
@@ -344,14 +350,10 @@
                     <ColumnDefinition  Width="60"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2">
-                    <TextBlock Text="[Line-Time] " 
-                               Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuMain_Base, Converter={StaticResource Color2SBrush}}"
-                               FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
-                    <!--TextBlock Text="" Foreground="{StaticResource BaseColor_Blue1}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/ -->
-
+                    <TextBlock Text="[Line-Time] " Style="{StaticResource TitleOutlineText}" 
+                               Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuMain_Base, Converter={StaticResource Color2SBrush}}"/>
                     <TextBlock Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
-                               FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}">
+                               Style="{StaticResource TitleOutlineText}">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0:00}:{1:00;00}">
                                 <Binding Path="TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTimeSpan.Minutes" />
@@ -360,16 +362,16 @@
                         </TextBlock.Text>
                     </TextBlock>
 
-                    <TextBlock Text=" / " 
-                               Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuMain_Base, Converter={StaticResource Color2SBrush}}"
-                               FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
+                    <TextBlock Text=" / " Style="{StaticResource TitleOutlineText}"
+                               Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuMain_Base, Converter={StaticResource Color2SBrush}}"/>
                     <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}" 
-                               Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
-                               FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize}"/>
+                               Style="{StaticResource TitleOutlineText}"
+                               Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"/>
                 </StackPanel>
+                <!-- メニューボタン -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 2 2 0" >
                     <Button Content="g" ToolTip="Custom"
-                               Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
+                            Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
                             Command="{Binding OverlayViewComponent.OverlayCustomOpenCommand}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">
@@ -382,7 +384,7 @@
                         </Button.Style>
                     </Button>
                     <Button Content="r" ToolTip="Close"
-                               Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
+                            Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
                             Command="{Binding OverlayViewComponent.OverlayClosedCommand}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">
@@ -400,47 +402,47 @@
             <!-- コンテンツヘッダー -->
             <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}">
                 <Border BorderThickness="0 0 0 1" BorderBrush="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderBar_Base, Converter={StaticResource Color2SBrush}}">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" >
                         <!-- T-No -->
                         <ItemsControl Grid.Column="0" Template="{StaticResource BasicTimeNoHeaderTemplate}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
-                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth}" 
-                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                                      IsTabStop="False"
+                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth}" 
+                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility, Converter={StaticResource BoolToVisibility}}"/>
                         <!-- Time -->
                         <ItemsControl Grid.Column="1" Template="{StaticResource BasicActionTimeHeaderTemplate}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
-                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth}" 
-                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                                      IsTabStop="False"
+                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth}" 
+                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility, Converter={StaticResource BoolToVisibility}}"/>
                         <!-- Type -->
                         <ItemsControl Grid.Column="2" Template="{StaticResource BasicTypeHeaderTemplate}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
-                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TypeWidth}" 
-                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                                      IsTabStop="False"
+                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TypeWidth}" 
+                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility, Converter={StaticResource BoolToVisibility}}"/>
                         <!-- Job -->
                         <ItemsControl Grid.Column="3" Template="{StaticResource BasicJobHeaderTemplate}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
-                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JobWidth}" 
-                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                                      IsTabStop="False"
+                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JobWidth}" 
+                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility, Converter={StaticResource BoolToVisibility}}"/>
                         <!-- Action -->
                         <ItemsControl Grid.Column="4" Template="{StaticResource BasicActionHeaderTemplate}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
-                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionWidth}" 
-                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                                      IsTabStop="False"
+                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionWidth}" 
+                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility, Converter={StaticResource BoolToVisibility}}"/>
                         <!-- Active -->
                         <ItemsControl Grid.Column="5" Template="{StaticResource BasicActiveHeaderTemplate}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
-                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActiveWidth}" 
-                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                                      IsTabStop="False"
+                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActiveWidth}" 
+                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility, Converter={StaticResource BoolToVisibility}}"/>
                         <!-- Alt -->
                         <ItemsControl Grid.Column="6" Template="{StaticResource BasicAlertHeaderTemplate}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
-                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.AlertWidth}" 
-                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                                      IsTabStop="False"
+                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.AlertWidth}" 
+                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility, Converter={StaticResource BoolToVisibility}}"/>
                         <!-- Anc -->
                         <ItemsControl Grid.Column="7" Template="{StaticResource BasicAncHeaderTemplate}"
-                                  FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize}"
-                                  Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth}" 
-                                  Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                                      IsTabStop="False"
+                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth}" 
+                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, Converter={StaticResource BoolToVisibility}}"/>
                     </StackPanel>
                 </Border>
             </Grid>
@@ -450,7 +452,6 @@
                       Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                       IsHitTestVisible="False" >-->
             <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
-                      FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize}"
                       Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                       IsHitTestVisible="False" 
                       ScrollViewer.CanContentScroll="True"
@@ -467,6 +468,7 @@
                     <Style TargetType="{x:Type ListViewItem}">
                         <Setter Property="Margin" Value="-10 -3"/>
                         <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="IsTabStop" Value="False"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding TimelineVisibility}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -487,34 +489,42 @@
                         <StackPanel Orientation="Horizontal">
                             <!-- T-No -->
                             <ItemsControl Panel.ZIndex="1" Grid.Column="0" Template="{StaticResource BasicTimeNoContentTemplate}"
+                                      IsTabStop="False"
                                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
                             <!-- Time -->
                             <ItemsControl Panel.ZIndex="1" Grid.Column="1" Template="{StaticResource BasicActionTimeContentTemplate}"
+                                      IsTabStop="False"
                                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
                             <!-- Type -->
                             <ItemsControl Panel.ZIndex="1" Grid.Column="2" Template="{StaticResource BasicTypeContentTemplate}"
+                                      IsTabStop="False"
                                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TypeWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
                             <!-- Job -->
                             <ItemsControl Panel.ZIndex="1" Grid.Column="3" Template="{StaticResource BasicJobContentTemplate}"
+                                      IsTabStop="False"
                                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JobWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
                             <!-- Action -->
                             <ItemsControl Panel.ZIndex="1" Grid.Column="4" Template="{StaticResource BasicActionContentTemplate}"
+                                      IsTabStop="False"
                                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
                             <!-- Active -->
                             <ItemsControl Panel.ZIndex="0" Grid.Column="5" Template="{StaticResource BasicActiveContentTemplate}"
+                                      IsTabStop="False"
                                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActiveWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
                             <!-- Alt -->
                             <ItemsControl Panel.ZIndex="1" Grid.Column="6" Template="{StaticResource BasicAlertContentTemplate}"
+                                      IsTabStop="False"
                                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.AlertWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
                             <!-- Anc -->
                             <ItemsControl Panel.ZIndex="1" Grid.Column="7" Template="{StaticResource BasicAncContentTemplate}"
+                                      IsTabStop="False"
                                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
                         </StackPanel>

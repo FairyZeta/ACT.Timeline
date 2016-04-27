@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using FirstFloor.ModernUI.Windows.Controls;
 using FairyZeta.Framework.WPF.Views;
+using FairyZeta.Framework.Data;
 
 namespace FairyZeta.Framework.ObjectModel
 {

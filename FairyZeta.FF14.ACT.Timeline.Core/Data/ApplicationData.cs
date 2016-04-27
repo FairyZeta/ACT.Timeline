@@ -13,6 +13,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> アプリケーションバージョン
+        /// </summary>
+        public Version ApplicationVersion { get; set; }
+
         #region --- File Name ---
 
         /// <summary> タイムライン設定データのファイル名

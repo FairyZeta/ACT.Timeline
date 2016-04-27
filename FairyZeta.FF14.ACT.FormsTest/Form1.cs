@@ -19,6 +19,7 @@ namespace FairyZeta.FF14.ACT.Timeline.FormsTest
         public Form1()
         {
             InitializeComponent();
+
             
             var view = this.elementHost1.Child as PluginApplicationView;
             this.vm = view.DataContext as PluginApplicationViewModel;

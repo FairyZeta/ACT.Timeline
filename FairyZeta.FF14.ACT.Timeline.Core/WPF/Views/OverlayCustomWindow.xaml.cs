@@ -16,7 +16,7 @@ using System.Windows.Interop;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
-    /// <summary> オーバーレイカスタムウィンドウ
+    /// <summary> OverlayCustomWindow
     /// </summary>
     public partial class OverlayCustomWindow : Window
     {

@@ -87,7 +87,7 @@
     <Compile Include="WPF\Converters\FontFamilyToNameConverter.cs" />
     <Compile Include="WPF\Converters\InverseBooleanConverter.cs" />
     <Compile Include="Data\OsEnvironmentData.cs" />
-    <Compile Include="FontInfo.cs" />
+    <Compile Include="Data\FontInfo.cs" />
     <Compile Include="Framework.ENUM.cs" />
     <Compile Include="ObjectModel\EnvironmentObjectModel.cs" />
     <Compile Include="Process\FileDownloadProcess.cs">

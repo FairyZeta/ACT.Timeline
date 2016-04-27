@@ -4,13 +4,13 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-  xmlns:local="clr-namespace:FairyZeta.Framework.Controls"
+  xmlns:local="clr-namespace:FairyZeta.Framework.Controls;assembly=FairyZeta.Framework"
   xmlns:fConv="clr-namespace:FairyZeta.Framework.WPF.Converters;assembly=FairyZeta.Framework"
+  xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
   FontFamily="Arial, メイリオ"
+    
   SnapsToDevicePixels="True"
-  Width="1024" 
-  Height="460" 
   TextOptions.TextFormattingMode="Ideal"
   TextOptions.TextHintingMode="Auto"
   TextOptions.TextRenderingMode="ClearType"
@@ -20,7 +20,7 @@
     <fConv:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 </UserControl.Resources>
 
-<Grid>
+    <Grid x:Name="RootGrid">
     <Grid.Resources>
         <DataTemplate x:Key="fontFamilyData">
             <Label 
@@ -50,53 +50,52 @@
         </CollectionViewSource>
     </Grid.Resources>
 
-    <Grid DataContext="{StaticResource familyCollection}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="230"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Grid DataContext="{StaticResource familyCollection}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="230"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0">
-            <Label Content="Font Family" Padding="0" Margin="6"/>
-
-            <ListBox Padding="0" Margin="6"
-          x:Name="FontFamilyListBox"
-          Background="Transparent"
-          ItemsSource="{Binding}"
-          Height="420"
-          ItemTemplate="{StaticResource fontFamilyData}">
+        <Grid Grid.Column="0" Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Label Content="Font Family" Padding="0" Margin="6 2"/>
+                <ListBox x:Name="FontFamilyListBox" Grid.Row="1" Padding="0" Margin="6"
+                     Background="Transparent" ItemsSource="{Binding}" 
+                     ItemTemplate="{StaticResource fontFamilyData}">
             </ListBox>
-        </StackPanel>
+        </Grid>
 
-        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0">
-            <Label Content="Font Size" Padding="0" Margin="6"/>
-            <TextBox 
-          x:Name="FontSizeTextBox" 
-          Text="10.5" 
-          Padding="0" 
-          Margin="6" 
-          TextAlignment="Right" 
-          Width="60" 
-          HorizontalAlignment="Left"/>
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0">
+                <Label Content="Font Size" Padding="0" Margin="6"/>
+                <fCtrl:DoubleUpDownControl x:Name="FontSizeTextBox"  
+                                           ChangedValue="{Binding EditFontInfo.Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
+                                           MinValue="0"
+                                           Padding="0" Margin="6" Width="60" HorizontalAlignment="Left"/>
+                <Label Content="Font Style" Padding="0" Margin="6"/>
+                <ListBox x:Name="FontStyleListBox" Padding="0" Margin="6"
+                         ItemsSource="{Binding FamilyTypefaces}">
+                </ListBox>
+            </StackPanel>
 
-            <Label Content="Font Style" Padding="0" Margin="6"/>
+        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"  Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+            <Label Content="Preview" Padding="0" Margin="6 2"/>
 
-            <ListBox Padding="0" Margin="6"
-          x:Name="FontStyleListBox"
-          ItemsSource="{Binding FamilyTypefaces}">
-            </ListBox>
-        </StackPanel>
-
-        <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0">
-            <Label Content="Preview" Padding="0" Margin="6"/>
-
-            <TextBox
+            <TextBox Grid.Row="1"
           x:Name="PreviewTextBlock"
           Padding="0" Margin="6"
           IsTabStop="False"
-          Height="420"
-          FontSize="{Binding Text, ElementName=FontSizeTextBox}"
+          FontSize="{Binding ChangedValue, ElementName=FontSizeTextBox}"
           FontFamily="{Binding Source, Source={StaticResource familyCollection}}" 
           FontWeight="{Binding SelectedItem.Weight, ElementName=FontStyleListBox}" 
           FontStretch="{Binding SelectedItem.Stretch, ElementName=FontStyleListBox}" 
@@ -105,7 +104,7 @@
           IsReadOnly="True"
           Text="0123456789&#10;abcdefghijklmnopqrstuvwxyz&#10;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#10;&#10;あのイーハトーヴォの&#10;すきとおった風、&#10;夏でも底に冷たさをもつ青いそら、&#10;うつくしい森で飾られたモリーオ市、&#10;郊外のぎらぎらひかる草の波。">
             </TextBox>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Grid>
 </UserControl>
