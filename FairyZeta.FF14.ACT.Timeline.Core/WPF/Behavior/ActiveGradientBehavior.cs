@@ -9,6 +9,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior
     /// </summary>
     public class ActiveGradientBehavior : Behavior<RangeBase>
     {
+        public static readonly DependencyProperty ColorChangedProperty =
+                    DependencyProperty.Register("ColorChanged", typeof(Color), typeof(ActiveGradientBehavior), new FrameworkPropertyMetadata(default(Color), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnColorChanged));
+
+        /// <summary> (Dependency) 変更対象カラー </summary>
+        public Color ColorChanged
+        {
+            get { return (Color)GetValue(ColorChangedProperty); }
+            set { SetValue(ColorChangedProperty, value); }
+        }
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -29,6 +39,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior
 
             AssociatedObject.Loaded -= AssociatedObject_Loaded;
             AssociatedObject.ValueChanged -= AssociatedObject_ValueChanged;
+        }
+
+        /// <summary> ColorChanged変更時のコールバック
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
+        private static void OnColorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            ActiveGradientBehavior ctrl = obj as ActiveGradientBehavior;
+            if (ctrl != null)
+            {
+                ctrl.CalculateNewGradient(ctrl.Progress);
+            }
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)

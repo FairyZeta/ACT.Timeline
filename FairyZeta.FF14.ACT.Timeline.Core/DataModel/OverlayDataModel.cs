@@ -11,6 +11,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 {
     /// <summary> タイムライン／オーバーレイデータモデル
     /// </summary>
+    [Serializable]
     public class OverlayDataModel : _DataModel
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
@@ -47,16 +48,29 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         [XmlIgnore]
         public ObservableCollection<OverlayType> OverlayTypeCollection { get; private set; }
 
-        #region #- [Property] Version.DataVersion - ＜データバージョン＞ -----
+        /// <summary> データバージョン(str) </summary>
+        public string DataVersionStr { get; set; }
+
         /// <summary> データバージョン </summary>
-        private Version _DataVersion;
-        /// <summary> データバージョン </summary>    
+        [XmlIgnore]
         public Version DataVersion
         {
-            get { return _DataVersion; }
-            set { this.SetProperty(ref this._DataVersion, value); }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.DataVersionStr))
+                {
+                    return new Version(0, 0, 0, 0);
+                }
+                else
+                {
+                    return new Version(this.DataVersionStr);
+                }
+            }
+            set
+            {
+                this.DataVersionStr = value.ToString();
+            }
         }
-        #endregion
 
         #region #- [Property] OverlayWindowData.OverlayWindowData - ＜新オーバーレイ画面データ＞ -----
         /// <summary> 新オーバーレイ画面データ </summary>
@@ -219,8 +233,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// <returns> 正常終了時 True </returns> 
         private bool initDataModel()
         {
-            this.DataVersion = new Version(0, 0, 0, 0);
-
             this.OverlayWindowData = new OverlayWindowData();
             this.OverlayOptionData = new OverlayOptionData();
             this.OverlayTypeCollection = new ObservableCollection<OverlayType>();

@@ -1,10 +1,11 @@
-﻿<UserControl x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.StandardTimelineView"
+﻿<UserControl x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.OverlayPreview"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:custom="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Custom"
+             xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
              xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
              xmlns:fControl="clr-namespace:FairyZeta.Framework.WPF.Converters;assembly=FairyZeta.Framework"
              xmlns:fBehaviors="clr-namespace:FairyZeta.Framework.WPF.Behaviors;assembly=FairyZeta.Framework"
@@ -41,12 +42,12 @@
                 <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                 <Setter Property="FontStyle" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Style, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                 <Setter Property="FontStretch" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Stretch, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" /> 
+                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
             </Style>
             <Style x:Key="HeaderOutlineText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource OutlineTextBase}">
-                
+
                 <Setter Property="VerticalAlignment" Value="Center"/>
-                
+
                 <Setter Property="Foreground" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderText_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
 
                 <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
@@ -163,7 +164,7 @@
                 <GradientStop Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BarColor2_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Offset="1"/>
                 <GradientStop Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BarColor3_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Offset="1"/>
             </LinearGradientBrush>
-            
+
             <ControlTemplate x:Key="ActiveBasicProgressBarStyle" TargetType="{x:Type ProgressBar}">
                 <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true" >
                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Tag}"/>
@@ -215,7 +216,7 @@
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
-            
+
             <!-- コンテンツ／番号 -->
             <ControlTemplate x:Key="BasicTimeNoContentTemplate" >
                 <TextBlock Text="{Binding Index}" Style="{StaticResource ContentOutlineText}" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -281,7 +282,7 @@
                                  Padding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BarInnerMargin, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
                                  BorderThickness="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BorderThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
                                  BorderBrush="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BorderColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Converter={StaticResource Color2SBrush}}"
-                                 Tag="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.CornerRadius, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                 Tag="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.CornerRadius, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                         <i:Interaction.Behaviors>
                             <behaviors:CastGradientBehavior ColorChanged="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BindOnColorChenged, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                         </i:Interaction.Behaviors>
@@ -334,8 +335,8 @@
             </ControlTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <Grid >
+    
+    <Grid>
         <Border CornerRadius="10" Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}" Margin="10"
                 Background="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.Background_Base, Converter={StaticResource Color2SBrush}}">
             <Border.Effect>
@@ -353,52 +354,17 @@
                     <TextBlock Text="[Line-Time] " Style="{StaticResource TitleOutlineText}" 
                                Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuMain_Base, Converter={StaticResource Color2SBrush}}"/>
                     <TextBlock Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
-                               Style="{StaticResource TitleOutlineText}">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0:00}:{1:00;00}">
-                                <Binding Path="TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTimeSpan.Minutes" />
-                                <Binding Path="TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTimeSpan.Seconds" />
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
+                               Style="{StaticResource TitleOutlineText}"
+                               Text="12:34"/>
 
                     <TextBlock Text=" / " Style="{StaticResource TitleOutlineText}"
                                Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuMain_Base, Converter={StaticResource Color2SBrush}}"/>
-                    <TextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}" 
+                    <TextBlock Text="Preview" 
                                Style="{StaticResource TitleOutlineText}"
                                Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"/>
                 </StackPanel>
-                <!-- メニューボタン -->
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 2 2 0" >
-                    <Button Content="g" ToolTip="Custom"
-                            Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
-                            Command="{Binding OverlayViewComponent.OverlayCustomOpenCommand}">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button Content="r" ToolTip="Close"
-                            Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
-                            Command="{Binding OverlayViewComponent.OverlayClosedCommand}">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </StackPanel>
             </Grid>
-            
+
             <!-- コンテンツヘッダー -->
             <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}">
                 <Border BorderThickness="0 0 0 1" BorderBrush="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderBar_Base, Converter={StaticResource Color2SBrush}}">
@@ -451,7 +417,7 @@
                       FontSize="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize}"
                       Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                       IsHitTestVisible="False" >-->
-            <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
+            <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayPreviewObjectModel.ActivityViewSource.View}"
                       Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                       IsHitTestVisible="False" 
                       ScrollViewer.CanContentScroll="True"

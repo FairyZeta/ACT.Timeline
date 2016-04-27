@@ -63,6 +63,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] string.TimelineViewStatusMsg - ＜タイムライン表示状態メッセージ＞ -----
+        /// <summary> タイムライン表示状態メッセージ </summary>
+        private string _TimelineViewStatusMsg;
+        /// <summary> タイムライン表示状態メッセージ </summary>    
+        public string TimelineViewStatusMsg
+        {
+            get { return _TimelineViewStatusMsg; }
+            set { this.SetProperty(ref this._TimelineViewStatusMsg, value); }
+        }
+        #endregion
+
         /// <summary> 現在オープンしている画面のIntPtrList
         /// </summary>
         public List<IntPtr> ViewIntPtrList { get; private set; }

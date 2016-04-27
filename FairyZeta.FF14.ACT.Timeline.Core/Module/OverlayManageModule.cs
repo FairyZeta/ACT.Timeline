@@ -112,7 +112,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             foreach (var data in dataList)
             {
                 OverlayViewComponent component = new OverlayViewComponent(pCommonDataModel);
-                
+
+                // データ補正の実行
+                if ( data.DataVersion < new Version(0, 0, 5, 0))
+                {
+                    data.FontData.TitleBar_BaseFontInfo.Size = data.OverlayGenericSettingsData.TitleBarFontSize;
+                    data.FontData.Header_BaseFontInfo.Size = data.OverlayGenericSettingsData.HeaderFontSize;
+                    data.FontData.Content_BaseFontInfo.Size = data.OverlayGenericSettingsData.ContentFontSize;
+                    data.FontData.Content_ActiveFontInfo.Size = data.OverlayGenericSettingsData.ContentFontSize;
+                }
+
+                // バージョン設定
+                data.DataVersion = pCommonDataModel.ApplicationData.ApplicationVersion;
+
                 component.OverlayDataModel = data;
 
                 component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineObjectModel.ActivityCollection };
@@ -121,21 +133,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
                 pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
 
-                // データ補正の実行
-                if (component.OverlayDataModel.DataVersion < new Version(0, 0, 5, 0))
-                {
-                    component.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Size
-                        = component.OverlayDataModel.OverlayGenericSettingsData.TitleBarFontSize;
-                    component.OverlayDataModel.FontData.Header_BaseFontInfo.Size
-                        = component.OverlayDataModel.OverlayGenericSettingsData.HeaderFontSize;
-                    component.OverlayDataModel.FontData.Content_BaseFontInfo.Size
-                        = component.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize;
-                    component.OverlayDataModel.FontData.Content_ActiveFontInfo.Size
-                        = component.OverlayDataModel.OverlayGenericSettingsData.ContentFontSize;
-                }
-
-                // バージョン設定
-                component.OverlayDataModel.DataVersion = pCommonDataModel.ApplicationData.ApplicationVersion;
 
                 pCommonDataModel.ViewCollection.Add(component);
             }

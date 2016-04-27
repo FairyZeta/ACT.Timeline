@@ -87,6 +87,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
         /// </summary>
         public void ApplicationSetup()
         {
+            // ログ削除実行
+            Globals.SysLogger.DeleteLogFile();
+            Globals.ErrLogger.DeleteLogFile();
+            Globals.TimelineLogger.DeleteLogFile();
+
             // セットアップ開始
             this.CommonComponent.SetupComponent();
             this.TimelineComponent.SetupComponent(true);

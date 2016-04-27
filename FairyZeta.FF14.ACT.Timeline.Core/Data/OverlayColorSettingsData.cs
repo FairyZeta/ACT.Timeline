@@ -19,7 +19,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         public Color EditBindColor
         {
             get { return this.getEditTargetColor(); }
-            set { this.setEditTargetColor(value); }
+            set 
+            { 
+                this.setEditTargetColor(value);
+            }
         }
 
         #region #- [Property] ColorEditTarget.ColorEditTarget - ＜カラー変更ターゲット＞ -----

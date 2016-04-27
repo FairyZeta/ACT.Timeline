@@ -92,6 +92,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             FontInfo f = e.NewValue as FontInfo;
             if(v != null && f != null)
             {
+                //v.setFont();
                 v.ShowFontInfo();
             }
         }
@@ -138,12 +139,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             this.FontStyleListBox.SelectedItem = this.EditFontInfo.Typeface;
         }
 
+        private void setFont()
+        {
+            this.PreviewTextBlock.FontSize = this.EditFontInfo.Size;
+            this.PreviewTextBlock.FontFamily = this.EditFontInfo.Family;
+            this.PreviewTextBlock.FontStretch = this.EditFontInfo.Stretch;
+            this.PreviewTextBlock.FontWeight = this.EditFontInfo.Weight;
+            this.PreviewTextBlock.FontStyle = this.EditFontInfo.Style;
+        }
+
         private void editFontChanged()
         {
             FontInfo fi = this.PreviewTextBlock.GetFontInfo();
 
             this.EditFontInfo.FamilyName = fi.FamilyName;
-            this.EditFontInfo.Size = fi.Size;
             this.EditFontInfo.StyleString = fi.StyleString;
             this.EditFontInfo.WeightString = fi.WeightString;
             this.EditFontInfo.StretchString = fi.StretchString;

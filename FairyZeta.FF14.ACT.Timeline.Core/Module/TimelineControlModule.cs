@@ -222,7 +222,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                     pCommonDM.AppEnableManageData.TimelinePauseEnabled = false;
                     pCommonDM.AppEnableManageData.TimelineRewindEnabled = true;
                     pCommonDM.AppEnableManageData.TimelineTrackerEnabled = true;
-
+                    pCommonDM.AppEnableManageData.TimelineUnloadEnabled = true;
                     break;
 
                 case TimerStatus.Run:
@@ -234,6 +234,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                     pCommonDM.AppEnableManageData.TimelinePauseEnabled = true;
                     pCommonDM.AppEnableManageData.TimelineRewindEnabled = true;
                     pCommonDM.AppEnableManageData.TimelineTrackerEnabled = false;
+                    pCommonDM.AppEnableManageData.TimelineUnloadEnabled = false;
 
                     break;
 
@@ -251,6 +252,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                     pCommonDM.AppEnableManageData.TimelinePauseEnabled = false;
                     pCommonDM.AppEnableManageData.TimelineRewindEnabled = true;
                     pCommonDM.AppEnableManageData.TimelineTrackerEnabled = true;
+                    pCommonDM.AppEnableManageData.TimelineUnloadEnabled = true;
 
                     break;
             }

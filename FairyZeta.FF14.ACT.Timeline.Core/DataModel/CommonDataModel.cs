@@ -107,7 +107,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             {
                 // ACTのShowボタン状態
                 if (!this.PluginSettingsData.ActCheckBoxValue)
+                {
+                    this.AppCommonData.TimelineViewStatusMsg = " - ActCheckBox False.";
                     return false;
+                }
                 // ウィンドウのアクティブ状態
                 //if (!this.AppStatusData.ActRelationWindowActive)
                 //    return false;
@@ -115,8 +118,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
                 if (this.PluginSettingsData.AutoTimelineVisibilityEnabled)
                 {
                     if (this.AppStatusData.TimelineLoadStatus != TimelineLoadStatus.Success)
+                    {
+                        this.AppCommonData.TimelineViewStatusMsg = " - Timeline Non Loaded.";
                         return false;
+                    }
                 }
+
+                this.AppCommonData.TimelineViewStatusMsg = " - All Green.";
 
                 return true;
                 

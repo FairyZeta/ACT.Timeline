@@ -42,10 +42,40 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition />
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <StackPanel>
-                <Label Content="- Timeline -"/>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Border>
+                    <Border.Resources>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </Border.Resources>
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock >
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Text" Value="　[Overlay View] Visible"/>
+                                    <Setter Property="Foreground" Value="Blue"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CommonDataModel.OverlayPassVisibility}" Value="False">
+                                            <Setter Property="Text" Value="　[Overlay View] Hidden"/>
+                                            <Setter Property="Foreground" Value="Red"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <TextBlock Text="{Binding CommonDataModel.AppCommonData.TimelineViewStatusMsg}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
             <TabControl Grid.Row="1" TabStripPlacement="Left" >
                 <TabItem Header="Generic" Style="{StaticResource BasicTabItemStyle}">
                     <Grid>
@@ -84,6 +114,8 @@
                 </TabItem>
                 
             </TabControl>
+            <Border Grid.Row="2" BorderThickness="0 1 0 0" BorderBrush="Gray">
+            </Border>
         </Grid>
     </Border>
     

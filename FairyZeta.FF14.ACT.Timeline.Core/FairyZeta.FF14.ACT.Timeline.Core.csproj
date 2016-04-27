@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="AppConst.cs" />
     <Compile Include="Component\CommonComponent.cs" />
+    <Compile Include="Component\OverlayPreviewComponent.cs" />
     <Compile Include="Component\TimelineComponent.cs" />
     <Compile Include="Component\OverlayViewComponent.cs">
       <SubType>Code</SubType>
@@ -141,6 +142,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Module\AutoUpdateCheckModule.cs" />
+    <Compile Include="ObjectModel\OverlayPreviewObjectModel.cs" />
     <Compile Include="ObjectModel\PluginHistoryObjectModel.cs" />
     <Compile Include="ObjectModel\TimelineAlertObjectModel.cs" />
     <Compile Include="Data\TimelineAnchorData.cs" />
@@ -224,6 +226,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WPF\ViewModels\OverlayManageWindowViewModel.cs" />
+    <Compile Include="WPF\ViewModels\OverlayPreviewViewModel.cs" />
     <Compile Include="WPF\ViewModels\OverlayWindowViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -251,6 +254,9 @@
     </Compile>
     <Compile Include="WPF\Views\OverlayManageWindow.xaml.cs">
       <DependentUpon>OverlayManageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Views\OverlayPreview.xaml.cs">
+      <DependentUpon>OverlayPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Views\OverlayStandardTimelineCustomView.xaml.cs">
       <DependentUpon>OverlayStandardTimelineCustomView.xaml</DependentUpon>
@@ -404,6 +410,10 @@
     <Page Include="WPF\Views\OverlayManageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Views\OverlayPreview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="WPF\Views\OverlayStandardTimelineCustomView.xaml">
       <SubType>Designer</SubType>

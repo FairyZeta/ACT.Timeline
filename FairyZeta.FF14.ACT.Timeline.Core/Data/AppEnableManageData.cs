@@ -110,6 +110,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             }
         }
         #endregion
+        #region #- [Property] bool.TimelineUnloadEnabled - ＜タイムラインアンロードの有効状態＞ -----
+        /// <summary> タイムラインアンロードの有効状態 </summary>
+        private bool _TimelineUnloadEnabled;
+        /// <summary> タイムラインアンロードの有効状態 </summary>    
+        public bool TimelineUnloadEnabled
+        {
+            get { return _TimelineUnloadEnabled; }
+            set { this.SetProperty(ref this._TimelineUnloadEnabled, value); }
+        }
+        #endregion
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 

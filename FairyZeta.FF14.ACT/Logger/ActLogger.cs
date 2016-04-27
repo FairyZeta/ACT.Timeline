@@ -54,13 +54,22 @@ namespace FairyZeta.FF14.ACT.Logger
         /// </summary>
         public void DeleteLogFile()
         {
+            if (!Directory.Exists(this.Setting.FileLogSetting.LogDictionary))
+                return;
+
             string[] files = Directory.GetFiles(this.Setting.FileLogSetting.LogDictionary);
             foreach (string log in files)
             {
                 DateTime dtUpdate = File.GetLastWriteTime(log);
                 if (DateTime.Today > dtUpdate.AddDays(this.Setting.FileLogSetting.LogPreserveDay))
                 {
-                    File.Delete(log);
+                    try
+                    {
+                        File.Delete(log);
+                    }
+                    catch
+                    {
+                    }
                 }
             }
         }

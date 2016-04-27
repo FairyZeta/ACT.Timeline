@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Prism.Commands;
+using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
 using FairyZeta.Framework;
@@ -27,6 +28,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> オーバーレイ管理モジュール
         /// </summary>
         public OverlayManageModule OverlayManageModule { get; set; }
+
+        /// <summary> プレビューオブジェクトモデル
+        /// </summary>
+        public OverlayPreviewObjectModel OverlayPreviewObjectModel { get; set; }
 
         /// <summary> ダイアログ管理モデル
         /// </summary>
@@ -198,6 +203,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayControlModule = new OverlayControlModule();
             this.OverlayManageModule = new OverlayManageModule();
             this.DialogManage = new DialogManageObjectModel();
+            this.OverlayPreviewObjectModel = new OverlayPreviewObjectModel();
             return true;
         }
 
@@ -365,6 +371,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             this.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo = null;
             this.OverlayDataModel.OverlayCustomTempData.BaseFontCustomVisibility = false;
+            this.OverlayDataModel.FontData.SaveChangedTarget = true;
         }
         #endregion 
 

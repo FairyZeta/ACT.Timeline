@@ -58,6 +58,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
+        #region #- [Command] DelegateCommand.TimelineUnloadCommand - ＜タイムラインアンロードコマンド＞ -----
+        /// <summary> タイムラインアンロードコマンド＜コマンド＞ </summary>
+        private DelegateCommand _TimelineUnloadCommand;
+        /// <summary> タイムラインアンロードコマンド＜コマンド＞ </summary>
+        public DelegateCommand TimelineUnloadCommand
+        {
+            get { return _TimelineUnloadCommand = _TimelineUnloadCommand ?? new DelegateCommand(this._TimelineUnloadExecute, this._CanTimelineUnloadExecute); }
+        }
+        #endregion 
+
+
       #endregion
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -316,7 +327,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
-
         #region #- [Method] CanExecute,Execute @ TimerControlCommand - ＜タイマー操作コマンド＞ -----
         /// <summary> 実行可能確認＜タイマー操作コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
@@ -363,6 +373,22 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         private void _TimelineLoadExecute()
         {
             this.TimelineLoad();
+        }
+        #endregion 
+
+        #region #- [Method] CanExecute,Execute @ TimelineUnloadCommand - ＜タイムラインアンロードコマンド＞ -----
+        /// <summary> 実行可能確認＜タイムラインアンロードコマンド＞ </summary>
+        /// <returns> 実行可能: ture / 実行不可能: false </returns>
+        private bool _CanTimelineUnloadExecute()
+        {
+            return true;
+        }
+
+        /// <summary> コマンド実行＜タイムラインアンロードコマンド＞ </summary>
+        private void _TimelineUnloadExecute()
+        {
+            this.TimelineCreateModule.TimelineDataClear(base.CommonDataModel, this.TimelineObjectModel);
+            this.TimelineCreateModule.TimelineFunctionEnabledChange(base.CommonDataModel);
         }
         #endregion 
     }

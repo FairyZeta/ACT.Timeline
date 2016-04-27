@@ -17,12 +17,28 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
     {
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        #region #- [Property] bool.BindOnColorChenged - ＜バインド用カラー変更フラグ＞ -----
+        /// <summary> バインド用カラー変更フラグ </summary>
+        private Color _BindOnColorChenged;
+        /// <summary> バインド用カラー変更フラグ </summary>    
+        [XmlIgnore]
+        public Color BindOnColorChenged
+        {
+            get { return _BindOnColorChenged; }
+            set { this.SetProperty(ref this._BindOnColorChenged, value); }
+        }
+        #endregion
+
         /// <summary> (バインド用)カスタム配色プロパティ </summary>    
         [XmlIgnore]
         public Color EditBindColor
         {
             get { return this.getEditTargetColor(); }
-            set { this.setEditTargetColor(value); }
+            set 
+            {
+                this.setEditTargetColor(value);
+                this.BindOnColorChenged = value;
+            }
         }
 
         #region #- [Property] ColorEditTarget.ColorEditTarget - ＜カラー変更ターゲット＞ -----
