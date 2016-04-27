@@ -65,6 +65,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
         {
             this.TimerData = new TimerData();
             this.ActivityCollection = new ObservableCollection<TimelineActivityData>();
+            this.activityEndTimeList = new List<double>();
+            this.AnchorList = new List<TimelineAnchorData>();
+            this.alertsTimeFromStart = new List<double>();
+            this.AlertList = new List<TimelineAlertObjectModel>();
 
             return true;
         }
@@ -120,7 +124,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
         /// <returns> 正常終了時 True </returns> 
         public bool Clear()
         {
+            this.Name = string.Empty;
             this.ActivityCollection.Clear();
+
+            this.activityEndTimeList.Clear();
+            this.AnchorList.Clear();
+            this.alertsTimeFromStart.Clear();
+
+            this.AlertList.Clear();
+
             return true;
         }
 

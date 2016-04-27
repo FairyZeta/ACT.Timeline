@@ -152,6 +152,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.CurrentCombatTime = 0;
             this.CurrentCombatStartTime = 0;
             this.CurrentCombatEndTime = 0;
+            this.CombatTimeChangedRefreshList.Clear();
 
             this.CurrentTimeChangedRefresh();
 
