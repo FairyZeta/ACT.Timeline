@@ -40,6 +40,11 @@
                             <Label Content=":"/>
                             <Label Content="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}"/>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Data Version" Width="100" HorizontalContentAlignment="Center"/>
+                            <Label Content=":"/>
+                            <Label Content="{Binding OverlayViewComponent.OverlayDataModel.DataVersion}"/>
+                        </StackPanel>
 
                         <Label Margin="15" Content="Sry, Name and Type custom  coming soon."/>
                     </StackPanel>

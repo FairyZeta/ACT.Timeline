@@ -244,7 +244,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core
                 //}
             }
             pTimelineOM.SetTimelineData(name, config.Items, config.Anchors, config.Alerts, config.AlertSoundAssets);
-            
+
+            //config = null;
         }
     }
 }

@@ -213,6 +213,16 @@
         Active
     }
 
+    /// <summary> エフェクトタイプ
+    /// </summary>
+    public enum EffectType
+    {
+        /// <summary> ぼかし </summary>
+        Blur,
+        /// <summary> ドロップシャドウ </summary>
+        DropShadow,
+    }
+
     public enum TankMode
     {
         NON,

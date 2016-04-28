@@ -100,7 +100,6 @@
   <ItemGroup>
     <Compile Include="AppConst.cs" />
     <Compile Include="Component\CommonComponent.cs" />
-    <Compile Include="Component\OverlayPreviewComponent.cs" />
     <Compile Include="Component\TimelineComponent.cs" />
     <Compile Include="Component\OverlayViewComponent.cs">
       <SubType>Code</SubType>
@@ -127,7 +126,6 @@
     <Compile Include="Data\OverlayBarSettingsData.cs" />
     <Compile Include="Data\OverlayColorSettingsData.cs" />
     <Compile Include="Data\OverlayContentSettingsData.cs" />
-    <Compile Include="Data\DefaultColorData.cs" />
     <Compile Include="Data\OverlayCustomTempData.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -226,7 +224,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WPF\ViewModels\OverlayManageWindowViewModel.cs" />
-    <Compile Include="WPF\ViewModels\OverlayPreviewViewModel.cs" />
     <Compile Include="WPF\ViewModels\OverlayWindowViewModel.cs">
       <SubType>Code</SubType>
     </Compile>

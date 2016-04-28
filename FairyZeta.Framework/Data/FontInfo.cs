@@ -109,6 +109,17 @@ namespace FairyZeta.Framework.Data
         [XmlIgnore]
         private static Dictionary<string, FontFamily> fontFamilyDictionary = new Dictionary<string, FontFamily>();
 
+        [XmlIgnore]
+        public string BeforeFamilyName { get; set; }
+        [XmlIgnore]
+        public string BeforeWeightString { get; set; }
+        [XmlIgnore]
+        public string BeforeStyleString { get; set; }
+        [XmlIgnore]
+        public string BeforeStretchString { get; set; }
+        [XmlIgnore]
+        public double BeforeSize { get; set; }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         public FontInfo()
@@ -139,6 +150,27 @@ namespace FairyZeta.Framework.Data
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> 現在のフォント情報を元に、変更前情報を作成します。
+        /// </summary>
+        public void CreateBeforeFontInfo()
+        {
+            this.BeforeFamilyName = this.FamilyName;
+            this.BeforeWeightString = this.WeightString;
+            this.BeforeStyleString = this.StyleString;
+            this.BeforeStretchString = this.StretchString;
+            this.BeforeSize = this.Size;
+        }
+
+        /// <summary> 現在のフォント情報を変更前フォント情報で上書きします。
+        /// </summary>
+        public void SetBeforeFontInfo()
+        {
+            this.FamilyName = this.BeforeFamilyName;
+            this.WeightString = this.BeforeWeightString;
+            this.StyleString = this.BeforeStyleString;
+            this.StretchString = this.BeforeStretchString;
+            this.Size = this.BeforeSize;
+        }
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
         
 

@@ -58,79 +58,108 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.ObjectModel
         {
             this.TimerData.CurrentCombatTime = 2.5;
 
+
             for (double d = 0; d < 14.0; d += 1.0)
             {
                 TimelineActivityData item = new TimelineActivityData();
                 item.Index = Convert.ToInt32(d);
                 item.TimeFromStart = d;
                 item.TimerData = this.TimerData;
-                
+
                 switch (item.Index)
                 {
                     case 0:
                         item.Name = "Type:ENEMY";
                         item.TimelineType = TimelineType.ENEMY;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = -1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         item.Duration = 3;
                         break;
                     case 1:
                         item.Name = "メガフレア";
                         item.TimelineType = TimelineType.ENEMY;
                         item.Duration = 3;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = 1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
 
                     case 2:
                         item.Name = "[G] Type:GIMMICK";
                         item.TimelineType = TimelineType.GIMMICK;
                         item.Duration = 3;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = -1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
                     case 3:
                         item.Name = "[G] 9時方向に増援";
                         item.TimelineType = TimelineType.GIMMICK;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = 1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
 
                     case 4:
                         item.Name = "[T] Type:TANK";
                         item.TimelineType = TimelineType.TANK;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = -1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
                     case 5:
                         item.Name = "[T] インビンシブル";
                         item.TimelineType = TimelineType.TANK;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = 1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
 
                     case 6:
                         item.Name = "[D] Type:DPS";
                         item.TimelineType = TimelineType.DPS;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = -1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
                     case 7:
                         item.Name = "[D] 捨身";
                         item.TimelineType = TimelineType.DPS;
+                        item.TimelineAlert = new TimelineAlertObjectModel();
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = 1 };
                         break;
 
                     case 8:
                         item.Name = "[H] Type:HEALER";
                         item.TimelineType = TimelineType.HEALER;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = -1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
                     case 9:
                         item.Name = "[H] ストンスキン";
                         item.TimelineType = TimelineType.HEALER;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = 1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
 
                     case 10:
                         item.Name = "[EGI] Type:Pet";
                         item.TimelineType = TimelineType.PET;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = -1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
                     case 11:
                         item.Name = "[FAIRY] 光の囁き";
                         item.TimelineType = TimelineType.PET;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = 1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
 
                     case 12:
                         item.Name = "Type:UNKNOWN";
                         item.TimelineType = TimelineType.UNKNOWN;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = -1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
                     case 13:
                         item.Name = "不明型タイムライン";
                         item.TimelineType = TimelineType.UNKNOWN;
+                        item.TimelineAnchorData = new TimelineAnchorData() { Jump = 1 };
+                        item.TimelineAlert = new TimelineAlertObjectModel();
                         break;
 
 

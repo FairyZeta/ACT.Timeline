@@ -10,7 +10,7 @@
              xmlns:fzBehavior="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
              xmlns:enum="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
         mc:Ignorable="d" 
-        Height="150"  
+        Height="80"  
         d:DesignHeight="630" d:DesignWidth="900"
         d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}">
 

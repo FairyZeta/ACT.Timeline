@@ -78,11 +78,11 @@
             </Grid>
             <TabControl Grid.Row="1" TabStripPlacement="Left" >
                 <TabItem Header="Generic" Style="{StaticResource BasicTabItemStyle}">
-                    <Grid>
+                    <Grid ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="80"/>
                             <RowDefinition Height="120"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="*" MinHeight="200"/>
                             <RowDefinition Height="240"/>
                         </Grid.RowDefinitions>
                         <view:TimelineStatusView Grid.Row="0" DataContext="{Binding}"/>

@@ -23,13 +23,12 @@
 
     <Border Background="White" >
         <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
-            <Grid Margin="5">
+            <Grid Margin="5" x:Name="LayoutRoot">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="500"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Label Content=" Timeline " Width="70" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Border>
                     <ListView ItemsSource="{Binding CommonComponent.CommonDataModel.TimelineFileViewSource.View}" SelectedItem="{Binding CommonComponent.CommonDataModel.SelectedTimelineFileData}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -39,7 +38,6 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </Border>
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 5" HorizontalAlignment="Left">
                     <Button Width="130" Height="24" Margin="5 5" Content="Load" 
                             IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.TimelineFileLoadEnabled}"

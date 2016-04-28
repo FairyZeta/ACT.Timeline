@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media.Effects;
+using System.Xml.Serialization;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 {
@@ -98,6 +102,77 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] EffectType.BackgroundEffectType - ＜背景エフェクトタイプ＞ -----
+        /// <summary> 背景エフェクトタイプ </summary>
+        private EffectType _BackgroundEffectType;
+        /// <summary> 背景エフェクトタイプ </summary>    
+        public EffectType BackgroundEffectType
+        {
+            get { return _BackgroundEffectType; }
+            set
+            {
+                this.SetProperty(ref this._BackgroundEffectType, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+        #region #- [Property] double.BackgroundBlurRadius - ＜背景のぼかし強さ＞ -----
+        /// <summary> 背景のぼかし強さ </summary>
+        private double _BackgroundBlurRadius;
+        /// <summary> 背景のぼかし強さ </summary>    
+        public double BackgroundBlurRadius
+        {
+            get { return _BackgroundBlurRadius; }
+            set
+            {
+                this.SetProperty(ref this._BackgroundBlurRadius, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+        #region #- [Property] KernelType.BackgroundEffectKernelType - ＜背景のエフェクトカーネルタイプ＞ -----
+        /// <summary> 背景のエフェクトカーネルタイプ </summary>
+        private KernelType _BackgroundEffectKernelType;
+        /// <summary> 背景のエフェクトカーネルタイプ </summary>    
+        public KernelType BackgroundEffectKernelType
+        {
+            get { return _BackgroundEffectKernelType; }
+            set
+            {
+                this.SetProperty(ref this._BackgroundEffectKernelType, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+        #region #- [Property] Thickness.BackgroundCornerRadius - ＜背景の丸さ＞ -----
+        /// <summary> 背景の丸さ </summary>
+        private CornerRadius _BackgroundCornerRadius;
+        /// <summary> 背景の丸さ </summary>    
+        public CornerRadius BackgroundCornerRadius
+        {
+            get { return _BackgroundCornerRadius; }
+            set
+            {
+                this.SetProperty(ref this._BackgroundCornerRadius, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+        #region #- [Property] Thickness.BackgroundMargin - ＜背景の余白＞ -----
+        /// <summary> 背景の余白 </summary>
+        private Thickness _BackgroundMargin;
+        /// <summary> 背景の余白 </summary>    
+        public Thickness BackgroundMargin
+        {
+            get { return _BackgroundMargin; }
+            set
+            {
+                this.SetProperty(ref this._BackgroundMargin, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+
         #region #- [Property] bool.TitleBarVisibility - ＜タイトルバーの表示状態＞ -----
         /// <summary> タイトルバーの表示状態 </summary>
         private bool _TitleBarVisibility;
@@ -111,6 +186,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._TitleBarVisibility = value;
                 base.OnPropertyChanged("TitleBarVisibility");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -127,6 +203,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._ContentHeaderVisibility = value;
                 base.OnPropertyChanged("ContentHeaderVisibility");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -147,6 +224,102 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        /// <summary> エフェクトタイプコレクション
+        /// </summary>
+        [XmlIgnore]
+        public ObservableCollection<EffectType> EffectTypeCollection { get; private set; }
+
+        /// <summary> カーネルタイプコレクション
+        /// </summary>
+        [XmlIgnore]
+        public ObservableCollection<KernelType> KernelTypeCollection { get; private set; }
+
+        #region -- Thickness 変更用 -----
+
+        /// <summary> 背景余白 </summary> 
+        [XmlIgnore]
+        public double BackgroundMargin_Left
+        {
+            get { return this.BackgroundMargin.Left; }
+            set
+            {
+                this.BackgroundMargin = new Thickness(value, BackgroundMargin.Top, BackgroundMargin.Right, BackgroundMargin.Bottom);
+            }
+        }
+        /// <summary> 背景余白 </summary> 
+        [XmlIgnore]
+        public double BackgroundMargin_Top
+        {
+            get { return this.BackgroundMargin.Top; }
+            set
+            {
+                this.BackgroundMargin = new Thickness(BackgroundMargin.Left, value, BackgroundMargin.Right, BackgroundMargin.Bottom);
+            }
+        }
+        /// <summary> 背景余白 </summary> 
+        [XmlIgnore]
+        public double BackgroundMargin_Right
+        {
+            get { return this.BackgroundMargin.Right; }
+            set
+            {
+                this.BackgroundMargin = new Thickness(BackgroundMargin.Left, BackgroundMargin.Top, value, BackgroundMargin.Bottom);
+            }
+        }
+        /// <summary> 背景余白 </summary> 
+        [XmlIgnore]
+        public double BackgroundMargin_Bottom
+        {
+            get { return this.BackgroundMargin.Bottom; }
+            set
+            {
+                this.BackgroundMargin = new Thickness(BackgroundMargin.Left, BackgroundMargin.Top, BackgroundMargin.Right, value);
+            }
+        }
+
+        /// <summary> 背景の丸さ </summary> 
+        [XmlIgnore]
+        public double BackgroundCornerRadius_TopLeft
+        {
+            get { return this.BackgroundCornerRadius.TopLeft; }
+            set
+            {
+                this.BackgroundCornerRadius = new CornerRadius(value, BackgroundCornerRadius.TopRight, BackgroundCornerRadius.BottomRight, BackgroundCornerRadius.BottomLeft);
+            }
+        }
+        /// <summary> 背景の丸さ </summary> 
+        [XmlIgnore]
+        public double BackgroundCornerRadius_TopRight
+        {
+            get { return this.BackgroundCornerRadius.TopRight; }
+            set
+            {
+                this.BackgroundCornerRadius = new CornerRadius(BackgroundCornerRadius.TopLeft, value, BackgroundCornerRadius.BottomRight, BackgroundCornerRadius.BottomLeft);
+            }
+        }
+        /// <summary> 背景の丸さ </summary> 
+        [XmlIgnore]
+        public double BackgroundCornerRadius_BottomRight
+        {
+            get { return this.BackgroundCornerRadius.BottomRight; }
+            set
+            {
+                this.BackgroundCornerRadius = new CornerRadius(BackgroundCornerRadius.TopLeft, BackgroundCornerRadius.TopRight, value, BackgroundCornerRadius.BottomLeft);
+            }
+        }
+        /// <summary> 背景の丸さ </summary> 
+        [XmlIgnore]
+        public double BackgroundCornerRadius_BottomLeft
+        {
+            get { return this.BackgroundCornerRadius.BottomLeft; }
+            set
+            {
+                this.BackgroundCornerRadius = new CornerRadius(BackgroundCornerRadius.TopLeft, BackgroundCornerRadius.TopRight, BackgroundCornerRadius.BottomRight, value);
+            }
+        }
+
+        #endregion
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイ一般設定データ／コンストラクタ
@@ -156,6 +329,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         {
             this.initData();
             this.clear();
+
+            this.SetupCollection();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
@@ -165,10 +340,26 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <returns> 正常終了時 True </returns> 
         private bool initData()
         {
+            this.EffectTypeCollection = new ObservableCollection<EffectType>();
+            this.KernelTypeCollection = new ObservableCollection<KernelType>();
+     
             return true;
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> コレクションの内容をセットアップします。
+        /// </summary>
+        public void SetupCollection()
+        {
+            this.EffectTypeCollection.Clear();
+            this.KernelTypeCollection.Clear();
+
+            this.EffectTypeCollection.Add(EffectType.Blur);
+            this.KernelTypeCollection.Add(KernelType.Box);
+            this.KernelTypeCollection.Add(KernelType.Gaussian);
+        }
+
 
         /// <summary> データの全体クリアを実行します。
         /// </summary>
@@ -193,6 +384,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.ContentFontSize = 14.0;
             this.ContentOpacity = 0;
             this.BackgroundOpacity = 60;
+
+            this.BackgroundEffectType = EffectType.Blur;
+            this.BackgroundBlurRadius = 10;
+            this.BackgroundEffectKernelType = KernelType.Box;
+            this.BackgroundCornerRadius = new CornerRadius(10, 10, 10, 10);
+            this.BackgroundMargin = new Thickness(10, 10, 10, 10);
 
             this.TitleBarVisibility = true;
             this.ContentHeaderVisibility = true;

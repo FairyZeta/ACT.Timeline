@@ -42,16 +42,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        public string ColorToStringFormat(Color pColor)
-        {
-            return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", pColor.A, pColor.R, pColor.G, pColor.B);
-        }
-
-        public Color StringToColorFormat(string pStr)
-        {
-            return (Color)ColorConverter.ConvertFromString(pStr);
-        }
-
         /// <summary> データの全体クリアを実行します。
         /// </summary>
         /// <returns> 正常終了時 True </returns> 

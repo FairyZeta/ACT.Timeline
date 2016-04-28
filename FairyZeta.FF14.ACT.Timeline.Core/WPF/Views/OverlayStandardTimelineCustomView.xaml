@@ -27,24 +27,8 @@
             </Style>
             <Style x:Key="DataGridCheckBoxStyle" TargetType="{x:Type CheckBox}">
                 <Setter Property="Width" Value="100"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
-            </Style>
-
-            <Style x:Key="DoubleValueUpDownRepeatButton" TargetType="{x:Type RepeatButton}">
-                <Setter Property="Width" Value="20"/>
-                <Setter Property="Height" Value="10"/>
-                <Setter Property="BorderBrush" Value="Gray"/>
-                <Setter Property="Background" Value="Transparent"/>
-            </Style>
-            <Style x:Key="DoubleValueUpRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
-                <Setter Property="Content" Value="+"/>
-                <Setter Property="BorderThickness" Value="0 1 1 1"/>
-                <Setter Property="Padding" Value="0 -5 0 0"/>
-            </Style>
-            <Style x:Key="DoubleValueDownRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
-                <Setter Property="Content" Value="-"/>
-                <Setter Property="BorderThickness" Value="0 0 1 1"/>
-                <Setter Property="Padding" Value="1 -5 0 0"/>
             </Style>
 
             <Style x:Key="ItemStackPanel" TargetType="{x:Type StackPanel}">
@@ -79,32 +63,28 @@
                 <RowDefinition Height="55*"/>
                 <RowDefinition Height="12*"/>
             </Grid.RowDefinitions>
-            <TabControl Grid.RowSpan="100" BorderThickness="0 1 0 0" Margin="0 0 10 0">
+            <TabControl Grid.RowSpan="100" BorderThickness="0 1 0 0" Margin="0 0 10 0" Background="White">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
                         <Setter Property="Width" Value="70"/>
                     </Style>
                 </TabControl.Resources>
                 <TabItem Header="Common">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
+                    <StackPanel>
+                        <Border >
                             <Border.Resources>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Width" Value="100"/>
                                     <Setter Property="Margin" Value="5 0"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
                                 </Style>
                                 <Style TargetType="{x:Type fCtrl:DoubleUpDownControl}">
                                     <Setter Property="Width" Value="80"/>
                                 </Style>
                             </Border.Resources>
-                            <Grid Margin="5">
-                                <Label Content=" Overlay Window " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Grid Margin="5 0">
                                 <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                                    <Label Content=" - Overlay Window - " Padding="3 0" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                     <StackPanel Orientation="Horizontal" Margin="2">
                                         <TextBlock Text="Window X"/>
                                         <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayWindowData.WindowTop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
@@ -124,39 +104,44 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
-                            <Grid Margin="5">
-                                <Label Content=" Overlay Opacity " Width="110" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Border >
+                            <Border.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Width" Value="100"/>
+                                    <Setter Property="Margin" Value="5 0"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                                <Style TargetType="{x:Type fCtrl:IntUpDownControl}">
+                                    <Setter Property="Width" Value="80"/>
+                                </Style>
+                                <Style TargetType="{x:Type Slider}">
+                                    <Setter Property="Margin" Value="10 0"/>
+                                </Style>
+                            </Border.Resources>
+                            <Grid Margin="5 0">
                                 <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="100"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Content="Background"/>
-                                        <Slider Grid.Column="1" Width="100" Minimum="0" Maximum="100"
+                                    <Label Content=" - Overlay Opacity - " Padding="3 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0 3">
+                                        <TextBlock Text="Background"/>
+                                        <fCtrl:IntUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Mode=TwoWay}"
+                                                                MinValue="0" MaxValue="100"/>
+                                        <Slider Width="200" Minimum="0" Maximum="100"
                                                 Value="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity}"/>
-                                        <Label Grid.Column="2" Content="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity}"/>
-                                    </Grid>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="100"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Content="Content"/>
-                                        <Slider Grid.Column="1" Width="100" Minimum="0" Maximum="100"
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0 3">
+                                        <TextBlock Text="Content"/>
+                                        <fCtrl:IntUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Mode=TwoWay}"
+                                                                MinValue="0" MaxValue="100"/>
+                                        <Slider Width="200" Minimum="0" Maximum="100"
                                                 Value="{Binding OverlayDataModel.OverlayGenericSettingsData.ContentOpacity}"/>
-                                        <Label Grid.Column="2" Content="{Binding OverlayDataModel.OverlayGenericSettingsData.ContentOpacity}"/>
-                                    </Grid>
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
-                            <Grid Margin="5">
-                                <Label Content=" Overlay Visibility " Width="120" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Border >
+                            <Grid Margin="5 0">
                                 <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                                    <Label Content=" - Overlay Visibility - " Padding="3 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                     <Grid Margin="5">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="200"/>
@@ -182,8 +167,92 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
+                        <Border >
+                            <Border.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Width" Value="100"/>
+                                    <Setter Property="Margin" Value="5 0"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                                <Style TargetType="{x:Type fCtrl:DoubleUpDownControl}">
+                                    <Setter Property="Width" Value="60"/>
+                                </Style>
+                            </Border.Resources>
+                            <Grid Margin="5 0">
+                                <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
+                                    <Label Content=" - Overlay Background - " Padding="3 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0 3">
+                                        <Label Content=" EffectType " Width="100"/>
+                                        <ComboBox Width="160"
+                                                  ItemsSource="{Binding OverlayDataModel.OverlayGenericSettingsData.EffectTypeCollection}"
+                                                  SelectedItem="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundEffectType}"/>
+                                    </StackPanel>
+                                    <ContentControl>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0 3">
+                                                <Label Content=" KernelType " Width="100"/>
+                                                <ComboBox Width="160"
+                                                          ItemsSource="{Binding OverlayDataModel.OverlayGenericSettingsData.KernelTypeCollection}"
+                                                          SelectedItem="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundEffectKernelType}"/>
 
-                    </Grid>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0 3">
+                                                <Label Content="Background" Width="100"/>
+                                                <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundBlurRadius, Mode=TwoWay}"
+                                                                           MinValue="0" />
+                                                <Slider Width="200" Minimum="0" Maximum="100" VerticalAlignment="Center" Margin="10 0"
+                                                        Value="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundBlurRadius}"/>
+                                            </StackPanel>
+                                            <Label Content=" Corner Radius "/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                                    <Label Content="T-Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundCornerRadius_TopLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                               MinValue="0"/>
+                                                </StackPanel>
+                                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                                    <Label Content="T-Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundCornerRadius_TopRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                               MinValue="0"/>
+                                                </StackPanel>
+                                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                                    <Label Content="B-Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundCornerRadius_BottomRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                               MinValue="0"/>
+                                                </StackPanel>
+                                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                                    <Label Content="B-Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundCornerRadius_BottomLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                               MinValue="0"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <Label Content=" Margin "/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                                    <Label Content="Left" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundMargin_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </StackPanel>
+                                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                                    <Label Content="Top" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundMargin_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </StackPanel>
+                                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                                    <Label Content="Right" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundMargin_Right, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </StackPanel>
+                                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                                    <Label Content="Bottom" Padding="0" Margin="0 0 5 0" Width="40" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayGenericSettingsData.BackgroundMargin_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                    </ContentControl>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                    </StackPanel>
                     
                 </TabItem>
                 <TabItem Header="Content">
@@ -196,53 +265,184 @@
                         <Grid Margin="5">
                             <Label Content=" Overlay Content Settings " Width="180" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <StackPanel Margin="0 10" DataContext="{Binding OverlayViewComponent}">
-                                <StackPanel Style="{StaticResource ItemStackPanel}">
-                                    <CheckBox Content="T-No" Style="{StaticResource DataGridCheckBoxStyle}"
+                                <Label Content=" - Width - " />
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/> 
+                                        <ColumnDefinition Width="60"/> 
+                                        <ColumnDefinition Width="15"/> 
+                                        <ColumnDefinition/> 
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" Content="T-No" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility}"/>
-                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource ItemStackPanel}">
-                                    <CheckBox Content="Time" Style="{StaticResource DataGridCheckBoxStyle}"
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth}" Minimum="0" Maximum="150"/>
+                                    <TextBlock Grid.Column="4" Text="150" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" Content="Time" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility}"/>
-                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource ItemStackPanel}">
-                                    <CheckBox Content="Type" Style="{StaticResource DataGridCheckBoxStyle}"
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth}" Minimum="0" Maximum="150"/>
+                                    <TextBlock Grid.Column="4" Text="150" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" Content="Type" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility}"/>
-                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource ItemStackPanel}">
-                                    <CheckBox Content="Job" Style="{StaticResource DataGridCheckBoxStyle}"
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth}" Minimum="0" Maximum="210"/>
+                                    <TextBlock Grid.Column="4" Text="210" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" Content="Job" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility}"/>
-                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource ItemStackPanel}">
-                                    <CheckBox Content="TankMode" Style="{StaticResource DataGridCheckBoxStyle}" IsEnabled="False"
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth}" Minimum="0" Maximum="210"/>
+                                    <TextBlock Grid.Column="4" Text="210" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" Content="TankMode" Style="{StaticResource DataGridCheckBoxStyle}" IsEnabled="False"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TankModeVisibility}"/>
-                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TankModeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TankModeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"
                                                                IsEnabled="False"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource ItemStackPanel}">
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
                                     <CheckBox Content="Action" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility}"/>
-                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource ItemStackPanel}">
-                                    <CheckBox Content="Active" Style="{StaticResource DataGridCheckBoxStyle}"
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth}" Minimum="0" Maximum="600"/>
+                                    <TextBlock Grid.Column="4" Text="600" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" Content="Active" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility}"/>
-                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource ItemStackPanel}">
-                                    <CheckBox Content="Alert" Style="{StaticResource DataGridCheckBoxStyle}"
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth}" Minimum="0" Maximum="600" SmallChange="1" TickFrequency="1" />
+                                    <TextBlock Grid.Column="4" Text="600" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" Content="Alert" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility}"/>
-                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource ItemStackPanel}">
-                                    <CheckBox Content="Anc" Style="{StaticResource DataGridCheckBoxStyle}"
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth}" Minimum="0" Maximum="60"/>
+                                    <TextBlock Grid.Column="4" Text="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" Content="Anc" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility}"/>
-                                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth}" Minimum="0" Maximum="60"/>
+                                    <TextBlock Grid.Column="4" Text="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Label Content=" - Min Height -"/>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="TitleBar" />
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TitleBarMinHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.TitleBarMinHeight}" Minimum="0" Maximum="100"/>
+                                    <TextBlock Grid.Column="4" Text="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Header" />
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.HeaderMinHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.HeaderMinHeight}" Minimum="0" Maximum="100"/>
+                                    <TextBlock Grid.Column="4" Text="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Content" />
+                                    <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ContentMinHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               MinValue="0"/>
+                                    <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ContentMinHeight}" Minimum="0" Maximum="100"/>
+                                    <TextBlock Grid.Column="4" Text="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -334,7 +534,7 @@
                             <StackPanel Margin="10">
                                 <Label Content=" * Attention *" Height="20" Padding="3 0" Background="White" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                                <TextBlock Text="Activeのフォントは、処理の重さやメモリの消費量に大きく影響する為、慎重に選んで下さい。"/>
+                                <TextBlock Text="Activeは、処理の重さやメモリの消費量に大きく影響する為、慎重に選んで下さい。"/>
                                 <TextBlock Text="具体的には、エイリアスのかかっていないフォントの選択をおすすめします。"/>
                                 <TextBlock Text="N0設定(小数点0桁表示)では、あまり気にせず好きなものを選択して問題ありません。"/>
                             </StackPanel>
@@ -358,7 +558,10 @@
                                 </Grid.RowDefinitions>
                                 <view:FontEditView EditFontInfo="{Binding OverlayViewComponent.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 <Border Grid.Row="1" HorizontalAlignment="Left">
-                                    <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Top" Command="{Binding OverlayViewComponent.FontEditEndCommand}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Center" Command="{Binding OverlayViewComponent.FontEditEndCommand}" />
+                                        <Button Width="160" Height="24" Margin="5" Content="Cancel" VerticalAlignment="Center" Command="{Binding OverlayViewComponent.FontEditCancelCommand}" />
+                                    </StackPanel>
                                 </Border>
                             </Grid>
                         </Border>
@@ -498,9 +701,11 @@
                                 </Grid.RowDefinitions>
                                 <view:ColorEditView EditColor="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.EditBindColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Border Grid.Row="1" HorizontalAlignment="Left">
-                                    <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Top" Command="{Binding OverlayViewComponent.EditCloseCommand}" CommandParameter="StringColor"/>    
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Center" Command="{Binding OverlayViewComponent.EditCloseCommand}" CommandParameter="StringColor"/>
+                                        <Button Width="160" Height="24" Margin="5" Content="Cancel" VerticalAlignment="Center" Command="{Binding OverlayViewComponent.StringColorEditCancelCommand}" />
+                                    </StackPanel>
                                 </Border>
-                                
                             </Grid>
                         </Border>
                     </Grid>
@@ -549,7 +754,6 @@
                                     <fCtrl:DoubleUpDownControl ChangedValue="{Binding OverlayDataModel.ActiveBarSettingsData.BarMargin_Bottom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                             </StackPanel>
-
 
                             <Label Content=" Bar Inner Margin "/>
                             <StackPanel Orientation="Horizontal">
@@ -703,7 +907,10 @@
                                 </Grid.RowDefinitions>
                                 <view:ColorEditView EditColor="{Binding OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.EditBindColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Border Grid.Row="1" HorizontalAlignment="Left">
-                                    <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Top" Command="{Binding OverlayViewComponent.ActiveColorEditEndCommand}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Center" Command="{Binding OverlayViewComponent.ActiveColorEditEndCommand}" />
+                                        <Button Width="160" Height="24" Margin="5" Content="Cancel" VerticalAlignment="Center" Command="{Binding OverlayViewComponent.ActiveColorEditCancelCommand}" />
+                                    </StackPanel>
                                 </Border>
                             </Grid>
                         </Border>
@@ -883,7 +1090,10 @@
                                 </Grid.RowDefinitions>
                                 <view:ColorEditView EditColor="{Binding OverlayViewComponent.OverlayDataModel.CastBarSettingsData.EditBindColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Border Grid.Row="1" HorizontalAlignment="Left">
-                                    <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Top" Command="{Binding OverlayViewComponent.CastColorEditEndCommand}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Width="160" Height="24" Margin="5" Content="Edit End" VerticalAlignment="Center" Command="{Binding OverlayViewComponent.CastColorEditEndCommand}" />
+                                        <Button Width="160" Height="24" Margin="5" Content="Cancel" VerticalAlignment="Center" Command="{Binding OverlayViewComponent.CastColorEditCancelCommand}" />
+                                    </StackPanel>
                                 </Border>
                             </Grid>
                         </Border>

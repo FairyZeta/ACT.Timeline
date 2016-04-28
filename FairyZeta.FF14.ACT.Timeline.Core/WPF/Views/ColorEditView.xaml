@@ -64,23 +64,23 @@
         <Grid x:Name="RGB" Grid.Row="2" Grid.Column="0" Height="140">
             <StackPanel Grid.Row="0" Margin="0,0,0,20">
                 <Label Content="RGB" FontWeight="ExtraBold" Margin="0,0,0,4" />
-
                 <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                    <Label Content="  R" Width="50" VerticalAlignment="Center" />
-                    <TextBox x:Name="RTextBox" Width="40" MaxLength="3" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
-                    <Slider x:Name="RSlider" Margin="8,0,0,0" Width="140" Minimum="0" Maximum="255" Value="{Binding ElementName=RTextBox, Path=Text, Mode=TwoWay, Converter={StaticResource S2DConverter}, ConverterParameter=N0}" />
+                    <Label Content=" R" Width="30" VerticalAlignment="Center" />
+                    <fCtrl:IntUpDownControl x:Name="RTextBox" Width="60" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" 
+                                             MinValue="0" MaxValue="255"/>
+                    <Slider x:Name="RSlider" Margin="8,0,0,0" Width="140" Minimum="0" Maximum="255" Value="{Binding ElementName=RTextBox, Path=ChangedValue, Mode=TwoWay}" />
                 </StackPanel>
-
                 <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                    <Label Content="  G" Width="50" VerticalAlignment="Center" />
-                    <TextBox x:Name="GTextBox" Width="40" MaxLength="3" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
-                    <Slider x:Name="GSlider" Margin="8,0,0,0" Width="140" Minimum="0" Maximum="255" Value="{Binding ElementName=GTextBox, Path=Text, Mode=TwoWay, Converter={StaticResource S2DConverter}, ConverterParameter=N0}" />
+                    <Label Content=" G" Width="30" VerticalAlignment="Center" />
+                    <fCtrl:IntUpDownControl x:Name="GTextBox" Width="60" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" 
+                                             MinValue="0" MaxValue="255"/>
+                    <Slider x:Name="GSlider" Margin="8,0,0,0" Width="140" Minimum="0" Maximum="255" Value="{Binding ElementName=GTextBox, Path=ChangedValue, Mode=TwoWay}" />
                 </StackPanel>
-
                 <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                    <Label Content="  B" Width="50" VerticalAlignment="Center" />
-                    <TextBox x:Name="BTextBox" Width="40" MaxLength="3" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
-                    <Slider x:Name="BSlider" Margin="8,0,0,0" Width="140" Minimum="0" Maximum="255"  Value="{Binding ElementName=BTextBox, Path=Text, Mode=TwoWay, Converter={StaticResource S2DConverter}, ConverterParameter=N0}"/>
+                    <Label Content=" B" Width="30" VerticalAlignment="Center" />
+                    <fCtrl:IntUpDownControl x:Name="BTextBox" Width="60" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" 
+                                             MinValue="0" MaxValue="255"/>
+                    <Slider x:Name="BSlider" Margin="8,0,0,0" Width="140" Minimum="0" Maximum="255"  Value="{Binding ElementName=BTextBox, Path=ChangedValue, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -88,12 +88,13 @@
             <StackPanel>
             
             <StackPanel Grid.Row="1" Margin="0,0,0,20">
-                <Label Content="Alpha" FontWeight="ExtraBold" />
+                    <Label Content="Alpha" FontWeight="ExtraBold" Margin="0,0,0,4"  />
 
                 <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                     <Label Content="Opacity" Width="50" VerticalAlignment="Center" />
-                    <TextBox x:Name="ATextBox" Width="40" MaxLength="3" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
-                    <Slider x:Name="ASlider" Margin="8,0,0,0" Width="140" Minimum="0" Maximum="255" Value="{Binding ElementName=ATextBox, Path=Text, Mode=TwoWay, Converter={StaticResource S2DConverter}, ConverterParameter=N0}" />
+                    <fCtrl:IntUpDownControl x:Name="ATextBox" Width="60" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" 
+                                             MinValue="0" MaxValue="255"/>
+                    <Slider x:Name="ASlider" Margin="8,0,0,0" Width="140" Minimum="0" Maximum="255" Value="{Binding ElementName=ATextBox, Path=ChangedValue, Mode=TwoWay}" />
                 </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Margin="0,0,0,20" Orientation="Horizontal">

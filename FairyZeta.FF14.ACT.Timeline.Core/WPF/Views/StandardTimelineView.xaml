@@ -335,21 +335,25 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid >
-        <Border CornerRadius="10" Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}" Margin="10"
+    <Grid>
+        <Border CornerRadius="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundCornerRadius}" 
+                Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}" 
+                Margin="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundMargin}"
                 Background="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.Background_Base, Converter={StaticResource Color2SBrush}}">
             <Border.Effect>
-                <BlurEffect Radius="10" KernelType="Box"/>
+                <BlurEffect Radius="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundBlurRadius}" 
+                            KernelType="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundEffectKernelType}"/>
             </Border.Effect>
         </Border>
         <StackPanel Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Converter={StaticResource opacityConverter}}" Margin="10">
             <!-- ウィンドウヘッダー -->
-            <Grid Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarVisibility, Converter={StaticResource BoolToVisibility}}">
+            <Grid Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarVisibility, Converter={StaticResource BoolToVisibility}}"
+                  MinHeight="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TitleBarMinHeight}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition  Width="60"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2" VerticalAlignment="Center">
                     <TextBlock Text="[Line-Time] " Style="{StaticResource TitleOutlineText}" 
                                Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuMain_Base, Converter={StaticResource Color2SBrush}}"/>
                     <TextBlock Foreground="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.MenuSub_Base, Converter={StaticResource Color2SBrush}}"
@@ -400,7 +404,8 @@
             </Grid>
             
             <!-- コンテンツヘッダー -->
-            <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}">
+            <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}"
+                  MinHeight="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.HeaderMinHeight}">
                 <Border BorderThickness="0 0 0 1" BorderBrush="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettingsData.HeaderBar_Base, Converter={StaticResource Color2SBrush}}">
                     <StackPanel Orientation="Horizontal" >
                         <!-- T-No -->
@@ -469,6 +474,7 @@
                         <Setter Property="Margin" Value="-10 -3"/>
                         <Setter Property="Background" Value="Transparent" />
                         <Setter Property="IsTabStop" Value="False"/>
+                        <Setter Property="MinHeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ContentMinHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding TimelineVisibility}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed"/>

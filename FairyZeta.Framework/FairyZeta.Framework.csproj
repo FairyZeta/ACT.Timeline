@@ -70,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
+    <Compile Include="WPF\Controls\IntUpDownControl.xaml.cs">
+      <DependentUpon>IntUpDownControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\Controls\DoubleUpDownControl.xaml.cs">
       <DependentUpon>DoubleUpDownControl.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\OutlineTextControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Controls\IntUpDownControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

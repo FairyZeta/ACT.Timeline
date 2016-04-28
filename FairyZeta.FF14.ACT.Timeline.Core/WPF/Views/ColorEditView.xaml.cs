@@ -19,7 +19,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 {
     /// <summary> ColorDialogView
     /// </summary>
-    public partial class ColorEditView : UserControl
+    public partial class ColorEditView : UserControl, IDisposable
     {
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -50,10 +50,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             this.EditColor = Colors.White;
 
             this.PredefinedColorsListBox.SelectionChanged += this.PredefinedColorsListBox_SelectionChanged;
-            this.RTextBox.TextChanged += (s, e) => this.ToHex();
-            this.GTextBox.TextChanged += (s, e) => this.ToHex();
-            this.BTextBox.TextChanged += (s, e) => this.ToHex();
-            this.ATextBox.TextChanged += (s, e) => this.ToHex();
+            this.RSlider.ValueChanged += (s, e) => this.ToHex();
+            this.GSlider.ValueChanged += (s, e) => this.ToHex();
+            this.BSlider.ValueChanged += (s, e) => this.ToHex();
+            this.ASlider.ValueChanged += (s, e) => this.ToHex();
             this.HexTextBox.LostFocus += (s, e) =>
             {
                 var color = Colors.White;
@@ -66,10 +66,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
                 {
                 }
 
-                this.RTextBox.Text = color.R.ToString();
-                this.GTextBox.Text = color.G.ToString();
-                this.BTextBox.Text = color.B.ToString();
-                this.ATextBox.Text = color.A.ToString();
+                this.RTextBox.ChangedValue = Convert.ToInt32(color.R);
+                this.GTextBox.ChangedValue = Convert.ToInt32(color.G);
+                this.BTextBox.ChangedValue = Convert.ToInt32(color.B);
+                this.ATextBox.ChangedValue = Convert.ToInt32(color.A);
 
                 this.trySetColor();
                 //this.ToPreview();
@@ -79,6 +79,65 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 
         /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> デストラクタ
+        /// </summary>
+        ~ColorEditView()
+        {
+            this.OnDispose(false);
+            return;
+        }
+
+        /// <summary>
+        /// 開放処理されたかどうかを取得|設定します。
+        /// </summary>
+        public bool IsDisposed
+        {
+            get; protected set;
+        }
+
+        /// <summary>
+        /// 内部リソース解放処理を行います。<br/>
+        /// 参照系の内部変数をnullに初期化したり、
+        /// イベントからハンドラメソッドを削除します。
+        /// </summary>
+        public void Dispose()
+        {
+            try
+            {
+                this.OnDispose(true);
+            }
+            catch (Exception)
+            {
+            }
+
+            return;
+        }
+
+        /// <summary>
+        /// 内部リソース解放処理を行います。<br/>
+        /// </summary>
+        /// <param name="disposing">false:アンマネージドリソースのみ解放する</param>
+        protected virtual void OnDispose(bool disposing)
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+
+            this.IsDisposed = true;
+
+            this.PredefinedColors = null;
+
+            this.PredefinedColorsListBox.SelectionChanged -= this.PredefinedColorsListBox_SelectionChanged;
+            this.RSlider.ValueChanged -= (s, e) => this.ToHex();
+            this.GSlider.ValueChanged -= (s, e) => this.ToHex();
+            this.BSlider.ValueChanged -= (s, e) => this.ToHex();
+            this.ASlider.ValueChanged -= (s, e) => this.ToHex();
+
+            if (disposing)
+            {
+            }
+        }
         /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> EditColor変更時のコールバック
@@ -107,10 +166,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
                     this.PredefinedColorsListBox.SelectedItem = predefinedColor;
 
                     var item = this.PredefinedColorsListBox.ItemContainerGenerator.ContainerFromItem(predefinedColor) as ListBoxItem;
+                    this.PredefinedColorsListBox.ScrollIntoView(this.PredefinedColorsListBox.SelectedItem);
 
-                    if (item != null)
-                        item.Focus();
-                    
                 }
             }
 
@@ -126,10 +183,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
             {
                 var color = ((PredefinedColor)this.PredefinedColorsListBox.SelectedItem).Color;
 
-                this.RTextBox.Text = color.R.ToString();
-                this.GTextBox.Text = color.G.ToString();
-                this.BTextBox.Text = color.B.ToString();
-                this.ATextBox.Text = color.A.ToString();
+                this.RTextBox.ChangedValue = Convert.ToInt32(color.R);
+                this.GTextBox.ChangedValue = Convert.ToInt32(color.G);
+                this.BTextBox.ChangedValue = Convert.ToInt32(color.B);
+                this.ATextBox.ChangedValue = Convert.ToInt32(color.A);
 
                 SetValue(EditColorProperty, color);
             }
@@ -138,10 +195,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
         private void ToHex()
         {
             byte a, r, g, b;
-            byte.TryParse(this.ATextBox.Text, out a);
-            byte.TryParse(this.RTextBox.Text, out r);
-            byte.TryParse(this.GTextBox.Text, out g);
-            byte.TryParse(this.BTextBox.Text, out b);
+            byte.TryParse(this.ATextBox.ChangedValue.ToString(), out a);
+            byte.TryParse(this.RTextBox.ChangedValue.ToString(), out r);
+            byte.TryParse(this.GTextBox.ChangedValue.ToString(), out g);
+            byte.TryParse(this.BTextBox.ChangedValue.ToString(), out b);
 
             var color = Color.FromArgb(a, r, g, b);
 
@@ -153,10 +210,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 
         private void ToHex(Color pColor)
         {
-            this.RTextBox.Text = pColor.R.ToString();
-            this.GTextBox.Text = pColor.G.ToString();
-            this.BTextBox.Text = pColor.B.ToString();
-            this.ATextBox.Text = pColor.A.ToString();
+            this.RTextBox.ChangedValue = Convert.ToInt32(pColor.R);
+            this.GTextBox.ChangedValue = Convert.ToInt32(pColor.G);
+            this.BTextBox.ChangedValue = Convert.ToInt32(pColor.B);
+            this.ATextBox.ChangedValue = Convert.ToInt32(pColor.A);
 
             this.HexTextBox.Text = pColor.ToString();
 

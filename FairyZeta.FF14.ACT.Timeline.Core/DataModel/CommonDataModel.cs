@@ -151,9 +151,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         /// <summary> OS環境オブジェクトモデル
         /// </summary>
         public EnvironmentObjectModel EnvironmentObjectModel { get; private set; }
-        /// <summary> デフォルトカラーデータ
-        /// </summary>
-        public DefaultColorData DefaultColorData { get; private set; }
 
         /// <summary> (バグ回避用)オーバーレイコンポーネントコレクション　=> できるだけ早く消すこと
         /// </summary>
@@ -199,8 +196,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 
             this.FormActMainControlData = new FormActMainControlData();
             this.PluginVersionInfo = new PluginVersionInfo();
-
-            this.DefaultColorData = new DefaultColorData();
 
             this.ViewCollection = new ObservableCollection<OverlayViewComponent>();
 

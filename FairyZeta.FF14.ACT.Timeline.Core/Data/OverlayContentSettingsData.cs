@@ -165,8 +165,52 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             }
         }
         #endregion
-      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
-        
+
+        #region #- [Property] double.TitleBarMinHeight - ＜タイトルバーの最小高さ＞ -----
+        /// <summary> タイトルバーの最小高さ </summary>
+        private double _TitleBarMinHeight;
+        /// <summary> タイトルバーの最小高さ </summary>    
+        public double TitleBarMinHeight
+        {
+            get { return _TitleBarMinHeight; }
+            set
+            {
+                this.SetProperty(ref this._TitleBarMinHeight, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+        #region #- [Property] double.HeaderMinHeight - ＜ヘッダーの最小高さ＞ -----
+        /// <summary> ヘッダーの最小高さ </summary>
+        private double _HeaderMinHeight;
+        /// <summary> ヘッダーの最小高さ </summary>    
+        public double HeaderMinHeight
+        {
+            get { return _HeaderMinHeight; }
+            set
+            {
+                this.SetProperty(ref this._HeaderMinHeight, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+        #region #- [Property] double.ContentMinHeight - ＜コンテンツの最小高さ＞ -----
+        /// <summary> コンテンツの最小高さ </summary>
+        private double _ContentMinHeight;
+        /// <summary> コンテンツの最小高さ </summary>    
+        public double ContentMinHeight
+        {
+            get { return _ContentMinHeight; }
+            set
+            {
+                this.SetProperty(ref this._ContentMinHeight, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+
+        /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
+
         /// <summary> タイムライン／オーバーレイコンテンツ設定データ／コンストラクタ
         /// </summary>
         public OverlayContentSettingsData()
@@ -215,6 +259,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.ActiveWidth = 170;
             this.AlertWidth = 30;
             this.JumpWidth = 30;
+
+            this.TitleBarMinHeight = 0;
+            this.HeaderMinHeight = 0;
+            this.ContentMinHeight = 0;
 
             return true;
         }

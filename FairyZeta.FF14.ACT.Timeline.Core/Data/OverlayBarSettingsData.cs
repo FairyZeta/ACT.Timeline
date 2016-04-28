@@ -454,8 +454,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         [XmlIgnore]
         public ObservableCollection<DoubleVisibilityStyle> DoubleStyleCollection { get; private set; }
 
+        /// <summary> 変更前カラー情報
+        /// </summary>
+        [XmlIgnore]
+        public Color BeforeColor { get; set; }
 
-        /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
+      /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイ各種バー設定データ
         /// </summary>
@@ -542,6 +546,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.BarHorizontalAlignment = System.Windows.HorizontalAlignment.Left;
         }
 
+        /// <summary> 変更前カラー情報を取得して設定します。
+        /// </summary>
+        public void SetBeforeColor()
+        {
+            this.BeforeColor = this.getEditTargetColor();
+        }
 
         /// <summary> データの全体クリアを実行します。
         /// </summary>
@@ -555,7 +565,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
-        
+
+        /// <summary> 変更ターゲットとなるカラーに値を設定します。
+        /// </summary>
+        /// <param name="pColor"> 変更カラー </param>
         private void setEditTargetColor(Color pColor)
         {
             switch (this.ColorEditTarget)
@@ -582,6 +595,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
 
 
+        /// <summary> 変更ターゲットとなるカラーから値を取得します。
+        /// </summary>
+        /// <param name="pColor"> 変更カラー </param>
         private Color getEditTargetColor()
         {
             switch (this.ColorEditTarget)

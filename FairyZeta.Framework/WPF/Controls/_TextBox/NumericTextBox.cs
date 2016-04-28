@@ -33,18 +33,18 @@ namespace FairyZeta.Framework.WPF.Controls
                 ||(Key.NumPad0 <= e.Key && e.Key <= Key.NumPad9) 
                 || Key.Back == e.Key 
                 || Key.Delete == e.Key 
-                || Key.Tab == e.Key 
+                || Key.Tab == e.Key
                 || Key.Up == e.Key
                 || Key.Down == e.Key
                 || Key.Left == e.Key
                 || Key.Right == e.Key)
                 //|| Key.OemPeriod == e.Key
-                ||(Keyboard.Modifiers & ModifierKeys.Shift) > 0)
+                || (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == (Key.LeftShift | Key.RightShift)))
             {
                 e.Handled = true;
             }
 
-            base.OnKeyDown(e);
+        base.OnKeyDown(e);
         }
    
     

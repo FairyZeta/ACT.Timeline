@@ -32,6 +32,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
                     || this.OverlayColorSettingsData.SaveChangedTarget
                     || this.ActiveBarSettingsData.SaveChangedTarget
                     || this.CastBarSettingsData.SaveChangedTarget
+                    || this.FontData.SaveChangedTarget
                     )
                 {
                     return true;

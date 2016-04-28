@@ -102,7 +102,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> フォント変更コマンド＜コマンド＞ </summary>
         public DelegateCommand<FontEditTarget?> FontEditCommand
         {
-            get { return _FontEditCommand = _FontEditCommand ?? new DelegateCommand<FontEditTarget?>(this._FontEditExecute, this._CanFontEditExecute); }
+            get { return _FontEditCommand = _FontEditCommand ?? new DelegateCommand<FontEditTarget?>(this._FontEditExecute); }
         }
         #endregion 
         #region #- [Command] DelegateCommand.FontEditEndCommand - ＜フォント変更終了コマンド＞ -----
@@ -111,7 +111,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> フォント変更終了コマンド＜コマンド＞ </summary>
         public DelegateCommand FontEditEndCommand
         {
-            get { return _FontEditEndCommand = _FontEditEndCommand ?? new DelegateCommand(this._FontEditEndExecute, this._CanFontEditEndExecute); }
+            get { return _FontEditEndCommand = _FontEditEndCommand ?? new DelegateCommand(this._FontEditEndExecute); }
+        }
+        #endregion 
+        #region #- [Command] DelegateCommand.FontEditCancelCommand - ＜フォント変更キャンセルコマンド＞ -----
+        /// <summary> フォント変更キャンセルコマンド＜コマンド＞ </summary>
+        private DelegateCommand _FontEditCancelCommand;
+        /// <summary> フォント変更キャンセルコマンド＜コマンド＞ </summary>
+        public DelegateCommand FontEditCancelCommand
+        {
+            get { return _FontEditCancelCommand = _FontEditCancelCommand ?? new DelegateCommand(this._FontEditCancelExecute); }
         }
         #endregion 
 
@@ -131,6 +140,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         public DelegateCommand<string> EditCloseCommand
         {
             get { return _EditCloseCommand = _EditCloseCommand ?? new DelegateCommand<string>(this._EditCloseExecute); }
+        }
+        #endregion 
+        #region #- [Command] DelegateCommand.StringColorEditCancelCommand - ＜文字カラー変更キャンセルコマンド＞ -----
+        /// <summary> 文字カラー変更キャンセルコマンド＜コマンド＞ </summary>
+        private DelegateCommand _StringColorEditCancelCommand;
+        /// <summary> 文字カラー変更キャンセルコマンド＜コマンド＞ </summary>
+        public DelegateCommand StringColorEditCancelCommand
+        {
+            get { return _StringColorEditCancelCommand = _StringColorEditCancelCommand ?? new DelegateCommand(this._StringColorEditCancelExecute); }
         }
         #endregion 
 
@@ -171,7 +189,26 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             get { return _CastColorEditEndCommand = _CastColorEditEndCommand ?? new DelegateCommand<ColorEditTarget?>(this._CastColorEditEndExecute); }
         }
         #endregion
-        
+
+        #region #- [Command] DelegateCommand.ActiveColorEditCancelCommand - ＜アクティブカラー変更キャンセルコマンド＞ -----
+        /// <summary> アクティブカラー変更キャンセルコマンド＜コマンド＞ </summary>
+        private DelegateCommand _ActiveColorEditCancelCommand;
+        /// <summary> アクティブカラー変更キャンセルコマンド＜コマンド＞ </summary>
+        public DelegateCommand ActiveColorEditCancelCommand
+        {
+            get { return _ActiveColorEditCancelCommand = _ActiveColorEditCancelCommand ?? new DelegateCommand(this._ActiveColorEditCancelExecute); }
+        }
+        #endregion 
+        #region #- [Command] DelegateCommand.CastColorEditCancelCommand - ＜キャストカラー変更キャンセルコマンド＞ -----
+        /// <summary> キャストカラー変更キャンセルコマンド＜コマンド＞ </summary>
+        private DelegateCommand _CastColorEditCancelCommand;
+        /// <summary> キャストカラー変更キャンセルコマンド＜コマンド＞ </summary>
+        public DelegateCommand CastColorEditCancelCommand
+        {
+            get { return _CastColorEditCancelCommand = _CastColorEditCancelCommand ?? new DelegateCommand(this._CastColorEditCancelExecute); }
+        }
+        #endregion 
+
         #region #- [Command] DelegateCommand<OverlayViewComponent>.OverlayViewLockCommand - ＜オーバーレイロック切替コマンド＞ -----
         /// <summary> オーバーレイロック切替コマンド＜コマンド＞ </summary>
         private DelegateCommand _OverlayViewLockCommand;
@@ -313,14 +350,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
         #endregion 
 
-        #region #- [Method] CanExecute,Execute @ FontEditCommand - ＜フォント変更コマンド＞ -----
-        /// <summary> 実行可能確認＜フォント変更コマンド＞ </summary>
-        /// <param name="para"> コマンドパラメーター </param>
-        /// <returns> 実行可能: ture / 実行不可能: false </returns>
-        private bool _CanFontEditExecute(FontEditTarget? para)
-        {
-            return true;
-        }
+        #region #- [Method] Execute @ FontEditCommand - ＜フォント変更コマンド＞ -----
 
         /// <summary> コマンド実行＜フォント変更コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
@@ -354,17 +384,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                 default:
                     return;
             }
-
+            this.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo.CreateBeforeFontInfo();
             this.OverlayDataModel.OverlayCustomTempData.BaseFontCustomVisibility = true;
         }
         #endregion
-        #region #- [Method] CanExecute,Execute @ FontEditEndCommand - ＜フォント変更終了コマンド＞ -----
-        /// <summary> 実行可能確認＜フォント変更終了コマンド＞ </summary>
-        /// <returns> 実行可能: ture / 実行不可能: false </returns>
-        private bool _CanFontEditEndExecute()
-        {
-            return true;
-        }
+        #region #- [Method] Execute @ FontEditEndCommand - ＜フォント変更終了コマンド＞ -----
 
         /// <summary> コマンド実行＜フォント変更終了コマンド＞ </summary>
         private void _FontEditEndExecute()
@@ -373,7 +397,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayDataModel.OverlayCustomTempData.BaseFontCustomVisibility = false;
             this.OverlayDataModel.FontData.SaveChangedTarget = true;
         }
+        #endregion
+        #region #- [Method] CanExecute,Execute @ FontEditCancelCommand - ＜フォント変更キャンセルコマンド＞ -----
+
+        /// <summary> コマンド実行＜フォント変更キャンセルコマンド＞ </summary>
+        private void _FontEditCancelExecute()
+        {
+            this.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo.SetBeforeFontInfo();
+            this.OverlayDataModel.OverlayCustomTempData.ChangeTargetFontInfo = null;
+            this.OverlayDataModel.OverlayCustomTempData.BaseFontCustomVisibility = false;
+            this.OverlayDataModel.FontData.SaveChangedTarget = true;
+        }
+
         #endregion 
+
 
         #region #- [Method] Execute @ ColorEditCommand - ＜カラー変更コマンド＞ -----
 
@@ -384,9 +421,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             if (!para.HasValue) return;
 
             this.OverlayDataModel.OverlayColorSettingsData.ColorEditTarget = para.Value;
+            this.OverlayDataModel.OverlayColorSettingsData.SetBeforeColor();
             this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = true;
 
-           
         }
         #endregion 
         #region #- [Method] Execute @ EditCloseCommand - ＜変更終了コマンド＞ -----
@@ -399,6 +436,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayDataModel.OverlayColorSettingsData.ColorEditTarget = ColorEditTarget.Non;
         }
         #endregion 
+        #region #- [Method] Execute @ StringColorEditCancelCommand - ＜文字カラー変更キャンセルコマンド＞ -----
+
+        /// <summary> コマンド実行＜文字カラー変更キャンセルコマンド＞ </summary>
+        private void _StringColorEditCancelExecute()
+        {
+            this.OverlayDataModel.OverlayColorSettingsData.EditBindColor
+                = this.OverlayDataModel.OverlayColorSettingsData.BeforeColor;
+            this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = false;
+            this.OverlayDataModel.OverlayColorSettingsData.ColorEditTarget = ColorEditTarget.Non;
+        }
+
+        #endregion 
+
         #region #- [Method] Execute @ ActiveColorEditCommand - ＜アクティブカラー変更コマンド＞ -----
 
         /// <summary> コマンド実行＜アクティブカラー変更コマンド＞ </summary>
@@ -408,6 +458,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             if (!para.HasValue) return;
 
             this.OverlayDataModel.ActiveBarSettingsData.ColorEditTarget = para.Value;
+            this.OverlayDataModel.ActiveBarSettingsData.SetBeforeColor();
             this.OverlayDataModel.OverlayCustomTempData.ActiveColorCustomVisibility = true;
         }
 
@@ -421,6 +472,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             if (!para.HasValue) return;
 
             this.OverlayDataModel.CastBarSettingsData.ColorEditTarget = para.Value;
+            this.OverlayDataModel.CastBarSettingsData.SetBeforeColor();
             this.OverlayDataModel.OverlayCustomTempData.CastColorCustomVisibility = true;
         }
         #endregion 
@@ -444,6 +496,31 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayDataModel.CastBarSettingsData.ColorEditTarget = ColorEditTarget.Non;
         }
         #endregion
+
+        #region #- [Method] Execute @ ActiveColorEditCancelCommand - ＜アクティブカラー変更キャンセルコマンド＞ -----
+
+        /// <summary> コマンド実行＜アクティブカラー変更キャンセルコマンド＞ </summary>
+        private void _ActiveColorEditCancelExecute()
+        {
+            this.OverlayDataModel.ActiveBarSettingsData.EditBindColor
+                = this.OverlayDataModel.ActiveBarSettingsData.BeforeColor;
+            this.OverlayDataModel.OverlayCustomTempData.ActiveColorCustomVisibility = false;
+            this.OverlayDataModel.ActiveBarSettingsData.ColorEditTarget = ColorEditTarget.Non;
+        }
+
+        #endregion
+        #region #- [Method] Execute @ CastColorEditCancelCommand - ＜キャストカラー変更キャンセルコマンド＞ -----
+
+        /// <summary> コマンド実行＜キャストカラー変更キャンセルコマンド＞ </summary>
+        private void _CastColorEditCancelExecute()
+        {
+            this.OverlayDataModel.CastBarSettingsData.EditBindColor
+                = this.OverlayDataModel.CastBarSettingsData.BeforeColor;
+            this.OverlayDataModel.OverlayCustomTempData.CastColorCustomVisibility = false;
+            this.OverlayDataModel.CastBarSettingsData.ColorEditTarget = ColorEditTarget.Non;
+        }
+
+        #endregion 
 
         #region #- [Method] CanExecute,Execute @ OverlayViewLockCommand - ＜オーバーレイロック切替コマンド＞ -----
 
