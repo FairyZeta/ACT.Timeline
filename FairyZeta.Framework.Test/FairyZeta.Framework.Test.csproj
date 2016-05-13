@@ -82,6 +82,10 @@
       <HintPath>..\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Prism, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -102,6 +106,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DialogViewWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -111,6 +119,10 @@
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Views\DialogViewWindow.xaml.cs">
+      <DependentUpon>DialogViewWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\GeneralPage.xaml">
@@ -154,6 +166,10 @@
       <Project>{22d040db-58a3-4e1d-9bcf-130d9504b9ab}</Project>
       <Name>FairyZeta.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FairyZeta.Framework.Dropbox\FairyZeta.Framework.Dropbox.csproj">
+      <Project>{37fdab22-4915-48a7-8e88-1c4e55314817}</Project>
+      <Name>FairyZeta.Framework.Dropbox</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FairyZeta.Framework\FairyZeta.Framework.csproj">
       <Project>{99f2ed28-b5fd-4c8f-855a-18ffc34a447b}</Project>
       <Name>FairyZeta.Framework</Name>
@@ -170,6 +186,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

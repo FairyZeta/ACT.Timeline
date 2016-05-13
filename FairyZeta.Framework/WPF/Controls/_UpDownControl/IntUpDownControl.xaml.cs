@@ -17,55 +17,55 @@ using System.Windows.Media.Animation;
 
 namespace FairyZeta.Framework.WPF.Controls
 {
-    /// <summary> DoubleUpDownControl
+    /// <summary> IntUpDownControl
     /// </summary>
-    public partial class DoubleUpDownControl : UserControl
+    public partial class IntUpDownControl : UserControl
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
         public static readonly DependencyProperty ChangedValueProperty =
-                    DependencyProperty.Register("ChangedValue", typeof(double), typeof(DoubleUpDownControl), new FrameworkPropertyMetadata(0.0, OnValueChanged));
+                    DependencyProperty.Register("ChangedValue", typeof(int), typeof(IntUpDownControl), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged));
 
         public static readonly DependencyProperty UpValueProperty =
-                    DependencyProperty.Register("UpValue", typeof(double), typeof(DoubleUpDownControl), new FrameworkPropertyMetadata(1.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                    DependencyProperty.Register("UpValue", typeof(int), typeof(IntUpDownControl), new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty DownValueProperty =
-                    DependencyProperty.Register("DownValue", typeof(double), typeof(DoubleUpDownControl), new FrameworkPropertyMetadata(-1.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                    DependencyProperty.Register("DownValue", typeof(int), typeof(IntUpDownControl), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty MinValueProperty =
-                    DependencyProperty.Register("MinValue", typeof(double), typeof(DoubleUpDownControl), new FrameworkPropertyMetadata(-1000000.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                    DependencyProperty.Register("MinValue", typeof(int), typeof(IntUpDownControl), new FrameworkPropertyMetadata(-1000000, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty MaxValueProperty =
-                    DependencyProperty.Register("MaxValue", typeof(double), typeof(DoubleUpDownControl), new FrameworkPropertyMetadata(1000000.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                    DependencyProperty.Register("MaxValue", typeof(int), typeof(IntUpDownControl), new FrameworkPropertyMetadata(1000000, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        /// <summary> (Dependency) 変更対象のdouble </summary>
-        public double ChangedValue
+        /// <summary> (Dependency) 変更対象のint </summary>
+        public int ChangedValue
         {
-            get { return (double)GetValue(ChangedValueProperty); }
+            get { return (int)GetValue(ChangedValueProperty); }
             set { SetValue(ChangedValueProperty, value); }
         }
-        /// <summary> (Dependency) upによる上昇double(規定値: 1.0) </summary>
-        public double UpValue
+        /// <summary> (Dependency) upによる上昇int(規定値: 1) </summary>
+        public int UpValue
         {
-            get { return (double)GetValue(UpValueProperty); }
+            get { return (int)GetValue(UpValueProperty); }
             set { SetValue(UpValueProperty, value); }
         }
-        /// <summary> (Dependency) downによる下降double(規定値:-1.0) </summary>
-        public double DownValue
+        /// <summary> (Dependency) downによる下降int(規定値:-1) </summary>
+        public int DownValue
         {
-            get { return (double)GetValue(DownValueProperty); }
+            get { return (int)GetValue(DownValueProperty); }
             set { SetValue(DownValueProperty, value); }
         }
-        /// <summary> (Dependency) doubleの最小値 </summary>
-        public double MinValue
+        /// <summary> (Dependency) intの最小値 </summary>
+        public int MinValue
         {
-            get { return (double)GetValue(MinValueProperty); }
+            get { return (int)GetValue(MinValueProperty); }
             set { SetValue(MinValueProperty, value); }
         }
-        /// <summary> (Dependency) doubleの最大値 </summary>
-        public double MaxValue
+        /// <summary> (Dependency) intの最大値 </summary>
+        public int MaxValue
         {
-            get { return (double)GetValue(MaxValueProperty); }
+            get { return (int)GetValue(MaxValueProperty); }
             set { SetValue(MaxValueProperty, value); }
         }
 
@@ -73,12 +73,12 @@ namespace FairyZeta.Framework.WPF.Controls
 
         /// <summary> DoubleUpDownControl／コンストラクタ
         /// </summary>
-        public DoubleUpDownControl()
+        public IntUpDownControl()
         {
             InitializeComponent();
 
             this.RootGrid.DataContext = this;
-            this.ChangedValue = 0.0;
+            //this.ChangedValue = 0;
 
             this.ValueBox.PreviewKeyDown += this.ValueBox_PreviewKeyDown;
             
@@ -98,7 +98,7 @@ namespace FairyZeta.Framework.WPF.Controls
         /// <param name="e"></param>
         private static void OnValueChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            DoubleUpDownControl ctrl = obj as DoubleUpDownControl;
+            IntUpDownControl ctrl = obj as IntUpDownControl;
             if (ctrl != null)
             {
                 ctrl.ValueBox.Text = e.NewValue.ToString();
@@ -127,9 +127,9 @@ namespace FairyZeta.Framework.WPF.Controls
                     this.ValueBox.Text = "0";
                     return;
                 }
-                double d = Convert.ToDouble(tb.Text);
-                this.ChangedValue = d;
-                this.ValueBox.Text = d.ToString();
+                int i = Convert.ToInt32(tb.Text);
+                this.ChangedValue = i;
+                this.ValueBox.Text = i.ToString();
             }
             catch
             {

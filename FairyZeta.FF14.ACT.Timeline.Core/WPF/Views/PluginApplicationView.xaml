@@ -6,9 +6,9 @@
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
+             xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
         mc:Ignorable="d" 
         Height="700" Width="900" 
-        MinHeight="630" MinWidth="900" 
         
         d:DesignHeight="630" d:DesignWidth="900" 
              d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}"
@@ -78,36 +78,88 @@
             </Grid>
             <TabControl Grid.Row="1" TabStripPlacement="Left" >
                 <TabItem Header="Generic" Style="{StaticResource BasicTabItemStyle}">
-                    <Grid ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="80"/>
-                            <RowDefinition Height="120"/>
-                            <RowDefinition Height="*" MinHeight="200"/>
-                            <RowDefinition Height="240"/>
-                        </Grid.RowDefinitions>
-                        <view:TimelineStatusView Grid.Row="0" DataContext="{Binding}"/>
-                        <view:TimelineTrackerView Grid.Row="1" DataContext="{Binding}"/>
-                        <view:TimelineFileListView Grid.Row="2" DataContext="{Binding}"/>
-                        <view:TimelineLogView Grid.Row="3" DataContext="{Binding}"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Option Settings" Style="{StaticResource BasicTabItemStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="330"/>
-                            <RowDefinition Height="180"/>
+                            <RowDefinition Height="Auto" MinHeight="30"/>
+                            <RowDefinition Height="Auto" MinHeight="30"/>
+                            <RowDefinition Height="*"  MinHeight="30"/>
+                            <RowDefinition Height="Auto"  MinHeight="30"/>
                         </Grid.RowDefinitions>
-                        <view:TimelineOptionSettingsView Grid.Row="0" DataContext="{Binding}"/>
-                        <view:TimelineEnvironmentView Grid.Row="1" DataContext="{Binding}"/>
+                        <fCtrl:BoxFoldContent DockPanel.Dock="Top" Grid.Row="0" Title=" - Timeline Info - " InnerDataContext="{Binding}">
+                            <fCtrl:BoxFoldContent.InnerDataTemplate>
+                                <DataTemplate>
+                                    <view:TimelineStatusView Grid.Row="0" DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </fCtrl:BoxFoldContent.InnerDataTemplate>
+                        </fCtrl:BoxFoldContent>
+
+                        <fCtrl:BoxFoldContent DockPanel.Dock="Top"  Grid.Row="1" Title=" - Tracker - " InnerDataContext="{Binding}">
+                            <fCtrl:BoxFoldContent.InnerDataTemplate>
+                                <DataTemplate>
+                                    <view:TimelineTrackerView DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </fCtrl:BoxFoldContent.InnerDataTemplate>
+                        </fCtrl:BoxFoldContent>
+
+                        <fCtrl:BoxFoldContent DockPanel.Dock="Bottom" Grid.Row="3" Title=" - Plugin Log - " InnerDataContext="{Binding}" IsContentOpen="False" ContentMinHeight="200">
+                            <fCtrl:BoxFoldContent.InnerDataTemplate>
+                                <DataTemplate>
+                                    <view:TimelineLogView DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </fCtrl:BoxFoldContent.InnerDataTemplate>
+                        </fCtrl:BoxFoldContent>
+                        
+                        <fCtrl:BoxFoldContent  Grid.Row="2" Title=" - File List - " InnerDataContext="{Binding}" ContentMinHeight="200" MinHeight="30">
+                            <fCtrl:BoxFoldContent.InnerDataTemplate>
+                                <DataTemplate>
+                                    <view:TimelineFileListView DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </fCtrl:BoxFoldContent.InnerDataTemplate>
+                        </fCtrl:BoxFoldContent>
+
                     </Grid>
                 </TabItem>
-                <TabItem Header="Overlay Manage" Style="{StaticResource BasicTabItemStyle}">
-                    <view:OverlayManageView />
+                
+                <TabItem Header="Option Settings" Style="{StaticResource BasicTabItemStyle}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <DockPanel>
+                        <fCtrl:BoxFoldContent DockPanel.Dock="Top" Title=" - Option Settings - " InnerDataContext="{Binding}" >
+                            <fCtrl:BoxFoldContent.InnerDataTemplate>
+                                <DataTemplate>
+                                    <view:TimelineOptionSettingsView DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </fCtrl:BoxFoldContent.InnerDataTemplate>
+                        </fCtrl:BoxFoldContent>
+                        <fCtrl:BoxFoldContent DockPanel.Dock="Bottom" Title=" - Plugin Log - " InnerDataContext="{Binding}" IsContentOpen="False">
+                            <fCtrl:BoxFoldContent.InnerDataTemplate>
+                                <DataTemplate>
+                                    <view:TimelineLogView DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </fCtrl:BoxFoldContent.InnerDataTemplate>
+                        </fCtrl:BoxFoldContent>
+                        <fCtrl:BoxFoldContent Title=" - Environment - " InnerDataContext="{Binding}" >
+                            <fCtrl:BoxFoldContent.InnerDataTemplate>
+                                <DataTemplate>
+                                    <view:TimelineEnvironmentView DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </fCtrl:BoxFoldContent.InnerDataTemplate>
+                        </fCtrl:BoxFoldContent>
+                    </DockPanel>
+                    </ScrollViewer>
                 </TabItem>
-                <TabItem Header="Timeline Edit" Style="{StaticResource BasicTabItemStyle}">
-                    <StackPanel>
-                        <Label Content="Timeline Edit, Coming soon... "/>
-                    </StackPanel>
+                
+                <TabItem Header="Overlay Manage" Style="{StaticResource BasicTabItemStyle}">
+                    <DockPanel>
+                        <fCtrl:BoxFoldContent DockPanel.Dock="Bottom" Title=" - Plugin Log - " InnerDataContext="{Binding}" IsContentOpen="False">
+                            <fCtrl:BoxFoldContent.InnerDataTemplate>
+                                <DataTemplate>
+                                    <view:TimelineLogView DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </fCtrl:BoxFoldContent.InnerDataTemplate>
+                        </fCtrl:BoxFoldContent>
+                        
+                        <view:OverlayManageView />
+                    </DockPanel>
                 </TabItem>
                 <TabItem Header="About" Style="{StaticResource BasicTabItemStyle}">
                     <view:TimelineAboutView />

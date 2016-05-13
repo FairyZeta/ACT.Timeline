@@ -12,7 +12,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
 {
     /// <summary> タイムライン／オーバーレイカスタムウィンドウビューモデル
     /// </summary>
-    public class OverlayCustomWindowViewModel : _ViewModel, IDisposable
+    public class OverlayCustomWindowViewModel : _ViewModel
     {
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -66,11 +66,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
         }
 
         /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        public void Dispose()
-        {
-            this.OverlayViewComponent = null;
-        }
 
         /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
         

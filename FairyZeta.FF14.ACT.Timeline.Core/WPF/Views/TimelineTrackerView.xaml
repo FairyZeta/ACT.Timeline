@@ -7,7 +7,7 @@
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
              xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
         mc:Ignorable="d" 
-        Height="120"  
+        Height="100"
         d:DesignHeight="200" d:DesignWidth="900" 
         d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}">
 
@@ -21,7 +21,6 @@
     </UserControl.Resources>
     
     <Border Background="White" >
-        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
@@ -31,7 +30,6 @@
                     <ColumnDefinition Width="400"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Content=" Tracker " Width="70" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Border Grid.Row="0" Margin="0 5" VerticalAlignment="Center">
                     <Slider Margin="5 0"
                             IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.TimelineTrackerEnabled}"
@@ -59,7 +57,6 @@
                             CommandParameter="Start"/>
                 </StackPanel>
             </Grid>
-        </Border>
     </Border>
     
 </UserControl>

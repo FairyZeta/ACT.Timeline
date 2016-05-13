@@ -94,8 +94,15 @@ namespace FairyZeta.Framework.Process
         {
             XmlSerializer serializer = new XmlSerializer(obj.GetType());
             FileStream fs = new FileStream(path, FileMode.Create);
-            serializer.Serialize(fs, obj);
-            fs.Close();
+
+            try
+            {
+                serializer.Serialize(fs, obj);
+            }
+            finally
+            {
+                fs.Close();
+            }
         }
 
         /// <summary> シリアライズエラーを無視して、XMLファイルを逆シリアライズします。 
@@ -129,15 +136,21 @@ namespace FairyZeta.Framework.Process
             {
                 XmlSerializer serializer = new XmlSerializer(type);
                 FileStream fs = new FileStream(path, FileMode.Open);
-                object result = serializer.Deserialize(fs);
-                fs.Close();
-
-                return result;
+                try
+                {
+                    object result = serializer.Deserialize(fs);
+                    return result;
+                }
+                finally
+                {
+                    fs.Close();
+                }
             }
             else
             {
                 return null;
             }
+            
         }
 
     }

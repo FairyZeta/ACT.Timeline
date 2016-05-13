@@ -56,39 +56,46 @@ namespace FairyZeta.Framework.Process
         }
 
         /// <summary> 指定のURIへ接続可能かを確認します。
-        /// <para> -> 接続接続可能であればTrue, 不可能であればFalseを返却します。</para>
+        /// <para> -> 接続不可能であればExceptionを返却します。</para>
         /// </summary>
         /// <param name="stringURI"> string: 接続を確認したいURIの文字列を指定します。 </param>
         /// <returns></returns>
-        public Task<bool> CheckWebResponseAsync(string stringURI)
+        public Task CheckWebResponseAsync(string stringURI)
         {
-            return new Task<bool>(() => this.CheckWebResponse(new Uri(stringURI)));
+            return new Task(() => this.CheckWebResponse(new Uri(stringURI)));
         }
         /// <summary> 指定のURIへ接続可能かを確認します。
-        /// <para> -> 接続接続可能であればTrue, 不可能であればFalseを返却します。</para>
+        /// <para> -> 接続不可能であればExceptionを返却します。</para>
         /// </summary>
         /// <param name="stringURI"> string: 接続を確認したいURIの文字列を指定します。 </param>
         /// <returns></returns>
-        public bool CheckWebResponse(string stringURI)
+        public void CheckWebResponse(string stringURI)
         {
-            return this.CheckWebResponse(new Uri(stringURI));
+            try
+            {
+                this.CheckWebResponse(new Uri(stringURI));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         /// <summary> 指定のURIへ接続可能かを確認します。
-        /// <para> -> 接続接続可能であればTrue, 不可能であればFalseを返却します。</para>
+        /// <para> -> 接続不可能であればExceptionを返却します。</para>
         /// </summary>
         /// <param name="uri"> Uri: 接続を確認したいURIを指定します。 </param>
         /// <returns></returns>
-        public Task<bool> CheckWebResponseAsync(Uri uri)
+        public Task CheckWebResponseAsync(Uri uri)
         {
-            return new Task<bool>(() => this.CheckWebResponse(uri));
+            return new Task(() => this.CheckWebResponse(uri));
         }
         /// <summary> 指定のURIへ接続可能かを確認します。
-        /// <para> -> 接続接続可能であればTrue, 不可能であればFalseを返却します。</para>
+        /// <para> -> 接続不可能であればExceptionを返却します。</para>
         /// </summary>
         /// <param name="uri"> Uri: 接続を確認したいURIを指定します。 </param>
         /// <returns></returns>
-        public bool CheckWebResponse(Uri uri)
+        public void CheckWebResponse(Uri uri)
         {
             HttpWebRequest webreq = null;
             HttpWebResponse webres = null;
@@ -102,11 +109,10 @@ namespace FairyZeta.Framework.Process
                 webres = (HttpWebResponse)webreq.GetResponse();
                 //応答ステータスコードを表示
                 Console.WriteLine(webres.StatusCode);
-                return true;
             }
             catch (Exception e)
             {
-                return false;
+                throw e;
             }
             finally
             {

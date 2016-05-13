@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Threading;
 using FairyZeta.Framework;
-using FairyZeta.Framework.Controls;
+using FairyZeta.Framework.WPF.Controls;
 using FairyZeta.Framework.Data;
 
 /// <summary> FZ／拡張メソッド
@@ -26,6 +27,39 @@ namespace FairyZeta
         public static Task<T[]> WhenAll<T>(this IEnumerable<Task<T>> tasks)
         {
             return Task.WhenAll(tasks);
+        }
+    }
+
+    /// <summary> STAなTASK
+    /// </summary>
+    public class STATask
+    {
+        public static Task Run<T>(Func<T> func)
+        {
+            var tcs = new TaskCompletionSource<T>();
+            var thread = new Thread(() =>
+            {
+                try
+                {
+                    tcs.SetResult(func());
+                }
+                catch (Exception e)
+                {
+                    tcs.SetException(e);
+                }
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            return tcs.Task;
+        }
+
+        public static Task Run(Action act)
+        {
+            return Run(() =>
+            {
+                act();
+                return true;
+            });
         }
     }
 

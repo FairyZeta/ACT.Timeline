@@ -53,6 +53,9 @@
       <HintPath>D:\Advanced Combat Tracker.exe</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="LibZ.Bootstrap">
+      <HintPath>..\packages\LibZ.Bootstrap.1.1.0.2\lib\net40-client\LibZ.Bootstrap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -73,6 +76,9 @@
       <Name>FairyZeta.FF14.ACT.Timeline.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /S /Q .\de
@@ -86,17 +92,32 @@ rd /S /Q .\ru
 rd /S /Q .\zh-Hans
 rd /S /Q .\zh-Hant
 
-if "$(ConfigurationName)"=="Debug" goto DelEnd
+if "$(ConfigurationName)"=="Debug" goto AllEnd
 del /F /Q .\*.pdb
 del /F /Q .\*.xml
 :DelEnd
 
 rd /S /Q .\dll
 md .\dll
+rd /S /Q .\FZ.Timeline
+md .\FZ.Timeline
+md .\FZ.Timeline\resources\
+md .\FZ.Timeline\resources\timeline
+md .\FZ.Timeline\resources\wav
 :mdEnd
 
 move /Y .\*.dll .\dll
-move /Y .\dll\FZ.Timeline.dll .\</PostBuildEvent>
+
+set LIBZ="$(SolutionDir)packages\LibZ.Bootstrap.1.1.0.2\tools\libz.exe"
+
+EXE_7ZA="$(SolutionDir)packages\7ZipCLI.9.20.0\tools\7za.exe"
+
+%25LIBZ%25 inject-dll --assembly .\dll\$(TargetName).dll --include .\dll\*.dll --exclude  .\dll\$(TargetName).dll
+
+move /Y .\dll\$(TargetName).dll .\FZ.Timeline
+xcopy /Y .\resources\timeline\*.* .\FZ.Timeline\resources\timeline\
+xcopy /Y .\resources\wav\*.* .\FZ.Timeline\resources\wav\
+:AllEnd</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

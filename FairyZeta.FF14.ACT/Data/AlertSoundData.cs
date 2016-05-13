@@ -21,7 +21,7 @@ namespace FairyZeta.FF14.ACT.Data
 
         /// <summary> ACT／アラートサウンドデータ／コンストラクタ
         /// </summary>
-        /// <param name="pFileName"
+        /// <param name="pFileName"> ファイル名 </param>
         public AlertSoundData(string pFileName)
         {
             this.Filename = pFileName;

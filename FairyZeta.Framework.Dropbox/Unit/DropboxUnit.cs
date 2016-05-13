@@ -1,31 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-namespace FairyZeta.Framework.Controls
+using System.Threading.Tasks;
+using FairyZeta.Framework.Dropbox.Proc;
+
+namespace FairyZeta.Framework.Dropbox.Unit
 {
-    public partial class OutlineTextControl : UserControl
+    /// <summary> ドロップボックスユニット
+    /// </summary>
+    public class DropboxUnit
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
-        public DependencyObject OutlineText { get; set; }
+
+
+        /// <summary> ダウンロードプロセス
+        /// </summary>
+        private DropboxDownloadProcess dropboxDownloadProcess; 
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        public OutlineTextControl()
+        /// <summary> ドロップボックスユニット／コンストラクタ
+        /// </summary>
+        public DropboxUnit()
         {
-            this.InitializeComponent();
+            this.initUnit();
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> ユニットの初期化を実行します。
+        /// </summary>
+        /// <returns> 正常終了時 True </returns> 
+        private bool initUnit()
+        {
+            this.dropboxDownloadProcess = new DropboxDownloadProcess();
+
+            return true;
+        }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 

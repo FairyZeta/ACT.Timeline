@@ -70,10 +70,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
-    <Compile Include="WPF\Controls\IntUpDownControl.xaml.cs">
+    <Compile Include="WPF\Controls\BoxFoldContent.xaml.cs">
+      <DependentUpon>BoxFoldContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\Controls.ENUM.cs" />
+    <Compile Include="WPF\Controls\Preview_LoadingRing.xaml.cs">
+      <DependentUpon>Preview_LoadingRing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\_UpDownControl\IntUpDownControl.xaml.cs">
       <DependentUpon>IntUpDownControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WPF\Controls\DoubleUpDownControl.xaml.cs">
+    <Compile Include="WPF\Controls\_UpDownControl\DoubleUpDownControl.xaml.cs">
       <DependentUpon>DoubleUpDownControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Converters\StringToThicknessConverter.cs" />
@@ -81,8 +88,8 @@
     <Compile Include="WPF\Views\FontDialogView.xaml.cs">
       <DependentUpon>FontDialogView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\OutlineTextBlock.cs" />
-    <Compile Include="Controls\OutlineTextControl.xaml.cs">
+    <Compile Include="WPF\Controls\OutlineTextBlock.cs" />
+    <Compile Include="WPF\Controls\OutlineTextControl.xaml.cs">
       <DependentUpon>OutlineTextControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ObjectModel\DialogManageObjectModel.cs" />
@@ -127,15 +134,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\OutlineTextControl.xaml">
+    <Page Include="WPF\Controls\OutlineTextControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WPF\Controls\IntUpDownControl.xaml">
+    <Page Include="WPF\Controls\BoxFoldContent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WPF\Controls\DoubleUpDownControl.xaml">
+    <Page Include="WPF\Controls\Preview_LoadingRing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Controls\_UpDownControl\IntUpDownControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Controls\_UpDownControl\DoubleUpDownControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -168,8 +183,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controls\" />
     <Folder Include="DataModel\" />
     <Folder Include="DataUnion\" />
+    <Folder Include="WPF\Controls\_ContentControl\" />
     <Folder Include="WPF\Triggers\" />
   </ItemGroup>
   <ItemGroup>

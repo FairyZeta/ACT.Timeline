@@ -57,11 +57,12 @@ namespace FairyZeta.Framework.Unit
         /// <returns></returns>
         public async Task<bool> FileDownloadAsync(string stringURI, string SavePath, string SaveFileName, SaveType saveType)
         {
-            if (!await this.networkCheckProcess.GetIsNetworkAvailableAsync()
-                || !await this.networkCheckProcess.CheckWebResponseAsync(stringURI))
+            if (!await this.networkCheckProcess.GetIsNetworkAvailableAsync())
             {
                 return false;
             }
+
+            await this.networkCheckProcess.CheckWebResponseAsync(stringURI);
 
             return await this.fileDownloadProcess.FileDownloadAsync(stringURI, SavePath, SaveFileName, saveType);
         }
@@ -77,13 +78,20 @@ namespace FairyZeta.Framework.Unit
         /// <returns></returns>
         public bool FileDownload(string stringURI, string SavePath, string SaveFileName, SaveType saveType)
         {
-            if (!this.networkCheckProcess.GetIsNetworkAvailable()
-                || !this.networkCheckProcess.CheckWebResponse(stringURI))
+            try
             {
-                return false;
-            }
+                if (!this.networkCheckProcess.GetIsNetworkAvailable())
+                {
+                    return false;
+                }
+                this.networkCheckProcess.CheckWebResponse(stringURI);
 
-            this.fileDownloadProcess.FileDownload(stringURI, SavePath, SaveFileName, saveType);
+                this.fileDownloadProcess.FileDownload(stringURI, SavePath, SaveFileName, saveType);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
 
             return true;
         }
@@ -100,11 +108,12 @@ namespace FairyZeta.Framework.Unit
         /// <returns></returns>
         public async Task<bool> FileDownloadAsync(Uri pUri, string SavePath, string SaveFileName, SaveType saveType)
         {
-            if (!await this.networkCheckProcess.GetIsNetworkAvailableAsync()
-                || !await this.networkCheckProcess.CheckWebResponseAsync(pUri))
+            if (!await this.networkCheckProcess.GetIsNetworkAvailableAsync())
             {
                 return false;
             }
+
+            await this.networkCheckProcess.CheckWebResponseAsync(pUri);
 
             return await this.fileDownloadProcess.FileDownloadAsync(pUri, SavePath, SaveFileName, saveType);
         }

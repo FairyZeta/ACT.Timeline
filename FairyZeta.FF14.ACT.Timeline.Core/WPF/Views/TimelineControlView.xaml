@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:custom="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Custom"
              xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
-             xmlns:fControl="clr-namespace:FairyZeta.Framework.Controls;assembly=FairyZeta.Framework"
              xmlns:converter="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Converter"
              xmlns:timelineCore="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
              

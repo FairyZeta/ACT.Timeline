@@ -4,7 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-  xmlns:local="clr-namespace:FairyZeta.Framework.Controls"
+  xmlns:local="clr-namespace:FairyZeta.Framework.WPF.Controls"
   xmlns:conv="clr-namespace:FairyZeta.Framework.WPF.Converters"
   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
   FontFamily="Arial, メイリオ"

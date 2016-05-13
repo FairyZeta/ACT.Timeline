@@ -6,7 +6,7 @@ using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
 
-namespace FairyZeta.Framework.Controls
+namespace FairyZeta.Framework.WPF.Controls
 {
     [ContentProperty("Text")]
     public class OutlineTextBlock : FrameworkElement

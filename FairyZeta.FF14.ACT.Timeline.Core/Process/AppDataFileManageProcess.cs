@@ -48,6 +48,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 
             return;
         }
+        /// <summary> 一時作業ディレクトリを生成します。
+        /// </summary>
+        /// <param name="pApplicationData"> 情報を参照するアプリケーションデータ </param>
+        public void CreatTempDirectory(ApplicationData pApplicationData)
+        {
+            if (string.IsNullOrWhiteSpace(pApplicationData.TempDirectoryPath)) return;
+            if (Directory.Exists(pApplicationData.TempDirectoryPath)) return;
+
+            Directory.CreateDirectory(pApplicationData.TempDirectoryPath);
+
+            return;
+        }
         /// <summary> オーバーレイデータのディレクトリを生成します。
         /// </summary>
         /// <param name="pApplicationData"> 情報を参照するアプリケーションデータ </param>

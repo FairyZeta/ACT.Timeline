@@ -178,6 +178,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Process\OvarlayDefaultSetProcess.cs" />
+    <Compile Include="Process\OverlayDataRevisionProcess.cs" />
     <Compile Include="Process\SaveChangedResetProcess.cs" />
     <Compile Include="Process\SetFilterProcess.cs" />
     <Compile Include="Module\TimelineControlModule.cs" />

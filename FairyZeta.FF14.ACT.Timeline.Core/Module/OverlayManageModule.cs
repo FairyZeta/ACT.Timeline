@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.IO;
+using Microsoft.Win32;
 using FairyZeta.Framework;
+using FairyZeta.Framework.Unit;
 using FairyZeta.Framework.Process;
 using FairyZeta.FF14.ACT.Timeline.Core.Component;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Process;
-
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {
@@ -20,6 +21,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
     public class OverlayManageModule : _Module
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> 汎用ダウンロードユニット
+        /// </summary>
+        private DownloadUnit downloadUnit;
 
         /// <summary> オーバーレイオープンプロセス
         /// </summary>
@@ -39,6 +44,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <summary> オーバーレイデフォルトカラーセットプロセス
         /// </summary>
         private OvarlayDefaultSetProcess ovarlayDefaultSetProcess;
+        /// <summary> オーバーレイデータ補正プロセス
+        /// </summary>
+        private OverlayDataRevisionProcess overlayDataRevisionProcess;
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -57,12 +65,15 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// <returns> 正常終了時 True </returns> 
         private bool initModule()
         {
+            this.downloadUnit = new DownloadUnit();
+
             this.overlayViewOpenProcess = new OverlayViewOpenProcess();
             this.xmlSerializerProcess = new XmlSerializerProcess();
             this.setFilterProcess = new SetFilterProcess();
             this.appDataFileManageProcess = new AppDataFileManageProcess();
             this.saveChangedResetProcess = new SaveChangedResetProcess();
             this.ovarlayDefaultSetProcess = new OvarlayDefaultSetProcess();
+            this.overlayDataRevisionProcess = new OverlayDataRevisionProcess();
 
             return true;
         }
@@ -71,41 +82,55 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> 新しいオーバーレイを作成します。
         /// </summary>
-        public void AddNewOverlay(OverlayManageDataModel pOverlayManageDataModel, OverlayDataModel pAddOverlayDataModel, TimelineComponent pTimelineComponent, CommonDataModel pCommonDataModel)
+        public void AddNewOverlay(CommonDataModel pCommonDM, OverlayDataModel pAddOverlayDM, TimelineComponent pTimelineC, OverlayManageDataModel pOverlayManageM, bool IsImport)
         {
             // ID設定
-            if (pOverlayManageDataModel.OverlayViewComponentCollection.Count > 0)
+            if (pOverlayManageM.OverlayViewComponentCollection.Count > 0)
             {
-                pAddOverlayDataModel.OverlayWindowData.ID = pOverlayManageDataModel.OverlayViewComponentCollection.Max(m => m.OverlayDataModel.OverlayWindowData.ID) + 1;
+                pAddOverlayDM.OverlayWindowData.ID = pOverlayManageM.OverlayViewComponentCollection.Max(m => m.OverlayDataModel.OverlayWindowData.ID) + 1;
             }
             else
             {
-                pAddOverlayDataModel.OverlayWindowData.ID = 1;
+                pAddOverlayDM.OverlayWindowData.ID = 1;
             }
-            
-            OverlayViewComponent component = new OverlayViewComponent(pCommonDataModel);
-            component.OverlayDataModel = pAddOverlayDataModel;
-            this.SetDefaultOverlayWindowData(component.OverlayDataModel.OverlayWindowData);
-            this.SetDefaultOverlaySettingData(component.OverlayDataModel.OverlayOptionData);
 
-            component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineComponent.TimelineObjectModel.ActivityCollection };
+            OverlayViewComponent component = new OverlayViewComponent(pCommonDM);
+            component.OverlayDataModel = pAddOverlayDM;
+
+            if (IsImport)
+            {
+                pAddOverlayDM.OverlayWindowData.WindowTop = 10;
+                pAddOverlayDM.OverlayWindowData.WindowLeft = 10;
+                pAddOverlayDM.OverlayWindowData.WindowVisibility = false;
+                pAddOverlayDM.OverlayWindowData.WindowLock = false;
+            }
+            else
+            {
+                this.SetDefaultOverlayWindowData(component.OverlayDataModel.OverlayWindowData);
+                this.SetDefaultOverlaySettingData(component.OverlayDataModel.OverlayOptionData);
+            }
+
+            component.OverlayDataModel.OverlayViewData.TimelineViewSource = new CollectionViewSource() { Source = pTimelineC.TimelineObjectModel.ActivityCollection };
             this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
 
             // バージョン設定
-            component.OverlayDataModel.DataVersion = pCommonDataModel.ApplicationData.ApplicationVersion;
+            component.OverlayDataModel.DataVersion = pCommonDM.ApplicationData.ApplicationVersion;
 
-            pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
-            pCommonDataModel.ViewCollection.Add(component);
+            pOverlayManageM.OverlayViewComponentCollection.Add(component);
+            pCommonDM.ViewCollection.Add(component);
         }
 
         /// <summary> 保存されているオーバーレイを全てロードします。
         /// </summary>
+        /// <param name="pCommonDataModel"> 共通データモデル </param>
+        /// <param name="pTimelineComponent"> タイムラインコンポーネント </param>
+        /// <param name="pOverlayManageDataModel"> 読込データを追加する管理データモデル </param>
         public void OverlayDataModelLoad(CommonDataModel pCommonDataModel, TimelineComponent pTimelineComponent, OverlayManageDataModel pOverlayManageDataModel)
         {
             if (pCommonDataModel == null || pCommonDataModel.ApplicationData == null) return;
             if (pCommonDataModel.ApplicationData.OverlayDataFilePathList.Count == 0) return;
 
-            var dataList = this.OverlayDataModelLoad(pCommonDataModel.ApplicationData.OverlayDataFilePathList);
+            var dataList = this.OverlayDataModelLoad(pCommonDataModel.ApplicationData.OverlayDataFilePathList, true);
 
             if (dataList.Count == 0) return;
 
@@ -113,14 +138,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             {
                 OverlayViewComponent component = new OverlayViewComponent(pCommonDataModel);
 
-                // データ補正の実行
-                if ( data.DataVersion < new Version(0, 0, 5, 0))
-                {
-                    data.FontData.TitleBar_BaseFontInfo.Size = data.OverlayGenericSettingsData.TitleBarFontSize;
-                    data.FontData.Header_BaseFontInfo.Size = data.OverlayGenericSettingsData.HeaderFontSize;
-                    data.FontData.Content_BaseFontInfo.Size = data.OverlayGenericSettingsData.ContentFontSize;
-                    data.FontData.Content_ActiveFontInfo.Size = data.OverlayGenericSettingsData.ContentFontSize;
-                }
+                this.overlayDataRevisionProcess.DataRevisionExecute(data);
 
                 // バージョン設定
                 data.DataVersion = pCommonDataModel.ApplicationData.ApplicationVersion;
@@ -132,7 +150,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 this.setFilterProcess.SetResetFilter(component.OverlayDataModel.OverlayViewData.TimelineViewSource, false);
 
                 pOverlayManageDataModel.OverlayViewComponentCollection.Add(component);
-
 
                 pCommonDataModel.ViewCollection.Add(component);
             }
@@ -200,13 +217,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         /// <param name="pFilePathList"> 読み込みファイルパスリスト </param>
         /// <returns> 復元成功時 DataList, 失敗時 空List </returns>
-        public IList<OverlayDataModel> OverlayDataModelLoad(IList<string> pFilePathList)
+        public IList<OverlayDataModel> OverlayDataModelLoad(IList<string> pFilePathList, bool pCatchFLG)
         {
             List<OverlayDataModel> list = new List<OverlayDataModel>();
 
             foreach (string path in pFilePathList)
             {
-                var data = this.OverlayDataModelLoad(path);
+                var data = this.OverlayDataModelLoad(path, pCatchFLG);
                 if (data != null)
                 {
                     list.Add(data);
@@ -218,61 +235,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         /// </summary>
         /// <param name="pFilePath"> 読み込みファイルパス </param>
         /// <returns> 復元成功時 Data, 失敗時 Null </returns>
-        public OverlayDataModel OverlayDataModelLoad(string pFilePath)
+        /// <param name="pCatchFLG"> 読込エラーを無視する場合 True, しない場合 False </param>
+        public OverlayDataModel OverlayDataModelLoad(string pFilePath, bool pCatchFLG)
         {
-            return this.xmlSerializerProcess.XmlLoad(pFilePath, typeof(OverlayDataModel), true) as OverlayDataModel;
-        }
-        /// <summary> XML形式のオーバーレイウィンドウ情報を読み込み、データリストを返却します。
-        /// </summary>
-        /// <param name="pFilePathList"> 読み込みファイルパスリスト </param>
-        /// <returns> 復元成功時 DataList, 失敗時 空List </returns>
-        public IList<OverlayWindowData> OverlayWindowLoad(IList<string> pFilePathList)
-        {
-            List<OverlayWindowData> list = new List<OverlayWindowData>();
-
-            foreach (string path in pFilePathList)
-            {
-                var data = this.OverlayWindowLoad(path);
-                if (data != null)
-                {
-                    list.Add(data);
-                }
-            }
-            return list;
-        }
-        /// <summary> XML形式のオーバーレイウィンドウ情報を読み込み、データを返却します。
-        /// </summary>
-        /// <param name="pFilePath"> 読み込みファイルパス </param>
-        /// <returns> 復元成功時 Data, 失敗時 Null </returns>
-        public OverlayWindowData OverlayWindowLoad(string pFilePath)
-        {
-            return this.xmlSerializerProcess.XmlLoad(pFilePath, typeof(OverlayWindowData), false) as OverlayWindowData;
-        }
-        /// <summary> XML形式のオーバーレイオプション情報を読み込み、データリストを返却します。
-        /// </summary>
-        /// <param name="pFilePathList"> 読み込みファイルパスリスト </param>
-        /// <returns> 復元成功時 DataList, 失敗時 空List </returns>
-        public IList<OverlayOptionData> OverlayOptionLoad(IList<string> pFilePathList)
-        {
-            List<OverlayOptionData> list = new List<OverlayOptionData>();
-
-            foreach (string path in pFilePathList)
-            {
-                var data = this.OverlayOptionLoad(path);
-                if (data != null)
-                {
-                    list.Add(data);
-                }
-            }
-            return list;
-        }
-        /// <summary> XML形式のオーバーレイオプション情報を読み込み、データを返却します。
-        /// </summary>
-        /// <param name="pFilePath"> 読み込みファイルパス </param>
-        /// <returns> 復元成功時 Data, 失敗時 Null </returns>
-        public OverlayOptionData OverlayOptionLoad(string pFilePath)
-        {
-            return this.xmlSerializerProcess.XmlLoad(pFilePath, typeof(OverlayOptionData), false) as OverlayOptionData;
+            return this.xmlSerializerProcess.XmlLoad(pFilePath, typeof(OverlayDataModel), pCatchFLG) as OverlayDataModel;
         }
 
         /// <summary> オーバーレイデータモデルリストをXML形式で保存します。
@@ -285,86 +251,123 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
             foreach (var data in pOverlayDataModelList)
             {
-                this.OverlayDataModelSave(pApplicationData, data);
+                this.OverlayDataModelSave(pApplicationData, data, true);
             }
 
             return;
         }
         /// <summary> オーバーレイデータモデルをXML形式で保存します。
         /// </summary>
-        /// <param name="pFilePath"> 読み込みファイルパス </param>
-        /// <param name="pOverlayDataModel"> オーバーレイ情報 </param>
-        public void OverlayDataModelSave(ApplicationData pApplicationData, OverlayDataModel pOverlayDataModel)
+        /// <param name="pApplicationData"> 保存するパス情報が格納されたアプリケーション情報 </param>
+        /// <param name="pOverlayDataModel"> 保存するオーバーレイ情報 </param>
+        /// <param name="pCatchFLG"> 保存エラーを無視する場合 True, しない場合 False </param>
+        public void OverlayDataModelSave(ApplicationData pApplicationData, OverlayDataModel pOverlayDataModel, bool pCatchFLG)
         {
             if (pApplicationData == null || pOverlayDataModel == null) return;
 
             string fileName = pApplicationData.OverlayDataPartName + String.Format("{0:0000}", pOverlayDataModel.OverlayWindowData.ID) + ".xml"; 
             string fullPath = Path.Combine(pApplicationData.OverlayDataDirectoryPath, fileName);
 
-            this.xmlSerializerProcess.XmlSave(fullPath, pOverlayDataModel, true);
+            this.OverlayDataModelSave(fullPath, pOverlayDataModel, pCatchFLG);
 
             this.saveChangedResetProcess.OverlayDataSaveChangedReset(pOverlayDataModel);
 
             return;
         }
-        /// <summary> オーバーレイウィンドウ情報リストをXML形式で保存します。
+        /// <summary> オーバーレイデータモデルをXML形式で保存します。
         /// </summary>
-        /// <param name="pFilePath"> 書き込みファイルパス </param>
-        /// <param name="pOverlayWindowDataList"> オーバーレイ情報リスト </param>
-        public void OverlayWindowSave(string pFilePath, IList<OverlayWindowData> pOverlayWindowDataList)
+        /// <param name="pFilePath"> 保存ファイルパス </param>
+        /// <param name="pOverlayDataModel"> 保存するオーバーレイ情報 </param>
+        /// <param name="pCatchFLG"> 保存エラーを無視する場合 True, しない場合 False </param>
+        public void OverlayDataModelSave(string pFilePath, OverlayDataModel pOverlayDataModel, bool pCatchFLG)
         {
-            foreach (var data in pOverlayWindowDataList)
-            {
-                this.OverlayWindowSave(pFilePath, data);
-            }
-
-            return;
-        }
-        /// <summary> オーバーレイウィンドウ情報をXML形式で保存します。
-        /// </summary>
-        /// <param name="pFilePath"> 読み込みファイルパス </param>
-        /// <param name="pOverlayWindowData"> オーバーレイ情報 </param>
-        public void OverlayWindowSave(string pFilePath, OverlayWindowData pOverlayWindowData)
-        {
-            this.xmlSerializerProcess.XmlSave(pFilePath, pOverlayWindowData, false);
-            return;
-        }
-        /// <summary> オーバーレイセッティング情報リストをXML形式で保存します。
-        /// </summary>
-        /// <param name="pFilePath"> 書き込みファイルパス </param>
-        /// <param name="pOverlayOptionDataList"> オーバーレイオプションデータリスト </param>
-        public void OverlayOptionSave(string pFilePath, IList<OverlayOptionData> pOverlayOptionDataList)
-        {
-            foreach (var data in pOverlayOptionDataList)
-            {
-                this.OverlayOptionSave(pFilePath, data);
-            }
-
-            return;
-        }
-        /// <summary> オーバーレイセッティング情報をXML形式で保存します。
-        /// </summary>
-        /// <param name="pFilePath"> 書き込みファイルパス </param>
-        /// <param name="pOverlayOptionData"> オーバーレイオプションデータ </param>
-        public void OverlayOptionSave(string pFilePath, OverlayOptionData pOverlayOptionData)
-        {
-            this.xmlSerializerProcess.XmlSave(pFilePath, pOverlayOptionData, false);
+            this.xmlSerializerProcess.XmlSave(pFilePath, pOverlayDataModel, pCatchFLG);
             return;
         }
 
       #endregion
 
+        /// <summary> オーバーレイファイルのダウンロードを実行します。
+        /// </summary>
+        /// <param name="pCommonDM"> 共通データモデル </param>
+        /// <param name="pDownloadURI"> ダウンロードするファイルのURI </param>
+        /// <returns></returns>
+        public bool DownloadOverlay(CommonDataModel pCommonDM, string pDownloadURI)
+        {
+            bool result = false;
+            try
+            {
+                result = this.downloadUnit.FileDownload(pDownloadURI, pCommonDM.ApplicationData.TempDirectoryPath, pCommonDM.ApplicationData.TempOverlayName, SaveType.OverRide);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
+        /// <summary> ファイル選択ダイアログを表示後、オーバーレイをインポートします。
+        /// </summary>
+        public bool ImportOverlay(CommonDataModel pCommonDataModel, TimelineComponent pTimelineComponent, OverlayManageDataModel pOverlayManageDataModel)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.Filter = "Overlay Xml|*.xml|All Files (*.*)|*.*";
+            openFileDialog.InitialDirectory = pCommonDataModel.ApplicationData.PluginDllDirectory;
+            openFileDialog.Title = "Import Overlay Data";
+            bool? result = openFileDialog.ShowDialog();
+            if (result == true)
+            {
+                return this.ImportOverlay(pCommonDataModel, pTimelineComponent, pOverlayManageDataModel, openFileDialog.FileName);
+            }
+
+            return false;
+        }
         /// <summary> オーバーレイをインポートします。
         /// </summary>
-        public void ImportOverlay()
+        public bool ImportOverlay(CommonDataModel pCommonDataModel, TimelineComponent pTimelineComponent, OverlayManageDataModel pOverlayManageDataModel, string pOverlayFullPath)
         {
-            
+            var data = this.OverlayDataModelLoad(pOverlayFullPath, false);
+            if (data != null)
+            {
+                this.overlayDataRevisionProcess.DataRevisionExecute(data);
+                this.AddNewOverlay(pCommonDataModel, data, pTimelineComponent, pOverlayManageDataModel, true);
+            }
+            else
+            {
+                throw new FileLoadException();
+            }
+
+            return true;
         }
 
         /// <summary> オーバーレイをエクスポートします。
         /// </summary>
-        public void ExportOverlay()
+        /// <param name="pCommonDataModel"> 共通データモデル </param>
+        /// <param name="pOverlayDataModel"> 保存するオーバーレイ情報 </param>
+        public void ExportOverlay(CommonDataModel pCommonDataModel, OverlayDataModel pOverlayDataModel)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.Filter = "Overlay Xml|*.xml|All Files (*.*)|*.*";
+            saveFileDialog.InitialDirectory = pCommonDataModel.ApplicationData.PluginDllDirectory;
+            saveFileDialog.Title = "Export Overlay Data";
+            bool? result = saveFileDialog.ShowDialog();
+            if (result == true)
+            {
+                try
+                {
+                    this.OverlayDataModelSave(saveFileDialog.FileName, pOverlayDataModel, false);
+                }
+                catch (Exception e)
+                {
+                    string msg = string.Format("Overlay Export Error: {0}", e.Message);
+                    pCommonDataModel.LogDataCollection.Add(
+                        Globals.ErrLogger.WriteSystemLog.Failure.ERROR.Write(msg, Globals.ProjectName));
+                        
+                }
+            }
             
         }
 
@@ -372,7 +375,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             pWindowData.WindowTop = 100;
             pWindowData.WindowLeft = 100;
-            pWindowData.WindowWidth = 390;
+            pWindowData.WindowWidth = 400;
             pWindowData.WindowHeight = 150;
         }
 

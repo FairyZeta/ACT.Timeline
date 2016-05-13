@@ -35,6 +35,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// </summary>
         public string PluginDllDirectory { get; set; }
 
+        /// <summary> 作業用の一時的なオーバーレイの名前
+        /// </summary>
+        public string TempOverlayName { get; set; }
+
         #endregion
 
         #region --- Path ---
@@ -42,6 +46,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         /// <summary> タイムラインアプリケーションのRoamingパス
         /// </summary>
         public string RoamingDirectoryPath { get; set; }
+
+        /// <summary> 一時作業ディレクトリパス
+        /// </summary>
+        public string TempDirectoryPath { get; set; }
 
         /// <summary> オーバーレイデータのディレクトリパス
         /// </summary>
@@ -55,11 +63,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         #region --- Get xxx ---
 
-        /// <summary> (notSet) タイムライン設定データのフルパス
+        /// <summary> (get) タイムライン設定データのフルパス
         /// </summary>
         public string GetTimelineSettingsFullPath
         {
             get { return Path.Combine(this.RoamingDirectoryPath, this.TimelineSettingsFileName); }
+        }
+        /// <summary> (get) 一時作業用オーバーレイデータのフルパス
+        /// </summary>
+        public string GetTempOverlayFullPath
+        {
+            get { return Path.Combine(this.TempDirectoryPath, this.TempOverlayName); }
         }
 
         #endregion

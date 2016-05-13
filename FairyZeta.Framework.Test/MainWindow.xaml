@@ -1,27 +1,37 @@
-﻿<mui:ModernWindow 
-  x:Class="FairyZeta.Framework.Test.MainWindow"
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:local="clr-namespace:FairyZeta.Framework.Test"
-  xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-  mc:Ignorable="d"
-  Title="FairyZeta.Framework.Test"
-  IsTitleVisible="True"
-  ContentSource="/Pages/GeneralPage.xaml"
-  Width="960" Height="540" 
-  FontFamily="Arial, メイリオ"
-  TextOptions.TextFormattingMode="Ideal"
-  TextOptions.TextHintingMode="Auto"
-  TextOptions.TextRenderingMode="ClearType">
-
-  <mui:ModernWindow.MenuLinkGroups>
-    <mui:LinkGroup DisplayName="Menu">
-      <mui:LinkGroup.Links>
-        <mui:Link DisplayName="General" Source="/Pages/GeneralPage.xaml" />
-      </mui:LinkGroup.Links>
-    </mui:LinkGroup>
-  </mui:ModernWindow.MenuLinkGroups>
-
-</mui:ModernWindow>
+﻿<Window x:Class="FairyZeta.Framework.Test.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:test="clr-namespace:FairyZeta.Framework.Test"
+        xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
+        Title="MainWindow" Height="300" Width="300" Background="Black">
+    
+    <Window.Resources>
+        <DataTemplate x:Key="TestTemplate">
+            <Border BorderThickness="0 10" BorderBrush="LightBlue">
+                <StackPanel>
+                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.2" FontWeight="Bold"/>
+                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.4"/>
+                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.6"/>
+                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.8"/>
+                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="1.0" FontWeight="Bold"/>
+                    <fCtrl:OutlineTextBlock FontSize="16" Text="TestText" Fill="YellowGreen" Stroke="Green" >
+                        <fCtrl:OutlineTextBlock.Effect>
+                            <DropShadowEffect Color="DarkGreen" ShadowDepth="1"/>
+                        </fCtrl:OutlineTextBlock.Effect>
+                    </fCtrl:OutlineTextBlock>
+                    <fCtrl:OutlineTextBlock FontSize="18" Text="TestText" Fill="YellowGreen" Stroke="Green" />
+                    <fCtrl:OutlineTextBlock FontSize="20" Text="TestText" Fill="YellowGreen" Stroke="Green" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Window.DataContext>
+        <test:MainWindowViewModel />
+    </Window.DataContext>
+    
+    <Grid>
+        <!--        <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource TestTemplate}" />-->
+        <fCtrl:BoxFoldContent TitleFontSize="18" Title="TEST" InnerDataTemplate="{StaticResource TestTemplate}" InnerDataContext="{Binding}"/>
+    </Grid>
+</Window>

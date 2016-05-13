@@ -55,7 +55,7 @@
         
         <local:NumericTextBox x:Name="ValueBox" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
                               
-                              Text="{Binding ChangedValue, StringFormat=N0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                              Text="{Binding ChangedValue, StringFormat=N1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
 
         <RepeatButton x:Name="ValueUpButton" Grid.Row="0" Grid.Column="1" Content="+"
                       Template="{StaticResource UpDownButton}" Style="{StaticResource DoubleValueUpRepeatButton}" />

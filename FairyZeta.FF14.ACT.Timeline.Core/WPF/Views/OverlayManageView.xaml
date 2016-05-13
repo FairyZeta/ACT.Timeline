@@ -6,6 +6,7 @@
         xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
         xmlns:behavior="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
+        xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
         xmlns:core="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core"
         mc:Ignorable="d" 
         d:DesignHeight="300" d:DesignWidth="800" 
@@ -19,141 +20,156 @@
                 <ResourceDictionary Source="../Style/_TimelineStyle.xaml"/>
                 <ResourceDictionary Source="../Style/OverlayManageStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         </ResourceDictionary>
     </UserControl.Resources>
     
     <Border BorderBrush="Gray" CornerRadius="5" BorderThickness="1" Background="White">
-        <Grid>
-            <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-            <DockPanel Grid.Row="0">
-                <Label Content="- Timeline Overlay Manage -"/>
-            </DockPanel>
-            <DockPanel Grid.Row="1">
-                <StackPanel Orientation="Horizontal">
-                    <Button Margin="5 2" Content="Add New Overlay" Command="{Binding OverlayManageComponent.NewOverlayAppendCommand}"/>
-                    <Button Margin="5 2" Content="Impont Overlay" IsEnabled="False" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                </StackPanel>
-            </DockPanel>
-            <DataGrid x:Name="OverlayListView"  Grid.Row="2" BorderThickness="0" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
-                      CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" 
-                      ItemsSource="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayViewComponentCollection}" 
-                      Padding="0 0 0 0" Margin="2 5">
-                <DataGrid.Resources>
-                    <Style TargetType="{x:Type ScrollBar}">
-                        <Setter Property="Template" Value="{StaticResource MyScrollBar}"/>
+        <Grid x:Name="ContentRootGrid">
+            <Grid x:Name="ControlGrid">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
-                </DataGrid.Resources>
-                <DataGrid.CellStyle>
-                    <Style TargetType="{x:Type DataGridCell}">
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="BorderBrush" Value="Transparent"/>
-                        <Setter Property="Background" Value="Transparent"/>
-                    </Style>
-                </DataGrid.CellStyle>
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="BorderThickness" Value="1"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource BaseColor_Gold1}"/>
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="FontWeight" Value="Bold" />
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    </Style>
-                    </DataGrid.ColumnHeaderStyle>
+                </Grid.Style>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <DockPanel Grid.Row="0">
+                    <Label Content="- Timeline Overlay Manage -"/>
+                </DockPanel>
+                <DockPanel Grid.Row="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Margin="5 2" Content="Add New Overlay" Command="{Binding OverlayManageComponent.NewOverlayAppendCommand}"/>
+                        <Button Margin="5 2" Width="100" Content="Import Overlay" 
+                                                Command="{Binding OverlayManageComponent.ImportModalVisibleCommand}"
+                                                CommandParameter="{x:Static core:ImportType.File}"/>
+                    </StackPanel>
+                </DockPanel>
+                <DataGrid x:Name="OverlayListView"  Grid.Row="2" BorderThickness="0" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                          CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" 
+                          ItemsSource="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayViewComponentCollection}" 
+                          Padding="0 0 0 0" Margin="2 5">
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type ScrollBar}">
+                            <Setter Property="Template" Value="{StaticResource MyScrollBar}"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource BaseColor_Gold1}"/>
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                        </DataGrid.ColumnHeaderStyle>
 
-                    <DataGrid.RowHeaderStyle>
-                        <Style TargetType="{x:Type DataGridRowHeader}">
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Style>
-                    </DataGrid.RowHeaderStyle>
-                    <DataGrid.RowStyle>
-                        <Style TargetType="{x:Type DataGridRow}">
-                            <Setter Property="Margin" Value="0"/>
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Style>
-                    </DataGrid.RowStyle>
+                        <DataGrid.RowHeaderStyle>
+                            <Style TargetType="{x:Type DataGridRowHeader}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </DataGrid.RowHeaderStyle>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </DataGrid.RowStyle>
                 
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="View Control" MinWidth="120">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="View Control" MinWidth="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                        <ToggleButton Content="View" Style="{StaticResource OvarlayControlToggleButton}" 
+                                                      IsChecked="{Binding OverlayDataModel.OverlayWindowData.WindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Command="{Binding DataContext.OverlayManageComponent.OverlayViewChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                      CommandParameter="{Binding}"/>
+                                        <ToggleButton Content="Lock"
+                                                      IsChecked="{Binding OverlayDataModel.OverlayWindowData.WindowLock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Command="{Binding DataContext.OverlayManageComponent.OverlayViewLockCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                      CommandParameter="{Binding}">
+                                            <ToggleButton.Style>
+                                                <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource OvarlayControlToggleButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.TimelineControl}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ToggleButton.Style>
+                                        </ToggleButton>
+                                    </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Overlay Type" MinWidth="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding OverlayDataModel.OverlayWindowData.OverlayType}" Style="{StaticResource OverlayListItemLabel}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Overlay Name" MinWidth="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding OverlayDataModel.OverlayWindowData.OverlayName}" Style="{StaticResource OverlayListItemLabel}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Overlay Control" MinWidth="280">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                    <ToggleButton Content="View" Style="{StaticResource OvarlayControlToggleButton}" 
-                                                  IsChecked="{Binding OverlayDataModel.OverlayWindowData.WindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                  Command="{Binding DataContext.OverlayManageComponent.OverlayViewChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                  CommandParameter="{Binding}"/>
-                                    <ToggleButton Content="Lock"
-                                                  IsChecked="{Binding OverlayDataModel.OverlayWindowData.WindowLock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                  Command="{Binding DataContext.OverlayManageComponent.OverlayViewLockCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                  CommandParameter="{Binding}">
-                                        <ToggleButton.Style>
-                                            <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource OvarlayControlToggleButton}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.TimelineControl}">
-                                                        <Setter Property="IsEnabled" Value="False"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ToggleButton.Style>
-                                    </ToggleButton>
-                                </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Overlay Type" MinWidth="120">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding OverlayDataModel.OverlayWindowData.OverlayType}" Style="{StaticResource OverlayListItemLabel}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Overlay Name" MinWidth="200">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding OverlayDataModel.OverlayWindowData.OverlayName}" Style="{StaticResource OverlayListItemLabel}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Overlay Control" MinWidth="280">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="Custom" 
-                                            Command="{Binding DataContext.OverlayManageComponent.OverlayCustomWindoOpenCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding}">
-                                        <Button.Style>
-                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource OvarlayControlButton}" >
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.TimelineControl}">
-                                                        <Setter Property="IsEnabled" Value="False"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
+                                        <Button Content="Custom" 
+                                                Command="{Binding DataContext.OverlayManageComponent.OverlayCustomWindoOpenCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource OvarlayControlButton}" >
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding OverlayDataModel.OverlayWindowData.OverlayType}" Value="{x:Static core:OverlayType.TimelineControl}">
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                         
-                                    </Button>
-                                    <Button Content="Export" Style="{StaticResource OvarlayControlButton}" IsEnabled="False"/>
-                                    <Button Content="Delete" Style="{StaticResource OvarlayControlButton}"
-                                            Command="{Binding DataContext.OverlayManageComponent.OverlayDeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding}"/>
-                                </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                                        </Button>
+                                        <Button Content="Export" Style="{StaticResource OvarlayControlButton}" 
+                                                Command="{Binding DataContext.OverlayManageComponent.OverlayExportCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                CommandParameter="{Binding}"/>
+                                        <Button Content="Delete" Style="{StaticResource OvarlayControlButton}"
+                                                Command="{Binding DataContext.OverlayManageComponent.OverlayDeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
-                    </DataGrid.Columns>
+                        </DataGrid.Columns>
                 
-            </DataGrid>
-
+                </DataGrid>
+            </Grid>
+            
             <!-- モーダル -->
-            <Border Background="Black" Grid.ColumnSpan="100" Grid.RowSpan="100" Opacity="0.5">
+            <Border Background="Black" Opacity="0.5">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -234,6 +250,164 @@
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Button Content="Delete" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayControlEnterCommand}" CommandParameter="Delete"/>
                         <Button Content="Cancel" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayControlEnterCommand}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <!-- インポートモーダル -->
+            <Border Background="White" Width="600" Height="180" Grid.ColumnSpan="100" Grid.RowSpan="100" CornerRadius="5">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.OverlayImportModalVisibility}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition />
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Label Content=" - Overlay Import - " Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!-- 初期表示状態 -->
+                    <Border Grid.Row="1" Background="White"
+                            Visibility="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportMenuVisibility, Converter={StaticResource BoolToVisibility}}"
+                            IsEnabled="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportMenuVisibility}">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30" Margin="5">
+                                <Button Margin="5 2" Width="100" Content="File Import" 
+                                            Command="{Binding OverlayManageComponent.OverlayImportCommand}"
+                                            CommandParameter="{x:Static core:ImportType.File}"/>
+                                <Label Content="Local File Import." />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30" Margin="5">
+                                <Button Margin="5 2" Width="100" Content="Web Download" 
+                                            Command="{Binding OverlayManageComponent.ImportDownloadVisibleCommand}"/>
+                                <Label Content="Input URL => Overlay Import." />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <!-- ダウンロード入力状態 -->
+                    <Border Grid.Row="1" Background="White"
+                            Visibility="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportDownloadVisibility, Converter={StaticResource BoolToVisibility}}"
+                            IsEnabled="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportDownloadVisibility}">
+                        <StackPanel>
+                            <Grid Height="30" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Label Content="URL: " Width="45" VerticalAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <TextBox Grid.Column="1" Text="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportURL, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Key="Enter"
+                                                    Command="{Binding OverlayManageComponent.OverlayImportCommand}"
+                                                    CommandParameter="{x:Static core:ImportType.Web}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <Label Content="[WARNING] " Width="100" VerticalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Red" 
+                                       FontWeight="Bold" FontSize="14"/>
+                                <StackPanel>
+                                    <Label Content="Please be careful about computer virus enough." FontSize="12"
+                                           VerticalAlignment="Center" Foreground="Red" />
+                                    <Label Content="(ウイルスには十分注意して下さい。信頼できないファイルは絶対ダメ。製作者は責任とれません。)" FontSize="12"
+                                           VerticalAlignment="Center" Foreground="Red" />
+                                </StackPanel>
+                                <Label Content="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportMsg}" VerticalAlignment="Center"  >
+                                    <Label.Style>
+                                        <Style TargetType="{x:Type Label}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" Value="{x:Static core:ImportResult.Success}">
+                                                    <Setter Property="Foreground" Value="Green"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" Value="{x:Static core:ImportResult.Cancel}">
+                                                    <Setter Property="Foreground" Value="DimGray"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" Value="{x:Static core:ImportResult.Failure}">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <!-- インポート中状態 -->
+                    <Border Grid.Row="1" Background="White"
+                            Visibility="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.NowImportVisibility, Converter={StaticResource BoolToVisibility}}"
+                            IsEnabled="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.NowImportVisibility}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Width="200" >
+                            <fCtrl:LoadingDottedRing Width="30" Height="30"/>
+                            <TextBlock Text="Now Import..." VerticalAlignment="Center" Margin="20 0"/>
+                        </StackPanel>
+                    </Border>
+                    <!-- インポート結果表示状態 -->
+                    <Border Grid.Row="1" Background="White" 
+                            Visibility="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResultVisibility, Converter={StaticResource BoolToVisibility}}"
+                            IsEnabled="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResultVisibility}">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30" Margin="5">
+                                <Label Content="Import Result: " Width="120" VerticalAlignment="Center" HorizontalContentAlignment="Right"/>
+                                <TextBlock Text="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" VerticalAlignment="Center" >
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" Value="{x:Static core:ImportResult.Success}">
+                                                    <Setter Property="Foreground" Value="Green"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" Value="{x:Static core:ImportResult.Cancel}">
+                                                    <Setter Property="Foreground" Value="DimGray"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" Value="{x:Static core:ImportResult.Failure}">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Label Content="MSG: " Width="120" VerticalAlignment="Center" HorizontalContentAlignment="Right" />
+                                <TextBlock Grid.Column="1" Text="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportMsg}" VerticalAlignment="Center"  TextWrapping="Wrap">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" Value="{x:Static core:ImportResult.Success}">
+                                                    <Setter Property="Foreground" Value="Green"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" Value="{x:Static core:ImportResult.Cancel}">
+                                                    <Setter Property="Foreground" Value="DimGray"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportResult}" Value="{x:Static core:ImportResult.Failure}">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                    <!-- コマンドボタン -->
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Content="Download" Width="100" Height="30" Margin="5 2" 
+                                Visibility="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportDownloadButtonVisibility, Converter={StaticResource BoolToVisibility}}"
+                                Command="{Binding OverlayManageComponent.OverlayImportCommand}"
+                                CommandParameter="{x:Static core:ImportType.Web}"/>
+                        <Button Content="Close" Width="100" Height="30" Margin="5 2" 
+                                Visibility="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.ImportCloseButtonVisibility, Converter={StaticResource BoolToVisibility}}"
+                                Command="{Binding OverlayManageComponent.OverlayControlEnterCommand}" 
+                                CommandParameter=""/>
                     </StackPanel>
                 </Grid>
             </Border>

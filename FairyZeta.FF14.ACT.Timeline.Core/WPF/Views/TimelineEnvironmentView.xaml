@@ -8,9 +8,8 @@
         xmlns:view="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Views"
              xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
              xmlns:fzBehavior="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
-        mc:Ignorable="d" 
-        Height="180"  
-        d:DesignHeight="630" d:DesignWidth="900"
+        mc:Ignorable="d"
+        d:DesignHeight="180" d:DesignWidth="900"
         d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
@@ -23,7 +22,6 @@
     </UserControl.Resources>
 
     <Border Background="White" >
-        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
@@ -35,7 +33,6 @@
                     <ColumnDefinition Width="700"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Content=" Environment " Width="100" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                 <Label Content="Resource Directory :"/>
                 <Button Width="140" Height="24" HorizontalAlignment="Right" Content="Set Default Directory" Margin="10 0"
@@ -88,7 +85,6 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-        </Border>
     </Border>
 
 </UserControl>

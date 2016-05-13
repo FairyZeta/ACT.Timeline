@@ -9,13 +9,13 @@
             <Setter Property="Margin" Value="0 2 0 2"/>
         </Style>
         
-        <Style x:Key="DoubleValueUpDownRepeatButton" TargetType="{x:Type RepeatButton}">
+        <Style x:Key="IntValueUpDownRepeatButton" TargetType="{x:Type RepeatButton}">
 
         </Style>
-        <Style x:Key="DoubleValueUpRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
+        <Style x:Key="IntValueUpRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource IntValueUpDownRepeatButton}">
 
         </Style>
-        <Style x:Key="DoubleValueDownRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DoubleValueUpDownRepeatButton}">
+        <Style x:Key="IntValueDownRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource IntValueUpDownRepeatButton}">
 
         </Style>
 
@@ -43,7 +43,7 @@
         </ControlTemplate>
         
     </UserControl.Resources>
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="20"/>
@@ -57,9 +57,9 @@
                               Text="{Binding ChangedValue,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
 
         <RepeatButton x:Name="ValueUpButton" Grid.Row="0" Grid.Column="1" Content="+"
-                      Template="{StaticResource UpDownButton}" Style="{StaticResource DoubleValueUpRepeatButton}" />
+                      Template="{StaticResource UpDownButton}" Style="{StaticResource IntValueUpRepeatButton}" />
         <RepeatButton x:Name="ValueDownButton" Grid.Row="1" Grid.Column="1"  Content="-"
-                      Template="{StaticResource UpDownButton}" Style="{StaticResource DoubleValueDownRepeatButton}" />
+                      Template="{StaticResource UpDownButton}" Style="{StaticResource IntValueDownRepeatButton}" />
 
     </Grid>
 </UserControl>

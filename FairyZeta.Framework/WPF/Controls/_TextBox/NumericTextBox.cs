@@ -37,8 +37,8 @@ namespace FairyZeta.Framework.WPF.Controls
                 || Key.Up == e.Key
                 || Key.Down == e.Key
                 || Key.Left == e.Key
-                || Key.Right == e.Key)
-                //|| Key.OemPeriod == e.Key
+                || Key.Right == e.Key
+                || Key.OemPeriod == e.Key)
                 || (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == (Key.LeftShift | Key.RightShift)))
             {
                 e.Handled = true;

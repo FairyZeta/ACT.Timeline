@@ -43,7 +43,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
             pApplicationData.TimelineSettingsFileName = "TimelineSettings.xml";
             pApplicationData.OverlayDataPartName = "OverlayData";
             pApplicationData.VersionInfoFileName = "VersionInfo.xml";
-
+            pApplicationData.TempOverlayName = "TempOverlay.xml";
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

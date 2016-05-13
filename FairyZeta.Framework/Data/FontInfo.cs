@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Xml.Serialization;
 using Prism.Mvvm;
-using FairyZeta.Framework.Controls;
+using FairyZeta.Framework.WPF.Controls;
 
 namespace FairyZeta.Framework.Data
 {

@@ -223,6 +223,28 @@
         DropShadow,
     }
 
+    /// <summary> インポートタイプ
+    /// </summary>
+    public enum ImportType
+    {
+        /// <summary> ファイルからインポート </summary>
+        File,
+        /// <summary> Webからダウンロードしてインポート </summary>
+        Web
+    }
+
+    /// <summary> インポート結果
+    /// </summary>
+    public enum ImportResult
+    {
+        /// <summary> 成功 </summary>
+        Success,
+        /// <summary> 失敗 </summary>
+        Failure,
+        /// <summary> キャンセル </summary>
+        Cancel
+    }
+
     public enum TankMode
     {
         NON,

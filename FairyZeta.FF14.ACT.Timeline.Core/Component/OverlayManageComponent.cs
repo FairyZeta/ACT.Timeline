@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.IO;
 using Prism.Commands;
 using FairyZeta.Framework;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
@@ -137,6 +138,46 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
         #endregion 
 
+        #region #- [Command] DelegateCommand.ImportModalVisibleCommand - ＜オーバーレイインポートモーダル表示コマンド＞ -----
+        /// <summary> オーバーレイインポートモーダル表示コマンド＜コマンド＞ </summary>
+        private DelegateCommand _ImportModalVisibleCommand;
+        /// <summary> オーバーレイインポートモーダル表示コマンド＜コマンド＞ </summary>
+        public DelegateCommand ImportModalVisibleCommand
+        {
+            get { return _ImportModalVisibleCommand = _ImportModalVisibleCommand ?? new DelegateCommand(this._ImportModalVisibleExecute); }
+        }
+        #endregion 
+
+        #region #- [Command] DelegateCommand.ImportDownloadVisibleCommand - ＜オーバーレイインポートダウンロード表示コマンド＞ -----
+        /// <summary> オーバーレイインポートダウンロード表示コマンド＜コマンド＞ </summary>
+        private DelegateCommand _ImportDownloadVisibleCommand;
+        /// <summary> オーバーレイインポートダウンロード表示コマンド＜コマンド＞ </summary>
+        public DelegateCommand ImportDownloadVisibleCommand
+        {
+            get { return _ImportDownloadVisibleCommand = _ImportDownloadVisibleCommand ?? new DelegateCommand(this._ImportDownloadVisibleExecute); }
+        }
+        #endregion 
+
+        #region #- [Command] DelegateCommand<ImportType?>.OverlayImportCommand - ＜オーバーレイインポートコマンド＞ -----
+        /// <summary> オーバーレイインポートコマンド＜コマンド＞ </summary>
+        private DelegateCommand<ImportType?> _OverlayImportCommand;
+        /// <summary> オーバーレイインポートコマンド＜コマンド＞ </summary>
+        public DelegateCommand<ImportType?> OverlayImportCommand
+        {
+            get { return _OverlayImportCommand = _OverlayImportCommand ?? new DelegateCommand<ImportType?>(this._OverlayImportExecute); }
+        }
+        #endregion 
+
+        #region #- [Command] DelegateCommand<OverlayViewComponent>.OverlayExportCommand - ＜オーバーレイエクスポートコマンド＞ -----
+        /// <summary> オーバーレイエクスポートコマンド＜コマンド＞ </summary>
+        private DelegateCommand<OverlayViewComponent> _OverlayExportCommand;
+        /// <summary> オーバーレイエクスポートコマンド＜コマンド＞ </summary>
+        public DelegateCommand<OverlayViewComponent> OverlayExportCommand
+        {
+            get { return _OverlayExportCommand = _OverlayExportCommand ?? new DelegateCommand<OverlayViewComponent>(this._OverlayExportExecute); }
+        }
+        #endregion 
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> タイムライン／オーバーレイ管理コンポーネント／コンストラクタ
@@ -177,12 +218,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                 OverlayDataModel controlModel = new OverlayDataModel();
                 controlModel.OverlayWindowData.OverlayName = "TimelineControl";
                 controlModel.OverlayWindowData.OverlayType = OverlayType.TimelineControl;
-                this.OverlayManageModule.AddNewOverlay(this.OverlayManageDataModel, controlModel, this.TimelineComponent, base.CommonDataModel);
+                this.OverlayManageModule.AddNewOverlay(base.CommonDataModel, controlModel, this.TimelineComponent, this.OverlayManageDataModel, false);
 
                 OverlayDataModel timelineModel = new OverlayDataModel();
                 timelineModel.OverlayWindowData.OverlayName = "StandardTimeline";
                 timelineModel.OverlayWindowData.OverlayType = OverlayType.StandardTimeline;
-                this.OverlayManageModule.AddNewOverlay(this.OverlayManageDataModel, timelineModel, this.TimelineComponent, base.CommonDataModel);
+                this.OverlayManageModule.AddNewOverlay(base.CommonDataModel, timelineModel, this.TimelineComponent, this.OverlayManageDataModel, false);
 
             }
 
@@ -259,6 +300,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             foreach(var comp in this.OverlayManageDataModel.OverlayViewComponentCollection)
             {
+                comp.OverlayDataModel.OverlayWindowData.TopMost = false;
                 comp.OverlayDataModel.OverlayWindowData.TopMost = true;
             }
         }
@@ -321,7 +363,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             switch (para)
             {
                 case "Add":
-                    this.OverlayManageModule.AddNewOverlay(this.OverlayManageDataModel, this.ControlOverlayDataModel, this.TimelineComponent, base.CommonDataModel);
+                    this.OverlayManageModule.AddNewOverlay(base.CommonDataModel, this.ControlOverlayDataModel, this.TimelineComponent, this.OverlayManageDataModel, false);
                     break;
                 case "Delete":
                     this.OverlayManageModule.DeleteOverlay(this.ControlOverlayViewComponent, base.CommonDataModel, this.OverlayManageDataModel);
@@ -330,9 +372,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                     break;
             }
 
-            this.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility = false;
-            this.OverlayManageDataModel.OverlayManageData.NowOverlayAddModalVisibility = false;
-            this.OverlayManageDataModel.OverlayManageData.OverlayDeleteModalVisibility = false;
+            this.OverlayManageDataModel.OverlayManageData.Clear();
         }
         #endregion 
 
@@ -428,6 +468,158 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             // --- モーダルを開く
             this.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility = true;
             this.OverlayManageDataModel.OverlayManageData.OverlayDeleteModalVisibility = true;
+        }
+        #endregion 
+        
+        #region #- [Method] CanExecute,Execute @ ImportModalVisibleCommand - ＜オーバーレイインポートモーダル表示コマンド＞ -----
+        /// <summary> コマンド実行＜オーバーレイインポートモーダル表示コマンド＞ </summary>
+        private void _ImportModalVisibleExecute()
+        {
+            this.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility = true;
+            this.OverlayManageDataModel.OverlayManageData.OverlayImportModalVisibility = true;
+
+            this.OverlayManageDataModel.OverlayManageData.ImportMenuVisibility = true;
+            this.OverlayManageDataModel.OverlayManageData.ImportDownloadButtonVisibility = false;
+            this.OverlayManageDataModel.OverlayManageData.ImportCloseButtonVisibility = true;
+        }
+        #endregion 
+        
+        #region #- [Method] Execute @ ImportDownloadVisibleCommand - ＜オーバーレイインポートダウンロード表示コマンド＞ -----
+        /// <summary> コマンド実行＜オーバーレイインポートダウンロード表示コマンド＞ </summary>
+        private void _ImportDownloadVisibleExecute()
+        {
+            this.OverlayManageDataModel.OverlayManageData.ImportMenuVisibility = false;
+            this.OverlayManageDataModel.OverlayManageData.ImportDownloadVisibility = true;
+            this.OverlayManageDataModel.OverlayManageData.ImportDownloadButtonVisibility = true;
+            this.OverlayManageDataModel.OverlayManageData.ImportURL = "http://";
+        }
+        #endregion 
+
+        #region #- [Method] Execute @ OverlayImportCommand - ＜オーバーレイインポートコマンド＞ -----
+        /// <summary> コマンド実行＜オーバーレイインポートコマンド＞ </summary>
+        private async void _OverlayImportExecute(ImportType? para)
+        {
+            if (!para.HasValue)
+                return;
+
+            if (this.OverlayManageDataModel.OverlayManageData.ImportResultVisibility)
+                return;
+
+            this.OverlayManageDataModel.OverlayManageData.ImportMenuVisibility = false;
+            this.OverlayManageDataModel.OverlayManageData.NowImportVisibility = true;
+            this.OverlayManageDataModel.OverlayManageData.ImportCloseButtonVisibility = false;
+            this.OverlayManageDataModel.OverlayManageData.ImportDownloadButtonVisibility = false;
+
+            switch(para.Value)
+            { 
+                case ImportType.File:
+
+                    try
+                    {
+                        if(this.OverlayManageModule.ImportOverlay(base.CommonDataModel, this.TimelineComponent, this.OverlayManageDataModel))
+                        {
+                            this.OverlayManageDataModel.OverlayManageData.ImportResult = ImportResult.Success;
+                            this.OverlayManageDataModel.OverlayManageData.ImportMsg = string.Format("Import Complete.");
+
+                        }
+                        else
+                        {
+                            this.OverlayManageDataModel.OverlayManageData.ImportResult = ImportResult.Cancel;
+                            this.OverlayManageDataModel.OverlayManageData.ImportMsg = string.Format("Import Cancel.");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        this.ImportErrorHandler(e);
+                    }
+                    finally
+                    {
+                        this.OverlayManageDataModel.OverlayManageData.ImportResultVisibility = true;
+                        this.OverlayManageDataModel.OverlayManageData.ImportCloseButtonVisibility = true;
+                    }
+                    
+                    return;
+
+                case ImportType.Web:
+
+                    var task = Task.Run(() =>
+                        {
+                            try
+                            {
+                                if (!this.OverlayManageModule.DownloadOverlay(base.CommonDataModel, this.OverlayManageDataModel.OverlayManageData.ImportURL))
+                                {
+
+                                    this.OverlayManageDataModel.OverlayManageData.ImportResult = ImportResult.Failure;
+                                    this.OverlayManageDataModel.OverlayManageData.ImportMsg = string.Format("[ERROR] {0}", "Network Not Available.");
+                                    return false;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                this.ImportErrorHandler(e);
+                                return false;
+                            }
+
+                            return true;
+                        });
+
+                    await task;
+
+                    try
+                    {
+                        if (!task.Result)
+                            return;
+
+                        this.OverlayManageModule.ImportOverlay(base.CommonDataModel, this.TimelineComponent, this.OverlayManageDataModel, base.CommonDataModel.ApplicationData.GetTempOverlayFullPath);
+
+                        this.OverlayManageDataModel.OverlayManageData.ImportResult = ImportResult.Success;
+                        this.OverlayManageDataModel.OverlayManageData.ImportMsg = string.Format("Import Complete.");
+                            
+                    }
+                    catch (Exception e)
+                    {
+                        this.ImportErrorHandler(e);
+                    }
+                    finally
+                    {
+                        if(File.Exists(base.CommonDataModel.ApplicationData.GetTempOverlayFullPath))
+                        {
+                            File.Delete(base.CommonDataModel.ApplicationData.GetTempOverlayFullPath);
+                        }
+
+                        this.OverlayManageDataModel.OverlayManageData.ImportResultVisibility = true;
+                        this.OverlayManageDataModel.OverlayManageData.ImportCloseButtonVisibility = true;
+                    }
+
+                    return;
+                        
+            }
+            
+        }
+
+        /// <summary> インポートエラー時の処理
+        /// </summary>
+        /// <param name="e"> 発生した例外 </param>
+        private void ImportErrorHandler(Exception e)
+        {
+            string msg = string.Format("Overlay Import Error: {0}", e.Message);
+
+            this.OverlayManageDataModel.OverlayManageData.ImportResult = ImportResult.Failure;
+            this.OverlayManageDataModel.OverlayManageData.ImportMsg = string.Format("[ERROR] {0}", e.Message);
+            
+        }
+
+        #endregion
+
+
+
+
+        #region #- [Method] Execute @ OverlayExportCommand - ＜オーバーレイエクスポートコマンド＞ -----
+        /// <summary> コマンド実行＜オーバーレイエクスポートコマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _OverlayExportExecute(OverlayViewComponent para)
+        {
+            this.OverlayManageModule.ExportOverlay(base.CommonDataModel, para.OverlayDataModel);
         }
         #endregion 
     }

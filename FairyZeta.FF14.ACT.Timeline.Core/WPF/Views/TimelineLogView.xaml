@@ -23,7 +23,6 @@
     </UserControl.Resources>
 
     <Border Background="White" >
-        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -31,7 +30,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Content=" Plugin Logs " Width="100" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                 <TabControl>
                      <TabItem Header="SYSTEM">
@@ -56,7 +54,6 @@
                     </TabItem>
                 </TabControl>
             </Grid>
-        </Border>
     </Border>
 
 </UserControl>

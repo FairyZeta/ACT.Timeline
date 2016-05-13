@@ -10,6 +10,7 @@ using FairyZeta.FF14.ACT.Timeline.Core.Component;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.Views;
 using FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels;
 using System.Windows.Forms.Integration;
+using Advanced_Combat_Tracker;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Process
 {

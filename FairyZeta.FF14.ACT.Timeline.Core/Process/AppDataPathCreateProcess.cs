@@ -44,6 +44,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ACT.FairyZeta", "Timeline");
         }
 
+        /// <summary> 一時作業領域のフォルダパスを設定します。
+        /// </summary>
+        /// <param name="pApplicationData"> 設定と参照に使用するアプリケーションデータ </param>
+        public void SetTempDirectoryPath(ApplicationData pApplicationData)
+        {
+            if (string.IsNullOrWhiteSpace(pApplicationData.RoamingDirectoryPath)) return;
+
+            pApplicationData.TempDirectoryPath = Path.Combine(pApplicationData.RoamingDirectoryPath, "Temp");
+        }
+
         /// <summary> オーバーレイデータのフォルダパスを設定します。
         /// </summary>
         /// <param name="pApplicationData"> 設定と参照に使用するアプリケーションデータ </param>

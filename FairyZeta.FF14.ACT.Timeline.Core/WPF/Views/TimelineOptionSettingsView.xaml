@@ -22,7 +22,6 @@
 
 
     <Border Background="White" >
-        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -30,7 +29,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Content=" Option Settings" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <StackPanel Grid.Row="0" Margin="5">
                     <TextBlock Text=" - Generic -" Margin="5"/>
                     <CheckBox Content="Reset Timeline at combat end" Margin="10 2" 
@@ -50,7 +48,6 @@
                               IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.BuildRevisonUpdateIgnore}"/>
                 </StackPanel>
             </Grid>
-        </Border>
     </Border>
 
 </UserControl>

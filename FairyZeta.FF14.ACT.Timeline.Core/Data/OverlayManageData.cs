@@ -78,6 +78,111 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] bool.OverlayImportModalVisibility - ＜オーバーレイインポートモーダル表示状態＞ -----
+        /// <summary> オーバーレイインポートモーダル表示状態 </summary>
+        private bool _OverlayImportModalVisibility;
+        /// <summary> オーバーレイインポートモーダル表示状態 </summary>    
+        public bool OverlayImportModalVisibility
+        {
+            get { return _OverlayImportModalVisibility; }
+            set { this.SetProperty(ref this._OverlayImportModalVisibility, value); }
+        }
+        #endregion
+
+        #region #- [Property] bool.ImportDownloadButtonVisibility - ＜インポートダウンロードボタン表示状態＞ -----
+        /// <summary> インポートダウンロードボタン表示状態 </summary>
+        private bool _ImportDownloadButtonVisibility;
+        /// <summary> インポートダウンロードボタン表示状態 </summary>    
+        public bool ImportDownloadButtonVisibility
+        {
+            get { return _ImportDownloadButtonVisibility; }
+            set { this.SetProperty(ref this._ImportDownloadButtonVisibility, value); }
+        }
+        #endregion
+        #region #- [Property] bool.ImportCloseButtonVisibility - ＜インポートクローズボタン表示状態＞ -----
+        /// <summary> インポートクローズボタン表示状態 </summary>
+        private bool _ImportCloseButtonVisibility;
+        /// <summary> インポートクローズボタン表示状態 </summary>    
+        public bool ImportCloseButtonVisibility
+        {
+            get { return _ImportCloseButtonVisibility; }
+            set { this.SetProperty(ref this._ImportCloseButtonVisibility, value); }
+        }
+        #endregion
+
+        #region #- [Property] bool.ImportMenuVisibility - ＜インポートメニュー表示状態＞ -----
+        /// <summary> インポートメニュー表示状態 </summary>
+        private bool _ImportMenuVisibility;
+        /// <summary> インポートメニュー表示状態 </summary>    
+        public bool ImportMenuVisibility
+        {
+            get { return _ImportMenuVisibility; }
+            set { this.SetProperty(ref this._ImportMenuVisibility, value); }
+        }
+        #endregion
+
+        #region #- [Property] bool.ImportDownloadVisibility - ＜インポートダウンロード表示状態＞ -----
+        /// <summary> インポートダウンロード表示状態 </summary>
+        private bool _ImportDownloadVisibility;
+        /// <summary> インポートダウンロード表示状態 </summary>    
+        public bool ImportDownloadVisibility
+        {
+            get { return _ImportDownloadVisibility; }
+            set { this.SetProperty(ref this._ImportDownloadVisibility, value); }
+        }
+        #endregion
+        #region #- [Property] bool.NowImportVisibility - ＜インポート中ステータス表示状態＞ -----
+        /// <summary> インポート中ステータス表示状態 </summary>
+        private bool _NowImportVisibility;
+        /// <summary> インポート中ステータス表示状態 </summary>    
+        public bool NowImportVisibility
+        {
+            get { return _NowImportVisibility; }
+            set { this.SetProperty(ref this._NowImportVisibility, value); }
+        }
+        #endregion
+        #region #- [Property] bool.ImportResultVisibility - ＜インポート結果表示状態＞ -----
+        /// <summary> インポート結果表示状態 </summary>
+        private bool _ImportResultVisibility;
+        /// <summary> インポート結果表示状態 </summary>    
+        public bool ImportResultVisibility
+        {
+            get { return _ImportResultVisibility; }
+            set { this.SetProperty(ref this._ImportResultVisibility, value); }
+        }
+        #endregion
+
+        #region #- [Property] string.ImportResult - ＜インポート結果＞ -----
+        /// <summary> インポート結果 </summary>
+        private ImportResult? _ImportResult;
+        /// <summary> インポート結果 </summary>    
+        public ImportResult? ImportResult
+        {
+            get { return _ImportResult; }
+            set { this.SetProperty(ref this._ImportResult, value); }
+        }
+        #endregion
+        #region #- [Property] string.ImportMsg - ＜インポート結果メッセージ＞ -----
+        /// <summary> インポート結果メッセージ </summary>
+        private string _ImportMsg;
+        /// <summary> インポート結果メッセージ </summary>    
+        public string ImportMsg
+        {
+            get { return _ImportMsg; }
+            set { this.SetProperty(ref this._ImportMsg, value); }
+        }
+        #endregion
+        #region #- [Property] string.ImportURL - ＜インポートURL＞ -----
+        /// <summary> インポートURL </summary>
+        private string _ImportURL;
+        /// <summary> インポートURL </summary>    
+        public string ImportURL
+        {
+            get { return _ImportURL; }
+            set { this.SetProperty(ref this._ImportURL, value); }
+        }
+        #endregion
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> オーバーレイ管理データ
@@ -124,6 +229,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.NowOverlayAddModalVisibility = false;
             this.OverlayDeleteModalVisibility = false;
             this.OverlayManageWindowClosed = false;
+            
+            this.OverlayImportModalVisibility = false;
+            this.ImportCloseButtonVisibility = false;
+            this.ImportDownloadButtonVisibility = false;
+            this.ImportMenuVisibility = false;
+            this.NowImportVisibility = false;
+            this.ImportDownloadVisibility = false;
+            this.ImportResultVisibility = false;
+            this.ImportURL = string.Empty;
+            this.ImportResult = null;
+            this.ImportMsg = string.Empty;
 
             return true;
         }

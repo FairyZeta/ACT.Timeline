@@ -77,6 +77,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             // Roaming
             pCommonDM.ApplicationData.RoamingDirectoryPath = this.appDataPathCreateProcess.CreateRoamingDirectoryPath();
+
             // DLL
             if(!string.IsNullOrWhiteSpace(Globals.PluginDllDirectoryPath))
             {
@@ -90,7 +91,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
                 pCommonDM.LogDataCollection.Add(
                     Globals.SysLogger.WriteSystemLog.Success.DEBUG.Write(string.Format("DllPath-Assembly {0}", Globals.PluginDllDirectoryPath)));
             }
-
+            // Temp
+            this.appDataPathCreateProcess.SetTempDirectoryPath(pCommonDM.ApplicationData);
             // Overlay
             this.appDataPathCreateProcess.SetOverlayDirectoryPath(pCommonDM.ApplicationData);
 
@@ -104,6 +106,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             // Roaming
             this.appDataFileManageProcess.CreateTimelineRoamingDirectory(pApplicationData);
+            // Temp
+            this.appDataFileManageProcess.CreatTempDirectory(pApplicationData);
             // Overlay
             this.appDataFileManageProcess.CreateOverlayDataDirectory(pApplicationData);
 

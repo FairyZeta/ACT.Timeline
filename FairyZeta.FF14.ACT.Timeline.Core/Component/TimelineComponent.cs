@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Prism.Commands;
 using System.Threading.Tasks;
+using System.Windows;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Module;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;

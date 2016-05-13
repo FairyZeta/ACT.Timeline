@@ -24,7 +24,6 @@
     </UserControl.Resources>
 
     <Border Background="White" >
-        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
@@ -66,7 +65,6 @@
                     </Label>
                 </StackPanel>
             </Grid>
-        </Border>
     </Border>
 
 </UserControl>

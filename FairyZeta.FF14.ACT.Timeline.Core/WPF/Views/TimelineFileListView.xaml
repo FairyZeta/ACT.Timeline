@@ -10,7 +10,8 @@
              xmlns:fzBehavior="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
         mc:Ignorable="d"  
         d:DesignHeight="630" d:DesignWidth="900"
-        d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}">
+        d:DataContext="{d:DesignInstance Type=dvm:Desing_PluginApplicationViewModel, IsDesignTimeCreatable=True}"
+             x:Name="TimelineFileList">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -22,22 +23,19 @@
     </UserControl.Resources>
 
     <Border Background="White" >
-        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
-            <Grid Margin="5" x:Name="LayoutRoot">
+            <Grid Margin="5" x:Name="LayoutRoot" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="500"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Content=" Timeline " Width="70" Height="20" Padding="3 0" Background="White" Margin="10 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <ListView ItemsSource="{Binding CommonComponent.CommonDataModel.TimelineFileViewSource.View}" SelectedItem="{Binding CommonComponent.CommonDataModel.SelectedTimelineFileData}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Label Content="{Binding TimelineFileName}" ToolTip="{Binding TimelineFileFullPath}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                <ListView ItemsSource="{Binding CommonComponent.CommonDataModel.TimelineFileViewSource.View}" SelectedItem="{Binding CommonComponent.CommonDataModel.SelectedTimelineFileData}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding TimelineFileName}" ToolTip="{Binding TimelineFileFullPath}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 5" HorizontalAlignment="Left">
                     <Button Width="130" Height="24" Margin="5 5" Content="Load" 
                             IsEnabled="{Binding CommonComponent.CommonDataModel.AppEnableManageData.TimelineFileLoadEnabled}"
@@ -53,7 +51,6 @@
                             Command="{Binding CommonComponent.OpenTimelineResourceDirectoryCommand}"/>
                 </StackPanel>
             </Grid>
-        </Border>
     </Border>
 
 

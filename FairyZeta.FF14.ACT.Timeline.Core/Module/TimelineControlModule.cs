@@ -200,6 +200,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             foreach (var pendingAlert in pendingAlerts)
             {
                 pendingAlert.Processed = soundPlayProcess.PlayAlert(pendingAlert, pCommonDM.PluginSettingsData.PlaySoundByACT);
+                pCommonDM.TimelineLogCollection.Add(
+                    Globals.TimelineLogger.WriteSystemLog.Success.INFO.Write(string.Format("PendingAlerts: {0}", pendingAlert.AlertSoundData.Filename), Globals.ProjectName));
             }
         }
 

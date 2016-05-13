@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="FairyZeta.Framework.WPF.Controls.Preview_LoadingRing"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls">
+    <StackPanel>
+        <Grid Height="50" Width="200">
+            <fCtrl:LoadingArc />
+        </Grid>
+        <Grid Height="50" Width="200">
+            <fCtrl:LoadingDottedRing/>
+        </Grid>
+        <Grid Height="50" Width="200">
+            <fCtrl:LoadingSolidRing/>
+        </Grid>
+        <Grid Height="50" Width="200">
+        </Grid>
+    </StackPanel>
+</UserControl>
