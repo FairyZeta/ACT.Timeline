@@ -78,6 +78,47 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] bool.CopyCreateModalVisibility - ＜オーバーレイコピー作成モーダル表示状態＞ -----
+        /// <summary> オーバーレイコピー作成モーダル表示状態 </summary>
+        private bool _CopyCreateModalVisibility;
+        /// <summary> オーバーレイコピー作成モーダル表示状態 </summary>    
+        public bool CopyCreateModalVisibility
+        {
+            get { return _CopyCreateModalVisibility; }
+            set { this.SetProperty(ref this._CopyCreateModalVisibility, value); }
+        }
+        #endregion
+        #region #- [Property] OverlayType.CopyOverlayType - ＜コピーするオーバーレイのタイプ＞ -----
+        /// <summary> コピーするオーバーレイのタイプ </summary>
+        private OverlayType _CopyOverlayType;
+        /// <summary> コピーするオーバーレイのタイプ </summary>    
+        public OverlayType CopyOverlayType
+        {
+            get { return _CopyOverlayType; }
+            set { this.SetProperty(ref this._CopyOverlayType, value); }
+        }
+        #endregion
+        #region #- [Property] string.CopyOverlayName - ＜コピーするオーバーレイの名前＞ -----
+        /// <summary> コピーするオーバーレイの名前 </summary>
+        private string _CopyOverlayName;
+        /// <summary> コピーするオーバーレイの名前 </summary>    
+        public string CopyOverlayName
+        {
+            get { return _CopyOverlayName; }
+            set { this.SetProperty(ref this._CopyOverlayName, value); }
+        }
+        #endregion
+        #region #- [Property] string.CopyNewOverlayName - ＜コピー後の新しいオーバーレイの名前＞ -----
+        /// <summary> コピー後の新しいオーバーレイの名前 </summary>
+        private string _CopyNewOverlayName;
+        /// <summary> コピー後の新しいオーバーレイの名前 </summary>    
+        public string CopyNewOverlayName
+        {
+            get { return _CopyNewOverlayName; }
+            set { this.SetProperty(ref this._CopyNewOverlayName, value); }
+        }
+        #endregion
+
         #region #- [Property] bool.OverlayImportModalVisibility - ＜オーバーレイインポートモーダル表示状態＞ -----
         /// <summary> オーバーレイインポートモーダル表示状態 </summary>
         private bool _OverlayImportModalVisibility;
@@ -229,7 +270,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.NowOverlayAddModalVisibility = false;
             this.OverlayDeleteModalVisibility = false;
             this.OverlayManageWindowClosed = false;
-            
+
+            this.CopyCreateModalVisibility = false;
+            this.CopyOverlayName = string.Empty;
+            this.CopyOverlayType = OverlayType.StandardTimeline;
+            this.CopyNewOverlayName = string.Empty;
+
             this.OverlayImportModalVisibility = false;
             this.ImportCloseButtonVisibility = false;
             this.ImportDownloadButtonVisibility = false;

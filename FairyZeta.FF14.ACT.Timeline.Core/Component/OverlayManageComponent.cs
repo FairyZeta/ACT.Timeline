@@ -98,8 +98,20 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             get { return _OverlayControlEnterCommand = _OverlayControlEnterCommand ?? new DelegateCommand<string>(this._OverlayControlEnterExecute, this._CanOverlayControlEnterExecute); }
         }
+        #endregion
+
+
+        #region #- [Command] DelegateCommand<OverlayViewComponent>.OverlayCopyCommand - ＜オーバーレイコピーコマンド＞ -----
+        /// <summary> オーバーレイコピーコマンド＜コマンド＞ </summary>
+        private DelegateCommand<OverlayViewComponent> _OverlayCopyCommand;
+        /// <summary> オーバーレイコピーコマンド＜コマンド＞ </summary>
+        public DelegateCommand<OverlayViewComponent> OverlayCopyCommand
+        {
+            get { return _OverlayCopyCommand = _OverlayCopyCommand ?? new DelegateCommand<OverlayViewComponent>(this._OverlayCopyExecute); }
+        }
         #endregion 
-        
+
+
         #region #- [Command] DelegateCommand<OverlayViewComponent>.OverlayViewCommand - ＜オーバーレイ表示切替コマンド＞ -----
         /// <summary> オーバーレイ表示切替コマンド＜コマンド＞ </summary>
         private DelegateCommand<OverlayViewComponent> _OverlayViewChangedCommand;
@@ -345,8 +357,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             this.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility = true;
             this.OverlayManageDataModel.OverlayManageData.NowOverlayAddModalVisibility = true;
         }
+        #endregion
+
+
+        #region #- [Method] Execute @ OverlayCopyCommand - ＜オーバーレイコピーコマンド＞ -----
+        /// <summary> コマンド実行＜オーバーレイコピーコマンド＞ </summary>
+        /// <param name="para"> コマンドパラメーター </param>
+        private void _OverlayCopyExecute(OverlayViewComponent para)
+        {
+            this.ControlOverlayViewComponent = para;
+            this.OverlayManageDataModel.OverlayManageData.CopyOverlayName = para.OverlayDataModel.OverlayWindowData.OverlayName;
+            this.OverlayManageDataModel.OverlayManageData.CopyOverlayType = para.OverlayDataModel.OverlayWindowData.OverlayType;
+            this.OverlayManageDataModel.OverlayManageData.CopyNewOverlayName = para.OverlayDataModel.OverlayWindowData.OverlayName;
+
+            this.OverlayManageDataModel.OverlayManageData.ModalBaseVisibility = true;
+            this.OverlayManageDataModel.OverlayManageData.CopyCreateModalVisibility = true;
+        }
         #endregion 
-        
+
         #region #- [Method] CanExecute,Execute @ OverlayControlEnterCommand - ＜オーバーレイ操作確定コマンド＞ -----
         /// <summary> 実行可能確認＜オーバーレイ操作確定コマンド＞ </summary>
         /// <param name="para"> コマンドパラメーター </param>
@@ -364,6 +392,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
             {
                 case "Add":
                     this.OverlayManageModule.AddNewOverlay(base.CommonDataModel, this.ControlOverlayDataModel, this.TimelineComponent, this.OverlayManageDataModel, false);
+                    break;
+                case "Copy":
+                    this.OverlayManageModule.CopyOverlay(this.ControlOverlayViewComponent, this.TimelineComponent, this.OverlayManageDataModel, this.OverlayManageDataModel.OverlayManageData.CopyNewOverlayName);
                     break;
                 case "Delete":
                     this.OverlayManageModule.DeleteOverlay(this.ControlOverlayViewComponent, base.CommonDataModel, this.OverlayManageDataModel);
@@ -570,7 +601,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
                         if (!task.Result)
                             return;
 
-                        this.OverlayManageModule.ImportOverlay(base.CommonDataModel, this.TimelineComponent, this.OverlayManageDataModel, base.CommonDataModel.ApplicationData.GetTempOverlayFullPath);
+                        this.OverlayManageModule.ImportOverlay(base.CommonDataModel, this.TimelineComponent, this.OverlayManageDataModel, base.CommonDataModel.ApplicationData.GetTempOverlayFullPath, string.Empty);
 
                         this.OverlayManageDataModel.OverlayManageData.ImportResult = ImportResult.Success;
                         this.OverlayManageDataModel.OverlayManageData.ImportMsg = string.Format("Import Complete.");
@@ -610,9 +641,6 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         }
 
         #endregion
-
-
-
 
         #region #- [Method] Execute @ OverlayExportCommand - ＜オーバーレイエクスポートコマンド＞ -----
         /// <summary> コマンド実行＜オーバーレイエクスポートコマンド＞ </summary>

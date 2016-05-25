@@ -65,9 +65,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             set { this.SetProperty(ref this._CastColorCustomVisibility, value); }
         }
         #endregion
-
         
-
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> オーバーレイカスタム一時的データ

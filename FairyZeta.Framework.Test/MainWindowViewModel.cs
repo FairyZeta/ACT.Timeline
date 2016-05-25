@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Prism.Mvvm;
+using FairyZeta.Framework;
 using FairyZeta.Framework.Dropbox;
+using FairyZeta.Framework.Unit;
 
 namespace FairyZeta.Framework.Test
 {
@@ -33,6 +35,12 @@ namespace FairyZeta.Framework.Test
             :base ()
         {
             this.initViewModel();
+
+           // ASEConverter asec = new ASEConverter();
+            //asec.Read(@"D:\realcolors_swatch1.ase");
+
+            //AseUnit unit = new AseUnit();
+            //unit.Load(@"D:\realcolors_swatch1.ase");
 
             //DropTest.Main();
             //var task = Task.Run((Func<Task>)DropTest.ListRootFolder);

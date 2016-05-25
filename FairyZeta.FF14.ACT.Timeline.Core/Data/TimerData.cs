@@ -74,7 +74,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         public TimeSpan CurrentCombatStartTimeSpan
         {
-            get { return new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatStartTime)); }
+            get
+            {
+                return Task.Run(() => new TimeSpan(0, 0, Convert.ToInt32(this._CurrentCombatStartTime))).Result;
+            }
         }
         
         public TimeSpan CurrentCombatTimeSpan
@@ -116,19 +119,14 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         /// <summary> CurrentTime変更時に画面を更新します。
         /// </summary>
-        public void CurrentTimeChangedRefresh()
+        public async void CurrentTimeChangedRefresh()
         {
-            foreach (var item in this.CombatTimeChangedRefreshList)
-            {
-                item.ViewRefresh();
-            }
 
-            //await this.CombatTimeChangedRefreshList.Select(async item =>
-            //    {
-            //        item.ViewRefresh();
-            //    }).WhenAll();
-
-            Console.WriteLine(string.Format("CurrentTimeChangedRefresh End: {0}", this._CurrentCombatTime));
+            await this.CombatTimeChangedRefreshList.Select(async item =>
+                {
+                    await Task.Run(() => item.ViewRefresh());
+                }).WhenAll();
+            
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

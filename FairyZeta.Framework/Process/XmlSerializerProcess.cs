@@ -67,6 +67,24 @@ namespace FairyZeta.Framework.Process
             }
         }
 
+        /// <summary> XMLファイルを逆シリアライズします。 
+        /// </summary>
+        /// <param name="path"> 読込XMLのファイルパス </param>
+        /// <param name="type"> 復元するオブジェクトの型 </param>
+        /// <param name="nonCatch"> シリアライズエラーを 無視する場合は true </param>
+        /// <returns> 復元オブジェクト </returns>
+        public T XmlLoad<T>(string path, bool nonCatch)
+        {
+            if (nonCatch)
+            {
+                return this.xmlLoad_NonException<T>(path);
+            }
+            else
+            {
+                return this.xmlLoad<T>(path);
+            }
+        }
+
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
         /// <summary> シリアライズエラーを無視して、オブジェクトをXMLにシリアライズします。 
@@ -153,5 +171,49 @@ namespace FairyZeta.Framework.Process
             
         }
 
+        /// <summary> シリアライズエラーを無視して、XMLファイルを逆シリアライズします。 
+        /// </summary>
+        /// <param name="path"> 読込XMLのファイルパス </param>
+        /// <param name="type"> 復元するオブジェクトの型 </param>
+        /// <returns> 復元オブジェクト </returns>
+        private T xmlLoad_NonException<T>(string path)
+        {
+            try
+            {
+                return this.xmlLoad<T>(path);
+            }
+            catch
+            {
+                return default(T);
+            }
+        }
+
+        /// <summary> XMLファイルを逆シリアライズします。 
+        /// </summary>
+        /// <param name="path"> 読込XMLのファイルパス </param>
+        /// <param name="type"> 復元するオブジェクトの型 </param>
+        /// <returns> 復元オブジェクト </returns>
+        private T xmlLoad<T>(string path)
+        {
+            if (File.Exists(path))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                FileStream fs = new FileStream(path, FileMode.Open);
+                try
+                {
+                    var result = serializer.Deserialize(fs);
+                    return (T)result;
+                }
+                finally
+                {
+                    fs.Close();
+                }
+            }
+            else
+            {
+                return default(T);
+            }
+
+        }
     }
 }

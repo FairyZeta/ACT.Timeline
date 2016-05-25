@@ -113,10 +113,7 @@
                         <TextBlock Text="多言語対応、特に日本語" />
                         <TextBlock Text="オーバーレイヘッダー表示項目の順番カスタム変更" />
                         <TextBlock Text="プレビュー編集の背景変更" />
-                        <TextBlock Text="オーバーレイのインポート、エクスポート" />
-                        <TextBlock Text="URL入力によるオーバーレイの直接インポート" />
                         <TextBlock Text="URL入力によるタイムラインファイルの直接保存" />
-                        <TextBlock Text="オーバーレイのコピー作成" />
                         <TextBlock Text="ソースフォルダの複数持ち" />
                         <TextBlock Text="カラーのプロファイル化" />
                         <TextBlock Text="(x,y指定による)自由配置型オーバーレイカスタム" />

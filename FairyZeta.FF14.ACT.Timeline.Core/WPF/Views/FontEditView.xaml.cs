@@ -100,7 +100,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
 
         private void FontFamilyListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.FontStyleListBox.SelectedIndex = 0;
+            if (this.EditFontInfo != null)
+            {
+                this.FontStyleListBox.SelectedItem = this.EditFontInfo.Typeface;
+            }
+
+            if (this.FontStyleListBox.SelectedItem == null)
+            {
+                this.FontStyleListBox.SelectedIndex = 0;
+            }
+
+
             this.editFontChanged();
         }
         private void FontStyleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -112,7 +122,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Views
         {
             if (EditFontInfo == null)
                 return;
-
+            
             //this.FontSizeTextBox.Text = this.EditFontInfo.Size.ToString("N1");
 
             int i = 0;

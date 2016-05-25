@@ -11,6 +11,7 @@
     <AssemblyName>FairyZeta.Framework</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -69,11 +72,46 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASEConverter.cs" />
+    <Compile Include="Component\ColorToolComponent.cs" />
+    <Compile Include="DataModel\ColorToolDataModel.cs" />
+    <Compile Include="Data\BrushData.cs" />
+    <Compile Include="Data\TempColorPaletteData.cs" />
+    <Compile Include="FrameworkSettings.cs" />
+    <Compile Include="WPF\Controls\MultiLineBorder.cs" />
+    <Compile Include="WPF\Design\Design_ColorPaletteData.cs" />
+    <Compile Include="WPF\ViewModels\ColorManageViewModel.cs" />
+    <Compile Include="WPF\Views\ColorManageView.xaml.cs">
+      <DependentUpon>ColorManageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Views\ColorPaletteView.xaml.cs">
+      <DependentUpon>ColorPaletteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="_ENUM.Color.cs" />
+    <Compile Include="DataUnion\AseDataUnion.cs" />
+    <Compile Include="DataUnion\PaletteSetDataUnion.cs" />
+    <Compile Include="Data\AseColorEntryCollection.cs" />
+    <Compile Include="Data\AseColorEntryData.cs" />
+    <Compile Include="Data\AseColorGroupCollection.cs" />
+    <Compile Include="Data\AseColorGroupData.cs" />
+    <Compile Include="Data\ColorPaletteData.cs" />
+    <Compile Include="Data\_Interface\IOutlineColorSettingsData.cs" />
+    <Compile Include="Data\_Interface\IShadowSettingsData.cs" />
+    <Compile Include="Data\OutlineTextData.cs" />
+    <Compile Include="Data\ShadowSettingsData.cs" />
+    <Compile Include="Data\_BlockData.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="ObjectModel\PaletteObjectModel.cs" />
+    <Compile Include="Proc\AseLoadProcess.cs" />
+    <Compile Include="Proc\AseWriteProcess.cs" />
+    <Compile Include="StreamExtensions.cs" />
+    <Compile Include="Unit\AseUnit.cs" />
+    <Compile Include="Unit\ColorPaletteUnit.cs" />
     <Compile Include="WPF\Controls\BoxFoldContent.xaml.cs">
       <DependentUpon>BoxFoldContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Controls\Controls.ENUM.cs" />
+    <Compile Include="WPF\Controls\CustomText.cs" />
     <Compile Include="WPF\Controls\Preview_LoadingRing.xaml.cs">
       <DependentUpon>Preview_LoadingRing.xaml</DependentUpon>
     </Compile>
@@ -89,9 +127,6 @@
       <DependentUpon>FontDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Controls\OutlineTextBlock.cs" />
-    <Compile Include="WPF\Controls\OutlineTextControl.xaml.cs">
-      <DependentUpon>OutlineTextControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ObjectModel\DialogManageObjectModel.cs" />
     <Compile Include="WPF\Converters\StringToDoubleConverter.cs" />
     <Compile Include="WPF\Converters\FontFamilyToNameConverter.cs" />
@@ -134,10 +169,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="WPF\Controls\OutlineTextControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="WPF\Controls\BoxFoldContent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -151,6 +182,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WPF\Controls\_UpDownControl\DoubleUpDownControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\TemplateStyle\ColorToolTemplateStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\ColorManageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\ColorPaletteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -183,9 +226,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
-    <Folder Include="DataModel\" />
-    <Folder Include="DataUnion\" />
     <Folder Include="WPF\Controls\_ContentControl\" />
     <Folder Include="WPF\Triggers\" />
   </ItemGroup>

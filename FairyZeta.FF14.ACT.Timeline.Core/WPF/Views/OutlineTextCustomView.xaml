@@ -1,0 +1,104 @@
+﻿<UserControl 
+  x:Class="FairyZeta.FF14.ACT.Timeline.Core.WPF.Views.OutlineTextCustomView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+  xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+  xmlns:fConv="clr-namespace:FairyZeta.Framework.WPF.Converters;assembly=FairyZeta.Framework"
+  xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
+  xmlns:vm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels"
+    xmlns:dData="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
+
+  mc:Ignorable="d" 
+  d:DesignHeight="600" d:DesignWidth="800"
+    d:DataContext="{d:DesignInstance Type=dData:Desing_OutlineTextCustomViewModel, IsDesignTimeCreatable=True}"
+
+    >
+
+    <UserControl.Resources>
+        <fConv:ColorToSolidColorBrushConverter x:Key="Color2SBrush"/>
+    </UserControl.Resources>
+
+    <Grid x:Name="RootGrid" Background="White">
+        <Border Margin="5">
+            <Border.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="50" />
+                    <Setter Property="Margin" Value="2 2"/>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Width" Value="180"/>
+                    <Setter Property="Margin" Value="5 0 0 0"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="{x:Type fCtrl:DoubleUpDownControl}">
+                    <Setter Property="Width" Value="70" />
+                </Style>
+                <Style TargetType="{x:Type fCtrl:IntUpDownControl}">
+                    <Setter Property="Width" Value="70" />
+                </Style>
+                
+            </Border.Resources>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="InnerColorEditButton" Content="EDIT"/>
+                    <TextBlock Text=" Base Color "/>
+                    <TextBlock Text="{Binding OutlineTextData.InnerTextColor}" Foreground="{Binding OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="OutlineColorEditButton" Content="EDIT"/>
+                    <TextBlock Text=" Outline Color "/>
+                    <TextBlock Text="{Binding OutlineTextData.OutlineTextColor}" Foreground="{Binding OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 3">
+                    <TextBlock Text="Outline Level " Width="100"/>
+                    <fCtrl:DoubleUpDownControl ChangedValue="{Binding OutlineTextData.OutlineThickness, Mode=TwoWay}"
+                                               MinValue="0" MaxValue="10" UpValue="0.1" DownValue="-0.1"/>
+                    <Slider Width="200" Minimum="0" Maximum="3" VerticalAlignment="Center" Margin="10 0"
+                            Value="{Binding OutlineTextData.OutlineThickness}"/>
+                </StackPanel>
+
+                <CheckBox Content="Shadow Enabled" IsChecked="{Binding OutlineTextData.ShadowEnabled}" Margin="10 5"/>
+                <StackPanel>
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding OutlineTextData.ShadowEnabled}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="ShadowColorEditButton" Content="EDIT"/>
+                        <TextBlock Text=" Shadow Color "/>
+                        <TextBlock Text="{Binding OutlineTextData.ShadowColor}" Foreground="{Binding OutlineTextData.ShadowColor, Converter={StaticResource Color2SBrush}, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 3">
+                        <TextBlock Text=" Shadow Level " Width="100"/>
+                        <fCtrl:DoubleUpDownControl ChangedValue="{Binding OutlineTextData.ShadowLevel, Mode=TwoWay}" MinValue="0" MaxValue="50" UpValue="0.1" DownValue="-0.1"/>
+                        <Slider Width="200" Minimum="0" Maximum="20" VerticalAlignment="Center" Margin="10 0"
+                                Value="{Binding OutlineTextData.ShadowLevel}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 3">
+                        <TextBlock Text=" Shadow Depth " Width="100"/>
+                        <fCtrl:DoubleUpDownControl ChangedValue="{Binding OutlineTextData.ShadowDepth, Mode=TwoWay}"
+                                                           MinValue="0" MaxValue="30" UpValue="0.1" DownValue="-0.1"/>
+                        <Slider Width="200" Minimum="0" Maximum="10" VerticalAlignment="Center" Margin="10 0"
+                                        Value="{Binding OutlineTextData.ShadowDepth}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 3">
+                        <TextBlock Text=" Shadow Direction " Width="100"/>
+                        <fCtrl:DoubleUpDownControl ChangedValue="{Binding OutlineTextData.ShadowDirection, Mode=TwoWay}"
+                                                           MinValue="0" MaxValue="360" UpValue="1" DownValue="-1"/>
+                        <Slider Width="200" Minimum="0" Maximum="360" VerticalAlignment="Center" Margin="10 0"
+                                        Value="{Binding OutlineTextData.ShadowDirection}"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

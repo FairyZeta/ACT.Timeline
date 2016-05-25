@@ -173,42 +173,42 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         /// <summary> バーの丸さ </summary> 
         [XmlIgnore]
-        public double CornerRadius_Left
+        public double CornerRadius_TopLeft
         {
-            get { return this.CornerRadius.Left; }
+            get { return this.CornerRadius.TopLeft; }
             set
             {
-                this.CornerRadius = new Thickness(value, CornerRadius.Top, CornerRadius.Right, CornerRadius.Bottom);
+                this.CornerRadius = new CornerRadius(value, this.CornerRadius.TopRight, this.CornerRadius.BottomRight, this.CornerRadius.BottomLeft);
             }
         }
         /// <summary> バーの丸さ </summary> 
         [XmlIgnore]
-        public double CornerRadius_Top
+        public double CornerRadius_TopRight
         {
-            get { return this.CornerRadius.Top; }
+            get { return this.CornerRadius.TopRight; }
             set
             {
-                this.CornerRadius = new Thickness(CornerRadius.Left, value, CornerRadius.Right, CornerRadius.Bottom);
+                this.CornerRadius = new CornerRadius(this.CornerRadius.TopLeft, value, this.CornerRadius.BottomRight, this.CornerRadius.BottomLeft);
             }
         }
         /// <summary> バーの丸さ </summary> 
         [XmlIgnore]
-        public double CornerRadius_Right
+        public double CornerRadius_BottomRight
         {
-            get { return this.CornerRadius.Right; }
+            get { return this.CornerRadius.BottomRight; }
             set
             {
-                this.CornerRadius = new Thickness(CornerRadius.Left, CornerRadius.Top, value, CornerRadius.Bottom);
+                this.CornerRadius = new CornerRadius(this.CornerRadius.TopLeft, this.CornerRadius.TopRight, value, this.CornerRadius.BottomLeft);
             }
         }
         /// <summary> バーの丸さ </summary> 
         [XmlIgnore]
-        public double CornerRadius_Bottom
+        public double CornerRadius_BottomLeft
         {
-            get { return this.CornerRadius.Bottom; }
+            get { return this.CornerRadius.BottomLeft; }
             set
             {
-                this.CornerRadius = new Thickness(CornerRadius.Left, CornerRadius.Top, CornerRadius.Right, value);
+                this.CornerRadius = new CornerRadius(this.CornerRadius.TopLeft, this.CornerRadius.TopRight, this.CornerRadius.BottomRight, value);
             }
         }
 
@@ -272,9 +272,9 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
         #region #- [Property] Thickness.CornerRadius - ＜バーの丸さ＞ -----
         /// <summary> バーの丸さ </summary>
-        private Thickness _CornerRadius;
+        private CornerRadius _CornerRadius;
         /// <summary> バーの丸さ </summary>    
-        public Thickness CornerRadius
+        public CornerRadius CornerRadius
         {
             get { return _CornerRadius; }
             set 
@@ -432,6 +432,80 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] double.BarActiveTime - ＜バーが動き出す時間＞ -----
+        /// <summary> バーが動き出す時間 </summary>
+        private double _BarActiveTime;
+        /// <summary> バーが動き出す時間 </summary>    
+        public double BarActiveTime
+        {
+            get { return _BarActiveTime; }
+            set
+            {
+                this.SetProperty(ref this._BarActiveTime, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+
+        
+        #region #- [Property] double.GradientStop1StartTime - ＜Color1~2へのグラデーション開始時間＞ -----
+        /// <summary> Color1~2へのグラデーション開始時間 </summary>
+        private double _GradientStop1StartTime;
+        /// <summary> Color1~2へのグラデーション開始時間 </summary>    
+        public double GradientStop1StartTime
+        {
+            get { return _GradientStop1StartTime; }
+            set
+            {
+                this.SetProperty(ref this._GradientStop1StartTime, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+        #region #- [Property] double.GradientStop1EndTime - ＜Color1~2へのグラデーション終了時間＞ -----
+        /// <summary> Color1~2へのグラデーション終了時間 </summary>
+        private double _GradientStop1EndTime;
+        /// <summary> Color1~2へのグラデーション終了時間 </summary>    
+        public double GradientStop1EndTime
+        {
+            get { return _GradientStop1EndTime; }
+            set
+            {
+                this.SetProperty(ref this._GradientStop1EndTime, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+
+        #region #- [Property] double.GradientStop2StartTime - ＜Color2~3へのグラデーション開始時間＞ -----
+        /// <summary> Color2~3へのグラデーション開始時間 </summary>
+        private double _GradientStop2StartTime;
+        /// <summary> Color2~3へのグラデーション開始時間 </summary>    
+        public double GradientStop2StartTime
+        {
+            get { return _GradientStop2StartTime; }
+            set
+            {
+                this.SetProperty(ref this._GradientStop2StartTime, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+        #region #- [Property] double.GradientStop2EndTime - ＜Color2~3へのグラデーション終了時間＞ -----
+        /// <summary> Color2~3へのグラデーション終了時間 </summary>
+        private double _GradientStop2EndTime;
+        /// <summary> Color2~3へのグラデーション終了時間 </summary>    
+        public double GradientStop2EndTime
+        {
+            get { return _GradientStop2EndTime; }
+            set
+            {
+                this.SetProperty(ref this._GradientStop2EndTime, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+
         /// <summary> バー形状コレクション
         /// </summary>
         [XmlIgnore]
@@ -481,7 +555,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
             this.BarMargin = new Thickness(1, 5, 35, 5);
             this.BarInnerMargin = new Thickness(1, 1, 1, 1);
-            this.CornerRadius = new Thickness(0, 0, 0, 0);
+            this.CornerRadius = new CornerRadius(0, 0, 0, 0);
             this.BorderThickness = new Thickness(1, 1, 1, 1);
 
             this.BarFormTypeCollection = new ObservableCollection<BarFormType>();
@@ -515,6 +589,13 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.TextHorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             this.TextVerticalAlignment = System.Windows.VerticalAlignment.Center;
 
+            this.BarActiveTime = 0d;
+            this.GradientStop1StartTime = 0d;
+            this.GradientStop1EndTime = 0d;
+            this.GradientStop2StartTime = 0d;
+            this.GradientStop2EndTime = 0d;
+
+
             return true;
         }
 
@@ -531,6 +612,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.BarColor3_Base = Color.FromArgb(0xAA, 0xFF, 0x00, 0x11);
 
             this.BarHorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            this.BarActiveTime = 12d;
+            this.GradientStop1StartTime = 9d;
+            this.GradientStop1EndTime = 7d;
+            this.GradientStop2StartTime = 5d;
+            this.GradientStop2EndTime = 3d;
         }
 
         /// <summary> キャストバー型のデフォルトセットアップを実行します。
@@ -544,6 +630,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.BarColor3_Base = Color.FromArgb(0xAA, 0xEA, 0x3A, 0xEA);
 
             this.BarHorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            this.BarActiveTime = 3d;
+            this.GradientStop1StartTime = 3d;
+            this.GradientStop1EndTime = 2d;
+            this.GradientStop2StartTime = 2d;
+            this.GradientStop2EndTime = 1d;
         }
 
         /// <summary> 変更前カラー情報を取得して設定します。

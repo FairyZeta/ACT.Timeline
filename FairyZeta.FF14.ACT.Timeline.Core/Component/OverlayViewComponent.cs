@@ -420,8 +420,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             if (!para.HasValue) return;
 
-            this.OverlayDataModel.OverlayColorSettingsData.ColorEditTarget = para.Value;
-            this.OverlayDataModel.OverlayColorSettingsData.SetBeforeColor();
+            this.OverlayDataModel.OverlayColorSettings.ColorEditTarget = para.Value;
+            this.OverlayDataModel.OverlayColorSettings.SetBeforeColor();
             this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = true;
 
         }
@@ -433,7 +433,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         private void _EditCloseExecute(string para)
         {
             this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = false;
-            this.OverlayDataModel.OverlayColorSettingsData.ColorEditTarget = ColorEditTarget.Non;
+            this.OverlayDataModel.OverlayColorSettings.ColorEditTarget = ColorEditTarget.Non;
         }
         #endregion 
         #region #- [Method] Execute @ StringColorEditCancelCommand - ＜文字カラー変更キャンセルコマンド＞ -----
@@ -441,10 +441,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         /// <summary> コマンド実行＜文字カラー変更キャンセルコマンド＞ </summary>
         private void _StringColorEditCancelExecute()
         {
-            this.OverlayDataModel.OverlayColorSettingsData.EditBindColor
-                = this.OverlayDataModel.OverlayColorSettingsData.BeforeColor;
+            this.OverlayDataModel.OverlayColorSettings.EditBindColor
+                = this.OverlayDataModel.OverlayColorSettings.BeforeColor;
             this.OverlayDataModel.OverlayCustomTempData.StringColorCustomVisibility = false;
-            this.OverlayDataModel.OverlayColorSettingsData.ColorEditTarget = ColorEditTarget.Non;
+            this.OverlayDataModel.OverlayColorSettings.ColorEditTarget = ColorEditTarget.Non;
         }
 
         #endregion 

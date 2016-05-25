@@ -155,6 +155,9 @@
                                         <Button Content="Export" Style="{StaticResource OvarlayControlButton}" 
                                                 Command="{Binding DataContext.OverlayManageComponent.OverlayExportCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                 CommandParameter="{Binding}"/>
+                                        <Button Content="Copy" Style="{StaticResource OvarlayControlButton}" 
+                                                Command="{Binding DataContext.OverlayManageComponent.OverlayCopyCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                CommandParameter="{Binding}"/>
                                         <Button Content="Delete" Style="{StaticResource OvarlayControlButton}"
                                                 Command="{Binding DataContext.OverlayManageComponent.OverlayDeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                 CommandParameter="{Binding}"/>
@@ -214,6 +217,48 @@
                     </StackPanel>
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Button Content="Add" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayControlEnterCommand}" CommandParameter="Add"/>
+                        <Button Content="Cancel" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayControlEnterCommand}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <!-- コピー追加モーダル -->
+            <Border Background="White" Width="400" Height="250" Grid.ColumnSpan="100" Grid.RowSpan="100" CornerRadius="5">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.CopyCreateModalVisibility}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition />
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Create New Overlay Window. (Copy)" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="1">
+                        <StackPanel Orientation="Horizontal" Height="30" Margin="5">
+                            <Label Content="Copy Overlay:" Width="120" HorizontalContentAlignment="Right" />
+                            <Label Height="30" Width="240" VerticalContentAlignment="Center"
+                                   Content="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.CopyOverlayName}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30" Margin="5">
+                            <Label Content="Overlay Type:" Width="120" HorizontalContentAlignment="Right" />
+                            <Label Height="30" Width="240" VerticalContentAlignment="Center"
+                                   Content="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.CopyOverlayType}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30" Margin="5">
+                            <Label Content="New Name:" Width="120" HorizontalContentAlignment="Right"/>
+                            <TextBox Height="30" Width="240"  VerticalContentAlignment="Center" 
+                                     Text="{Binding OverlayManageComponent.OverlayManageDataModel.OverlayManageData.CopyNewOverlayName, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Content="Copy" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayControlEnterCommand}" CommandParameter="Copy"/>
                         <Button Content="Cancel" Width="100" Height="30" Margin="5 2" Command="{Binding OverlayManageComponent.OverlayControlEnterCommand}" />
                     </StackPanel>
                 </Grid>

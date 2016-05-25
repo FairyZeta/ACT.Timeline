@@ -38,7 +38,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Overlay Name" Width="100" HorizontalContentAlignment="Center"/>
                             <Label Content=":"/>
-                            <Label Content="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}"/>
+                            <TextBox Width="400" Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Data Version" Width="100" HorizontalContentAlignment="Center"/>
@@ -46,7 +46,7 @@
                             <Label Content="{Binding OverlayViewComponent.OverlayDataModel.DataVersion}"/>
                         </StackPanel>
 
-                        <Label Margin="15" Content="Sry, Name and Type custom  coming soon."/>
+                        <Label Margin="15" Content="Sry, Type custom  coming soon."/>
                     </StackPanel>
                 </Grid>
             </Border>

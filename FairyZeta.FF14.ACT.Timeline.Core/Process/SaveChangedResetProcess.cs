@@ -51,6 +51,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Process
             pDataModel.ActiveBarSettingsData.SaveChangedTarget = false;
             pDataModel.CastBarSettingsData.SaveChangedTarget = false;
             pDataModel.FontData.SaveChangedTarget = false;
+
+            pDataModel.OverlayColorSettings.SetPropertyChangedFLG(false);
         }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/

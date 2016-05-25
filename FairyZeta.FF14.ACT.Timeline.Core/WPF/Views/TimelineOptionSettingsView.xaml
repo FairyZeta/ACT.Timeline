@@ -33,7 +33,7 @@
                     <TextBlock Text=" - Generic -" Margin="5"/>
                     <CheckBox Content="Reset Timeline at combat end" Margin="10 2" 
                               IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.ResetTimelineCombatEndEnabled}"/>
-                    <TextBlock Text=" - Sound -" Margin="5"/>
+                <TextBlock Text=" - Sound -" Margin="5"/>
                     <CheckBox Content="Play Sound By ACT" Margin="10 2" VerticalAlignment="Center"
                               IsChecked="{Binding CommonComponent.CommonDataModel.PluginSettingsData.PlaySoundByACT}"/>
                     <TextBlock Text=" - Auto Operation -" Margin="5"/>

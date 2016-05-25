@@ -48,6 +48,21 @@ namespace FairyZeta.Framework.ObjectModel
             this.OsEnvironmentData.IsOperating64Bit = System.Environment.Is64BitOperatingSystem;
             this.OsEnvironmentData.IsProcess64Bit = System.Environment.Is64BitProcess;
 
+            this.OsEnvironmentData.OperatingSystem = System.Environment.OSVersion;
+            this.OsEnvironmentData.RunCLR = System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion();
+            this.OsEnvironmentData.BuildCLR = System.Reflection.Assembly.GetExecutingAssembly().ImageRuntimeVersion;
+
+            string osBit = string.Empty;
+            if (this.OsEnvironmentData.IsOperating64Bit)
+            {
+                osBit = " - 64bit";
+            }
+            else
+            {
+                osBit = " - 32bit";
+            }
+
+
             return true;
         }
 

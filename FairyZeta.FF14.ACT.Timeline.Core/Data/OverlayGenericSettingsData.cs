@@ -356,6 +356,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.KernelTypeCollection.Clear();
 
             this.EffectTypeCollection.Add(EffectType.Blur);
+            this.EffectTypeCollection.Add(EffectType.DropShadow);
             this.KernelTypeCollection.Add(KernelType.Box);
             this.KernelTypeCollection.Add(KernelType.Gaussian);
         }

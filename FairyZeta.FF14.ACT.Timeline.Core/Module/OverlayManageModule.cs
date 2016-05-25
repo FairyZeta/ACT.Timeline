@@ -319,19 +319,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             bool? result = openFileDialog.ShowDialog();
             if (result == true)
             {
-                return this.ImportOverlay(pCommonDataModel, pTimelineComponent, pOverlayManageDataModel, openFileDialog.FileName);
+                return this.ImportOverlay(pCommonDataModel, pTimelineComponent, pOverlayManageDataModel, openFileDialog.FileName, string.Empty);
             }
 
             return false;
         }
         /// <summary> オーバーレイをインポートします。
         /// </summary>
-        public bool ImportOverlay(CommonDataModel pCommonDataModel, TimelineComponent pTimelineComponent, OverlayManageDataModel pOverlayManageDataModel, string pOverlayFullPath)
+        public bool ImportOverlay(CommonDataModel pCommonDataModel, TimelineComponent pTimelineComponent, OverlayManageDataModel pOverlayManageDataModel, string pOverlayFullPath, string pImportOverlayName)
         {
             var data = this.OverlayDataModelLoad(pOverlayFullPath, false);
             if (data != null)
             {
                 this.overlayDataRevisionProcess.DataRevisionExecute(data);
+                if(!string.IsNullOrWhiteSpace(pImportOverlayName))
+                {
+                    data.OverlayWindowData.OverlayName = pImportOverlayName;
+                }
+
                 this.AddNewOverlay(pCommonDataModel, data, pTimelineComponent, pOverlayManageDataModel, true);
             }
             else
@@ -371,6 +376,19 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
             
         }
 
+        /// <summary> オーバーレイのコピー作成を実行します。
+        /// </summary>
+        /// <param name="pOverlayVC"> コピーするオーバーレイコンポーネント </param>
+        /// <param name="pTimelineC"> コピーしたオーバーレイに搭載するタイムラインコンポーネント </param>
+        /// <param name="pOverlayManageDM"> オーバーレイ管理データモデル </param>
+        /// <param name="pNewOverlayName"> コピー後に設定するオーバーレイの名前 </param>
+        public void CopyOverlay(OverlayViewComponent pOverlayVC, TimelineComponent pTimelineC, OverlayManageDataModel pOverlayManageDM, string pNewOverlayName)
+        {
+            this.OverlayDataModelSave(pOverlayVC.CommonDataModel.ApplicationData.GetTempOverlayFullPath, pOverlayVC.OverlayDataModel, false);
+            this.ImportOverlay(pOverlayVC.CommonDataModel, pTimelineC, pOverlayManageDM, pOverlayVC.CommonDataModel.ApplicationData.GetTempOverlayFullPath, pNewOverlayName);
+        }
+
+        
         public void SetDefaultOverlayWindowData(OverlayWindowData pWindowData)
         {
             pWindowData.WindowTop = 100;

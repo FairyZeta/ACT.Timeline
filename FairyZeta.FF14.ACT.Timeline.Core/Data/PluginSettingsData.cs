@@ -134,6 +134,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._AutoTimelineVisibilityEnabled = value;
                 base.OnPropertyChanged("AutoTimelineVisibilityEnabled");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
@@ -222,9 +223,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
 
                 this._LastUpdateCheckTime = value;
                 base.OnPropertyChanged("LastUpdateCheckTime");
+                base.SaveChangedTarget = true;
             }
         }
         #endregion
+
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 

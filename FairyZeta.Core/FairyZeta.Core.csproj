@@ -55,8 +55,11 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DisplayData.cs" />
+    <Compile Include="FZ.Enum.cs" />
     <Compile Include="Process\DoubleToAdjustProcess.cs" />
     <Compile Include="Process\DoubleToRoundProcess.cs" />
+    <Compile Include="Process\GetDisplayResolutionProcess.cs" />
     <Compile Include="Process\StringParserProcess.cs" />
     <Compile Include="Process\_Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

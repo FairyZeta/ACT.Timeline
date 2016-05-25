@@ -3,22 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:test="clr-namespace:FairyZeta.Framework.Test"
         xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
-        Title="MainWindow" Height="300" Width="300" Background="Black">
+        Title="MainWindow" Height="300" Width="300" >
     
     <Window.Resources>
         <DataTemplate x:Key="TestTemplate">
             <Border BorderThickness="0 10" BorderBrush="LightBlue">
                 <StackPanel>
-                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.2" FontWeight="Bold"/>
+                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.2" FontWeight="Bold">
+                        <fCtrl:OutlineTextBlock.BitmapEffect>
+                            <DropShadowBitmapEffect ShadowDepth="0" Softness="0.2" />
+                        </fCtrl:OutlineTextBlock.BitmapEffect>
+                    </fCtrl:OutlineTextBlock>
+                        
+                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.4" FontWeight="Bold"/>
                     <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.4"/>
                     <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.6"/>
                     <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.8"/>
                     <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="1.0" FontWeight="Bold"/>
-                    <fCtrl:OutlineTextBlock FontSize="16" Text="TestText" Fill="YellowGreen" Stroke="Green" >
-                        <fCtrl:OutlineTextBlock.Effect>
-                            <DropShadowEffect Color="DarkGreen" ShadowDepth="1"/>
-                        </fCtrl:OutlineTextBlock.Effect>
-                    </fCtrl:OutlineTextBlock>
                     <fCtrl:OutlineTextBlock FontSize="18" Text="TestText" Fill="YellowGreen" Stroke="Green" />
                     <fCtrl:OutlineTextBlock FontSize="20" Text="TestText" Fill="YellowGreen" Stroke="Green" />
                 </StackPanel>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
+using FairyZeta.FF14.ACT.Timeline.Core.Settings;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
 {
@@ -34,6 +35,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
                     || this.CastBarSettingsData.SaveChangedTarget
                     || this.FontData.SaveChangedTarget
                     )
+                {
+                    return true;
+                }
+                else if (this.OverlayColorSettings.IsSettingChanged())
                 {
                     return true;
                 }
@@ -200,6 +205,17 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
         }
         #endregion
 
+        #region #- [Property] OverlayColorSettings.OverlayColorSettings - ＜オーバーレイ配色設定＞ -----
+        /// <summary> オーバーレイ配色設定 </summary>
+        private OverlayColorSettings _OverlayColorSettings;
+        /// <summary> オーバーレイ配色設定 </summary>    
+        public OverlayColorSettings OverlayColorSettings
+        {
+            get { return _OverlayColorSettings; }
+            set { this.SetProperty(ref this._OverlayColorSettings, value); }
+        }
+        #endregion
+
         /// <summary> アクティブバー設定データ
         /// </summary>
         public OverlayBarSettingsData ActiveBarSettingsData { get; set; }
@@ -244,6 +260,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             this.OverlayContentSettingsData = new OverlayContentSettingsData();
             this.OverlayCustomTempData = new OverlayCustomTempData();
             this.OverlayColorSettingsData = new OverlayColorSettingsData();
+            this.OverlayColorSettings = new OverlayColorSettings();
 
             this.ActiveBarSettingsData = new OverlayBarSettingsData();
             this.ActiveBarSettingsData.DefaultSetup_ActiveBar();

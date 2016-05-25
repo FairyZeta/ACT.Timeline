@@ -12,6 +12,17 @@ namespace FairyZeta.Framework.Data
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> OS情報
+        /// </summary>
+        public OperatingSystem OperatingSystem { get; set; }
+
+        /// <summary> .Netの実行Ver
+        /// </summary>
+        public string RunCLR { get; set; }
+        /// <summary> .NetのビルドVer
+        /// </summary>
+        public string BuildCLR { get; set; }
+
         /// <summary> OSが64Bitで稼働しているかどうか
         /// </summary>
         public bool IsOperating64Bit { get; set; }

@@ -5,15 +5,25 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace FairyZeta.Framework.WPF.Controls
 {
-    [ContentProperty("Text")]
     public class OutlineTextBlock : FrameworkElement
     {
         private FormattedText FormattedText;
         private Geometry TextGeometry;
 
+        public DropShadowEffect TextShadowEffect { get; set; }
+
+        public OutlineTextBlock()
+        {
+            this.TextDecorations = new TextDecorationCollection();
+        }
+
+        #region DependencyProperty
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", typeof(string), typeof(OutlineTextBlock),
             new FrameworkPropertyMetadata(OnFormattedTextInvalidated));
@@ -61,11 +71,13 @@ namespace FairyZeta.Framework.WPF.Controls
         public static readonly DependencyProperty FontWeightProperty = TextElement.FontWeightProperty.AddOwner(
             typeof(OutlineTextBlock), new FrameworkPropertyMetadata(OnFormattedTextUpdated));
 
-        public OutlineTextBlock()
-        {
-            this.TextDecorations = new TextDecorationCollection();
-        }
+        public static readonly DependencyProperty TextShadowEffectProperty = DependencyProperty.Register(
+            "TextShadowEffect", typeof(DropShadowEffect), typeof(OutlineTextBlock),
+            new FrameworkPropertyMetadata(null));
 
+        #endregion
+
+        #region BindProperty
         public Brush Fill
         {
             get { return (Brush)GetValue(FillProperty); }
@@ -144,15 +156,31 @@ namespace FairyZeta.Framework.WPF.Controls
             get { return (TextWrapping)GetValue(TextWrappingProperty); }
             set { SetValue(TextWrappingProperty, value); }
         }
+        #endregion
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            this.EnsureGeometry();
+            //RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
 
-            drawingContext.DrawGeometry(
-                this.Fill, 
-                new Pen(this.Stroke, this.StrokeThickness), 
-                this.TextGeometry);
+            if (this.StrokeThickness <= 0d)
+            {
+                if (this.FormattedText == null)
+                {
+                    this.EnsureFormattedText();
+                }
+
+                drawingContext.DrawText(this.FormattedText, new Point());
+            }
+            else
+            {
+                this.EnsureGeometry();
+
+                drawingContext.DrawGeometry(
+                    this.Fill,
+                    new Pen(this.Stroke, this.StrokeThickness),
+                    this.TextGeometry);
+            }
+
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -205,23 +233,25 @@ namespace FairyZeta.Framework.WPF.Controls
             outlinedTextBlock.InvalidateMeasure();
             outlinedTextBlock.InvalidateVisual();
         }
-
+        
         private void EnsureFormattedText()
         {
-            if (this.FormattedText != null || this.Text == null)
+            if (this.Text == null)
             {
                 return;
             }
-
+            
             this.FormattedText = new FormattedText(
                 this.Text,
                 CultureInfo.CurrentUICulture,
                 this.FlowDirection,
                 new Typeface(this.FontFamily, this.FontStyle, this.FontWeight, this.FontStretch),
                 this.FontSize,
-                Brushes.Black,
+                //Brushes.Black,
+                this.Fill,
                 new NumberSubstitution(),
-                TextFormattingMode.Ideal);
+                TextFormattingMode.Display);
+            
 
             this.UpdateFormattedText();
         }
@@ -245,19 +275,23 @@ namespace FairyZeta.Framework.WPF.Controls
             this.FormattedText.SetTextDecorations(this.TextDecorations);
         }
 
-        private void EnsureGeometry()
+        private  void EnsureGeometry()
         {
             if (this.TextGeometry != null)
             {
                 return;
             }
 
-            this.EnsureFormattedText();
-
-            if (this.FormattedText != null)
+            if (this.FormattedText == null)
             {
-                this.TextGeometry = this.FormattedText.BuildGeometry(new Point());
+                this.EnsureFormattedText();
             }
+
+            if (this.FormattedText == null)
+                return;
+
+            this.TextGeometry = this.FormattedText.BuildGeometry(new Point());
         }
     }
+    
 }

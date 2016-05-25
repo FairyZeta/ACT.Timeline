@@ -152,29 +152,83 @@
 
         /// <summary> メニューメイン／ベース </summary>
         MenuMain_Base,
+        /// <summary> メニューメイン／アウトライン </summary>
+        MenuMain_Outline,
+        /// <summary> メニューメイン／シャドウ </summary>
+        MenuMain_Shadow,
+
         /// <summary> メニューサブ／ベース </summary>
         MenuSub_Base,
+        /// <summary> メニューサブ／アウトライン </summary>
+        MenuSub_Outline,
+        /// <summary> メニューサブ／シャドウ </summary>
+        MenuSub_Shadow,
+
         /// <summary> 背景／ベース </summary>
         Background_Base,
+        /// <summary> 背景／シャドウ </summary>
+        Background_Shadow,
 
         /// <summary> タイムライン／ヘッダーテキスト／ベース </summary>
         HeaderText_Base,
+        /// <summary> タイムライン／ヘッダーテキスト／アウトライン </summary>
+        HeaderText_Outline,
+        /// <summary> タイムライン／ヘッダーテキスト／シャドウ </summary>
+        HeaderText_Shadow,
+
         /// <summary> タイムライン／ヘッダーバー／ベース </summary>
         HeaderBar_Base,
+        /// <summary> タイムライン／ヘッダーバー／シャドウ </summary>
+        HeaderBar_Shadow,
+
         /// <summary> タイムライン／不明／ベース </summary>
         TypeColorUNKNOWN_Base,
+        /// <summary> タイムライン／不明／アウトライン </summary>
+        TypeColorUNKNOWN_Outline,
+        /// <summary> タイムライン／不明／シャドウ </summary>
+        TypeColorUNKNOWN_Shadow,
+
         /// <summary> タイムライン／敵／ベース </summary>
         TypeColorENEMY_Base,
+        /// <summary> タイムライン／敵／アウトライン </summary>
+        TypeColorENEMY_Outline,
+        /// <summary> タイムライン／敵／シャドウ </summary>
+        TypeColorENEMY_Shadow,
+
         /// <summary> タイムライン／タンク／ベース </summary>
         TypeColorTANK_Base,
+        /// <summary> タイムライン／タンク／アウトライン </summary>
+        TypeColorTANK_Outline,
+        /// <summary> タイムライン／タンク／シャドウ </summary>
+        TypeColorTANK_Shadow,
+
         /// <summary> タイムライン／DPS／ベース </summary>
         TypeColorDPS_Base,
+        /// <summary> タイムライン／DPS／アウトライン </summary>
+        TypeColorDPS_Outline,
+        /// <summary> タイムライン／DPS／シャドウ </summary>
+        TypeColorDPS_Shadow,
+
         /// <summary> タイムライン／ヒーラー／ベース </summary>
         TypeColorHEALER_Base,
+        /// <summary> タイムライン／ヒーラー／アウトライン </summary>
+        TypeColorHEALER_Outline,
+        /// <summary> タイムライン／ヒーラー／シャドウ </summary>
+        TypeColorHEALER_Shadow,
+
         /// <summary> タイムライン／ペット／ベース </summary>
         TypeColorPET_Base,
+        /// <summary> タイムライン／ペット／アウトライン </summary>
+        TypeColorPET_Outline,
+        /// <summary> タイムライン／ペット／シャドウ </summary>
+        TypeColorPET_Shadow,
+
         /// <summary> タイムライン／ギミック／ベース </summary>
         TypeColorGIMMICK_Base,
+        /// <summary> タイムライン／ギミック／アウトライン </summary>
+        TypeColorGIMMICK_Outline,
+        /// <summary> タイムライン／敵／シャドウ </summary>
+        TypeColorGIMMICK_Shadow,
 
         BarBorder_Base,
         BarBackgroung_Base,

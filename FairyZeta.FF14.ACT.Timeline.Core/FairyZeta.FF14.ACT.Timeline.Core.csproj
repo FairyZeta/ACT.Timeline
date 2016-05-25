@@ -191,6 +191,7 @@
     </Compile>
     <Compile Include="Process\TimelineSynchroProcess.cs" />
     <Compile Include="Process\_Process.cs" />
+    <Compile Include="Settings\OverlayColorSettings.cs" />
     <Compile Include="Timeline.ENUM.cs" />
     <Compile Include="TimelineCore.cs" />
     <Compile Include="Globals.cs" />
@@ -212,12 +213,13 @@
     <Compile Include="WPF\Behavior\PropertyChangedCommandBehavior.cs" />
     <Compile Include="WPF\Behavior\WindowCloseAttachedBehavior.cs" />
     <Compile Include="WPF\Behavior\WindowStateChangeAttachedBehavior.cs" />
+    <Compile Include="WPF\Controls\TimelineProgressBar.cs" />
     <Compile Include="WPF\Converter\ColorToShadowColorConverter.cs" />
     <Compile Include="WPF\Converter\OpacityConverter.cs" />
-    <Compile Include="WPF\Custom\OutlinedTextBlock.cs" />
     <Compile Include="WPF\Desing\Desing_BaseWindowViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WPF\Desing\Desing_OutlineTextCustomViewModel.cs" />
     <Compile Include="WPF\Desing\Desing_OverlayCustomWindowViewModel.cs" />
     <Compile Include="WPF\Desing\Desing_OverlayManageWindowViewModel.cs" />
     <Compile Include="WPF\Desing\Desing_PluginApplicationViewModel.cs" />
@@ -232,6 +234,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WPF\ViewModels\_ViewModel.cs" />
+    <Compile Include="WPF\Views\ShadowSettingsCustomView.xaml.cs">
+      <DependentUpon>ShadowSettingsCustomView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Views\OutlineTextCustomView.xaml.cs">
+      <DependentUpon>OutlineTextCustomView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\Views\ColorEditView.xaml.cs">
       <DependentUpon>ColorEditView.xaml</DependentUpon>
     </Compile>
@@ -381,6 +389,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WPF\Views\ShadowSettingsCustomView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Views\OutlineTextCustomView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WPF\Views\ColorEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -483,6 +499,9 @@
       <Project>{99f2ed28-b5fd-4c8f-855a-18ffc34a447b}</Project>
       <Name>FairyZeta.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataUnion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

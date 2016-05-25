@@ -11,12 +11,46 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior
     {
         public static readonly DependencyProperty ColorChangedProperty =
                     DependencyProperty.Register("ColorChanged", typeof(Color), typeof(CastGradientBehavior), new FrameworkPropertyMetadata(default(Color), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnColorChanged));
+        public static readonly DependencyProperty GradientStop1StartTimeProperty =
+                    DependencyProperty.Register("GradientStop1StartTime", typeof(double), typeof(CastGradientBehavior), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnGradientStopTimeChanged));
+        public static readonly DependencyProperty GradientStop1EndTimeProperty =
+                    DependencyProperty.Register("GradientStop1EndTime", typeof(double), typeof(CastGradientBehavior), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnGradientStopTimeChanged));
+        public static readonly DependencyProperty GradientStop2StartTimeProperty =
+                    DependencyProperty.Register("GradientStop2StartTime", typeof(double), typeof(CastGradientBehavior), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnGradientStopTimeChanged));
+        public static readonly DependencyProperty GradientStop2EndTimeProperty =
+                    DependencyProperty.Register("GradientStop2EndTime", typeof(double), typeof(CastGradientBehavior), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnGradientStopTimeChanged));
+
 
         /// <summary> (Dependency) 変更対象カラー </summary>
         public Color ColorChanged
         {
             get { return (Color)GetValue(ColorChangedProperty); }
             set { SetValue(ColorChangedProperty, value); }
+        }
+
+        /// <summary> (Dependency) Color1~2へのグラデーション開始時間 </summary>
+        public double GradientStop1StartTime
+        {
+            get { return (double)GetValue(GradientStop1StartTimeProperty); }
+            set { SetValue(GradientStop1StartTimeProperty, value); }
+        }
+        /// <summary> (Dependency) Color1~2へのグラデーション終了時間 </summary>
+        public double GradientStop1EndTime
+        {
+            get { return (double)GetValue(GradientStop1EndTimeProperty); }
+            set { SetValue(GradientStop1EndTimeProperty, value); }
+        }
+        /// <summary> (Dependency) Color2~3へのグラデーション開始時間 </summary>
+        public double GradientStop2StartTime
+        {
+            get { return (double)GetValue(GradientStop2StartTimeProperty); }
+            set { SetValue(GradientStop2StartTimeProperty, value); }
+        }
+        /// <summary> (Dependency) Color2~3へのグラデーション終了時間 </summary>
+        public double GradientStop2EndTime
+        {
+            get { return (double)GetValue(GradientStop2EndTimeProperty); }
+            set { SetValue(GradientStop2EndTimeProperty, value); }
         }
 
         protected override void OnAttached()
@@ -46,6 +80,18 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior
         /// <param name="obj"></param>
         /// <param name="e"></param>
         private static void OnColorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            CastGradientBehavior ctrl = obj as CastGradientBehavior;
+            if (ctrl != null)
+            {
+                ctrl.CalculateNewGradient(ctrl.Progress);
+            }
+        }
+        /// <summary> GradientStopTime変更時のコールバック
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
+        private static void OnGradientStopTimeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             CastGradientBehavior ctrl = obj as CastGradientBehavior;
             if (ctrl != null)
@@ -93,19 +139,24 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior
             {
 
             }
-            else if (progress < 2)
+            else if (progress < this.GradientStop2StartTime)
             {
-                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[2].Color, 1 - progress);
-                var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[1].Color, 2 - progress);
-                brush.GradientStops.Add(newGradientStop1);
+                var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[2].Color, this.GradientStop2EndTime - progress);
+                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[1].Color, this.GradientStop2StartTime - progress);
                 brush.GradientStops.Add(newGradientStop2);
+                brush.GradientStops.Add(newGradientStop1);
+            }
+            else if (progress < this.GradientStop1StartTime)
+            {
+                var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[1].Color, this.GradientStop1EndTime - progress);
+                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[0].Color, this.GradientStop1StartTime - progress);
+                brush.GradientStops.Add(newGradientStop2);
+                brush.GradientStops.Add(newGradientStop1);
             }
             else
             {
-                var newGradientStop1 = new GradientStop(SourceBrush.GradientStops[1].Color, 2 - progress);
-                var newGradientStop2 = new GradientStop(SourceBrush.GradientStops[0].Color, 3 - progress);
-                brush.GradientStops.Add(newGradientStop1);
-                brush.GradientStops.Add(newGradientStop2);
+                var newGradientStop = new GradientStop(SourceBrush.GradientStops[0].Color, 0);
+                brush.GradientStops.Add(newGradientStop);
             }
 
             ApplyNewGradient(brush);
