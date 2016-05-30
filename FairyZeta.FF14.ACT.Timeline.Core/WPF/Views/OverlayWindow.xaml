@@ -22,7 +22,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Style/_TimelineStyle.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/_TimelineStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

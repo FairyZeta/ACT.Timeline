@@ -8,7 +8,7 @@ using System.Reflection;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Process;
-using FairyZeta.Framework.Process;
+using FairyZeta.Framework.Proc;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 {

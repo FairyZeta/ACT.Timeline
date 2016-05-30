@@ -1,0 +1,6 @@
+﻿<Button x:Class="FairyZeta.Framework.WPF.Controls.ImageButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls">
+    
+</Button>

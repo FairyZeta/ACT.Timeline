@@ -1,0 +1,22 @@
+﻿<RadioButton x:Class="FairyZeta.Framework.WPF.Controls.ColorRadioButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FairyZeta.Framework.WPF.Controls">
+    <RadioButton.Template>
+        <ControlTemplate>
+            <Grid x:Name="RootGrid">
+                
+            </Grid>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="true">
+                </DataTrigger>
+                <Trigger Property="IsFocused" Value="true">
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </RadioButton.Template>
+</RadioButton>

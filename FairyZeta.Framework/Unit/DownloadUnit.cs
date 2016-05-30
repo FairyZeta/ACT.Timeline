@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FairyZeta.Framework.Process;
+using FairyZeta.Framework.Proc;
 
 namespace FairyZeta.Framework.Unit
 {

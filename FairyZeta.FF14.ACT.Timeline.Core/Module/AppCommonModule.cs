@@ -10,7 +10,7 @@ using FairyZeta.FF14.ACT.Info;
 using FairyZeta.FF14.ACT.Timeline.Core.Data;
 using FairyZeta.FF14.ACT.Timeline.Core.DataModel;
 using FairyZeta.FF14.ACT.Timeline.Core.Process;
-using FairyZeta.Framework.Process;
+using FairyZeta.Framework.Proc;
 using FairyZeta.FF14.ACT.ObjectModel;
 using FairyZeta.FF14.ACT.Timeline.Core.ObjectModel;
 

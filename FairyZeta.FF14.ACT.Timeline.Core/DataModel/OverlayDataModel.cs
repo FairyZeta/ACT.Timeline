@@ -34,6 +34,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
                     || this.ActiveBarSettingsData.SaveChangedTarget
                     || this.CastBarSettingsData.SaveChangedTarget
                     || this.FontData.SaveChangedTarget
+                    || this.OverlayHeaderNameSettings.SaveChangedTarget
                     )
                 {
                     return true;
@@ -215,6 +216,16 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             set { this.SetProperty(ref this._OverlayColorSettings, value); }
         }
         #endregion
+        #region #- [Property] OverlayHeaderNameSettings.OverlayHeaderNameSettings - ＜オーバーレイヘッダー名設定＞ -----
+        /// <summary> オーバーレイヘッダー名設定 </summary>
+        private OverlayHeaderNameSettings _OverlayHeaderNameSettings;
+        /// <summary> オーバーレイヘッダー名設定 </summary>    
+        public OverlayHeaderNameSettings OverlayHeaderNameSettings
+        {
+            get { return _OverlayHeaderNameSettings; }
+            set { this.SetProperty(ref this._OverlayHeaderNameSettings, value); }
+        }
+        #endregion
 
         /// <summary> アクティブバー設定データ
         /// </summary>
@@ -261,6 +272,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.DataModel
             this.OverlayCustomTempData = new OverlayCustomTempData();
             this.OverlayColorSettingsData = new OverlayColorSettingsData();
             this.OverlayColorSettings = new OverlayColorSettings();
+            this.OverlayHeaderNameSettings = new OverlayHeaderNameSettings();
 
             this.ActiveBarSettingsData = new OverlayBarSettingsData();
             this.ActiveBarSettingsData.DefaultSetup_ActiveBar();

@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\FairyZeta.FF14.ACT.Timeline.Core\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -43,7 +43,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\FairyZeta.FF14.ACT.Timeline.Core\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -192,6 +192,7 @@
     <Compile Include="Process\TimelineSynchroProcess.cs" />
     <Compile Include="Process\_Process.cs" />
     <Compile Include="Settings\OverlayColorSettings.cs" />
+    <Compile Include="Settings\OverlayHeaderNameSettings.cs" />
     <Compile Include="Timeline.ENUM.cs" />
     <Compile Include="TimelineCore.cs" />
     <Compile Include="Globals.cs" />
@@ -275,9 +276,6 @@
     </Compile>
     <Compile Include="WPF\Views\StandardTimelineView.xaml.cs">
       <DependentUpon>StandardTimelineView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WPF\Views\StandardTimelineView_OLD.xaml.cs">
-      <DependentUpon>StandardTimelineView_OLD.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Views\TimelineAboutView.xaml.cs">
       <DependentUpon>TimelineAboutView.xaml</DependentUpon>
@@ -365,27 +363,27 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="WPF\Style\OverlayCustomStyle.xaml">
+    <Page Include="WPF\TemplateStyle\OverlayCustomStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WPF\Style\OverlayManageStyle.xaml">
+    <Page Include="WPF\TemplateStyle\OverlayManageStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WPF\Style\StandardTimelineStyle.xaml">
+    <Page Include="WPF\TemplateStyle\StandardTimelineResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WPF\Style\_AppBaseStyle.xaml">
+    <Page Include="WPF\TemplateStyle\_AppBaseStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WPF\Style\_TimelineStyle.xaml">
+    <Page Include="WPF\TemplateStyle\_TimelineStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WPF\Style\__ColorBaseStyle.xaml">
+    <Page Include="WPF\TemplateStyle\__ColorBaseStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -442,10 +440,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WPF\Views\StandardTimelineView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WPF\Views\StandardTimelineView_OLD.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.IO;
 
-namespace FairyZeta.Framework.Process
+namespace FairyZeta.Framework.Proc
 {
     /// <summary> FZ／ファイルダウンロードプロセス
     /// </summary>

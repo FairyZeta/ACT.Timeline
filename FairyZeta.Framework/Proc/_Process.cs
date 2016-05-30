@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FairyZeta.Framework.Process
+namespace FairyZeta.Framework.Proc
 {
     /// <summary> [規定] フレームワーク／プロセス
     /// </summary>

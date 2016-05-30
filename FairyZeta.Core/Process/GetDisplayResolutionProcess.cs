@@ -34,6 +34,10 @@ namespace FairyZeta.Core.Process
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> ディスプレイ情報を返却します。
+        /// </summary>
+        /// <param name="pDisplayType"> 取得するディスプレイタイプ </param>
+        /// <returns> ディスプレイデータ またはNull </returns>
         public DisplayData GetDisplayResolution(DisplayType pDisplayType)
         {
             DisplayData result = null;
@@ -41,7 +45,16 @@ namespace FairyZeta.Core.Process
             switch (pDisplayType)
             {
                 case DisplayType.HD720:
-                    result = new DisplayData(pDisplayType.ToString(), 720d, 1280d, 9d, 16d);
+                    result = new DisplayData(pDisplayType.ToString(), 1280d, 720d, 16d, 9d);
+                    break;
+                case DisplayType.FHD:
+                    result = new DisplayData(pDisplayType.ToString(), 1920d, 1080d, 16d, 9d);
+                    break;
+                case DisplayType.WUXGA:
+                    result = new DisplayData(pDisplayType.ToString(), 1920d, 1200d, 8d, 5d);
+                    break;
+                case DisplayType.QFHD_UHD_4K:
+                    result = new DisplayData(pDisplayType.ToString(), 3840d, 2160d, 16d, 9d);
                     break;
             }
 

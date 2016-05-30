@@ -11,8 +11,8 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
-                <ResourceDictionary Source="../Style/OverlayCustomStyle.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/StandardTimelineResource.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/OverlayCustomStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
@@ -28,7 +28,7 @@
             </Grid.RowDefinitions>
             <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="10 15 10 10"   CornerRadius="3">
                 <Grid Margin="5">
-                    <Label Content=" Overlay Genelic Settings " Width="140" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Content=" Overlay Genelic Settings " Width="180" Height="20" Padding="3 0" Background="White" Margin="0 -15 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <StackPanel Margin="0 10">
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Overlay Type" Width="100" HorizontalContentAlignment="Center"/>
@@ -45,7 +45,12 @@
                             <Label Content=":"/>
                             <Label Content="{Binding OverlayViewComponent.OverlayDataModel.DataVersion}"/>
                         </StackPanel>
-
+                        <Border BorderThickness="0 1 0 0" BorderBrush="Gray" Margin="10 10"/>
+                        <StackPanel Orientation="Horizontal" Margin="15 5">
+                            <CheckBox Content="Overlay Drawing is Light Mode (OutlineText and Shadow OFF.)" IsChecked="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}"/>
+                        </StackPanel>
+                        
+                        <Border BorderThickness="0 1 0 0" BorderBrush="Gray" Margin="10 10"/>
                         <Label Margin="15" Content="Sry, Type custom  coming soon."/>
                     </StackPanel>
                 </Grid>

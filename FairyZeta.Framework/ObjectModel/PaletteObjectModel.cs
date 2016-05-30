@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using FairyZeta.Framework.Data;
 using FairyZeta.Framework.DataUnion;
-using FairyZeta.Framework.Process;
+using FairyZeta.Framework.Proc;
 using System.IO;
 using Prism.Mvvm;
 using Prism.Commands;

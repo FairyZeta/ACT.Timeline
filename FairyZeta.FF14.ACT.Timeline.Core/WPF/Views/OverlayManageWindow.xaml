@@ -16,8 +16,8 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Style/_TimelineStyle.xaml"/>
-                <ResourceDictionary Source="../Style/OverlayManageStyle.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/_TimelineStyle.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/OverlayManageStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="Button" x:Key="WindowButtons">
                 <Setter Property="Opacity" Value="0"/>

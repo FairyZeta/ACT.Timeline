@@ -2,30 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Reflection;
-using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace FairyZeta.Framework.Process
+using System.ComponentModel;
+using System.Windows.Media.Animation;
+
+namespace FairyZeta.Framework.WPF.Controls
 {
-    /// <summary> FZ／アセンブリデータ取得プロセス
+    /// <summary> Template
     /// </summary>
-    public class GetAssemblyDataProcess : _Process
+    public partial class Template : UserControl
     {
       /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        public Template()
+        {
+            InitializeComponent();
+        }
+
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
-
-        /// <summary> アセンブリディレクトリを取得して返却します。
-        /// </summary>
-        /// <returns> ディレクトリパス </returns>
-        public string GetAssemblyDirectory()
-        {
-            return Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-        }
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 

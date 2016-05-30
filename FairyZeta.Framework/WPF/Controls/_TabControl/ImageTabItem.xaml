@@ -1,0 +1,31 @@
+﻿<TabItem x:Class="FairyZeta.Framework.WPF.Controls.ImageTabItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FairyZeta.Framework.WPF.Controls">
+    <TabItem.Template>
+        <ControlTemplate TargetType="TabItem">
+            <Grid x:Name="rootGrid" IsEnabled="{TemplateBinding IsEnabled}">
+                <Image x:Name="img1" DataContext="{Binding RelativeSource={RelativeSource Self}}" Source="{Binding DefaultImage, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageTabItem}}}" />
+                <Image x:Name="img2" DataContext="{Binding RelativeSource={RelativeSource Self}}" />
+                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsSelected" Value="true">
+
+                </Trigger>
+                <Trigger Property="IsFocused" Value="true">
+                    <Setter TargetName="img1" Property="Source" Value="{x:Null}"/>
+                    <Setter TargetName="img2" Property="Source" Value="{Binding IMG_IsFocused, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageTabItem}}}" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter TargetName="img1" Property="Source" Value="{x:Null}"/>
+                    <Setter TargetName="img2" Property="Source" Value="{Binding IsMouseOverImage, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageTabItem}}}" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter TargetName="img1" Property="Source" Value="{x:Null}"/>
+                    <Setter TargetName="img2" Property="Source" Value="{Binding IMG_IsEnabled_False, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageTabItem}}}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </TabItem.Template>
+</TabItem>

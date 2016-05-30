@@ -17,8 +17,8 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Style/_TimelineStyle.xaml"/>
-                <ResourceDictionary Source="../Style/OverlayManageStyle.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/_TimelineStyle.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/OverlayManageStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>

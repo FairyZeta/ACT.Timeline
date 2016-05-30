@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace FairyZeta.Framework.Process
+namespace FairyZeta.Framework.Proc
 {
     /// <summary> フレームワーク／XMLシリアライズプロセス
     /// </summary>

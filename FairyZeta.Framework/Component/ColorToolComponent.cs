@@ -65,7 +65,6 @@ namespace FairyZeta.Framework.Component
                 this.PaletteObjectModel.CurrentPaletteSet = this.PaletteObjectModel.PaletteSetCollection[0];
             }
 
-
         }
 
       /*--- Method: Initialization ----------------------------------------------------------------------------------------------------------------------------------*/

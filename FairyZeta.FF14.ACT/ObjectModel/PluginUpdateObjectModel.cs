@@ -9,7 +9,7 @@ using FairyZeta.FF14.ACT.Info;
 using FairyZeta.FF14.ACT.WPF.Views;
 using FairyZeta.FF14.ACT.WPF.ViewModels;
 using FairyZeta.Framework.Unit;
-using FairyZeta.Framework.Process;
+using FairyZeta.Framework.Proc;
 
 
 namespace FairyZeta.FF14.ACT.ObjectModel

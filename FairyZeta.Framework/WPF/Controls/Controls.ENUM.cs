@@ -7,4 +7,13 @@
         /// <summary> シンプルタイプ </summary>
         SimpleBox
     }
+
+    /// <summary> イメージタブタイプ
+    /// </summary>
+    public enum ImageTabType
+    {
+        /// <summary> ベーシックタイプ
+        /// </summary>
+        BasicType
+    }
 }

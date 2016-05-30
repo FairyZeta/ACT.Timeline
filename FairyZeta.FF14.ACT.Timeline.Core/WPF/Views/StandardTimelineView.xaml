@@ -8,10 +8,6 @@
              xmlns:dvm="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Desing"
              xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
              xmlns:tCtrl="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Controls"
-             xmlns:fBehaviors="clr-namespace:FairyZeta.Framework.WPF.Behaviors;assembly=FairyZeta.Framework"
-             xmlns:fConverter="clr-namespace:FairyZeta.Framework.WPF.Converters;assembly=FairyZeta.Framework"
-             xmlns:behaviors="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Behavior"
-             xmlns:converter="clr-namespace:FairyZeta.FF14.ACT.Timeline.Core.WPF.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=dvm:Desing_BaseWindowViewModel, IsDesignTimeCreatable=True}"
@@ -20,421 +16,9 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/StandardTimelineResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <fConverter:ColorToSolidColorBrushConverter x:Key="Color2SBrush"/>
-            <converter:OpacityConverter x:Key="opacityConverter"/>
-            <converter:ColorToShadowColorConverter x:Key="ShadowColorConverter"/>
-            <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
-
-
-            <Style x:Key="OutlineTextBase" TargetType="{x:Type fCtrl:OutlineTextBlock}">
-                <Setter Property="UseLayoutRounding" Value="True" />
-                <Setter Property="SnapsToDevicePixels" Value="True" />
-                <Setter Property="TextOptions.TextHintingMode" Value="Fixed" />
-                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
-                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-            </Style>
-
-            <Style x:Key="TitleOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource OutlineTextBase}">
-                <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontStyle" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Style, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontStretch" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Stretch, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
-            </Style>
-            <Style x:Key="TitleMainOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource TitleOutlineText}">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True">
-                        <Setter Property="Effect" Value="{StaticResource EffectTitleMain}"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-            <Style x:Key="TitleSubOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource TitleOutlineText}">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True">
-                        <Setter Property="Effect" Value="{StaticResource EffectTitleSub}"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-
-            <Style x:Key="HeaderOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource OutlineTextBase}">
-                <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-
-                <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontStyle" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Style, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontStretch" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Stretch, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
-
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True">
-                        <Setter Property="Effect" Value="{StaticResource EffectHeaderText}"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-
-            <Style x:Key="ContentOutlineTextBase" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource OutlineTextBase}">
-                <Style.Triggers>
-                    <!-- Type ENEMY -->
-                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.ENEMY}">
-                        <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                    </DataTrigger>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.ENEMY}"/>
-                            <Condition Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True"/>
-                        </MultiDataTrigger.Conditions>
-                        <MultiDataTrigger.Setters>
-                            <Setter Property="Effect" Value="{StaticResource EffectENEMY}"/>
-                        </MultiDataTrigger.Setters>
-                    </MultiDataTrigger>
-                    <!-- Type UNKNOWN -->
-                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.UNKNOWN}">
-                        <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                    </DataTrigger>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.UNKNOWN}"/>
-                            <Condition Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True"/>
-                        </MultiDataTrigger.Conditions>
-                        <MultiDataTrigger.Setters>
-                            <Setter Property="Effect" Value="{StaticResource EffectUNKNOWN}"/>
-                        </MultiDataTrigger.Setters>
-                    </MultiDataTrigger>
-                    <!-- Type TANK -->
-                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.TANK}">
-                        <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                    </DataTrigger>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.TANK}"/>
-                            <Condition Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True"/>
-                        </MultiDataTrigger.Conditions>
-                        <MultiDataTrigger.Setters>
-                            <Setter Property="Effect" Value="{StaticResource EffectTANK}"/>
-                        </MultiDataTrigger.Setters>
-                    </MultiDataTrigger>
-                    <!-- Type HEALER -->
-                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.HEALER}">
-                        <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                    </DataTrigger>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.HEALER}"/>
-                            <Condition Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True"/>
-                        </MultiDataTrigger.Conditions>
-                        <MultiDataTrigger.Setters>
-                            <Setter Property="Effect" Value="{StaticResource EffectHEALER}"/>
-                        </MultiDataTrigger.Setters>
-                    </MultiDataTrigger>
-                    <!-- Type DPS -->
-                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.DPS}">
-                        <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                    </DataTrigger>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.DPS}"/>
-                            <Condition Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True"/>
-                        </MultiDataTrigger.Conditions>
-                        <MultiDataTrigger.Setters>
-                            <Setter Property="Effect" Value="{StaticResource EffectDPS}"/>
-                        </MultiDataTrigger.Setters>
-                    </MultiDataTrigger>
-                    <!-- Type PET -->
-                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.PET}">
-                        <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                    </DataTrigger>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.PET}"/>
-                            <Condition Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True"/>
-                        </MultiDataTrigger.Conditions>
-                        <MultiDataTrigger.Setters>
-                            <Setter Property="Effect" Value="{StaticResource EffectPET}"/>
-                        </MultiDataTrigger.Setters>
-                    </MultiDataTrigger>
-                    <!-- Type GIMMICK -->
-                    <DataTrigger Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.GIMMICK}">
-                        <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
-                        <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                    </DataTrigger>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding TimelineType}" Value="{x:Static timelineCore:TimelineType.GIMMICK}"/>
-                            <Condition Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True"/>
-                        </MultiDataTrigger.Conditions>
-                        <MultiDataTrigger.Setters>
-                            <Setter Property="Effect" Value="{StaticResource EffectGIMMICK}"/>
-                        </MultiDataTrigger.Setters>
-                    </MultiDataTrigger>
-                </Style.Triggers>
-            </Style>
-            <Style x:Key="ContentOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource ContentOutlineTextBase}">
-                <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontStyle" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Style, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontStretch" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Stretch, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_BaseFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-            </Style>
-            <Style x:Key="Content_ActiveOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource ContentOutlineTextBase}">
-                <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontStyle" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Style, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontStretch" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Stretch, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Content_ActiveFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-            </Style>
-
-            <!-- ヘッダー／番号 -->
-            <ControlTemplate x:Key="BasicTimeNoHeaderTemplate" >
-                <fCtrl:OutlineTextBlock Text="T-No" Style="{StaticResource HeaderOutlineText}"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ControlTemplate>
-            <!-- ヘッダー／アクションタイム -->
-            <ControlTemplate x:Key="BasicActionTimeHeaderTemplate" >
-                <fCtrl:OutlineTextBlock Text="Time" Style="{StaticResource HeaderOutlineText}"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ControlTemplate>
-            <!-- ヘッダー／アラート -->
-            <ControlTemplate x:Key="BasicAlertHeaderTemplate" >
-                <fCtrl:OutlineTextBlock Text="Alt" Style="{StaticResource HeaderOutlineText}"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ControlTemplate>
-            <!-- ヘッダー／アクション -->
-            <ControlTemplate x:Key="BasicActionHeaderTemplate" >
-                <fCtrl:OutlineTextBlock Text="Action" Style="{StaticResource HeaderOutlineText}"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ControlTemplate>
-            <!-- ヘッダー／アクティブ -->
-            <ControlTemplate x:Key="BasicActiveHeaderTemplate" >
-                <fCtrl:OutlineTextBlock Text="Active" Style="{StaticResource HeaderOutlineText}"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ControlTemplate>
-            <!-- ヘッダー／タイプ -->
-            <ControlTemplate x:Key="BasicTypeHeaderTemplate" >
-                <fCtrl:OutlineTextBlock Text="Type" Style="{StaticResource HeaderOutlineText}"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ControlTemplate>
-            <!-- ヘッダー／ジョブ -->
-            <ControlTemplate x:Key="BasicJobHeaderTemplate" >
-                <fCtrl:OutlineTextBlock Text="Job" Style="{StaticResource HeaderOutlineText}"
-                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ControlTemplate>
-            <!-- ヘッダー／アンカー -->
-            <ControlTemplate x:Key="BasicAncHeaderTemplate" >
-                <fCtrl:OutlineTextBlock Text="Anc" Style="{StaticResource HeaderOutlineText}"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </ControlTemplate>
-
-            <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill" EndPoint="1,0" StartPoint="0,0">
-                <GradientStop Color="#00FFFFFF" Offset="0"/>
-                <GradientStop Color="#60FFFFFF" Offset="0.4"/>
-                <GradientStop Color="#60FFFFFF" Offset="0.6"/>
-                <GradientStop Color="#00FFFFFF" Offset="1"/>
-            </LinearGradientBrush>
-
-            <ControlTemplate x:Key="ActiveBasicProgressBarStyle" TargetType="{x:Type ProgressBar}">
-                <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true" >
-                    
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Tag}"/>
-                    <Border x:Name="PART_Track" Margin="{TemplateBinding Padding}" CornerRadius="{TemplateBinding Tag}"/>
-                    <Decorator x:Name="PART_Indicator" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}">
-                        <Grid x:Name="Foreground">
-                            <Border x:Name="Indicator" Background="{TemplateBinding Foreground}" CornerRadius="{TemplateBinding Tag}"/>
-                            <!--
-                            <Grid x:Name="Animation" ClipToBounds="true">
-                                <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-200,0,0,0" Width="0" />
-                            </Grid>-->
-                        </Grid>
-                    </Decorator>
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Tag}"/>
-                </Grid>
-                <ControlTemplate.Triggers>
-                    <Trigger Property="Orientation" Value="Vertical">
-                        <Setter Property="LayoutTransform" TargetName="TemplateRoot">
-                            <Setter.Value>
-                                <RotateTransform Angle="-90"/>
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                </ControlTemplate.Triggers>
-            </ControlTemplate>
-
-            <ControlTemplate x:Key="DurationBasicProgressBarStyle" TargetType="{x:Type ProgressBar}">
-                <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true" >
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Tag}"/>
-                    <Border x:Name="PART_Track" Margin="{TemplateBinding Padding}" CornerRadius="{TemplateBinding Tag}"/>
-                    <Decorator x:Name="PART_Indicator" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}">
-                        <Grid x:Name="Foreground">
-                            <Border x:Name="Indicator" Background="{TemplateBinding Foreground}" CornerRadius="{TemplateBinding Tag}"/>
-                            <!--
-                            <Grid x:Name="Animation" ClipToBounds="true">
-                                <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-200,0,0,0" Width="0" />
-                            </Grid> -->
-                        </Grid>
-                    </Decorator>
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Tag}"/>
-                </Grid>
-                <ControlTemplate.Triggers>
-                    <Trigger Property="Orientation" Value="Vertical">
-                        <Setter Property="LayoutTransform" TargetName="TemplateRoot">
-                            <Setter.Value>
-                                <RotateTransform Angle="-90"/>
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                </ControlTemplate.Triggers>
-            </ControlTemplate>
-            
-            <!-- コンテンツ／番号 -->
-            <ControlTemplate x:Key="BasicTimeNoContentTemplate" >
-                <fCtrl:OutlineTextBlock Text="{Binding Index}" Style="{StaticResource ContentOutlineText}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </ControlTemplate>
-            <!-- コンテンツ／時間 -->
-            <ControlTemplate x:Key="BasicActionTimeContentTemplate" >
-                <fCtrl:OutlineTextBlock Style="{StaticResource ContentOutlineText}" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                    <fCtrl:OutlineTextBlock.Text>
-                        <MultiBinding StringFormat="{}{0:00}:{1:00;00}">
-                            <Binding Path="EndTimeSpan.Minutes" />
-                            <Binding Path="EndTimeSpan.Seconds" />
-                        </MultiBinding>
-                    </fCtrl:OutlineTextBlock.Text>
-                </fCtrl:OutlineTextBlock>
-            </ControlTemplate>
-            <!-- コンテンツ／アラート -->
-            <ControlTemplate x:Key="BasicAlertContentTemplate" >
-                <fCtrl:OutlineTextBlock Text="♪" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <fCtrl:OutlineTextBlock.Style>
-                        <Style TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource ContentOutlineText}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding TimelineAlert}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </fCtrl:OutlineTextBlock.Style>
-                </fCtrl:OutlineTextBlock>
-            </ControlTemplate>
-            <!-- コンテンツ／アクション -->
-            <ControlTemplate x:Key="BasicActionContentTemplate" >
-                <fCtrl:OutlineTextBlock Text="{Binding Name}" Style="{StaticResource ContentOutlineText}" Margin="10 0 0 0" VerticalAlignment="Center" />
-            </ControlTemplate>
-            <!-- コンテンツ／アクティブ -->
-            <ControlTemplate x:Key="BasicActiveContentTemplate" >
-                <Grid Style="{StaticResource BasicCellGrid}" >
-                    <tCtrl:TimelineProgressBar x:Name="ActiveBar" 
-                                 Template="{StaticResource ActiveBasicProgressBarStyle}"
-                                 Value="{Binding TimerData.CurrentCombatTime}" 
-                                 Maximum="{Binding TimeFromStart}" 
-                                 HorizontalContentAlignment="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BarHorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                 Margin="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BarMargin, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                 Background="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BackgroundColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Converter={StaticResource Color2SBrush}}" 
-                                 Padding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BarInnerMargin, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                 BorderThickness="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BorderThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                 BorderBrush="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BorderColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Converter={StaticResource Color2SBrush}}"
-                                 Tag="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.CornerRadius, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                            
-                                 TimeFromStart="{Binding TimeFromStart}"
-                                 BarActiveTime="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BarActiveTime, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                               
-                                 GradientColor1="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BarColor1_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"
-                                 GradientColor2="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BarColor2_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"
-                                 GradientColor3="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.BarColor3_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}" 
-                        
-                                                              GradientStop1StartTime="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.GradientStop1StartTime, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"
-                                                              GradientStop1EndTime="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.GradientStop1EndTime, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"
-                                                              GradientStop2StartTime="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.GradientStop2StartTime, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"
-                                                              GradientStop2EndTime="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.GradientStop2EndTime, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}">
-                        <tCtrl:TimelineProgressBar.Style>
-                            <Style TargetType="{x:Type tCtrl:TimelineProgressBar}">
-                            </Style>
-                        </tCtrl:TimelineProgressBar.Style>
-                    </tCtrl:TimelineProgressBar>
-                    <tCtrl:TimelineProgressBar x:Name="DurationBar"
-                                 Template="{StaticResource DurationBasicProgressBarStyle}"
-                                 Minimum="{Binding TimeFromStart}" 
-                                 Value="{Binding TimerData.CurrentCombatTime}"
-                                 Maximum="{Binding EndTime}" 
-                                 HorizontalContentAlignment="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BarHorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                 Margin="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BarMargin, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                 Background="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BackgroundColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Converter={StaticResource Color2SBrush}}" 
-                                 Padding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BarInnerMargin, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                 BorderThickness="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BorderThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                 BorderBrush="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BorderColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Converter={StaticResource Color2SBrush}}"
-                                 Tag="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.CornerRadius, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                                            
-                                 GradientColor1="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BarColor1_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"
-                                 GradientColor2="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BarColor2_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"
-                                 GradientColor3="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.BarColor3_Base, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"
-                                               
-                                 GradientStop1StartTime="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.GradientStop1StartTime, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"           
-                                 GradientStop1EndTime="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.GradientStop1EndTime, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"     
-                                 GradientStop2StartTime="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.GradientStop2StartTime, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  
-                                 GradientStop2EndTime="{Binding DataContext.OverlayViewComponent.OverlayDataModel.CastBarSettingsData.GradientStop2EndTime, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                        <ProgressBar.Style>
-                            <Style TargetType="ProgressBar" >
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding DurationIndicatorVisibility}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Duration}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ProgressBar.Style>
-                    </tCtrl:TimelineProgressBar>
-                    <fCtrl:OutlineTextBlock VerticalAlignment="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.TextVerticalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                               HorizontalAlignment="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.TextHorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                               TextWrapping="NoWrap" >
-                        <fCtrl:OutlineTextBlock.Style>
-                            <Style BasedOn="{StaticResource Content_ActiveOutlineText}" TargetType="{x:Type fCtrl:OutlineTextBlock}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.DoubleVisibilityStyle, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                                 Value="{x:Static timelineCore:DoubleVisibilityStyle.N0}">
-                                        <Setter Property="Text" Value="{Binding ActiveTime,StringFormat=N0}" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.DoubleVisibilityStyle, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                                 Value="{x:Static timelineCore:DoubleVisibilityStyle.N1}">
-                                        <Setter Property="Text" Value="{Binding ActiveTime,StringFormat=N1}" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.ActiveBarSettingsData.DoubleVisibilityStyle, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                                 Value="{x:Static timelineCore:DoubleVisibilityStyle.N2}">
-                                        <Setter Property="Text" Value="{Binding ActiveTime,StringFormat=N2}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </fCtrl:OutlineTextBlock.Style>
-                    </fCtrl:OutlineTextBlock>
-                </Grid>
-            </ControlTemplate>
-            <ControlTemplate x:Key="BasicTypeContentTemplate" >
-                <fCtrl:OutlineTextBlock Style="{StaticResource ContentOutlineText}" Text="{Binding TimelineType}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </ControlTemplate>
-            <ControlTemplate x:Key="BasicJobContentTemplate" >
-                <fCtrl:OutlineTextBlock Style="{StaticResource ContentOutlineText}" Text="{Binding JobType}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </ControlTemplate>
-            <ControlTemplate x:Key="BasicAncContentTemplate" >
-                <fCtrl:OutlineTextBlock Style="{StaticResource ContentOutlineText}" Text="{Binding AncType}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </ControlTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -443,22 +27,11 @@
                 Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}" 
                 Margin="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundMargin}"
                 Background="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.BaseColor, Converter={StaticResource Color2SBrush}}">
-            <Border.Resources>
-                <DropShadowEffect x:Key="EffectDropShadow" 
-                                  Color="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.ShadowColor}" 
-                                  BlurRadius="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.ShadowLevel}" 
-                                  Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.ShadowOpacity}" 
-                                  Direction="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.ShadowDirection}" 
-                                  ShadowDepth="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.ShadowDepth}"/>
-                <BlurEffect x:Key="EffectBlur"
-                            Radius="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundBlurRadius}" 
-                            KernelType="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundEffectKernelType}"/>
-            </Border.Resources>
             <Border.Style>
                 <Style TargetType="{x:Type Border}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundEffectType}" Value="{x:Static timelineCore:EffectType.Blur}">
-                            <Setter Property="Effect" Value="{StaticResource EffectBlur}"/>
+                            <Setter Property="Effect" Value="{StaticResource EffectBackground_Blur}"/>
                         </DataTrigger>
 
                         <MultiDataTrigger>
@@ -467,7 +40,7 @@
                                 <Condition Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.ShadowEnabled}" Value="True"/>
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
-                                <Setter Property="Effect" Value="{StaticResource EffectDropShadow}"/>
+                                <Setter Property="Effect" Value="{StaticResource EffectBackground_DropShadow}"/>
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>                        
                     </Style.Triggers>
@@ -487,145 +60,49 @@
                     <ColumnDefinition />
                     <ColumnDefinition  Width="60"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5 2" VerticalAlignment="Center">
-                    <fCtrl:OutlineTextBlock Text="[Line-Time] " Style="{StaticResource TitleMainOutlineText}" 
-                                            Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                            Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                            StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineThickness}"/>
-                    <fCtrl:OutlineTextBlock Style="{StaticResource TitleSubOutlineText}" 
-                                            Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                            Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                            StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineThickness}">
-                        <fCtrl:OutlineTextBlock.Text>
-                            <MultiBinding StringFormat="{}{0:00}:{1:00;00}">
-                                <Binding Path="TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTimeSpan.Minutes" />
-                                <Binding Path="TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTimeSpan.Seconds" />
-                            </MultiBinding>
-                        </fCtrl:OutlineTextBlock.Text>
-                    </fCtrl:OutlineTextBlock>
-
-                    <fCtrl:OutlineTextBlock Text=" / " Style="{StaticResource TitleMainOutlineText}"
-                                            Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                            Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                            StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineThickness}"/>
-                    <fCtrl:OutlineTextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}" 
-                                            Style="{StaticResource TitleSubOutlineText}" Margin="3 0"
-                                            Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                            Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                            StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineThickness}"/>
-                </StackPanel>
-                <!-- メニューボタン -->
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 2 2 0" >
-                    <Button ToolTip="Custom"
-                            Command="{Binding OverlayViewComponent.OverlayCustomOpenCommand}">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Content>
-                            <ContentControl>
-                                <fCtrl:OutlineTextBlock Text="g" Style="{StaticResource TitleSubOutlineText}" FontFamily="Marlett"
-                                                        Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                                        Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                                        StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineThickness}"/>
-                            </ContentControl>
-
-                        </Button.Content>
-                    </Button>
-                    <Button ToolTip="Close"
-                            Command="{Binding OverlayViewComponent.OverlayClosedCommand}">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyleKey}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.WindowLock}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Content>
-                            <Grid>
-                                <fCtrl:OutlineTextBlock Text="r" Style="{StaticResource TitleSubOutlineText}" FontFamily="Marlett"
-                                                        Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                                        Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                                        StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineThickness}"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-            </Grid>
-            
-            <!-- コンテンツヘッダー -->
-            <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}"
-                  MinHeight="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.HeaderMinHeight}">
-                <Border BorderThickness="0 0 0 1" BorderBrush="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderBar_ShadowSettingsData.BaseColor, Converter={StaticResource Color2SBrush}}">
-                    <Border.Resources>
-                        <DropShadowEffect x:Key="EffectHeaderBar" 
-                                      Color="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderBar_ShadowSettingsData.ShadowColor}" 
-                                      BlurRadius="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderBar_ShadowSettingsData.ShadowLevel}" 
-                                      Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderBar_ShadowSettingsData.ShadowOpacity}" 
-                                      Direction="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderBar_ShadowSettingsData.ShadowDirection}" 
-                                      ShadowDepth="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderBar_ShadowSettingsData.ShadowDepth}"/>
-                    </Border.Resources>
-                    <Border.Style>
-                        <Style TargetType="{x:Type Border}">
+                <!-- トップコンテンツ -->
+                <ItemsControl Grid.Row="0">
+                    <ItemsControl.Style>
+                        <Style TargetType="{x:Type ItemsControl}">
+                            <Setter Property="Template" Value="{StaticResource BasicTopContent}"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderBar_ShadowSettingsData.ShadowEnabled}" Value="True">
-                                    <Setter Property="Effect" Value="{StaticResource EffectHeaderBar}"/>
+                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
+                                    <Setter Property="Template" Value="{StaticResource LightTopContent}"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Border.Style>
-                </Border>
-                <StackPanel Orientation="Horizontal" >
-                    <!-- T-No -->
-                    <ItemsControl Grid.Column="0" Template="{StaticResource BasicTimeNoHeaderTemplate}"
-                                      IsTabStop="False"
-                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth}" 
-                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Time -->
-                    <ItemsControl Grid.Column="1" Template="{StaticResource BasicActionTimeHeaderTemplate}"
-                                      IsTabStop="False"
-                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth}" 
-                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Type -->
-                    <ItemsControl Grid.Column="2" Template="{StaticResource BasicTypeHeaderTemplate}"
-                                      IsTabStop="False"
-                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TypeWidth}" 
-                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Job -->
-                    <ItemsControl Grid.Column="3" Template="{StaticResource BasicJobHeaderTemplate}"
-                                      IsTabStop="False"
-                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JobWidth}" 
-                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Action -->
-                    <ItemsControl Grid.Column="4" Template="{StaticResource BasicActionHeaderTemplate}"
-                                      IsTabStop="False"
-                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionWidth}" 
-                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Active -->
-                    <ItemsControl Grid.Column="5" Template="{StaticResource BasicActiveHeaderTemplate}"
-                                      IsTabStop="False"
-                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActiveWidth}" 
-                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Alt -->
-                    <ItemsControl Grid.Column="6" Template="{StaticResource BasicAlertHeaderTemplate}"
-                                      IsTabStop="False"
-                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.AlertWidth}" 
-                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                    <!-- Anc -->
-                    <ItemsControl Grid.Column="7" Template="{StaticResource BasicAncHeaderTemplate}"
-                                      IsTabStop="False"
-                                      Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth}" 
-                                      Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                </StackPanel>
+                    </ItemsControl.Style>
+                </ItemsControl>
+                <!-- メニューボタン -->
+                <ItemsControl Grid.Column="1">
+                    <ItemsControl.Style>
+                        <Style TargetType="{x:Type ItemsControl}">
+                            <Setter Property="Template" Value="{StaticResource BasicMenuButton}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
+                                    <Setter Property="Template" Value="{StaticResource LightMenuButton}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
+                </ItemsControl>
             </Grid>
-            
+            <!-- コンテンツヘッダー -->
+            <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}"
+                  MinHeight="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.HeaderMinHeight}">
+                <ItemsControl >
+                    <ItemsControl.Style>
+                        <Style TargetType="{x:Type ItemsControl}">
+                            <Setter Property="Template" Value="{StaticResource BasicContentHeader}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
+                                    <Setter Property="Template" Value="{StaticResource LightContentHeader}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
+                </ItemsControl>
+            </Grid>
             <!-- コンテンツ -->
             <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
                       Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
@@ -662,55 +139,17 @@
                         </Style.Triggers>
                     </Style>
                 </ListView.Resources>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <!-- T-No -->
-                            <ItemsControl Panel.ZIndex="1" Grid.Column="0" Template="{StaticResource BasicTimeNoContentTemplate}"
-                                      IsTabStop="False"
-                                          Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
-                                          Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
-                            <!-- Time -->
-                            <ItemsControl Panel.ZIndex="1" Grid.Column="1" Template="{StaticResource BasicActionTimeContentTemplate}"
-                                      IsTabStop="False"
-                                          Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
-                                          Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
-                            <!-- Type -->
-                            <ItemsControl Panel.ZIndex="1" Grid.Column="2" Template="{StaticResource BasicTypeContentTemplate}"
-                                      IsTabStop="False"
-                                          Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TypeWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
-                                          Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
-                            <!-- Job -->
-                            <ItemsControl Panel.ZIndex="1" Grid.Column="3" Template="{StaticResource BasicJobContentTemplate}"
-                                      IsTabStop="False"
-                                          Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JobWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
-                                          Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
-                            <!-- Action -->
-                            <ItemsControl Panel.ZIndex="1" Grid.Column="4" Template="{StaticResource BasicActionContentTemplate}"
-                                      IsTabStop="False"
-                                          Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActionWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
-                                          Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
-                            <!-- Active -->
-                            <ItemsControl Panel.ZIndex="0" Grid.Column="5" Template="{StaticResource BasicActiveContentTemplate}"
-                                      IsTabStop="False"
-                                          Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActiveWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
-                                          Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
-                            <!-- Alt -->
-                            <ItemsControl Panel.ZIndex="1" Grid.Column="6" Template="{StaticResource BasicAlertContentTemplate}"
-                                      IsTabStop="False"
-                                          Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.AlertWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
-                                          Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
-                            <!-- Anc -->
-                            <ItemsControl Panel.ZIndex="1" Grid.Column="7" Template="{StaticResource BasicAncContentTemplate}"
-                                      IsTabStop="False"
-                                          Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
-                                          Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
-                        </StackPanel>
-
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                <ListView.Style>
+                    <Style TargetType="{x:Type ListView}">
+                        <Setter Property="ItemTemplate" Value="{StaticResource BasicTimelineContent}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
+                                <Setter Property="ItemTemplate" Value="{StaticResource LightTimelineContent}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Style>
             </ListView>
-
         </Grid>
     </Grid>
 </UserControl>

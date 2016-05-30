@@ -15,7 +15,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/StandardTimelineResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converter:ColorToShadowColorConverter x:Key="ShadowColorConverter"/>

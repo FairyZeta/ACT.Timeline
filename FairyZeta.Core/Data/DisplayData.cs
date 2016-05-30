@@ -43,11 +43,11 @@ namespace FairyZeta.Core.Data
         /// <summary> FZ／ディスプレイデータ／コンストラクタ
         /// </summary>
         /// <param name="pName"> 解像度通称 </param>
-        /// <param name="pHeight"> 縦サイズ </param>
         /// <param name="pWidth"> 横サイズ </param>
-        /// <param name="pAspectY"> アスペクト比：縦 </param>
+        /// <param name="pHeight"> 縦サイズ </param>
         /// <param name="pAspectX"> アスペクト比：横 </param>
-        public DisplayData(string pName, double pHeight, double pWidth, double pAspectY, double pAspectX)
+        /// <param name="pAspectY"> アスペクト比：縦 </param>
+        public DisplayData(string pName, double pWidth, double pHeight, double pAspectX, double pAspectY)
             : this()
         {
             this.Name = pName;

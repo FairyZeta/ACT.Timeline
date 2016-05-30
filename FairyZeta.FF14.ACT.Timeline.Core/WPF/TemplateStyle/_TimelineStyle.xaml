@@ -100,6 +100,7 @@
     <SolidColorBrush x:Key="StandardBrush" Color="{StaticResource StandardColor}" />
     <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource HoverColor}" />
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
+    
     <LinearGradientBrush x:Key="ScollBarBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="{StaticResource ScollBarBackgroundStart}" />
@@ -146,50 +147,27 @@
                 <RowDefinition Height="0.00001*" />
                 <RowDefinition MaxHeight="18" />
             </Grid.RowDefinitions>
-            <RepeatButton x:Name="DecreaseRepeat"
-			Command="ScrollBar.LineUpCommand"
-			Foreground="{StaticResource StandardBrush}"
-			Style="{DynamicResource ScrollButtons}">
-                <Path x:Name="DecreaseArrow"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Data="F1 M 3.5,0L 0,7L 7,7L 3.5,0 Z "
-					Fill="{StaticResource StandardBrush}" />
+            <RepeatButton x:Name="DecreaseRepeat" Command="ScrollBar.LineUpCommand"	Foreground="{StaticResource StandardBrush}"	Style="{DynamicResource ScrollButtons}">
+                <Path x:Name="DecreaseArrow" HorizontalAlignment="Center" VerticalAlignment="Center" Data="F1 M 3.5,0L 0,7L 7,7L 3.5,0 Z " Fill="{StaticResource StandardBrush}" />
             </RepeatButton>
-            <Track x:Name="PART_Track"
-			Grid.Row="1"
-			Focusable="false"
-			IsDirectionReversed="true">
+            <Track x:Name="PART_Track" Grid.Row="1" Focusable="false" IsDirectionReversed="true">
                 <Track.Thumb>
-                    <Thumb x:Name="Thumb"
-					Background="{DynamicResource ButtonDefaultBrush}"
-					Style="{DynamicResource ScrollThumbs}" />
+                    <Thumb x:Name="Thumb" Background="{DynamicResource ButtonDefaultBrush}" Style="{DynamicResource ScrollThumbs}" />
                 </Track.Thumb>
             </Track>
-            <RepeatButton x:Name="IncreaseRepeat"
-			Grid.Row="2"
-			Command="ScrollBar.LineDownCommand"
-			Foreground="{DynamicResource StandardBrush}"
-			Style="{DynamicResource ScrollButtons}">
-                <Path x:Name="IncreaseArrow"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Data="F1 M 3.5,7L 7,0L 0,0L 3.5,7 Z "
-					Fill="{StaticResource StandardBrush}" />
+            <RepeatButton x:Name="IncreaseRepeat" Grid.Row="2" Command="ScrollBar.LineDownCommand" Foreground="{DynamicResource StandardBrush}" Style="{DynamicResource ScrollButtons}">
+                <Path x:Name="IncreaseArrow" HorizontalAlignment="Center" VerticalAlignment="Center" Data="F1 M 3.5,7L 7,0L 0,0L 3.5,7 Z " Fill="{StaticResource StandardBrush}" />
             </RepeatButton>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger SourceName="IncreaseRepeat" Property="IsMouseOver" Value="true">
-                <Setter TargetName="IncreaseArrow" Property="Fill" 
-                        Value="{StaticResource HoverBrush}" />
+                <Setter TargetName="IncreaseArrow" Property="Fill" Value="{StaticResource HoverBrush}" />
             </Trigger>
             <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
-                <Setter TargetName="Thumb" Property="Background" 
-                         Value="{StaticResource HoverBrush}" />
+                <Setter TargetName="Thumb" Property="Background" Value="{StaticResource HoverBrush}" />
             </Trigger>
             <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
-                <Setter TargetName="Thumb" Property="Background" 
-                        Value="{StaticResource StandardBrush}" />
+                <Setter TargetName="Thumb" Property="Background" Value="{StaticResource StandardBrush}" />
             </Trigger>
         </ControlTemplate.Triggers>
 

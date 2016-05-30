@@ -224,6 +224,21 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
         }
         #endregion
 
+        #region #- [Property] bool.LightMode - ＜軽量モード状態＞ -----
+        /// <summary> 軽量モード状態 </summary>
+        private bool _LightMode;
+        /// <summary> 軽量モード状態 </summary>    
+        public bool LightMode
+        {
+            get { return _LightMode; }
+            set
+            {
+                this.SetProperty(ref this._LightMode, value);
+                base.SaveChangedTarget = true;
+            }
+        }
+        #endregion
+
         /// <summary> エフェクトタイプコレクション
         /// </summary>
         [XmlIgnore]
@@ -395,6 +410,7 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Data
             this.TitleBarVisibility = true;
             this.ContentHeaderVisibility = true;
             this.ContentScrollBarVisibility = true;
+            this.LightMode = false;
 
             return true;
         }

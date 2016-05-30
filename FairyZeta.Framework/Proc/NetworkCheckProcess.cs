@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.IO;
 
-namespace FairyZeta.Framework.Process
+namespace FairyZeta.Framework.Proc
 {
     /// <summary> FZ／ネットワークチェックプロセス
     /// <para> => ローカルおよびインターネットの接続確認や特定URLへ接続の可否など。 </para>

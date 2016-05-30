@@ -15,7 +15,7 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../TemplateStyle/ColorToolTemplateStyle.xaml"/>
+                <ResourceDictionary Source="../ColorToolRD.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

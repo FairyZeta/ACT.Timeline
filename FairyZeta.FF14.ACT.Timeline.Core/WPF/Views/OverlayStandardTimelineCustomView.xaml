@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Style/StandardTimelineStyle.xaml"/>
+                <ResourceDictionary Source="../TemplateStyle/StandardTimelineResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <fConv:ColorToSolidColorBrushConverter x:Key="Color2SBrush"/>
@@ -280,20 +280,22 @@
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="15"/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="30"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Content="T-No" Style="{StaticResource DataGridCheckBoxStyle}"
-                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility}"/>
-                            <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                               MinValue="0"/>
-                            <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth}" Minimum="0" Maximum="150"/>
-                            <TextBlock Grid.Column="4" Text="150" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <CheckBox Grid.Column="0" Content="T-No" Style="{StaticResource DataGridCheckBoxStyle}" IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TimeNoVisibility}"/>
+                            <TextBox Grid.Column="1" Margin="2 0" Text="{Binding OverlayDataModel.OverlayHeaderNameSettings.TimeNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <fCtrl:DoubleUpDownControl Grid.Column="2" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                            
+                            <Slider Grid.Column="4" Value="{Binding OverlayDataModel.OverlayContentSettingsData.TimeNoWidth}" Minimum="0" Maximum="150"/>
+                            <TextBlock Grid.Column="5" Text="150" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="15"/>
@@ -302,13 +304,15 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" Content="Time" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActionTimeVisibility}"/>
-                            <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                               MinValue="0"/>
-                            <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth}" Minimum="0" Maximum="150"/>
-                            <TextBlock Grid.Column="4" Text="150" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Margin="2 0" Text="{Binding OverlayDataModel.OverlayHeaderNameSettings.ActionTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <fCtrl:DoubleUpDownControl Grid.Column="2" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                            
+                            <Slider Grid.Column="4" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ActionTimeWidth}" Minimum="0" Maximum="150"/>
+                            <TextBlock Grid.Column="5" Text="150" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="15"/>
@@ -317,13 +321,14 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" Content="Type" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TypeVisibility}"/>
-                            <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                               MinValue="0"/>
-                            <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth}" Minimum="0" Maximum="210"/>
-                            <TextBlock Grid.Column="4" Text="210" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Margin="2 0" Text="{Binding OverlayDataModel.OverlayHeaderNameSettings.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <fCtrl:DoubleUpDownControl Grid.Column="2" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                            <Slider Grid.Column="4" Value="{Binding OverlayDataModel.OverlayContentSettingsData.TypeWidth}" Minimum="0" Maximum="210"/>
+                            <TextBlock Grid.Column="5" Text="210" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="15"/>
@@ -332,27 +337,14 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" Content="Job" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.JobVisibility}"/>
-                            <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                               MinValue="0"/>
-                            <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth}" Minimum="0" Maximum="210"/>
-                            <TextBlock Grid.Column="4" Text="210" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Margin="2 0" Text="{Binding OverlayDataModel.OverlayHeaderNameSettings.Job, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <fCtrl:DoubleUpDownControl Grid.Column="2" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                            <Slider Grid.Column="4" Value="{Binding OverlayDataModel.OverlayContentSettingsData.JobWidth}" Minimum="0" Maximum="210"/>
+                            <TextBlock Grid.Column="5" Text="210" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="30"/>
-                            </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" Content="TankMode" Style="{StaticResource DataGridCheckBoxStyle}" IsEnabled="False"
-                                              IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.TankModeVisibility}"/>
-                            <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.TankModeWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                               MinValue="0"
-                                                               IsEnabled="False"/>
-                        </Grid>
-                        <Grid Margin="2">
-                            <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="15"/>
@@ -361,13 +353,14 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Content="Action" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActionVisibility}"/>
-                            <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                               MinValue="0"/>
-                            <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth}" Minimum="0" Maximum="600"/>
-                            <TextBlock Grid.Column="4" Text="600" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Margin="2 0" Text="{Binding OverlayDataModel.OverlayHeaderNameSettings.Action, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <fCtrl:DoubleUpDownControl Grid.Column="2" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                            <Slider Grid.Column="4" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ActionWidth}" Minimum="0" Maximum="600"/>
+                            <TextBlock Grid.Column="5" Text="600" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="15"/>
@@ -376,13 +369,14 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" Content="Active" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility}"/>
-                            <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                               MinValue="0"/>
-                            <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth}" Minimum="0" Maximum="600" SmallChange="1" TickFrequency="1" />
-                            <TextBlock Grid.Column="4" Text="600" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Margin="2 0" Text="{Binding OverlayDataModel.OverlayHeaderNameSettings.Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <fCtrl:DoubleUpDownControl Grid.Column="2" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                            <Slider Grid.Column="4" Value="{Binding OverlayDataModel.OverlayContentSettingsData.ActiveWidth}" Minimum="0" Maximum="600" SmallChange="1" TickFrequency="1" />
+                            <TextBlock Grid.Column="5" Text="600" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="15"/>
@@ -391,13 +385,14 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" Content="Alert" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility}"/>
-                            <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                               MinValue="0"/>
-                            <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth}" Minimum="0" Maximum="60"/>
-                            <TextBlock Grid.Column="4" Text="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Margin="2 0" Text="{Binding OverlayDataModel.OverlayHeaderNameSettings.Alert, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <fCtrl:DoubleUpDownControl Grid.Column="2" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                            <Slider Grid.Column="4" Value="{Binding OverlayDataModel.OverlayContentSettingsData.AlertWidth}" Minimum="0" Maximum="60"/>
+                            <TextBlock Grid.Column="5" Text="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="15"/>
@@ -406,10 +401,10 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" Content="Anc" Style="{StaticResource DataGridCheckBoxStyle}"
                                               IsChecked="{Binding OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility}"/>
-                            <fCtrl:DoubleUpDownControl Grid.Column="1" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                               MinValue="0"/>
-                            <Slider Grid.Column="3" Value="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth}" Minimum="0" Maximum="60"/>
-                            <TextBlock Grid.Column="4" Text="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Margin="2 0" Text="{Binding OverlayDataModel.OverlayHeaderNameSettings.Anc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <fCtrl:DoubleUpDownControl Grid.Column="2" ChangedValue="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinValue="0"/>
+                            <Slider Grid.Column="4" Value="{Binding OverlayDataModel.OverlayContentSettingsData.JumpWidth}" Minimum="0" Maximum="60"/>
+                            <TextBlock Grid.Column="5" Text="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -1246,7 +1241,7 @@
                 <TabItem Header="Content">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel>
-                            <fCtrl:BoxFoldContent Title=" - Content Width - " InnerDataContext="{Binding}" InnerDataTemplate="{StaticResource DT_Content_ContentWidth}"/>
+                            <fCtrl:BoxFoldContent Title=" - Content Header Name and Width - " InnerDataContext="{Binding}" InnerDataTemplate="{StaticResource DT_Content_ContentWidth}"/>
                             <fCtrl:BoxFoldContent Title=" - Content Min Height - " InnerDataContext="{Binding}" InnerDataTemplate="{StaticResource DT_Content_ContentMinHeight}"/>
                         </StackPanel>
                     </ScrollViewer>

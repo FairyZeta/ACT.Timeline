@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\FairyZeta.FF14.ACT.Timeline\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\FairyZeta.FF14.ACT.Timeline\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -79,6 +79,20 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppResources\Timeline\txt\3so_contrib_244.txt" />
+    <Content Include="AppResources\Timeline\txt\3so_timeline.txt" />
+    <Content Include="AppResources\Timeline\txt\4so_timeline.txt" />
+    <Content Include="AppResources\Timeline\txt\levi_extreme_timeline.txt" />
+    <Content Include="AppResources\Timeline\txt\test.txt" />
+    <Content Include="AppResources\Timeline\txt\Test_Filter.txt" />
+    <Content Include="AppResources\Timeline\txt\test_R1.txt" />
+    <Content Include="AppResources\Timeline\txt\titan_hard_timeline.txt" />
+    <Content Include="AppResources\Timeline\wav\se_maoudamashii_chime10.wav" />
+    <Content Include="AppResources\Timeline\wav\se_maoudamashii_onepoint07.wav" />
+    <Content Include="AppResources\Timeline\wav\se_maoudamashii_onepoint26.wav" />
+    <Content Include="AppResources\Timeline\wav\source.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /S /Q .\de
@@ -115,8 +129,8 @@ EXE_7ZA="$(SolutionDir)packages\7ZipCLI.9.20.0\tools\7za.exe"
 %25LIBZ%25 inject-dll --assembly .\dll\$(TargetName).dll --include .\dll\*.dll --exclude  .\dll\$(TargetName).dll
 
 move /Y .\dll\$(TargetName).dll .\FZ.Timeline
-xcopy /Y .\resources\timeline\*.* .\FZ.Timeline\resources\timeline\
-xcopy /Y .\resources\wav\*.* .\FZ.Timeline\resources\wav\
+xcopy /Y $(ProjectDir)\AppResources\timeline\txt\*.* .\FZ.Timeline\resources\timeline\
+xcopy /Y $(ProjectDir)\AppResources\timeline\wav\*.* .\FZ.Timeline\resources\wav\
 :AllEnd</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
