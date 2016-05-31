@@ -75,6 +75,9 @@ namespace FairyZeta.Framework.WPF.Controls
             "TextShadowEffect", typeof(DropShadowEffect), typeof(OutlineTextBlock),
             new FrameworkPropertyMetadata(null));
 
+        public static readonly DependencyProperty DrawingReverseModeProperty
+            = DependencyProperty.Register("DrawingReverseMode", typeof(bool), typeof(OutlineTextBlock), new FrameworkPropertyMetadata(false, OnDrawingReverseModeChanged));
+
         #endregion
 
         #region BindProperty
@@ -156,12 +159,16 @@ namespace FairyZeta.Framework.WPF.Controls
             get { return (TextWrapping)GetValue(TextWrappingProperty); }
             set { SetValue(TextWrappingProperty, value); }
         }
+
+        public bool DrawingReverseMode
+        {
+            get { return (bool)GetValue(DrawingReverseModeProperty); }
+            set { SetValue(DrawingReverseModeProperty, value); }
+        }
         #endregion
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            //RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
-
             if (this.StrokeThickness <= 0d)
             {
                 if (this.FormattedText == null)
@@ -175,10 +182,17 @@ namespace FairyZeta.Framework.WPF.Controls
             {
                 this.EnsureGeometry();
 
-                drawingContext.DrawGeometry(
-                    this.Fill,
-                    new Pen(this.Stroke, this.StrokeThickness),
-                    this.TextGeometry);
+                if (this.DrawingReverseMode)
+                {
+                    // ２重処理して、アウトライン=>メインテキストの順番に描画する
+                    drawingContext.DrawGeometry(null, new Pen(this.Stroke, this.StrokeThickness), this.TextGeometry);
+                    drawingContext.DrawGeometry(this.Fill, null, this.TextGeometry);
+                }
+                else
+                {
+                    // 通常通り、メインテキスト=>アウトラインの順番に描画する
+                    drawingContext.DrawGeometry(this.Fill, new Pen(this.Stroke, this.StrokeThickness), this.TextGeometry);
+                }  
             }
 
         }
@@ -225,6 +239,16 @@ namespace FairyZeta.Framework.WPF.Controls
         }
 
         private static void OnFormattedTextUpdated(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var outlinedTextBlock = (OutlineTextBlock)dependencyObject;
+            outlinedTextBlock.UpdateFormattedText();
+            outlinedTextBlock.TextGeometry = null;
+
+            outlinedTextBlock.InvalidateMeasure();
+            outlinedTextBlock.InvalidateVisual();
+        }
+
+        private static void OnDrawingReverseModeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var outlinedTextBlock = (OutlineTextBlock)dependencyObject;
             outlinedTextBlock.UpdateFormattedText();

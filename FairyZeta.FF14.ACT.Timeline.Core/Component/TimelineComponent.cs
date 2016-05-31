@@ -178,6 +178,12 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary> コンポーネント終了の処理を実行します。
+        /// </summary>
+        public void ComponentShutdown()
+        {
+        }
+
         /// <summary> タイムラインロードを実行します。
         /// </summary>
         public void TimelineLoad()

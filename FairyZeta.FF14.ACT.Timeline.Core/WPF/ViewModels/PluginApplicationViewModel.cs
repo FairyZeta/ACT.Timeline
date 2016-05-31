@@ -130,8 +130,11 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.ViewModels
             this.CommonComponent.AutoProcessEnd();
             this.TimelineComponent.AutoProcessEnd();
             this.OverlayManageComponent.AutoProcessEnd();
-
+            // シャットダウン処理の実行
             this.CommonComponent.ComponentShutdown();
+            this.TimelineComponent.ComponentShutdown();
+            this.OverlayManageComponent.ComponentShutdown();
+
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/

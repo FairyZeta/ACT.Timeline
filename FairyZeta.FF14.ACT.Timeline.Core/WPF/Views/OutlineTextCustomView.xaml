@@ -55,9 +55,10 @@
                     <TextBlock Text="Outline Level " Width="100"/>
                     <fCtrl:DoubleUpDownControl ChangedValue="{Binding OutlineTextData.OutlineThickness, Mode=TwoWay}"
                                                MinValue="0" MaxValue="10" UpValue="0.1" DownValue="-0.1"/>
-                    <Slider Width="200" Minimum="0" Maximum="3" VerticalAlignment="Center" Margin="10 0"
+                    <Slider Width="200" Minimum="0" Maximum="5" VerticalAlignment="Center" Margin="10 0"
                             Value="{Binding OutlineTextData.OutlineThickness}"/>
                 </StackPanel>
+                <CheckBox Content="Outline Drawing Reverse (OnRender is Outline -> MainText)" IsChecked="{Binding OutlineTextData.DrawingReverseMode}" Margin="10 5"/>
 
                 <CheckBox Content="Shadow Enabled" IsChecked="{Binding OutlineTextData.ShadowEnabled}" Margin="10 5"/>
                 <StackPanel>

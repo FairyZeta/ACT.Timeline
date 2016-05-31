@@ -200,6 +200,24 @@ namespace FairyZeta.Framework.Data
             }
         }
 
+        #region #- [Property] bool.DrawingReverseMode - ＜描画逆順モード＞ -----
+        /// <summary> 描画逆順モード </summary>
+        private bool _DrawingReverseMode;
+        /// <summary> 描画逆順モード 
+        /// <para> True: アウトライン=>テキスト の順番で描画する </para>
+        /// <para> False: テキスト=>アウトライン の順番で描画する(デフォルト) </para>
+        /// </summary> 
+        public bool DrawingReverseMode
+        {
+            get { return _DrawingReverseMode; }
+            set
+            {
+                this.SetProperty(ref this._DrawingReverseMode, value);
+                this.PropertyChangedFLG = true;
+            }
+        }
+        #endregion
+
         #region #- [Property] bool.PropertyChangedFLG - ＜プロパティ変更フラグ＞ -----
         /// <summary> プロパティ変更フラグ </summary>
         private bool _PropertyChangedFLG;
@@ -210,6 +228,7 @@ namespace FairyZeta.Framework.Data
             set { this.SetProperty(ref this._PropertyChangedFLG, value); }
         }
         #endregion
+
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -245,6 +264,8 @@ namespace FairyZeta.Framework.Data
             this.ShadowLevel = 3d;
             this.ShadowDirection = 315d;
             this.ShadowDepth = 0d;
+
+            this.DrawingReverseMode = false;
 
             this.PropertyChangedFLG = false;
             

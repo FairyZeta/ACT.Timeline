@@ -15,7 +15,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
 
         /// <summary> アプリケーション起動後1秒毎に処理するタイマー
         /// </summary>
-        public  DispatcherTimer SecTimer01 { get; private set; }
+        public DispatcherTimer SecTimer01 { get; private set; }
+        /// <summary> アプリケーション起動後1分毎に処理するタイマー
+        /// </summary>
+        public DispatcherTimer MinTimer01 { get; private set; }
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
         
@@ -36,6 +39,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Module
         {
             this.SecTimer01 = new DispatcherTimer();
             SecTimer01.Interval = new TimeSpan(0, 0, 1);
+            this.MinTimer01 = new DispatcherTimer();
+            MinTimer01.Interval = new TimeSpan(0, 1, 0);
 
             return true;
         }

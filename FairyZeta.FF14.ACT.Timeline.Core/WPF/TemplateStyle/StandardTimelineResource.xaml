@@ -18,61 +18,61 @@
 
     <!-- Effects -->
     <DropShadowEffect x:Key="EffectTitleMain" 
-                                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
     <DropShadowEffect x:Key="EffectTitleSub" 
-                                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 
     <DropShadowEffect x:Key="EffectHeaderText" 
-                                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 
     <DropShadowEffect x:Key="EffectENEMY" 
-                                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
     <DropShadowEffect x:Key="EffectUNKNOWN"
-                                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
     <DropShadowEffect x:Key="EffectTANK" 
-                                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
     <DropShadowEffect x:Key="EffectHEALER" 
-                                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
     <DropShadowEffect x:Key="EffectDPS" 
-                                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
     <DropShadowEffect x:Key="EffectPET" 
-                                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                      Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Opacity="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowOpacity, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      Direction="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowDirection, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                      ShadowDepth="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.ShadowDepth, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
     <DropShadowEffect x:Key="EffectGIMMICK" 
                       Color="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.ShadowColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
                       BlurRadius="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.ShadowLevel, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
@@ -107,6 +107,7 @@
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
     </Style>
+    
     <Style x:Key="TitleOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource OutlineTextBase}">
         <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
         <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
@@ -115,6 +116,10 @@
         <Setter Property="FontWeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.TitleBar_BaseFontInfo.Weight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
     </Style>
     <Style x:Key="TitleMainOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource TitleOutlineText}">
+        <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
+        <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
+        <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+        <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True">
                 <Setter Property="Effect" Value="{StaticResource EffectTitleMain}"/>
@@ -122,16 +127,22 @@
         </Style.Triggers>
     </Style>
     <Style x:Key="TitleSubOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource TitleOutlineText}">
+        <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
+        <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
+        <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+        <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.ShadowEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True">
                 <Setter Property="Effect" Value="{StaticResource EffectTitleSub}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="HeaderOutlineText" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource OutlineTextBase}">
         <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
         <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
         <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+        <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HeaderText_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 
         <Setter Property="FontSize" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Size, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
         <Setter Property="FontFamily" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.FontData.Header_BaseFontInfo.Family, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
@@ -145,6 +156,7 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="ContentOutlineTextBase" TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource OutlineTextBase}">
         <Style.Triggers>
             <!-- Type ENEMY -->
@@ -152,6 +164,7 @@
                 <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.ENEMY_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -167,6 +180,7 @@
                 <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.UNKNOWN_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -182,6 +196,7 @@
                 <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.TANK_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -197,6 +212,7 @@
                 <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.HEALER_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -212,6 +228,7 @@
                 <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.DPS_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -227,6 +244,7 @@
                 <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.PET_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -242,6 +260,7 @@
                 <Setter Property="Fill" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.InnerTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="Stroke" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.OutlineTextColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource Color2SBrush}}"/>
                 <Setter Property="StrokeThickness" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.OutlineThickness, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Setter Property="DrawingReverseMode" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayColorSettings.GIMMICK_OutlineTextData.DrawingReverseMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -490,7 +509,7 @@
     </ControlTemplate>
     <!-- コンテンツ／アラート -->
     <ControlTemplate x:Key="BasicAlertContentTemplate" >
-        <fCtrl:OutlineTextBlock Text="♪" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <fCtrl:OutlineTextBlock Text="♪" HorizontalAlignment="Center" VerticalAlignment="Center" >
             <fCtrl:OutlineTextBlock.Style>
                 <Style TargetType="{x:Type fCtrl:OutlineTextBlock}" BasedOn="{StaticResource ContentOutlineText}">
                     <Style.Triggers>
@@ -720,14 +739,8 @@
     <!-- オーバーレイトップ／表示コンテンツ -->
     <ControlTemplate x:Key="BasicTopContent" >
         <StackPanel Orientation="Horizontal" Margin="5 2" VerticalAlignment="Center">
-            <fCtrl:OutlineTextBlock Text="[Line-Time] " Style="{StaticResource TitleMainOutlineText}" 
-                                    Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                    Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                    StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineThickness}"/>
-            <fCtrl:OutlineTextBlock Style="{StaticResource TitleSubOutlineText}" 
-                                    Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                    Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                    StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineThickness}">
+            <fCtrl:OutlineTextBlock Text="[Line-Time] " Style="{StaticResource TitleMainOutlineText}" />
+            <fCtrl:OutlineTextBlock Style="{StaticResource TitleSubOutlineText}" >
                 <fCtrl:OutlineTextBlock.Text>
                     <MultiBinding StringFormat="{}{0:00}:{1:00;00}">
                         <Binding Path="TimelineComponent.TimelineObjectModel.TimerData.CurrentCombatTimeSpan.Minutes" />
@@ -736,15 +749,9 @@
                 </fCtrl:OutlineTextBlock.Text>
             </fCtrl:OutlineTextBlock>
 
-            <fCtrl:OutlineTextBlock Text=" / " Style="{StaticResource TitleMainOutlineText}"
-                                    Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                    Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                    StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuMain_OutlineTextData.OutlineThickness}"/>
+            <fCtrl:OutlineTextBlock Text=" / " Style="{StaticResource TitleMainOutlineText}"/>
             <fCtrl:OutlineTextBlock Text="{Binding OverlayViewComponent.OverlayDataModel.OverlayWindowData.OverlayName}" 
-                                    Style="{StaticResource TitleSubOutlineText}" Margin="3 0"
-                                    Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                    Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                    StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineThickness}"/>
+                                    Style="{StaticResource TitleSubOutlineText}" Margin="3 0"/>
         </StackPanel>
     </ControlTemplate>
     <ControlTemplate x:Key="LightTopContent" >
@@ -783,10 +790,7 @@
                 </Button.Style>
                 <Button.Content>
                     <ContentControl>
-                        <fCtrl:OutlineTextBlock Text="g" Style="{StaticResource TitleSubOutlineText}" FontFamily="Marlett"
-                                                        Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                                        Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                                        StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineThickness}"/>
+                        <fCtrl:OutlineTextBlock Text="g" Style="{StaticResource TitleSubOutlineText}" FontFamily="Marlett"/>
                     </ContentControl>
                 </Button.Content>
             </Button>
@@ -801,12 +805,9 @@
                     </Style>
                 </Button.Style>
                 <Button.Content>
-                    <Grid>
-                        <fCtrl:OutlineTextBlock Text="r" Style="{StaticResource TitleSubOutlineText}" FontFamily="Marlett"
-                                                        Fill="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.InnerTextColor, Converter={StaticResource Color2SBrush}}"
-                                                        Stroke="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineTextColor, Converter={StaticResource Color2SBrush}}"
-                                                        StrokeThickness="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.MenuSub_OutlineTextData.OutlineThickness}"/>
-                    </Grid>
+                    <ContentControl>
+                        <fCtrl:OutlineTextBlock Text="r" Style="{StaticResource TitleSubOutlineText}" FontFamily="Marlett"/>
+                    </ContentControl>
                 </Button.Content>
             </Button>
         </StackPanel>
@@ -929,11 +930,11 @@
                               Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ActiveWidth}" 
                               Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.ActiveVisibility, Converter={StaticResource BoolToVisibility}}"/>
                 <!-- Alt -->
-                <ItemsControl Grid.Column="6" Template="{StaticResource LightAlertHeaderTemplate}" IsTabStop="False"
+                <ItemsControl Grid.Column="6" Template="{StaticResource LightAlertHeaderTemplate}" IsTabStop="False" 
                               Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.AlertWidth}" 
                               Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.AlertVisibility, Converter={StaticResource BoolToVisibility}}"/>
                 <!-- Anc -->
-                <ItemsControl Grid.Column="7" Template="{StaticResource LightAncHeaderTemplate}" IsTabStop="False"
+                <ItemsControl Grid.Column="7" Template="{StaticResource LightAncHeaderTemplate}" IsTabStop="False" 
                               Width="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth}" 
                               Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, Converter={StaticResource BoolToVisibility}}"/>
             </StackPanel>
@@ -942,7 +943,8 @@
 
     <!-- オーバーレイ／タイムラインコンテンツ -->
     <DataTemplate x:Key="BasicTimelineContent">
-        <StackPanel Orientation="Horizontal">
+        <Grid>
+            <StackPanel Orientation="Horizontal">
             <!-- T-No -->
             <ItemsControl Panel.ZIndex="1" Grid.Column="0" Template="{StaticResource BasicTimeNoContentTemplate}" IsTabStop="False"
                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
@@ -976,9 +978,11 @@
                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
         </StackPanel>
+        </Grid>
     </DataTemplate>
     <DataTemplate x:Key="LightTimelineContent">
-        <StackPanel Orientation="Horizontal">
+        <Grid>
+            <StackPanel Orientation="Horizontal">
             <!-- T-No -->
             <ItemsControl Panel.ZIndex="1" Grid.Column="0" Template="{StaticResource LightTimeNoContentTemplate}" IsTabStop="False"
                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TimeNoWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
@@ -1012,6 +1016,7 @@
                           Width="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.JumpWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" 
                           Visibility="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayItemVisibilitySettingsData.JumpVisibility, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}, Converter={StaticResource BoolToVisibility}}"/>
         </StackPanel>
+        </Grid>
     </DataTemplate>
 
 </ResourceDictionary>

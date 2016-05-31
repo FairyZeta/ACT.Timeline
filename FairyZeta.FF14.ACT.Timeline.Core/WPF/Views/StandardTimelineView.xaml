@@ -22,134 +22,136 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
-        <Border CornerRadius="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundCornerRadius}" 
-                Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}" 
-                Margin="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundMargin}"
-                Background="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.BaseColor, Converter={StaticResource Color2SBrush}}">
-            <Border.Style>
-                <Style TargetType="{x:Type Border}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundEffectType}" Value="{x:Static timelineCore:EffectType.Blur}">
-                            <Setter Property="Effect" Value="{StaticResource EffectBackground_Blur}"/>
-                        </DataTrigger>
+    <Border>
+        <Grid>
+            <Border CornerRadius="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundCornerRadius}" 
+                    Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundOpacity, Converter={StaticResource opacityConverter}}" 
+                    Margin="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundMargin}"
+                    Background="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.BaseColor, Converter={StaticResource Color2SBrush}}">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundEffectType}" Value="{x:Static timelineCore:EffectType.Blur}">
+                                <Setter Property="Effect" Value="{StaticResource EffectBackground_Blur}"/>
+                            </DataTrigger>
 
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundEffectType}" Value="{x:Static timelineCore:EffectType.DropShadow}"/>
-                                <Condition Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.ShadowEnabled}" Value="True"/>
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.Setters>
-                                <Setter Property="Effect" Value="{StaticResource EffectBackground_DropShadow}"/>
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>                        
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-        </Border>
-        <Grid Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Converter={StaticResource opacityConverter}}" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <!-- ウィンドウヘッダー -->
-            <Grid Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarVisibility, Converter={StaticResource BoolToVisibility}}"
-                  MinHeight="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TitleBarMinHeight}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition  Width="60"/>
-                </Grid.ColumnDefinitions>
-                <!-- トップコンテンツ -->
-                <ItemsControl Grid.Row="0">
-                    <ItemsControl.Style>
-                        <Style TargetType="{x:Type ItemsControl}">
-                            <Setter Property="Template" Value="{StaticResource BasicTopContent}"/>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.BackgroundEffectType}" Value="{x:Static timelineCore:EffectType.DropShadow}"/>
+                                    <Condition Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayColorSettings.Background_ShadowSettingsData.ShadowEnabled}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Effect" Value="{StaticResource EffectBackground_DropShadow}"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>                        
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
+            <Grid Opacity="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentOpacity, Converter={StaticResource opacityConverter}}" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!-- ウィンドウヘッダー -->
+                <Grid Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.TitleBarVisibility, Converter={StaticResource BoolToVisibility}}"
+                      MinHeight="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.TitleBarMinHeight}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition  Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- トップコンテンツ -->
+                    <ItemsControl Grid.Row="0">
+                        <ItemsControl.Style>
+                            <Style TargetType="{x:Type ItemsControl}">
+                                <Setter Property="Template" Value="{StaticResource BasicTopContent}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
+                                        <Setter Property="Template" Value="{StaticResource LightTopContent}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                    </ItemsControl>
+                    <!-- メニューボタン -->
+                    <ItemsControl Grid.Column="1">
+                        <ItemsControl.Style>
+                            <Style TargetType="{x:Type ItemsControl}">
+                                <Setter Property="Template" Value="{StaticResource BasicMenuButton}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
+                                        <Setter Property="Template" Value="{StaticResource LightMenuButton}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                    </ItemsControl>
+                </Grid>
+                <!-- コンテンツヘッダー -->
+                <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}"
+                      MinHeight="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.HeaderMinHeight}">
+                    <ItemsControl >
+                        <ItemsControl.Style>
+                            <Style TargetType="{x:Type ItemsControl}">
+                                <Setter Property="Template" Value="{StaticResource BasicContentHeader}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
+                                        <Setter Property="Template" Value="{StaticResource LightContentHeader}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                    </ItemsControl>
+                </Grid>
+                <!-- コンテンツ -->
+                <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
+                          Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                          IsHitTestVisible="False" 
+                          ScrollViewer.CanContentScroll="True"
+                          ScrollViewer.IsDeferredScrollingEnabled="True"
+                          ScrollViewer.PanningMode="VerticalOnly"
+                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                          VirtualizingPanel.IsVirtualizing="True">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical" CanVerticallyScroll="True" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.Resources>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Margin" Value="-5 -3"/>
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="IsTabStop" Value="False"/>
+                            <Setter Property="MinHeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ContentMinHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                            <Setter Property="Visibility" Value="Visible"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
-                                    <Setter Property="Template" Value="{StaticResource LightTopContent}"/>
+                                <DataTrigger Binding="{Binding TimelineVisibility}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </ItemsControl.Style>
-                </ItemsControl>
-                <!-- メニューボタン -->
-                <ItemsControl Grid.Column="1">
-                    <ItemsControl.Style>
-                        <Style TargetType="{x:Type ItemsControl}">
-                            <Setter Property="Template" Value="{StaticResource BasicMenuButton}"/>
+                        <Style TargetType="{x:Type ScrollBar}">
+                            <Setter Property="Template" Value="{StaticResource MyScrollBar}"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
-                                    <Setter Property="Template" Value="{StaticResource LightMenuButton}"/>
+                                <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentScrollBarVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" Value="false">
+                                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </ItemsControl.Style>
-                </ItemsControl>
+                    </ListView.Resources>
+                    <ListView.Style>
+                        <Style TargetType="{x:Type ListView}">
+                            <Setter Property="ItemTemplate" Value="{StaticResource BasicTimelineContent}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
+                                    <Setter Property="ItemTemplate" Value="{StaticResource LightTimelineContent}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Style>
+                </ListView>
             </Grid>
-            <!-- コンテンツヘッダー -->
-            <Grid Grid.Row="1" Visibility="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentHeaderVisibility, Converter={StaticResource BoolToVisibility}}"
-                  MinHeight="{Binding OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.HeaderMinHeight}">
-                <ItemsControl >
-                    <ItemsControl.Style>
-                        <Style TargetType="{x:Type ItemsControl}">
-                            <Setter Property="Template" Value="{StaticResource BasicContentHeader}"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
-                                    <Setter Property="Template" Value="{StaticResource LightContentHeader}"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ItemsControl.Style>
-                </ItemsControl>
-            </Grid>
-            <!-- コンテンツ -->
-            <ListView Grid.Row="2" ItemsSource="{Binding OverlayViewComponent.OverlayDataModel.OverlayViewData.TimelineViewSource.View}"
-                      Background="Transparent" BorderBrush="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                      IsHitTestVisible="False" 
-                      ScrollViewer.CanContentScroll="True"
-                      ScrollViewer.IsDeferredScrollingEnabled="True"
-                      ScrollViewer.PanningMode="VerticalOnly"
-                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                      VirtualizingPanel.IsVirtualizing="True">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Vertical" CanVerticallyScroll="True" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.Resources>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <Setter Property="Margin" Value="-10 -3"/>
-                        <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="IsTabStop" Value="False"/>
-                        <Setter Property="MinHeight" Value="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayContentSettingsData.ContentMinHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                        <Setter Property="Visibility" Value="Visible"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding TimelineVisibility}" Value="False">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                    <Style TargetType="{x:Type ScrollBar}">
-                        <Setter Property="Template" Value="{StaticResource MyScrollBar}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding DataContext.OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.ContentScrollBarVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" Value="false">
-                                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.Resources>
-                <ListView.Style>
-                    <Style TargetType="{x:Type ListView}">
-                        <Setter Property="ItemTemplate" Value="{StaticResource BasicTimelineContent}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding OverlayViewComponent.OverlayDataModel.OverlayGenericSettingsData.LightMode}" Value="True">
-                                <Setter Property="ItemTemplate" Value="{StaticResource LightTimelineContent}"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.Style>
-            </ListView>
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>

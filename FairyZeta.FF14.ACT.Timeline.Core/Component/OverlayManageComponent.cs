@@ -260,7 +260,8 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         public bool AutoProcessStart()
         {
             // オーバーレイ自動管理の開始
-            this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoSaveEvent);
+            this.AppCommonTimerModule.MinTimer01.Tick += new EventHandler(this.OverlayAutoSaveEvent);
+            this.AppCommonTimerModule.MinTimer01.Start();
             //this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoHideEvent);
             this.AppCommonTimerModule.SecTimer01.Tick += new EventHandler(this.OverlayAutoTopMostEvent);
             this.AppCommonTimerModule.SecTimer01.Start();
@@ -275,14 +276,23 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             // オーバーレイ自動管理の終了
             this.AppCommonTimerModule.SecTimer01.Stop();
-            this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoSaveEvent);
-            //this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoHideEvent);
             this.AppCommonTimerModule.SecTimer01.Tick -= new EventHandler(this.OverlayAutoTopMostEvent);
+
+            this.AppCommonTimerModule.MinTimer01.Stop();
+            this.AppCommonTimerModule.MinTimer01.Tick -= new EventHandler(this.OverlayAutoSaveEvent);
 
             return true;
         }
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /// <summary> コンポーネント終了の処理を実行します。
+        /// </summary>
+        public void ComponentShutdown()
+        {
+            // オートセーブ強制起動
+            this.OverlayAutoSaveEvent(null, null);
+        }
 
         /// <summary> [TimerEvent] オーバーレイデータの自動セーブを実行します。
         /// </summary>
@@ -292,13 +302,10 @@ namespace FairyZeta.FF14.ACT.Timeline.Core.Component
         {
             if (this.CommonDataModel.ApplicationData == null) return;
 
-            var targets = this.OverlayManageDataModel.OverlayViewComponentCollection.Where(d => d.OverlayDataModel.SaveChangedTarget);
-            if (targets.Count() == 0) return;
-            
             List<OverlayDataModel> dataModelList = new List<OverlayDataModel>();
-            foreach(var item in targets)
+            foreach (var data in this.OverlayManageDataModel.OverlayViewComponentCollection)
             {
-                dataModelList.Add(item.OverlayDataModel);
+                dataModelList.Add(data.OverlayDataModel);
             }
 
             this.OverlayManageModule.OverlayDataModelSave(this.CommonDataModel.ApplicationData, dataModelList);
