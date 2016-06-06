@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using Prism.Mvvm;
 using FairyZeta.Framework;
 using FairyZeta.Framework.Dropbox;
@@ -26,6 +27,19 @@ namespace FairyZeta.Framework.Test
             set { this.SetProperty(ref this._TestString, value); }
         }
         #endregion
+
+        #region #- [Property] double.ProgressValue - ＜プログレス値＞ -----
+        /// <summary> プログレス値 </summary>
+        private double _ProgressValue;
+        /// <summary> プログレス値 </summary>    
+        public double ProgressValue
+        {
+            get { return _ProgressValue; }
+            set { this.SetProperty(ref this._ProgressValue, value); }
+        }
+        #endregion
+
+        private DispatcherTimer progressTimer; 
 
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
     
@@ -57,12 +71,29 @@ namespace FairyZeta.Framework.Test
         private bool initViewModel()
         {
             this.TestString = "バインドテスト";
+
+            this.progressTimer = new DispatcherTimer();
+            this.progressTimer.Interval = new TimeSpan(0, 0, 0,0,10);
+            this.progressTimer.Tick += progressTimer_Tick;
+            this.progressTimer.Start();
             return true;
         }
+
 
       /*--- Method: public ------------------------------------------------------------------------------------------------------------------------------------------*/
 
       /*--- Method: private -----------------------------------------------------------------------------------------------------------------------------------------*/
 
+        private void progressTimer_Tick(object sender, EventArgs e)
+        {
+            if(this.ProgressValue <= 100d)
+            {
+                this.ProgressValue += 0.1;
+            }
+            else
+            {
+                this.ProgressValue = 0;
+            }
+        }
     }
 }

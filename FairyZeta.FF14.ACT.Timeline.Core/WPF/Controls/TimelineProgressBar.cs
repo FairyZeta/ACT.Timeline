@@ -10,7 +10,7 @@ using FairyZeta.Framework.WPF.Controls;
 
 namespace FairyZeta.FF14.ACT.Timeline.Core.WPF.Controls
 {
-    public class TimelineProgressBar : GradientProgressBar
+    public class TimelineProgressBar : ExtendProgressBar
     {
         /*--- Property/Field Definitions ------------------------------------------------------------------------------------------------------------------------------*/
 

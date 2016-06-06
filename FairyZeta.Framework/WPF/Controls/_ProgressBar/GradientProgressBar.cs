@@ -23,13 +23,19 @@ namespace FairyZeta.Framework.WPF.Controls
                     DependencyProperty.Register("GradientColor3", typeof(Color), typeof(GradientProgressBar), new FrameworkPropertyMetadata(default(Color), OnColorChanged));
 
         public static readonly DependencyProperty GradientStop1StartValueProperty =
-                    DependencyProperty.Register("GradientStop1StartValue", typeof(double), typeof(GradientProgressBar), new FrameworkPropertyMetadata(30d, OnGradientStopValueChanged));
+                    DependencyProperty.Register("GradientStop1StartValue", typeof(double), typeof(GradientProgressBar), new FrameworkPropertyMetadata(70d, OnGradientStopValueChanged));
         public static readonly DependencyProperty GradientStop1EndValueProperty =
-                    DependencyProperty.Register("GradientStop1EndValue", typeof(double), typeof(GradientProgressBar), new FrameworkPropertyMetadata(40d, OnGradientStopValueChanged));
+                    DependencyProperty.Register("GradientStop1EndValue", typeof(double), typeof(GradientProgressBar), new FrameworkPropertyMetadata(60d, OnGradientStopValueChanged));
         public static readonly DependencyProperty GradientStop2StartValueProperty =
-                    DependencyProperty.Register("GradientStop2StartValue", typeof(double), typeof(GradientProgressBar), new FrameworkPropertyMetadata(60d, OnGradientStopValueChanged));
+                    DependencyProperty.Register("GradientStop2StartValue", typeof(double), typeof(GradientProgressBar), new FrameworkPropertyMetadata(40d, OnGradientStopValueChanged));
         public static readonly DependencyProperty GradientStop2EndValueProperty =
-                    DependencyProperty.Register("GradientStop2EndValue", typeof(double), typeof(GradientProgressBar), new FrameworkPropertyMetadata(70d, OnGradientStopValueChanged));
+                    DependencyProperty.Register("GradientStop2EndValue", typeof(double), typeof(GradientProgressBar), new FrameworkPropertyMetadata(30d, OnGradientStopValueChanged));
+
+        public static readonly DependencyProperty AutoHideProperty =
+                    DependencyProperty.Register("AutoHide", typeof(bool), typeof(GradientProgressBar), new FrameworkPropertyMetadata(false, OnHidePropertyChanged));
+        public static readonly DependencyProperty HideTypeProperty =
+                    DependencyProperty.Register("HideType", typeof(Visibility), typeof(GradientProgressBar), new FrameworkPropertyMetadata(Visibility.Collapsed, OnHidePropertyChanged));
+
 
         /// <summary> (Dependency) グラデーションカラー1 </summary>
         public Color GradientColor1
@@ -74,6 +80,20 @@ namespace FairyZeta.Framework.WPF.Controls
             get { return (double)GetValue(GradientStop2EndValueProperty); }
             set { SetValue(GradientStop2EndValueProperty, value); }
         }
+
+        /// <summary> (Dependency) 進捗100%時に自動で非表示にするか </summary>
+        public bool AutoHide
+        {
+            get { return (bool)GetValue(AutoHideProperty); }
+            set { SetValue(AutoHideProperty, value); }
+        }
+        /// <summary> (Dependency) 自動非表示にする場合の非表示タイプ( not "Visible" ) </summary>
+        public Visibility HideType
+        {
+            get { return (Visibility)GetValue(HideTypeProperty); }
+            set { SetValue(HideTypeProperty, value); }
+        }
+
       /*--- Constructers --------------------------------------------------------------------------------------------------------------------------------------------*/
         
         /// <summary> FZ／グラデーションプログレスバー／コンストラクタ
@@ -136,6 +156,18 @@ namespace FairyZeta.Framework.WPF.Controls
             }
         }
 
+        /// <summary> Hide関連変更時のコールバック
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
+        private static void OnHidePropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            GradientProgressBar ctrl = obj as GradientProgressBar;
+            if (ctrl != null)
+            {
+                ctrl.CalculateNewGradient();
+            }
+        }
         /// <summary> 新しいグラデーションブラシを生成します。
         /// </summary>
         protected void CalculateNewGradient()
@@ -148,7 +180,11 @@ namespace FairyZeta.Framework.WPF.Controls
 
             if (progress <= 0)
             {
-
+                if (this.AutoHide)
+                {
+                    base.Visibility = this.HideType;
+                    return;
+                }
             }
             else if (progress < this.GradientStop2StartValue)
             {
@@ -170,6 +206,11 @@ namespace FairyZeta.Framework.WPF.Controls
                 brush.GradientStops.Add(newGradientStop);
             }
 
+
+            if (this.AutoHide)
+            {
+                base.Visibility = Visibility.Visible;
+            }
 
             base.Foreground = brush;
         }

@@ -242,7 +242,9 @@
     public enum BarFormType
     {
         /// <summary> シンプル型 </summary>
-        SimpleType
+        SimpleType,
+        /// <summary> ウィンドウズ標準型 </summary>
+        WindowsType,
     }
 
     /// <summary> Doubleの小数点

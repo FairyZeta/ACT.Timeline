@@ -10,5 +10,13 @@
         OverRide
     }
 
-
+    /// <summary> グラデーションタイプ定義
+    /// </summary>
+    public enum GradientType
+    {
+        /// <summary> 線状グラデーション </summary>
+        Linear,
+        /// <summary> 放射状グラデーション </summary>
+        Radial
+    }
 }

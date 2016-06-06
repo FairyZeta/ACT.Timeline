@@ -3,28 +3,290 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:test="clr-namespace:FairyZeta.Framework.Test"
         xmlns:fCtrl="clr-namespace:FairyZeta.Framework.WPF.Controls;assembly=FairyZeta.Framework"
-        Title="MainWindow" Height="300" Width="300" >
-    
+        Title="MainWindow" Height="300" Width="500" >
+
     <Window.Resources>
-        <DataTemplate x:Key="TestTemplate">
-            <Border BorderThickness="0 10" BorderBrush="LightBlue">
-                <StackPanel>
-                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.2" FontWeight="Bold">
-                        <fCtrl:OutlineTextBlock.BitmapEffect>
-                            <DropShadowBitmapEffect ShadowDepth="0" Softness="0.2" />
-                        </fCtrl:OutlineTextBlock.BitmapEffect>
-                    </fCtrl:OutlineTextBlock>
-                        
-                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.4" FontWeight="Bold"/>
-                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.4"/>
-                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.6"/>
-                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="0.8"/>
-                    <fCtrl:OutlineTextBlock FontSize="14" Text="TestText" Fill="YellowGreen" Stroke="Green" StrokeThickness="1.0" FontWeight="Bold"/>
-                    <fCtrl:OutlineTextBlock FontSize="18" Text="TestText" Fill="YellowGreen" Stroke="Green" />
-                    <fCtrl:OutlineTextBlock FontSize="20" Text="TestText" Fill="YellowGreen" Stroke="Green" />
-                </StackPanel>
+        <ControlTemplate x:Key="PolygonTemplate" TargetType="{x:Type UserControl}">
+            <Polygon Points="50,0 0,75 50,150 500,150 550,75 500,0" Stretch="Fill" 
+                     Stroke="{TemplateBinding BorderBrush}" 
+                     StrokeThickness="{TemplateBinding BorderThickness}" 
+                     Fill="{TemplateBinding Background}"/>
+        </ControlTemplate>
+        
+        <DataTemplate x:Key="LinearGradientTemplate">
+            <Border BorderThickness="0 2" BorderBrush="LightBlue">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border Width="100" Height="20">
+                        <Border.Background>
+                            <LinearGradientBrush>
+                                <LinearGradientBrush.StartPoint>
+                                    <Point X="0" Y="1"/>
+                                </LinearGradientBrush.StartPoint>
+                                <LinearGradientBrush.EndPoint>
+                                    <Point X="0" Y="0"/>
+                                </LinearGradientBrush.EndPoint>
+                                <GradientStop Color="Blue" Offset="0"/>
+                                <GradientStop Color="Red" Offset="0.5"/>
+                                <GradientStop Color="Blue" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </Grid>
             </Border>
         </DataTemplate>
+        <DataTemplate x:Key="RadialGradientTemplate">
+            <Border BorderThickness="0 2" BorderBrush="LightBlue">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border Width="100" Height="20">
+                        <Border.Background>
+                            <RadialGradientBrush RadiusX="10" RadiusY="0.7">
+                                <RadialGradientBrush.Center>
+                                    <Point X="0.5" Y="0.5"/>
+                                </RadialGradientBrush.Center>
+                                <RadialGradientBrush.GradientOrigin>
+                                    <Point X="0.5" Y="0.5"/>
+                                </RadialGradientBrush.GradientOrigin>
+                                <GradientStop Color="Red" Offset="0.1"/>
+                                <GradientStop Color="Blue" Offset="0.1"/>
+                                <GradientStop Color="Transparent" Offset="1.0"/>
+                            </RadialGradientBrush>
+                        </Border.Background>
+                        <Border.Effect>
+                            <BlurEffect KernelType="Gaussian" Radius="5"/>
+                        </Border.Effect>
+                    </Border>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!-- プログレスバー -->
+        <ControlTemplate x:Key="BasicProgressBarTemplate" TargetType="{x:Type ProgressBar}">
+            <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true" >
+                <UserControl Template="{StaticResource PolygonTemplate}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Foreground}"/>
+                <UserControl Template="{StaticResource PolygonTemplate}" x:Name="PART_Track" Margin="{TemplateBinding Padding}" />
+                <Decorator x:Name="PART_Indicator" HorizontalAlignment="Right" Margin="{TemplateBinding Padding}">
+                    <Grid x:Name="Foreground">
+                        <UserControl Template="{StaticResource PolygonTemplate}" x:Name="Indicator" Background="{TemplateBinding Background}" />
+                    </Grid>
+                </Decorator>
+
+                <UserControl Template="{StaticResource PolygonTemplate}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="LayoutTransform" TargetName="TemplateRoot">
+                        <Setter.Value>
+                            <RotateTransform Angle="-90"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="TestTemplate" TargetType="{x:Type fCtrl:ExtendProgressBar}">
+        	<Grid x:Name="TemplateRoot" SnapsToDevicePixels="True" >
+                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Tag}"/>
+                <Border x:Name="PART_Track" Margin="{TemplateBinding Padding}" CornerRadius="{TemplateBinding Tag}"/>
+                <Decorator x:Name="PART_Indicator" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}">
+
+                    <Grid x:Name="Foreground">
+                        <Border x:Name="Indicator" Background="{TemplateBinding Foreground}" CornerRadius="{TemplateBinding Tag}"/>
+                        <Border x:Name="Animation" ClipToBounds="True" CornerRadius="{TemplateBinding InnerCornerRadius}">
+                            <Border x:Name="PART_GlowRect" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="100" CornerRadius="{TemplateBinding InnerCornerRadius}">
+                                <Border.Background>
+                                        <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                            <GradientStop Color="Transparent" Offset="0"/>
+                                            <GradientStop Color="#60FFFFFF" Offset="0.4"/>
+                                            <GradientStop Color="#60FFFFFF" Offset="0.6"/>
+                                            <GradientStop Color="Transparent" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                        </Border>
+                        <Grid x:Name="Overlay">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MaxWidth="15"/>
+                                <ColumnDefinition Width="0.1*"/>
+                                <ColumnDefinition MaxWidth="15"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                        <Border x:Name="LeftDark" Margin="1,1,0,1" Grid.RowSpan="2" CornerRadius="{TemplateBinding InnerCornerRadius}">
+                            <Border.Background>
+                                    <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                        <GradientStop Color="#0C000000" Offset="0"/>
+                                        <GradientStop Color="#20000000" Offset="0.3"/>
+                                        <GradientStop Color="#00000000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                        <Border x:Name="RightDark" Grid.Column="2" Margin="0,1,1,1" Grid.RowSpan="2" CornerRadius="{TemplateBinding InnerCornerRadius}">
+                            <Border.Background>
+                                    <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                        <GradientStop Color="#00000000" Offset="0"/>
+                                        <GradientStop Color="#20000000" Offset="0.7"/>
+                                        <GradientStop Color="#0C000000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                        <Rectangle x:Name="LeftLight" Grid.Column="0" Grid.Row="2">
+                                <Rectangle.Fill>
+                                    <RadialGradientBrush RadiusY="1" RadiusX="1">
+                                        <RadialGradientBrush.RelativeTransform>
+                                            <MatrixTransform Matrix="1,0,0,1,0.5,0.5"/>
+                                        </RadialGradientBrush.RelativeTransform>
+                                        <GradientStop Color="#60FFFFC4" Offset="0"/>
+                                        <GradientStop Color="#00FFFFC4" Offset="1"/>
+                                    </RadialGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Rectangle x:Name="CenterLight" Grid.Column="1" Grid.Row="2">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush EndPoint="0,0" StartPoint="0,1">
+                                        <GradientStop Color="#60FFFFC4" Offset="0"/>
+                                        <GradientStop Color="#00FFFFC4" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Rectangle x:Name="RightLight" Grid.Column="2" Grid.Row="2">
+                                <Rectangle.Fill>
+                                    <RadialGradientBrush RadiusY="1" RadiusX="1">
+                                        <RadialGradientBrush.RelativeTransform>
+                                            <MatrixTransform Matrix="1,0,0,1,-0.5,0.5"/>
+                                        </RadialGradientBrush.RelativeTransform>
+                                        <GradientStop Color="#60FFFFC4" Offset="0"/>
+                                        <GradientStop Color="#00FFFFC4" Offset="1"/>
+                                    </RadialGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                    </Grid>
+                </Decorator>
+
+                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Tag}"/>
+        	</Grid>
+            
+        	<ControlTemplate.Triggers>
+        		<Trigger Property="Orientation" Value="Vertical">
+        			<Setter Property="LayoutTransform" TargetName="TemplateRoot">
+        				<Setter.Value>
+        					<RotateTransform Angle="-90"/>
+        				</Setter.Value>
+        			</Setter>
+        		</Trigger>
+        		<Trigger Property="IsIndeterminate" Value="True">
+        			<Setter Property="Visibility" TargetName="LeftDark" Value="Collapsed"/>
+        			<Setter Property="Visibility" TargetName="RightDark" Value="Collapsed"/>
+        			<Setter Property="Visibility" TargetName="LeftLight" Value="Collapsed"/>
+        			<Setter Property="Visibility" TargetName="CenterLight" Value="Collapsed"/>
+        			<Setter Property="Visibility" TargetName="RightLight" Value="Collapsed"/>
+        			<Setter Property="Visibility" TargetName="Indicator" Value="Collapsed"/>
+        		</Trigger>
+        		<Trigger Property="IsIndeterminate" Value="False">
+        			<Setter Property="Background" TargetName="Animation" Value="#80B5FFA9"/>
+        		</Trigger>
+        	</ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="BoxProgressBarTemplate" TargetType="{x:Type fCtrl:ExtendProgressBar}">
+            <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true" >
+                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Tag}"/>
+                <Border x:Name="PART_Track" Margin="{TemplateBinding Padding}" CornerRadius="{TemplateBinding Tag}"/>
+                <Decorator x:Name="PART_Indicator" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}">
+                    <Grid x:Name="Foreground">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="Indicator" Background="{TemplateBinding Foreground}" CornerRadius="{TemplateBinding Tag}"/>
+                        <Border Grid.Column="1" Background="White" Height="{TemplateBinding Height}" Width="{TemplateBinding Height}" />
+                    </Grid>
+                </Decorator>
+                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Tag}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="LayoutTransform" TargetName="TemplateRoot">
+                        <Setter.Value>
+                            <RotateTransform Angle="-90"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        
+        <ControlTemplate x:Key="SliderProgressStyle" TargetType="{x:Type fCtrl:ExtendProgressBar}">
+            <ControlTemplate.Resources>
+                <Style TargetType="{x:Type fCtrl:ExtendProgressBar}">
+        	        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        	        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
+                </Style>
+            </ControlTemplate.Resources>
+            <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true" >
+
+               
+                <TickBar x:Name="TopTick" Fill="Gray" Height="4" Placement="Top" Grid.Row="0" TickFrequency="10"  Margin="0 0 0 10"/>
+                <Border x:Name="PART_Track" Grid.Row="1"  Margin="{TemplateBinding Padding}" CornerRadius="{TemplateBinding Tag}"/>
+                <TickBar x:Name="BottomTick" Fill="Gray" Height="4" Placement="Bottom" Grid.Row="2" TickFrequency="10" Margin="0 10 0 0"/>
+
+                <Decorator x:Name="PART_Indicator" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}">
+                    <Grid x:Name="Foreground">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="Indicator" Background="{TemplateBinding Foreground}" CornerRadius="{TemplateBinding Tag}" Margin="0 5"/>
+                        <Border Grid.Column="1" Background="White" Height="{TemplateBinding Height}" Width="{TemplateBinding Height}" Margin="-5 0 0 0" BorderBrush="Black" BorderThickness="1"/>
+                    </Grid>
+                </Decorator>
+
+                <!--
+                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Margin="0 3"/>
+-->
+            </Grid>
+            <ControlTemplate.Triggers> 
+                <!--
+                <Trigger Property="TickPlacement" Value="TopLeft">
+                    <Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
+                    <Setter Property="Margin" TargetName="TrackBackground" Value="5,2,5,0"/>
+                </Trigger>
+                <Trigger Property="TickPlacement" Value="BottomRight">
+                    <Setter Property="Visibility" TargetName="BottomTick" Value="Visible"/>
+                    <Setter Property="Margin" TargetName="TrackBackground" Value="5,0,5,2"/>
+                </Trigger>
+                <Trigger Property="TickPlacement" Value="Both">
+                    <Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
+                    <Setter Property="Visibility" TargetName="BottomTick" Value="Visible"/>
+                </Trigger>
+                <Trigger Property="IsSelectionRangeEnabled" Value="True">
+                    <Setter Property="Visibility" TargetName="PART_SelectionRange" Value="Visible"/>
+                </Trigger>
+                -->
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Fill" TargetName="TopTick" Value="{DynamicResource SliderTickDisabled}"/>
+                    <Setter Property="Fill" TargetName="BottomTick" Value="{DynamicResource SliderTickDisabled}"/>
+                </Trigger>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="LayoutTransform" TargetName="TemplateRoot">
+                        <Setter.Value>
+                            <RotateTransform Angle="-90"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+
     </Window.Resources>
     
     <Window.DataContext>
@@ -32,7 +294,46 @@
     </Window.DataContext>
     
     <Grid>
-        <!--        <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource TestTemplate}" />-->
-        <fCtrl:BoxFoldContent TitleFontSize="18" Title="TEST" InnerDataTemplate="{StaticResource TestTemplate}" InnerDataContext="{Binding}"/>
+        <TabControl TabStripPlacement="Left">
+            <TabItem Header="TEST">
+                <StackPanel>
+                    <fCtrl:BoxFoldContent TitleFontSize="18" Title="LinearGradientBrush" InnerDataTemplate="{StaticResource LinearGradientTemplate}" InnerDataContext="{Binding}"/>
+                    <fCtrl:BoxFoldContent TitleFontSize="18" Title="RadialGradientBrush" InnerDataTemplate="{StaticResource RadialGradientTemplate}" InnerDataContext="{Binding}"/>
+                </StackPanel>
+                
+                
+            </TabItem>
+            <TabItem Header="ProgressBar">
+
+                <StackPanel>
+                    <fCtrl:ExtendProgressBar Template="{DynamicResource TestTemplate}"
+                                               Width="200" Height="20" Margin="10" Value="{Binding ProgressValue}" GradientColor1="Red" GradientColor2="Green" GradientColor3="Blue" 
+                                               
+                                               BaseCornerRadius="10" InnerCornerRadius="10" 
+                                               />
+                    <fCtrl:ExtendProgressBar Template="{DynamicResource TestTemplate}"
+                                               Width="200" Height="20" Margin="10" Value="3" GradientColor1="Red" GradientColor2="Green" GradientColor3="Blue" 
+                                               BorderThickness="0" 
+                                               BaseCornerRadius="20" InnerCornerRadius="20"
+                                               />
+                    <Grid>
+                        <fCtrl:ExtendProgressBar Template="{DynamicResource TestTemplate}"
+                                                 BorderThickness="0" Width="200" Height="10" Margin="10" Value="{Binding ProgressValue}" GradientColor1="Red" GradientColor2="Green" GradientColor3="Blue" >
+                        </fCtrl:ExtendProgressBar>
+                        
+                    </Grid>
+                    <fCtrl:ExtendProgressBar Template="{StaticResource BasicProgressBarTemplate}" 
+                                               Width="200" Height="20" Margin="10" Value="{Binding ProgressValue}" GradientColor1="Red" GradientColor2="Green" GradientColor3="Blue"/>
+                    <fCtrl:ExtendProgressBar Template="{StaticResource SliderProgressStyle}" 
+                                               Width="200" Height="20" Margin="10" Value="{Binding ProgressValue}" GradientColor1="Red" GradientColor2="Green" GradientColor3="Blue"/>
+                    <Grid Width="200" Height="20">
+                        <UserControl Template="{StaticResource PolygonTemplate}" BorderBrush="Gray" Background="DimGray" BorderThickness="5"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Slider">
+                <Slider Width="200" Height="50" />
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

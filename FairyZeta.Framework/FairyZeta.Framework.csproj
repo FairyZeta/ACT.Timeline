@@ -78,9 +78,11 @@
     <Compile Include="Data\BrushData.cs" />
     <Compile Include="Data\TempColorPaletteData.cs" />
     <Compile Include="FrameworkSettings.cs" />
+    <Compile Include="WPF\Controls\_Polygon\ExtendPolygon.cs" />
     <Compile Include="WPF\Controls\_Button\ImageButton.xaml.cs">
       <DependentUpon>ImageButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WPF\Controls\_ProgressBar\ExtendProgressBar.cs" />
     <Compile Include="WPF\Controls\_TabControl\ImageTabItem.xaml.cs">
       <DependentUpon>ImageTabItem.xaml</DependentUpon>
     </Compile>
